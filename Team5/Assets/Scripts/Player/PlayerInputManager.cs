@@ -84,7 +84,7 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
     // 커서고정
     private void OnApplicationFocus(bool hasFocus)
     {
-        SetCursorState(hasFocus);
+        // SetCursorState(hasFocus);
     }
     
     //=========================================================
