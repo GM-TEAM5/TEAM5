@@ -2,19 +2,20 @@ using UnityEngine;
 
 
 
-    [RequireComponent(typeof(CharacterController))]
+    [RequireComponent(typeof(CharacterController),typeof(PlayerStatus))]
     public class PlayerController : MonoBehaviour
     {
         PlayerInputManager playerInput;
+
+        PlayerStatus playerStatus;
+
         CharacterController controller;
         
 
-        [SerializeField]
-        private Vector3 playerVelocity;
+        [SerializeField] Vector3 playerVelocity;
         
         #region Move
-        [SerializeField] private Vector3 lastMoveDir;
-        [SerializeField] private float playerSpeed = 5f;
+        [SerializeField] Vector3 lastMoveDir;
         #endregion
 
 
@@ -24,7 +25,10 @@ using UnityEngine;
         private void Start()
         {
             controller = GetComponent<CharacterController>();
+            playerStatus = GetComponent<PlayerStatus>();
+
             playerInput = PlayerInputManager.Instance;
+            
             
             // t_camera = Camera.main.transform;
         }
@@ -60,6 +64,6 @@ using UnityEngine;
             // Debug.Log(moveVector);
             lastMoveDir = transform.right* moveVector.x + transform.forward * moveVector.y;
             lastMoveDir.y = 0;      // 방향 조절에 필요 없기떄문.
-            controller.Move(lastMoveDir.normalized * Time.deltaTime * playerSpeed);
+            controller.Move(lastMoveDir.normalized * Time.deltaTime * playerStatus.movementSpeed);
         }
     }

@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: SpriteShadow
-  m_Shader: {fileID: -6465566751694194690, guid: 2bc4cf1a013cccf43957bfe0177c79d8,
+  m_Shader: {fileID: -6465566751694194690, guid: 1a14f1c1a2f6ab34f92d510d7b3d8f7d,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
