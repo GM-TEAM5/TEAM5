@@ -1,4 +1,6 @@
+using System.Net.Mail;
 using Unity.VisualScripting;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 
@@ -104,5 +106,33 @@ using UnityEngine;
 
             // ui
             stateUI.UpdateCurrHp();
+        }
+
+
+        //=====================================================
+        public void GetExp(float exp)
+        {
+            status.currExp += exp;
+            
+            // 레벨업 체크
+            if (status.currExp >= status.maxExp)
+            {
+                LevelUp();
+            }
+
+            stateUI.UpdateCurrExp();
+        }
+
+
+        public void LevelUp()
+        {
+            status.level ++;
+            status.currExp -= status.maxExp;    // 현재 경험치 감소
+            //그 다음으로  status.maxExp 를 공식에 따라 증가시키던지 해야함. 
+
+            stateUI.UpdateLevelText();
+            stateUI.UpdateMaxExp();
+
+            Debug.Log("플레이어 레벨업!");
         }
     }
