@@ -6,6 +6,12 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerStatus
 {
+    //
+    public int level = 1;
+    public float currExp;
+    public float maxExp = 100;
+    
+    //
     float _hp;
     public float hp  // 현재체력
     {

@@ -33,13 +33,15 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
     
     //
     
-    [SerializeField] LayerMask aimColliderLayerMask = new();
+    // [SerializeField] LayerMask aimColliderLayerMask = new();
 
 
     //================================================================
 
     void Start()
     {
+        DontDestroyOnLoad(gameObject);  // 얜 죽으면 안됨.
+        
         playerInput = GetComponent<PlayerInput>();
         
         moveAction = playerInput.actions["Move"];

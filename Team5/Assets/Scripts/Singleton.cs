@@ -24,7 +24,7 @@ public class Singleton<T> : MonoBehaviour where T : Component
     /// </summary>
     void Awake()
     {
-        DontDestroyOnLoad (gameObject);
+        // DontDestroyOnLoad (gameObject);
         if (instance == null ) {
             instance = this as T;
         } else {
