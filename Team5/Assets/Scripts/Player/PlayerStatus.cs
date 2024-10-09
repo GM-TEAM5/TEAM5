@@ -12,7 +12,7 @@ public class PlayerStatus
     public float maxExp = 100;
     
     //
-    float _hp;
+    [SerializeField] float _hp;
     public float hp  // 현재체력
     {
         get => _hp;

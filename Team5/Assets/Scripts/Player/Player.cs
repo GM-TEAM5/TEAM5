@@ -5,10 +5,13 @@ using UnityEngine;
 
 
 
-    [RequireComponent(typeof(CharacterController))]
+    [RequireComponent(typeof(CharacterController),
+                     typeof(SpriteEntity))]
     public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포넌트에 접근하기 쉽도록 싱글톤
     {
+        // [SerializeField] Sprite playerSprite;
         public PlayerStatus status;     // 플레이어의 능력치 정보 
+        SpriteEntity spriteEntity;
         
         PlayerStateUI stateUI;
         
@@ -68,7 +71,11 @@ using UnityEngine;
             status = new PlayerStatus();      // 플레이어 스탯 초기화.
 
             stateUI = GetComponent<PlayerStateUI>();
-            stateUI.Init();     // 상태 ui 초기화
+            stateUI.Init(this);     // 상태 ui 초기화
+            
+
+            spriteEntity = GetComponent<SpriteEntity>();
+            spriteEntity.Init(controller.radius);
         }
 
         //========================================================================
@@ -96,7 +103,7 @@ using UnityEngine;
             }
 
             // ui
-            stateUI.UpdateCurrHp();
+            stateUI.UpdateCurrHp(status.hp);
         }
 
 
@@ -105,7 +112,7 @@ using UnityEngine;
             status.hp += heal;
 
             // ui
-            stateUI.UpdateCurrHp();
+            stateUI.UpdateCurrHp(status.hp);
         }
 
 
@@ -120,7 +127,7 @@ using UnityEngine;
                 LevelUp();
             }
 
-            stateUI.UpdateCurrExp();
+            stateUI.UpdateCurrExp(status.currExp);
         }
 
 
@@ -130,8 +137,8 @@ using UnityEngine;
             status.currExp -= status.maxExp;    // 현재 경험치 감소
             //그 다음으로  status.maxExp 를 공식에 따라 증가시키던지 해야함. 
 
-            stateUI.UpdateLevelText();
-            stateUI.UpdateMaxExp();
+            stateUI.UpdateLevelText(status.level);
+            stateUI.UpdateMaxExp(status.maxExp);
 
             Debug.Log("플레이어 레벨업!");
         }

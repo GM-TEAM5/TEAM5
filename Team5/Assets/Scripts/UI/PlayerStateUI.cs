@@ -15,14 +15,14 @@ public class PlayerStateUI : MonoBehaviour
 
 
     //==========================================
-    public void Init()
+    public void Init(Player player)
     {
-        UpdateMaxHp();
-        UpdateCurrHp();
+        UpdateMaxHp(player.status.maxHp);
+        UpdateCurrHp(player.status.hp);
 
-        UpdateMaxExp();
-        UpdateCurrExp();
-        UpdateLevelText();
+        UpdateMaxExp(player.status.maxExp);
+        UpdateCurrExp(player.status.currExp);
+        UpdateLevelText(player.status.level);
 
     }
 
@@ -33,17 +33,17 @@ public class PlayerStateUI : MonoBehaviour
     /// <summary>
     /// hp bar 의 최댓값을 플레이어 능력치 값에 맞춘다. (주로 체력 증가 이벤트 발생시 호출됨 )
     /// </summary>
-    public void UpdateMaxHp()
+    public void UpdateMaxHp(float maxHp)
     {
-        hpBar.maxValue = Player.Instance.status.maxHp;
+        hpBar.maxValue = maxHp;
     }
 
     /// <summary>
     /// hp bar의 현재 값을 플레이어 능력치 값에 맞춘다. (주로 회복, 피해 발생시 호출됨)
     /// </summary>
-    public void UpdateCurrHp()
+    public void UpdateCurrHp(float hp)
     {
-        hpBar.value = Player.Instance.status.hp;
+        hpBar.value = hp;
     }
 
     #endregion
@@ -52,25 +52,25 @@ public class PlayerStateUI : MonoBehaviour
     /// <summary>
     /// hp bar 의 최댓값을 플레이어 능력치 값에 맞춘다. (주로 체력 증가 이벤트 발생시 호출됨 )
     /// </summary>
-    public void UpdateMaxExp()
+    public void UpdateMaxExp(float maxExp)
     {
-        expBar.maxValue = Player.Instance.status.maxExp;
+        expBar.maxValue = maxExp;
     }
 
     /// <summary>
     /// hp bar의 현재 값을 플레이어 능력치 값에 맞춘다. (주로 회복, 피해 발생시 호출됨)
     /// </summary>
-    public void UpdateCurrExp()
+    public void UpdateCurrExp(float currExp)
     {
-        expBar.value = Player.Instance.status.currExp;
+        expBar.value = currExp;
     }
 
     /// <summary>
     ///  레벨 텍스트 업데이트
     /// </summary>
-    public void UpdateLevelText()
+    public void UpdateLevelText(int level)
     {
-        levelText.SetText( Player.Instance.status.level.ToString() );
+        levelText.SetText( level.ToString());
     }
     #endregion
 }
