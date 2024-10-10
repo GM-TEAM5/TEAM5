@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Net.Mail;
 using Unity.VisualScripting;
 using UnityEditor.PackageManager;
@@ -10,22 +11,32 @@ using UnityEngine;
     public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포넌트에 접근하기 쉽도록 싱글톤
     {
         // [SerializeField] Sprite playerSprite;
+
+        public Transform t_player;
+
         public PlayerStatus status;     // 플레이어의 능력치 정보 
         SpriteEntity spriteEntity;
         
+        //======= ui ========
         PlayerStateUI stateUI;
+        PlayerSkillsUI skillsUI;
         
+
+        //
         PlayerInputManager playerInput;
         CharacterController controller;
         
 
+        List<PlayerSkill> skills= new();
         
+        int maxSkillNum = 5;
         
         #region Move
         // [SerializeField] Vector3 playerVelocity;
         [SerializeField] Vector3 lastMoveDir;
         #endregion
 
+ 
 
 
         //====================================================================================
@@ -43,7 +54,7 @@ using UnityEngine;
             //controller.Move(playerVelocity * Time.deltaTime);
 
             Move();
-            
+            TryUseSkills();
 
             // Rotate(playerInput.mouseDir);
             //shoot
@@ -65,14 +76,24 @@ using UnityEngine;
         /// </summary>
         public void InitPlayer()
         {
+            t_player= transform;
+            
             controller = GetComponent<CharacterController>();
             playerInput = PlayerInputManager.Instance;
             
             status = new PlayerStatus();      // 플레이어 스탯 초기화.
+            foreach(var skill in TestManager.Instance.initSkillData)
+            {
+                GetSkill( skill );
+            }
+            
+
 
             stateUI = GetComponent<PlayerStateUI>();
             stateUI.Init(this);     // 상태 ui 초기화
             
+            skillsUI = FindObjectOfType<PlayerSkillsUI>();
+            skillsUI.Init(skills);
 
             spriteEntity = GetComponent<SpriteEntity>();
             spriteEntity.Init(controller.radius, controller.height);
@@ -142,4 +163,31 @@ using UnityEngine;
 
             Debug.Log("플레이어 레벨업!");
         }
+
+
+        #region ===== Skill =====
+        public void GetSkill( PlayerSkillSO skillData )
+        {
+            if (skills.Count<maxSkillNum )
+            {
+                PlayerSkill skill = new(skillData);
+                skills.Add(skill);
+            }
+
+            // 그리고 ui 업뎃
+        }
+
+        public void TryUseSkills()
+        {
+            for(int i=0;i<skills.Count;i++)
+            {
+                if (skills[i].isAvailable)
+                {
+                    skills[i].Use();
+                }                
+            }
+        }
+
+        #endregion
+
     }

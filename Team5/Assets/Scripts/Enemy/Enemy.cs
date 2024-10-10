@@ -13,7 +13,9 @@ public class Enemy : MonoBehaviour
     EnemyStateUI stateUI;
     SpriteEntity spriteEntity;
     NavMeshAgent navAgent;
-    
+    Transform t_target;
+
+
     [SerializeField] float _hp;
     public float hp  // 현재체력
     {
@@ -31,6 +33,13 @@ public class Enemy : MonoBehaviour
         Init(); // 초반에만, -  
     }
     
+    void Update()
+    {
+        navAgent.SetDestination(t_target.position);
+
+        // navAgent.isStopped = true;
+    }
+
 
     public void Init()
     {
@@ -39,6 +48,7 @@ public class Enemy : MonoBehaviour
         navAgent = GetComponent<NavMeshAgent>();
         navAgent.speed = enemyData.movementSpeed;
         // data 에 따라 radius 및 이동속도 도 세팅해야함. 
+        t_target = Player.Instance.transform;
 
         stateUI = GetComponent<EnemyStateUI>();
         stateUI.Init(this);
