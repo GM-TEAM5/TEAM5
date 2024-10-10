@@ -75,7 +75,7 @@ using UnityEngine;
             
 
             spriteEntity = GetComponent<SpriteEntity>();
-            spriteEntity.Init(controller.radius);
+            spriteEntity.Init(controller.radius, controller.height);
         }
 
         //========================================================================

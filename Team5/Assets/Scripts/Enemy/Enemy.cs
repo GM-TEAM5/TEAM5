@@ -37,13 +37,14 @@ public class Enemy : MonoBehaviour
         hp = enemyData.maxHp;
 
         navAgent = GetComponent<NavMeshAgent>();
+        navAgent.speed = enemyData.movementSpeed;
         // data 에 따라 radius 및 이동속도 도 세팅해야함. 
 
         stateUI = GetComponent<EnemyStateUI>();
         stateUI.Init(this);
 
         spriteEntity = GetComponent<SpriteEntity>();
-        spriteEntity.Init(enemyData.sprite, navAgent.radius);
+        spriteEntity.Init(enemyData.sprite, navAgent.radius, navAgent.height);
         
     }
 

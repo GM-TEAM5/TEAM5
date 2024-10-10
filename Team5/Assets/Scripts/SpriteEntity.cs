@@ -17,9 +17,9 @@ public class SpriteEntity : MonoBehaviour
     /// </summary>
     /// <param name="sprite"></param>
     /// <param name="entitySize"></param>
-    public void Init(Sprite sprite, float entitySize)
+    public void Init(Sprite sprite, float entitySize,float entityHeight)
     {
-        Init(entitySize);
+        Init(entitySize,entityHeight);
 
         spriteRenderer.sprite = sprite;
     }
@@ -27,8 +27,8 @@ public class SpriteEntity : MonoBehaviour
     /// <summary>
     /// 지정된 크기로 초기화 ( 스프라이트는 컴파일 때의 스프라이트로 사용 ) - 플레이어 초기화용
     /// </summary>
-    /// <param name="entitySize"></param>
-    public void Init(float entitySize)
+    /// <param name="entityWidth"></param>
+    public void Init(float entityWidth, float entityHeight)
     {
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         
@@ -38,7 +38,9 @@ public class SpriteEntity : MonoBehaviour
         t_sprite = spriteRenderer.transform;
         t_camera = Camera.main.transform;
 
-        t_sprite.localPosition = new Vector3(0,0,-entitySize);
+        t_sprite.localPosition = new Vector3(0,0,-entityWidth);
+
+        GetComponentInChildren<Canvas>().GetComponent<RectTransform>().anchoredPosition = new Vector2(0, entityHeight);
     }
 
     void Update()
