@@ -3017,7 +3017,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sketchLineWidth: 0.1
-  sketchLineMaterial: {fileID: 0}
+  sketchLineMaterial: {fileID: 2100000, guid: 6c985ced94c7cb64c86ada52641c766f, type: 2}
+  basicAttachPrefab: {fileID: 6365197401584590210, guid: 8d83a92420e31534bab7079c1694d382,
+    type: 3}
 --- !u!120 &4888796789088342395
 LineRenderer:
   serializedVersion: 2

@@ -12,6 +12,9 @@ public class PlayerDraw : MonoBehaviour
     public float sketchLineWidth = 0.1f;
     public Material sketchLineMaterial;
 
+    [Header("Prefab")]
+    public GameObject basicAttachPrefab;
+
     private bool isDrawing = false;
     private List<Vector3> points = new List<Vector3>();
     private LineRenderer lineRenderer;
@@ -72,7 +75,7 @@ public class PlayerDraw : MonoBehaviour
         // 기본 공격 선 생성
         if (points.Count > 0)
         {
-            // TODO: 공격 선 생성
+            PlayerBasicAttack.CreateBrushLine(basicAttachPrefab, points.ToArray());
         }
         lineRenderer.positionCount = 0;
         points.Clear();
