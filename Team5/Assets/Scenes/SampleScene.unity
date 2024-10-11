@@ -3004,6 +3004,8 @@ MonoBehaviour:
   initSkillData:
   - {fileID: 11400000, guid: ea7204fbdab788c43ad0039ecde11c89, type: 2}
   initProjSprite: {fileID: 21300000, guid: 1396c40b41c55a745a385648ec3e7152, type: 3}
+  damageText: {fileID: 6403899980032326514, guid: a537ae7bbd7ea544e892012b3c972e1a,
+    type: 3}
 --- !u!4 &1682831513
 Transform:
   m_ObjectHideFlags: 0
