@@ -8,8 +8,8 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
 {
     [SerializeField] PlayerInput playerInput;
     
-    InputAction moveAction;
-    InputAction drawAction;
+    public InputAction moveAction;
+    public InputAction drawAction;
     InputAction lookAction;
     // InputAction jumpAction;
     // InputAction aimAction;
@@ -33,6 +33,9 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
     
     //
     
+
+    private Plane drawingPlane;
+
     // [SerializeField] LayerMask aimColliderLayerMask = new();
 
 
@@ -51,7 +54,8 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
         // lookAction = playerInput.actions["Look"];
         // jumpAction = playerInput.actions["Jump"];
         // aimAction = playerInput.actions["Aim"];
-        
+
+        drawingPlane = new Plane(Vector3.up, Vector3.zero);
     }
 
     void Update()
@@ -68,6 +72,12 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
 
 
 
+        Vector2 mousePosition = Mouse.current.position.ReadValue();
+        Ray ray = Camera.main.ScreenPointToRay(mousePosition);
+        if (drawingPlane.Raycast(ray, out float enter))
+        {
+            mouseWorldPos = ray.GetPoint(enter);
+        }
         // Transform t_hit = null; // 히트스캔에 필요.
         // Ray ray = Camera.main.ScreenPointToRay(new Vector2(Screen.width *0.5f, Screen.height * 0.5f) );  //조준점 위치(화면중앙));
         // 조준점 방향 계산
