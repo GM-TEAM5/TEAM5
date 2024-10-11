@@ -26,7 +26,7 @@ public class PlayerSkill
         
         //
         Vector3 targetPos = skillData.FindTargetPos();
-
+        
         skillData.Use( targetPos );
     }
 

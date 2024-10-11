@@ -35,7 +35,7 @@ public class Enemy : MonoBehaviour
     
     void Update()
     {
-        navAgent.SetDestination(t_target.position);
+        // navAgent.SetDestination(t_target.position);
 
         // navAgent.isStopped = true;
     }

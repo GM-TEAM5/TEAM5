@@ -7,14 +7,14 @@ using System.Linq;
 [CreateAssetMenu(fileName = "Skill_01_Pistol", menuName = "SO/PlayerSkill/01")]
 public class Skill_01_Pistol :PlayerSkillSO  
 {
-    
+    [SerializeField] Projectile bulletPrefab;
 
     public override Vector3 FindTargetPos()
     {
         Vector3 playerPos = Player.Instance.t_player.position;
         Vector3 ret = playerPos;
 
-        Collider[] hits = Physics.OverlapSphere(playerPos, 10f, Util.GameConstants.enemyLayer);         
+        Collider[] hits = Physics.OverlapSphere(playerPos, 50f, Util.GameConstants.enemyLayer);         
 
         if (hits.Length>0)
         {
@@ -27,6 +27,10 @@ public class Skill_01_Pistol :PlayerSkillSO
     
     public override void Use(Vector3 targetPos)
     {
-        Debug.Log("[스킬] 빵야");
+        // Debug.Log("[스킬] 빵야");
+
+        var bullet = Instantiate(bulletPrefab, Player.Instance.t_player.position+ Vector3.up, Quaternion.identity);
+        bullet.Init(targetPos);
+        
     }
 }
