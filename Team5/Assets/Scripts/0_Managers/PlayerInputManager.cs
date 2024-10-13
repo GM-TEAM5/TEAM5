@@ -14,7 +14,6 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
     // InputAction jumpAction;
     // InputAction aimAction;
 
-
     //
     public Vector2 moveVector {get;private set;}
     public Vector2 mouseMoveVector {get;private set;}
