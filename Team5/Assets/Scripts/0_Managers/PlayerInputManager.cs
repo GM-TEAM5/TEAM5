@@ -42,8 +42,6 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
 
     void Start()
     {
-        DontDestroyOnLoad(gameObject);  // 얜 죽으면 안됨.
-        
         playerInput = GetComponent<PlayerInput>();
         
         moveAction = playerInput.actions["Move"];
