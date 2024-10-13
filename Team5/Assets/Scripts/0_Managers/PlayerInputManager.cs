@@ -8,8 +8,8 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
 {
     [SerializeField] PlayerInput playerInput;
     
-    InputAction moveAction;
-    InputAction drawAction;
+    public InputAction moveAction;
+    public InputAction drawAction;
     InputAction lookAction;
     // InputAction jumpAction;
     // InputAction aimAction;
@@ -29,10 +29,12 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
     public Vector3 mouseWorldPos {get;private set;} // 마우스가 가리키는 곳의 월드 좌표 
     public float xAxis{get;private set;}        //마우스 움직임 x축
     public float yAxis {get;private set;}       // 마우스 움직임 y축
-    
-    
+
+    // TODO: 그리기 범위 수정
+    private Plane drawingPlane;
+
     //
-    
+
     // [SerializeField] LayerMask aimColliderLayerMask = new();
 
 
@@ -47,17 +49,24 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
         moveAction = playerInput.actions["Move"];
         drawAction = playerInput.actions["Draw"];
 
-        
+
         // lookAction = playerInput.actions["Look"];
         // jumpAction = playerInput.actions["Jump"];
         // aimAction = playerInput.actions["Aim"];
-        
+
+        drawingPlane = new Plane(Vector3.up, Vector3.zero);
     }
 
     void Update()
     {
         moveVector = moveAction.ReadValue<Vector2>();
-        
+
+        Vector2 mousePosition = Mouse.current.position.ReadValue();
+        Ray ray = Camera.main.ScreenPointToRay(mousePosition);
+        if (drawingPlane.Raycast(ray, out float enter))
+        {
+            mouseWorldPos = ray.GetPoint(enter);
+        }
         
         // mouseMoveVector = lookAction.ReadValue<Vector2>();
         // aim = aimAction.ReadValue<float>()>0;
