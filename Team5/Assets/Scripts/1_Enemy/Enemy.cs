@@ -52,6 +52,10 @@ public class Enemy : MonoBehaviour
         {
             GetDamaged(10);
         }
+        else if (other.CompareTag("Brush"))
+        {
+            GetDamaged(100);
+        }
     }
 
 
