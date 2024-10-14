@@ -24,6 +24,8 @@ public class PlayerStateUI : MonoBehaviour
         UpdateCurrExp(player.status.currExp);
         UpdateLevelText(player.status.level);
 
+        UpdateMaxInk(player.status.maxInk);
+        UpdateCurrInk(player.status.currInk);
     }
 
 
@@ -71,6 +73,25 @@ public class PlayerStateUI : MonoBehaviour
     public void UpdateLevelText(int level)
     {
         levelText.SetText( level.ToString());
+    }
+    #endregion
+
+    #region ====== Ink =======
+
+    /// <summary>
+    /// ink bar 의 최댓값을 플레이어 능력치 값에 맞춘다.
+    /// </summary>
+    public void UpdateMaxInk(float maxInk)
+    {
+        inkBar.maxValue = maxInk;
+    }
+
+    /// <summary>
+    /// ink bar의 현재 값을 맞춘다. (붓칠 시 호출됨)
+    /// </summary>
+    public void UpdateCurrInk(float currInk)
+    {
+        inkBar.value = currInk;
     }
     #endregion
 }
