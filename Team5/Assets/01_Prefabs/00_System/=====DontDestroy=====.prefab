@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6736671908521497305}
   - component: {fileID: 5222418502838114663}
   - component: {fileID: 4964979423805334565}
+  - component: {fileID: 760930456658816313}
   - component: {fileID: 5031679521403383433}
   m_Layer: 0
   m_Name: GameManager
@@ -46,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f17b811f890727a4b92462551519c3fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerData: {fileID: 11400000, guid: 4c17b5a46cdc74947ab1ca6a9e8d532e, type: 2}
 --- !u!114 &4964979423805334565
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,6 +65,22 @@ MonoBehaviour:
   initProjSprite: {fileID: 21300000, guid: 1396c40b41c55a745a385648ec3e7152, type: 3}
   damageText: {fileID: 6403899980032326514, guid: a537ae7bbd7ea544e892012b3c972e1a,
     type: 3}
+  testStageData: {fileID: 11400000, guid: 6084220f7ec65f84ba55697acff44cae, type: 2}
+--- !u!114 &760930456658816313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1047560434824942920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0069a74a6242bb44ca04992fb27b5e5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onStageLoad:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5031679521403383433
 MonoBehaviour:
   m_ObjectHideFlags: 0

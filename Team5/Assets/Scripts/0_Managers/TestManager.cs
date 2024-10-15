@@ -8,4 +8,7 @@ public class TestManager :  Singleton<TestManager>
     public Sprite initProjSprite;
 
     public DamageText damageText;
+
+
+    public StageDataSO testStageData;
 }
