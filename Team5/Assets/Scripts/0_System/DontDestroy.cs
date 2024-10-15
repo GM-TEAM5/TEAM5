@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DontDestroy : MonoBehaviour
+/// <summary>
+/// 
+/// </summary>
+public class DontDestroy : Singleton<DontDestroy>
 {
-    void Awake()
+    void Start()
     {
         DontDestroyOnLoad(gameObject);
     }
