@@ -49,7 +49,7 @@ namespace Redcode.Pools
 
         private readonly List<IPool<Component>> _poolsObjects = new();
 
-        private void Awake()
+        private void Start()
         {
             var namesGroups = _pools.Select(p => p.Name).GroupBy(n => n).Where(g => g.Count() > 1);
 

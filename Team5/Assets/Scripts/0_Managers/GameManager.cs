@@ -13,9 +13,20 @@ public class GameManager : Singleton<GameManager>
     void Start()
     {
         GameEventManager.Instance.onStageLoad.AddListener( SetStage );
+
+
+        InitGame();
     }
 
     //===================================================================================
+
+    public void InitGame()
+    {
+        ResourceManager.Instance.Init();
+
+    }
+
+
 
     /// <summary>
     /// 

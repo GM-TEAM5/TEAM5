@@ -15,6 +15,8 @@ public class StageManager : Singleton<StageManager>
     {
         // 여기서 스테이지 로드 완료 이벤트 재생
         GameEventManager.Instance.onStageLoad.Invoke();
+
+
     }
 
 

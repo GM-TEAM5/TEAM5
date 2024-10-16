@@ -9,6 +9,6 @@ public class TestManager :  Singleton<TestManager>
 
     public DamageText damageText;
 
-
+    public EnemySO enemyData;
     public StageDataSO testStageData;
 }

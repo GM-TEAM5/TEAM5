@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.AI;
 using System;
 
+using Redcode.Pools;
 
 [RequireComponent(typeof(NavMeshAgent),
                     typeof(SpriteEntity))]
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IPoolObject
 {
     public EnemySO enemyData;   //적의 데이터
     EnemyStateUI stateUI;
@@ -32,7 +33,7 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
-        Init(); // 초반에만, -  
+        // Init(); // 초반에만, -  
     }
     
     void Update()
@@ -58,11 +59,25 @@ public class Enemy : MonoBehaviour
         }
     }
 
-
-
-
-    public void Init()
+    //===========================
+     
+    public void OnCreatedInPool()
     {
+        
+    }
+
+    public void OnGettingFromPool()
+    {
+        
+    }
+
+
+   //=====================================
+
+    public void Init(EnemySO enemyData)
+    {
+        this.enemyData = enemyData;
+        
         hp = enemyData.maxHp;
 
         GetComponent<Collider>().enabled = true;
@@ -113,4 +128,6 @@ public class Enemy : MonoBehaviour
 
         Debug.Log($"{enemyData.entityName} 사망");
     }
+
+
 }
