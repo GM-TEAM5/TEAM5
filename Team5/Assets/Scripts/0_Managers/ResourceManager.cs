@@ -6,7 +6,10 @@ using UnityEngine.Rendering;
 
 public class ResourceManager : Singleton<ResourceManager>
 {
-    public string enemyDataPath = "EnemyData";
+    public readonly string enemyDataPath = "EnemyData";
+
+    public readonly string defaultEnemyId = "000";
+
 
     public SerializedDictionary<string, EnemySO> enemyData = new();
 
@@ -15,11 +18,21 @@ public class ResourceManager : Singleton<ResourceManager>
 
     public void Init()
     {
-        
         foreach(EnemySO enemy in Resources.LoadAll<EnemySO>(enemyDataPath))
         {
             enemyData[enemy.id] = enemy;
         }
 
+    }
+
+
+    public EnemySO GetEnemyData(string id)
+    {
+        if (enemyData.ContainsKey(id))
+        {
+            return enemyData[id];
+        }
+
+        return enemyData[defaultEnemyId];
     }
 }

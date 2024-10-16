@@ -16,7 +16,11 @@ public class SimpleSpawn : WaveFormSO
             // 에너미 생성해서//  Instantiate(  , spawnPoint, Quaternion.identity);
             // 세팅하기. 
             // PoolManager.Instance.GetEnemy(id);
-            
+
+            Vector3 randPos = StageManager.Instance.GetRandomPosition( Player.Instance.t_player.position, 20f );
+            PoolManager.Instance.GetEnemy(id, randPos);
+
+
             Debug.Log($"적 생성 {id} at {spawnPoint}");
         }
         

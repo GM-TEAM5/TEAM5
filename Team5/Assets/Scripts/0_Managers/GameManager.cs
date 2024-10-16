@@ -13,8 +13,6 @@ public class GameManager : Singleton<GameManager>
     void Start()
     {
         GameEventManager.Instance.onStageLoad.AddListener( SetStage );
-
-
         InitGame();
     }
 
@@ -23,7 +21,6 @@ public class GameManager : Singleton<GameManager>
     public void InitGame()
     {
         ResourceManager.Instance.Init();
-
     }
 
 

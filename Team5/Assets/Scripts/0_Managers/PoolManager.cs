@@ -163,10 +163,12 @@ public class PoolManager : Singleton<PoolManager>
 
     //================================================================================
 
-    public Enemy GetEnemy( string id )
+    public Enemy GetEnemy( string id ,Vector3 initPos)
     {
-        var enemy = Instance.GetFromPool<Enemy>(); 
-        enemy.Init(TestManager.Instance.enemyData);
+        Enemy enemy = Instance.GetFromPool<Enemy>(); 
+        EnemySO enemyData =  ResourceManager.Instance.GetEnemyData(id);
+        enemy.Init( enemyData );
+        enemy.transform.position = initPos;
 
         return enemy;
     }
