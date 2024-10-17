@@ -20,7 +20,38 @@ MonoBehaviour:
     waveForm: {fileID: 11400000, guid: 254f42f2f62d31643970295c0301736c, type: 2}
     startTime: 0
     endTime: 0
-    frequency: 1
+    frequency: 5
+    testCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 10
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  - enemyIds:
+    - 001
+    n: 1
+    waveForm: {fileID: 11400000, guid: 254f42f2f62d31643970295c0301736c, type: 2}
+    startTime: 3
+    endTime: 0
+    frequency: 10
     testCurve:
       serializedVersion: 2
       m_Curve:

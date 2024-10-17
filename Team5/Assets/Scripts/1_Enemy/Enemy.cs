@@ -16,10 +16,11 @@ public class Enemy : MonoBehaviour, IPoolObject
     public EnemySO enemyData;   //적의 데이터
     EnemyStateUI stateUI;
     SpriteEntity spriteEntity;
-    NavMeshAgent navAgent;
+    public NavMeshAgent navAgent;
+    EnemyMove move;
     Collider enemyCollider;
 
-    Transform t_target;
+    public  Transform t_target;
 
 
     [SerializeField] float _hp;
@@ -33,24 +34,11 @@ public class Enemy : MonoBehaviour, IPoolObject
     }  
 
     public bool isAlive => _hp>0;    
-
+    float  rangeWeight =1f ;     // 원거리의 경우 각 개체마다 사거리 보정이 있다. - 자연스러움을 위해
+    public float range => enemyData.range * rangeWeight;
     //===============================================================
 
-    void Start()
-    {
-        // Init(); // 초반에만, -  
-    }
     
-    void Update()
-    {
-        if(isAlive)
-        {
-            navAgent.SetDestination(t_target.position);
-        }
-        
-
-        // navAgent.isStopped = true;
-    }
 
     void OnTriggerEnter(Collider other)
     {
@@ -78,6 +66,10 @@ public class Enemy : MonoBehaviour, IPoolObject
         stateUI = GetComponent<EnemyStateUI>();
         spriteEntity = GetComponent<SpriteEntity>();
         enemyCollider = GetComponent<Collider>();
+        move = GetComponent<EnemyMove>();
+
+        
+        
     }
 
     public void OnGettingFromPool()
@@ -97,17 +89,25 @@ public class Enemy : MonoBehaviour, IPoolObject
         transform.position = initPos;
         enemyCollider.enabled = true;
         navAgent.isStopped = false;
-        t_target = Player.Instance.transform;
+        
         
         //
         this.enemyData = enemyData;
         hp = enemyData.maxHp;
+        if (enemyData.attackType == EnemyAttackType.Range)
+        {
+            rangeWeight = UnityEngine.Random.Range(0.8f,1.2f);
+        }
         navAgent.speed = enemyData.movementSpeed;
         // data 에 따라 radius 및 이동속도 도 세팅해야함. 
         
         //
         stateUI.Init(this);
         spriteEntity.Init(enemyData.sprite, navAgent.radius, navAgent.height);
+
+        //
+        t_target = Player.Instance.transform;
+        move.StartMoveRoutine(this);    
     }
 
     public void GetDamaged(Vector3 hitPoint, float damage)
@@ -145,6 +145,8 @@ public class Enemy : MonoBehaviour, IPoolObject
 
         stateUI.OnDie();
     }
+
+    //=============================================================
 
     //==================================================
     /// <summary>

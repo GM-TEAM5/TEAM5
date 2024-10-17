@@ -25,7 +25,12 @@ public class Projectile : MonoBehaviour
         Vector3 fixedProjPos = new Vector3(transform.position.x,0,transform.position.z);
 
         Vector3 dir = (fixedTargetPos - fixedProjPos).normalized;
-        Quaternion lookRotation = Quaternion.LookRotation(dir);
+        Quaternion lookRotation = Quaternion.identity;
+        if (dir != Vector3.zero)
+        {
+            lookRotation = Quaternion.LookRotation(dir);
+        }
+        
 
         Quaternion fixedRotation = Quaternion.Euler(90, lookRotation.eulerAngles.y,0 );
         transform.rotation = fixedRotation;

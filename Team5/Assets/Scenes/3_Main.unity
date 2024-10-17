@@ -135,6 +135,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: =====DontDestroy=====
       objectReference: {fileID: 0}
+    - target: {fileID: 4964979423805334565, guid: f6a8952bfb0882c4386daa0922f02686,
+        type: 3}
+      propertyPath: initSkillData.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6079161161061999894, guid: f6a8952bfb0882c4386daa0922f02686,
         type: 3}
       propertyPath: m_LocalPosition.x

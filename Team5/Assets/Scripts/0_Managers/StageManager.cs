@@ -37,7 +37,7 @@ public class StageManager : Singleton<StageManager>
         initialized = true;
     }
 
-    public Vector3 GetRandomPosition(Vector3 center,float range )
+    public static Vector3 GetRandomPosition(Vector3 center,float range )
     {
         Vector3 ret = center;
         

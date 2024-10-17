@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System.Data.Common;
+using UnityEngine.AI;
 using System;
 
 /// <summary>
@@ -42,6 +42,7 @@ public class EnemySO : ScriptableObject
     public float ad = 20;            // 평타 뎀지 
     public float ap;            // Ability power - 몬스터 특수 기술의 공격력!?
     
+    [Min(0.1f)]public float moveCooltime = 0.2f;      // 연산량을 줄이고 좀 더 자연스러운 움직임을 위해 이동에 쿨타임을 적용한다. 
     public float movementSpeed = 5;    // 이동속도
 
     public float exp = 10;   // 주는 경험치
