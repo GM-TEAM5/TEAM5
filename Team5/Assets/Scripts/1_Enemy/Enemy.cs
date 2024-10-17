@@ -54,13 +54,16 @@ public class Enemy : MonoBehaviour, IPoolObject
 
     void OnTriggerEnter(Collider other)
     {
+        Vector3 hitPoint = other.ClosestPoint(transform.position);
+        //
         if (other.CompareTag("Projectile"))
         {
-            GetDamaged(10);
+            GetDamaged(hitPoint, 10);
         }
+        //
         else if (other.CompareTag("Brush"))
         {
-            GetDamaged(100);
+            GetDamaged(hitPoint,100);
         }
     }
 
@@ -88,9 +91,10 @@ public class Enemy : MonoBehaviour, IPoolObject
     /// 척 스텟 초기화 - pool에서 생성되거나, 재탕될 때 호출됨. 
     /// </summary>
     /// <param name="enemyData"></param>
-    public void Init(EnemySO enemyData)
+    public void Init(EnemySO enemyData, Vector3 initPos)
     {
         //
+        transform.position = initPos;
         enemyCollider.enabled = true;
         navAgent.isStopped = false;
         t_target = Player.Instance.transform;
@@ -100,13 +104,13 @@ public class Enemy : MonoBehaviour, IPoolObject
         hp = enemyData.maxHp;
         navAgent.speed = enemyData.movementSpeed;
         // data 에 따라 radius 및 이동속도 도 세팅해야함. 
-
+        
         //
         stateUI.Init(this);
         spriteEntity.Init(enemyData.sprite, navAgent.radius, navAgent.height);
     }
 
-    public void GetDamaged(float damage)
+    public void GetDamaged(Vector3 hitPoint, float damage)
     {
         hp -= damage;
 
@@ -121,7 +125,7 @@ public class Enemy : MonoBehaviour, IPoolObject
 
 
         // 데미지 텍스트 생성
-        Instantiate( TestManager.Instance.damageText).Init(transform, damage);  // 추후 이벤트로 뺄거임
+        PoolManager.Instance.GetDamageText(hitPoint, damage); 
     }
 
     public void GetHealed(float heal)

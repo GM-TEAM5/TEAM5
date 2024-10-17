@@ -165,12 +165,21 @@ public class PoolManager : Singleton<PoolManager>
 
     public Enemy GetEnemy( string id ,Vector3 initPos)
     {
-        Enemy enemy = Instance.GetFromPool<Enemy>(); 
+        Enemy enemy = GetFromPool<Enemy>(); 
         EnemySO enemyData =  ResourceManager.Instance.GetEnemyData(id);
-        enemy.Init( enemyData );
-        enemy.transform.position = initPos;
-
+        enemy.Init( enemyData ,initPos);
+    
         return enemy;
+    }
+
+
+    public DamageText GetDamageText(Vector3 hitPoint, float damage)
+    {
+        DamageText damageText = GetFromPool<DamageText>();
+        
+        damageText.Init(hitPoint, damage);
+
+        return damageText;
     }
 
 

@@ -31,7 +31,7 @@ public class SpriteEntity : MonoBehaviour
     public void Init(float entityWidth, float entityHeight)
     {
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        spriteRenderer.color = Color.white;
+        spriteRenderer.color = Color.white;     // 풀에서 다시 가져올 때 투명한 상태기 때문에. 
         
         spriteRenderer.spriteSortPoint = SpriteSortPoint.Pivot;
         spriteRenderer.material = spriteShadow;
