@@ -7,7 +7,7 @@ public class SpriteEntity : MonoBehaviour
 {
     [SerializeField] Material spriteShadow;
     
-    SpriteRenderer spriteRenderer;
+    public SpriteRenderer spriteRenderer;
 
     Transform t_sprite;
     Transform t_camera;
@@ -31,6 +31,7 @@ public class SpriteEntity : MonoBehaviour
     public void Init(float entityWidth, float entityHeight)
     {
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        spriteRenderer.color = Color.white;
         
         spriteRenderer.spriteSortPoint = SpriteSortPoint.Pivot;
         spriteRenderer.material = spriteShadow;
@@ -39,8 +40,13 @@ public class SpriteEntity : MonoBehaviour
         t_camera = Camera.main.transform;
 
         t_sprite.localPosition = new Vector3(0,0,-entityWidth);
-
-        GetComponentInChildren<Canvas>().GetComponent<RectTransform>().anchoredPosition = new Vector2(0, entityHeight);
+        
+        //
+        Canvas enemyCanvas = GetComponentInChildren<Canvas>();
+        if (enemyCanvas != null)
+        {
+            enemyCanvas.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, entityHeight);
+        }
     }
 
     void Update()

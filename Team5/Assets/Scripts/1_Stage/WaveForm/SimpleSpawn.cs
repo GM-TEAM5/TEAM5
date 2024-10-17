@@ -21,7 +21,7 @@ public class SimpleSpawn : WaveFormSO
             PoolManager.Instance.GetEnemy(id, randPos);
 
 
-            Debug.Log($"적 생성 {id} at {spawnPoint}");
+            // Debug.Log($"적 생성 {id} at {spawnPoint}");
         }
         
     }

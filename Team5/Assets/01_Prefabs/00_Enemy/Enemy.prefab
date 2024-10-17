@@ -625,7 +625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05257e76d70908f4ebe92cc674ad5ff6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyData: {fileID: 11400000, guid: 7eb040a3ec39f1849b3b01844a2c735d, type: 2}
+  enemyData: {fileID: 0}
   _hp: 0
 --- !u!114 &2342430051140074879
 MonoBehaviour:
@@ -639,6 +639,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8428c70fabce52947bb80c36d1c90682, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyCanvas: {fileID: 3845607560662886267}
   hpBar: {fileID: 4970973799935846487}
 --- !u!114 &5448602303656350085
 MonoBehaviour:
@@ -653,6 +654,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteShadow: {fileID: 2100000, guid: 27f239c432540ce4386ac924d33c3f9e, type: 2}
+  spriteRenderer: {fileID: 0}
 --- !u!1 &6834195862774931770
 GameObject:
   m_ObjectHideFlags: 0

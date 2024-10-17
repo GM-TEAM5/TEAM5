@@ -2,16 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class EnemyStateUI : MonoBehaviour
 {
+    [SerializeField] Canvas enemyCanvas;
+    
     [SerializeField] Slider hpBar;
 
     public void Init(Enemy enemy)
     {
+        enemyCanvas.gameObject.SetActive( enemy.enemyData.rank == EnemyRank.Elite );
+        
         UpdateMaxHp(enemy.enemyData.maxHp);
         UpdateCurrHp(enemy.hp);
     }
+
+    public void OnDie()
+    {
+        if (enemyCanvas.gameObject.activeSelf)
+        {
+            enemyCanvas.gameObject.SetActive( false );
+        }
+    }
+
 
 
     #region ====== HP =======

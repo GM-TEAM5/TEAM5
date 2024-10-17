@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System;
 
+/// <summary>
+/// 공격 타입
+/// </summary>
 public enum EnemyAttackType
 {
     None,
@@ -10,6 +13,14 @@ public enum EnemyAttackType
     Range,
 }
 
+/// <summary>
+/// 적 등급
+/// </summary>
+public enum EnemyRank
+{
+    Normal,
+    Elite
+}
 
 [CreateAssetMenu(fileName = "EnemySO", menuName = "SO/Enemy/EnemyData", order = int.MaxValue)] 
 public class EnemySO : ScriptableObject
@@ -19,6 +30,10 @@ public class EnemySO : ScriptableObject
     public Sprite sprite;       // 개체의 스프라이트
     public float size;       // 기준보다 몇배가 큰지.
     //
+    public EnemyRank rank;
+    public EnemyAttackType attackType;
+
+
     public float maxHp = 200;
     public float armor;
 
