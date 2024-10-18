@@ -406,6 +406,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 739172247990353431}
+  - component: {fileID: 2055806724241806570}
   - component: {fileID: 5870525755460835313}
   - component: {fileID: 2482353749107652102}
   - component: {fileID: 4950403964581278901}
@@ -413,7 +414,7 @@ GameObject:
   - component: {fileID: 8922386916663289436}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -435,6 +436,29 @@ Transform:
   - {fileID: 4393392868795816524}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &2055806724241806570
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2591433327750361634}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1.8
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!143 &5870525755460835313
 CharacterController:
   m_ObjectHideFlags: 0
@@ -518,6 +542,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteShadow: {fileID: 2100000, guid: 27f239c432540ce4386ac924d33c3f9e, type: 2}
+  spriteRenderer: {fileID: 0}
 --- !u!114 &8922386916663289436
 MonoBehaviour:
   m_ObjectHideFlags: 0

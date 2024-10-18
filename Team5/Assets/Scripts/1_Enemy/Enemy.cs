@@ -6,6 +6,7 @@ using System;
 
 using Redcode.Pools;
 using DG.Tweening;
+using UnityEngine.InputSystem.Interactions;
 
 
 
@@ -34,11 +35,23 @@ public class Enemy : MonoBehaviour, IPoolObject
     }  
 
     public bool isAlive => _hp>0;    
-    float  rangeWeight =1f ;     // 원거리의 경우 각 개체마다 사거리 보정이 있다. - 자연스러움을 위해
+    [SerializeField] float  rangeWeight = 1f ;     // 원거리의 경우 각 개체마다 사거리 보정이 있다. - 자연스러움을 위해
     public float range => enemyData.range * rangeWeight;
+
+    public float targetDistSqr;
+
+
+    //
+    List<EnemySkill> skills = new();    // 공격을 스킬로 대신함. 
+
     //===============================================================
 
-    
+    void Update()
+    {
+        targetDistSqr = Vector3.SqrMagnitude(t_target.position - transform.position);
+        // Debug.Log($"{targetDistSqr} {range}, {range *range} ");
+        TryUseSkills();
+    }
 
     void OnTriggerEnter(Collider other)
     {
@@ -100,6 +113,9 @@ public class Enemy : MonoBehaviour, IPoolObject
         }
         navAgent.speed = enemyData.movementSpeed;
         // data 에 따라 radius 및 이동속도 도 세팅해야함. 
+
+
+        InitSkill();
         
         //
         stateUI.Init(this);
@@ -144,9 +160,42 @@ public class Enemy : MonoBehaviour, IPoolObject
         PlaySequence_Death();   //
 
         stateUI.OnDie();
+        //
+        TestManager.Instance.TestSFX_enemyDeath();
     }
 
     //=============================================================
+    #region SKill
+    public void InitSkill()
+    {
+        skills.Clear();
+        foreach(var skillData in enemyData.skils)
+        {
+            EnemySkill skill = new(skillData);
+            skills.Add(skill);
+        }
+    }
+
+
+    public void TryUseSkills()
+    {
+        for (int i = 0; i < skills.Count; i++)
+        {
+            if (  CanUse( skills[i] ))
+            {
+                skills[i].Use(this,t_target.position);
+            }
+        }
+    }
+
+    bool CanUse(EnemySkill skill)
+    {
+        bool targetInRange = targetDistSqr <= range * range *1.1f;
+        
+        return targetInRange && skill.isCooltimeOk ;
+    }
+
+    #endregion
 
     //==================================================
     /// <summary>

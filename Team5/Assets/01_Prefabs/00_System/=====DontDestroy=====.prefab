@@ -44,7 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 492a6323758de0c40915fcfef50eb5f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyDataPath: EnemyData
+  enemyData:
+    m_Keys: []
+    m_Values: []
 --- !u!1 &1047560434824942920
 GameObject:
   m_ObjectHideFlags: 0
@@ -105,13 +107,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87ad656f400953d43b47a1888d6bdad8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initSkillData:
-  - {fileID: 11400000, guid: ea7204fbdab788c43ad0039ecde11c89, type: 2}
+  initSkillData: []
   initProjSprite: {fileID: 21300000, guid: 1396c40b41c55a745a385648ec3e7152, type: 3}
   damageText: {fileID: 6403899980032326514, guid: a537ae7bbd7ea544e892012b3c972e1a,
     type: 3}
   enemyData: {fileID: 11400000, guid: d01bd1dd1f8a73f428d2c2c19be7ad69, type: 2}
   testStageData: {fileID: 11400000, guid: 6084220f7ec65f84ba55697acff44cae, type: 2}
+  testEnemyDeathSFX: {fileID: 8300000, guid: d42ae79f9dcb40f449196f5abe26daa8, type: 3}
+  simpleSFX: {fileID: 3356766389577947961, guid: 295d54b2ceb9e8c42882363f4e26c038,
+    type: 3}
 --- !u!114 &760930456658816313
 MonoBehaviour:
   m_ObjectHideFlags: 0

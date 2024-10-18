@@ -11,4 +11,12 @@ public class TestManager :  Singleton<TestManager>
 
     public EnemySO enemyData;
     public StageDataSO testStageData;
+
+    public AudioClip testEnemyDeathSFX;
+    public SimpleSFX simpleSFX;
+
+    public void TestSFX_enemyDeath()
+    {
+        Instantiate(simpleSFX).PlaySFX(testEnemyDeathSFX);
+    }
 }

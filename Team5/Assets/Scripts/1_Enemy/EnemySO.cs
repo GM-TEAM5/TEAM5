@@ -47,5 +47,5 @@ public class EnemySO : ScriptableObject
 
     public float exp = 10;   // 주는 경험치
     
-    public List<EnemySkill> skils;  // 스킬이 있을 수도 있음. 
+    public List<EnemySkillSO> skils;  // 스킬이 있을 수도 있음.
 }

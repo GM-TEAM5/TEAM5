@@ -14,17 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 000
   entityName: Dummy
-  sprite: {fileID: 21300000, guid: c1fcb977b2bad2c448d4ab902180ffd1, type: 3}
+  sprite: {fileID: 21300000, guid: 9fff920755f5d8f40aec205f1eeb8708, type: 3}
   size: 0
   rank: 0
   attackType: 1
   maxHp: 30
   armor: 0
-  range: 1
+  range: 1.5
   attackSpeed: 0
   ad: 20
   ap: 0
   moveCooltime: 0.2
   movementSpeed: 4
   exp: 10
-  skils: []
+  skils:
+  - {fileID: 11400000, guid: 1d3b684378794034ebf35c7408d8235e, type: 2}

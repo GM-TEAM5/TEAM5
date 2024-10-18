@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using BW.Util;
 using UnityEditor;
 using UnityEngine;
 
@@ -172,6 +173,14 @@ public class PoolManager : Singleton<PoolManager>
         return enemy;
     }
 
+    public EnemyProjectile GetEnemyProjectile(EnemySkillSO skillData, Enemy enemy, Vector3 initPos, float lifeTime)
+    {
+        EnemyProjectile enemyProj = GetFromPool<EnemyProjectile>(); 
+        enemyProj.Init(skillData, enemy, initPos, lifeTime);
+    
+        return enemyProj;
+    }
+
 
     public DamageText GetDamageText(Vector3 hitPoint, float damage)
     {
@@ -182,8 +191,28 @@ public class PoolManager : Singleton<PoolManager>
         return damageText;
     }
 
+    //=====================================================================
+    
+    /// <summary>
+    ///  시간차로 풀에 반환.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="component"></param>
+    /// <param name="lifeTime"></param>
+    public void TakeToPool<T>(Component component, float lifeTime) where T : Component
+    {
+        StartCoroutine( DelayedTake<T>(component, lifeTime));
+    }
 
-
-
+    System.Collections.IEnumerator DelayedTake<T>(Component component, float lifeTime) where T : Component
+    {
+        yield return new WaitForSeconds(lifeTime);
+        
+        
+        if (component.gameObject.activeSelf)
+        {
+            TakeToPool<T>(component);
+        }    
+    }
 }
 

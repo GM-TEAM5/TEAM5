@@ -39,7 +39,7 @@ public class EnemyMove : MonoBehaviour
             }
             else
             {
-                yield return new WaitUntil( ()=>enemy.isAlive );            
+                yield break;            
             }
             yield return moveCooltime;            
         }
@@ -55,12 +55,26 @@ public class EnemyMove : MonoBehaviour
         switch (enemyData.attackType)
         {
             case EnemyAttackType.Melee:
-                Approach(navAgent,targetPos);
+                SimpleApproach(navAgent,targetPos);
                 break;
             case EnemyAttackType.Range:
                 Kite(navAgent,targetPos);
                 break;
         }
+    }
+
+    /// <summary>
+    ///  타겟 위치로 이동 - 사거리 끝까지 이동한다. 
+    /// </summary>
+    /// <param name="navAgent"></param>
+    /// <param name="targetPos"></param>
+    void SimpleApproach( NavMeshAgent navAgent, Vector3 targetPos)
+    {
+        // Vector3 dir = (t.position - targetPos).normalized;
+        // Vector3 dest = targetPos + dir * enemy.range;
+
+
+        navAgent.SetDestination(targetPos);
     }
 
     /// <summary>
@@ -85,8 +99,9 @@ public class EnemyMove : MonoBehaviour
     {
         float distSqr = Vector3.SqrMagnitude(targetPos - t.position);
         
-        float rangeSqr= enemy.range * enemy.range;
-         
+        
+        float rangeSqr = enemy.range * enemy.range;
+        //  Debug.Log( $"-- {distSqr}  {rangeSqr}" );
         if(distSqr < rangeSqr)
         {
             if ( distSqr < rangeSqr * 0.7f) // 가중치 부여  - 안그러면 튕기는 움직임이 됨.

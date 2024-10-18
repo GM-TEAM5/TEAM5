@@ -72,6 +72,16 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     }
 
     //============================================================================
+    void OnTriggerEnter(Collider other)
+    {
+        if( other.CompareTag("EnemyProjectile"))
+        {
+            EnemyProjectile ep = other.GetComponent<EnemyProjectile>();
+            
+            GetDamaged(ep.damage);
+        }
+    }
+
 
     /// <summary>
     /// 플레이어 초기화시 호출. 
@@ -118,9 +128,9 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
 
 
     //========================================================================
-    public void GetDamaged(float damage)
+    public void GetDamaged(float amount)
     {
-        status.hp -= damage;
+        status.hp -= amount;
 
         if (status.hp <= 0)
         {
@@ -129,15 +139,19 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
 
         // ui
         stateUI.UpdateCurrHp(status.hp);
+
+        PoolManager.Instance.GetDamageText(transform.position, amount);
     }
 
 
-    public void GetHealed(float heal)
+    public void GetHealed(float amount)
     {
-        status.hp += heal;
+        status.hp += amount;
 
         // ui
         stateUI.UpdateCurrHp(status.hp);
+
+        PoolManager.Instance.GetDamageText(transform.position, amount);
     }
 
 

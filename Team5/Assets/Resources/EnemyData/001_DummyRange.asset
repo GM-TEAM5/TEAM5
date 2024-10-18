@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 001
   entityName: DummyRange
-  sprite: {fileID: 21300000, guid: 5d61885b1d75f964d9d339f0c6dc6d17, type: 3}
+  sprite: {fileID: 21300000, guid: 50e2b4e9845fa3a48bc6fc5656a2b5fd, type: 3}
   size: 0
   rank: 0
   attackType: 2
@@ -27,4 +27,5 @@ MonoBehaviour:
   moveCooltime: 0.1
   movementSpeed: 3
   exp: 10
-  skils: []
+  skils:
+  - {fileID: 11400000, guid: 4819645d574309746846a0860ab68095, type: 2}
