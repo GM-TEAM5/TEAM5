@@ -193,26 +193,6 @@ public class PoolManager : Singleton<PoolManager>
 
     //=====================================================================
     
-    /// <summary>
-    ///  시간차로 풀에 반환.
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="component"></param>
-    /// <param name="lifeTime"></param>
-    public void TakeToPool<T>(Component component, float lifeTime) where T : Component
-    {
-        StartCoroutine( DelayedTake<T>(component, lifeTime));
-    }
 
-    System.Collections.IEnumerator DelayedTake<T>(Component component, float lifeTime) where T : Component
-    {
-        yield return new WaitForSeconds(lifeTime);
-        
-        
-        if (component.gameObject.activeSelf)
-        {
-            TakeToPool<T>(component);
-        }    
-    }
 }
 

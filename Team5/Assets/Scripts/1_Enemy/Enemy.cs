@@ -48,6 +48,11 @@ public class Enemy : MonoBehaviour, IPoolObject
 
     void Update()
     {
+        if (isAlive == false)
+        {
+            return;
+        }
+        
         targetDistSqr = Vector3.SqrMagnitude(t_target.position - transform.position);
         // Debug.Log($"{targetDistSqr} {range}, {range *range} ");
         TryUseSkills();
@@ -178,7 +183,7 @@ public class Enemy : MonoBehaviour, IPoolObject
 
 
     public void TryUseSkills()
-    {
+    {  
         for (int i = 0; i < skills.Count; i++)
         {
             if (  CanUse( skills[i] ))

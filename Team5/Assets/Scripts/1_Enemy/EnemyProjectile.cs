@@ -12,13 +12,15 @@ public class EnemyProjectile : MonoBehaviour, IPoolObject
     public float damage;
     public float speed;
     public float lifeTime;
+
+    Coroutine destroyRoutine;
     
     //=======================================================
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            DestroyProjectile(); 
+            DestroyProjectile(0); 
         }
     }
 
@@ -37,7 +39,7 @@ public class EnemyProjectile : MonoBehaviour, IPoolObject
 
         //
         transform.position = initPos;
-        PoolManager.Instance.TakeToPool<EnemyProjectile>(this,lifeTime);
+        DestroyProjectile(lifeTime);
     }
 
     public void SetDirAndSpeed(Vector3 dir,float speed)
@@ -61,11 +63,20 @@ public class EnemyProjectile : MonoBehaviour, IPoolObject
 
     //================================================
 
-    public void DestroyProjectile()
+    public void DestroyProjectile(float delay)
     {
+        if(destroyRoutine!=null)
+        {
+            StopCoroutine(destroyRoutine);
+        }
+        destroyRoutine = StartCoroutine( DelayedDestroy(delay));
+    }
+
+    IEnumerator DelayedDestroy(float delay)
+    {
+        yield return new WaitForSeconds(delay);
         projCollider.enabled = false;
         PoolManager.Instance.TakeToPool<EnemyProjectile>(this);
     }
-
 
 }
