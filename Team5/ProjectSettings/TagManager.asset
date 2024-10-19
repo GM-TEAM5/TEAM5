@@ -8,6 +8,7 @@ TagManager:
   - Projectile
   - Brush
   - EnemyProjectile
+  - DropItem
   layers:
   - Default
   - TransparentFX

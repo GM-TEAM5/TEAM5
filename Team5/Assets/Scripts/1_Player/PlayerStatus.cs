@@ -25,9 +25,9 @@ public class PlayerStatus
     public float ad = 100;     // 공격력
     public float armor;     // 방어력
     public float movementSpeed = 10;    // 이동속도
-
+    public float range = 4f;
     // 붓칠 관련 변수
-    public float drawRange; // 그리기 사용 가능 범위  
+    public float drawRange = 10f; // 그리기 사용 가능 범위  
     public float maxInk = 100f;   // 최대 잉크 양
     public float currInk;   // 현재 잉크 양
     public float inkUseRate = 20f;    // 초당 잉크 사용량

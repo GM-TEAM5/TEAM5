@@ -191,6 +191,15 @@ public class PoolManager : Singleton<PoolManager>
         return damageText;
     }
 
+
+    public DropItem GetExp(float value, Vector3 initPos)
+    {
+        DropItem dropItem = GetFromPool<DropItem>();
+        DropItemDataSO itemData =  ResourceManager.Instance.GetDropItemData("00");
+        dropItem.Init(itemData,value,initPos);
+        return dropItem;
+    }
+
     //=====================================================================
     
 

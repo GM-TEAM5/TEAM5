@@ -5,6 +5,15 @@ using UnityEngine;
 using TMPro;
 using DG.Tweening;
 
+
+public enum damageType
+{
+    DMG_NORMAL,
+    DMG_CRITICAL,
+    DMG_TICK,
+    DMG_PLAYER
+}
+
 public class DamageText : MonoBehaviour, IPoolObject
 {
     TextMeshPro text; 

@@ -7,6 +7,7 @@ using System;
 using Redcode.Pools;
 using DG.Tweening;
 using UnityEngine.InputSystem.Interactions;
+using UnityEngine.UIElements;
 
 
 
@@ -21,6 +22,7 @@ public class Enemy : MonoBehaviour, IPoolObject
     EnemyMove move;
     Collider enemyCollider;
 
+    Transform t;
     public  Transform t_target;
 
 
@@ -86,7 +88,7 @@ public class Enemy : MonoBehaviour, IPoolObject
         enemyCollider = GetComponent<Collider>();
         move = GetComponent<EnemyMove>();
 
-        
+        t = transform;
         
     }
 
@@ -161,12 +163,18 @@ public class Enemy : MonoBehaviour, IPoolObject
         enemyCollider.enabled = false;       // 적 탐색 및 총알 충돌에 걸리지 않도록.
         navAgent.isStopped = true;          // 이동중지
 
+        DropItem();
         //
         PlaySequence_Death();   //
 
         stateUI.OnDie();
         //
         TestManager.Instance.TestSFX_enemyDeath();
+    }
+
+    void DropItem()
+    {
+        PoolManager.Instance.GetExp( enemyData.exp, transform.position);    
     }
 
     //=============================================================

@@ -9,8 +9,8 @@ public class SpriteEntity : MonoBehaviour
     
     public SpriteRenderer spriteRenderer;
 
-    Transform t_sprite;
-    Transform t_camera;
+    [SerializeField] Transform t_sprite;
+    [SerializeField] Transform t_camera;
 
     /// <summary>
     /// 지정된 스프라이트, 크기로 초기화

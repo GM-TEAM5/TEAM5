@@ -80,6 +80,11 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
             
             GetDamaged(ep.damage);
         }
+        else if ( other.CompareTag("DropItem"))
+        {
+            DropItem di = other.GetComponent<DropItem>();
+            di.PickUp();
+        } 
     }
 
 
