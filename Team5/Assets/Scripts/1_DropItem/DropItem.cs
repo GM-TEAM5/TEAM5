@@ -81,7 +81,7 @@ public class DropItem : MonoBehaviour, IPoolObject
         spriteEntity.Init(itemData.sprite, 0.5f,0.5f);
         
         
-        rb.position = initPos + offset;
+        transform.position = initPos + offset;
         
     }
 

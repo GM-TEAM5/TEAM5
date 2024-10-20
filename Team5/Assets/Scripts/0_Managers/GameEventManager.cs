@@ -7,6 +7,6 @@ using UnityEngine.Events;
 public class GameEventManager : Singleton<GameEventManager>
 {
     public UnityEvent onStageLoad = new();
-
+    public UnityEvent onLevelUp = new();
 
 }
