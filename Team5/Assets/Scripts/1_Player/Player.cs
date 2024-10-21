@@ -163,31 +163,23 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     //=====================================================
     public void GetExp(float exp)
     {
-        status.currExp += exp;
-
-        // 레벨업 체크
-        if (status.currExp >= status.maxExp)
+        if(status.GetExp(exp))
         {
-            LevelUp();
+            OnLevelUp();
         }
 
         stateUI.UpdateCurrExp(status.currExp);
     }
 
 
-    public void LevelUp()
+    public void OnLevelUp()
     {
-        status.level++;
-        status.currExp -= status.maxExp;    // 현재 경험치 감소
-                                            //그 다음으로  status.maxExp 를 공식에 따라 증가시키던지 해야함. 
-
-
         GameEventManager.Instance.onLevelUp.Invoke();
 
         stateUI.UpdateLevelText(status.level);
         stateUI.UpdateMaxExp(status.maxExp);
 
-        Debug.Log("플레이어 레벨업!");
+        // Debug.Log("플레이어 레벨업!");
     }
 
 

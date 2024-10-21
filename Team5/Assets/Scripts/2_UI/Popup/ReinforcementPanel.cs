@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using Unity.VisualScripting.FullSerializer;
 using UnityEditor;
 using UnityEngine;
@@ -9,13 +10,20 @@ using UnityEngine.UI;
 public class ReinforcementPanel : MonoBehaviour
 {
     public readonly int optionsNum = 3;
+    
+    [SerializeField] TextMeshProUGUI text_reinforceLevel;
     [SerializeField] Transform t_btnParent;
     [SerializeField] GameObject prefab_optionBtn;
 
 
-    public void Open()
+
+    /// <summary>
+    /// 강화 패널 열기 - level 에 따라 더 좋은 선택지 세팅하도록~
+    /// </summary>
+    /// <param name="level"></param>
+    public void Open(int level)
     {
-        SetOptions(optionsNum);     // 선택지 세팅. 
+        SetOptions(level, optionsNum);     // 선택지 세팅. 
         gameObject.SetActive(true);
     }
 
@@ -26,8 +34,10 @@ public class ReinforcementPanel : MonoBehaviour
 
 
     //=============================================
-    void SetOptions(int num)
+    void SetOptions(int level, int num)
     {   
+        text_reinforceLevel.SetText($"선택지 레벨 {level}");
+        
         for(int i=0;i<t_btnParent.childCount;i++)
         {
             Destroy(t_btnParent.GetChild(i).gameObject);

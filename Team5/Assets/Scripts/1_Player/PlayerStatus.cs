@@ -6,7 +6,11 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerStatus
 {
-    //
+    //                          0   1    2   3   4   5   6   7   8   9
+    int[] expIncrementTable = {0,10, 30, 60, 60, 60, 60, 60, 60, 100};
+
+    // int[] lowLevelMaxExpTable = {0, 100, 110,140, 200};
+
     public int level = 1;
     public float currExp;
     public float maxExp = 100;
@@ -40,4 +44,29 @@ public class PlayerStatus
     }
 
     //====================================
+    public bool GetExp(float exp)
+    {
+        //
+        bool isLevelUp = false;
+
+        currExp+=exp;
+
+        while(currExp>=maxExp)
+        {
+            isLevelUp = true;
+            
+            currExp -= maxExp;
+            
+            SetMaxExp(level);
+
+            level++;
+        }
+
+        return isLevelUp;
+    }
+
+    void SetMaxExp(int level)
+    {
+        maxExp = maxExp + expIncrementTable[level%10];
+    }
 }
