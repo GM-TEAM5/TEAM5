@@ -22,7 +22,6 @@ public class GamePlayManager : Singleton<GamePlayManager>
     {
         // 선택지 띄우기
         reinforcementPanel.Open();
-
         PauseGamePlay(true);
     }
     

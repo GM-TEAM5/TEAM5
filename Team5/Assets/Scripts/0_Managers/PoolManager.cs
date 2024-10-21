@@ -200,6 +200,24 @@ public class PoolManager : Singleton<PoolManager>
         return dropItem;
     }
 
+    public DropItem GetHpUp(float value, Vector3 initPos)
+    {
+        DropItem dropItem = GetFromPool<DropItem>();
+        DropItemDataSO itemData =  ResourceManager.Instance.GetDropItemData("01");
+        dropItem.Init(itemData,value,initPos);
+        return dropItem;
+    }
+
+
+    public DropItem GetMoney(float value, Vector3 initPos)
+    {
+        DropItem dropItem = GetFromPool<DropItem>();
+        DropItemDataSO itemData =  ResourceManager.Instance.GetDropItemData("02");
+        dropItem.Init(itemData,value,initPos);
+        return dropItem;
+    }
+
+
     //=====================================================================
     
 

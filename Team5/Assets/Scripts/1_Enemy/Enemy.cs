@@ -4,10 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using System;
 
-using Redcode.Pools;
 using DG.Tweening;
-using UnityEngine.InputSystem.Interactions;
-using UnityEngine.UIElements;
 
 
 
@@ -174,7 +171,13 @@ public class Enemy : MonoBehaviour, IPoolObject
 
     void DropItem()
     {
-        PoolManager.Instance.GetExp( enemyData.exp, transform.position);    
+        PoolManager.Instance.GetExp( enemyData.exp, transform.position);
+
+        if ( UnityEngine.Random.Range(0,100) < 50  )
+        {
+            PoolManager.Instance.GetMoney( enemyData.exp, transform.position);
+        }
+            
     }
 
     //=============================================================
