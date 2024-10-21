@@ -7,7 +7,7 @@ using UnityEngine;
 public class PlayerStatus
 {
     //                          0   1    2   3   4   5   6   7   8   9
-    int[] expIncrementTable = {0,10, 30, 60, 60, 60, 60, 60, 60, 100};
+    int[] expIncrementTable = {100,0, 10, 30, 60, 60, 60, 60, 60, 60};
 
     // int[] lowLevelMaxExpTable = {0, 100, 110,140, 200};
 
@@ -44,6 +44,11 @@ public class PlayerStatus
     }
 
     //====================================
+    /// <summary>
+    /// 해당 exp 만큼 경험치를 획득하고, 레벨업시 레벨과 경험치 요구량을 변경한다.
+    /// </summary>
+    /// <param name="exp"></param> - 
+    /// <returns></returns>     
     public bool GetExp(float exp)
     {
         //
@@ -53,20 +58,20 @@ public class PlayerStatus
 
         while(currExp>=maxExp)
         {
+            level++;
             isLevelUp = true;
             
             currExp -= maxExp;
             
-            SetMaxExp(level);
-
-            level++;
+            SetNextMaxExp(level);
         }
 
         return isLevelUp;
     }
 
-    void SetMaxExp(int level)
+    void SetNextMaxExp(int level)
     {
-        maxExp = maxExp + expIncrementTable[level%10];
+        maxExp = maxExp + expIncrementTable[level % expIncrementTable.Length];
+        Debug.Log($"{level}: {maxExp}");
     }
 }

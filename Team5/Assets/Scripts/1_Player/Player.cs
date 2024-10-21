@@ -163,6 +163,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     //=====================================================
     public void GetExp(float exp)
     {
+        //
         if(status.GetExp(exp))
         {
             OnLevelUp();
