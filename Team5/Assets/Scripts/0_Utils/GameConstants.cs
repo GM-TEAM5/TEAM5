@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Util
+namespace BW.Util
 {
     public static class GameConstants 
     {

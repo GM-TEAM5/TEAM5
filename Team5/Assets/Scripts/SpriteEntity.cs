@@ -7,10 +7,10 @@ public class SpriteEntity : MonoBehaviour
 {
     [SerializeField] Material spriteShadow;
     
-    SpriteRenderer spriteRenderer;
+    public SpriteRenderer spriteRenderer;
 
-    Transform t_sprite;
-    Transform t_camera;
+    [SerializeField] Transform t_sprite;
+    [SerializeField] Transform t_camera;
 
     /// <summary>
     /// 지정된 스프라이트, 크기로 초기화
@@ -31,6 +31,7 @@ public class SpriteEntity : MonoBehaviour
     public void Init(float entityWidth, float entityHeight)
     {
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        spriteRenderer.color = Color.white;     // 풀에서 다시 가져올 때 투명한 상태기 때문에. 
         
         spriteRenderer.spriteSortPoint = SpriteSortPoint.Pivot;
         spriteRenderer.material = spriteShadow;
@@ -39,8 +40,13 @@ public class SpriteEntity : MonoBehaviour
         t_camera = Camera.main.transform;
 
         t_sprite.localPosition = new Vector3(0,0,-entityWidth);
-
-        GetComponentInChildren<Canvas>().GetComponent<RectTransform>().anchoredPosition = new Vector2(0, entityHeight);
+        
+        //
+        Canvas enemyCanvas = GetComponentInChildren<Canvas>();
+        if (enemyCanvas != null)
+        {
+            enemyCanvas.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, entityHeight);
+        }
     }
 
     void Update()

@@ -14,7 +14,6 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
     // InputAction jumpAction;
     // InputAction aimAction;
 
-
     //
     public Vector2 moveVector {get;private set;}
     public Vector2 mouseMoveVector {get;private set;}
@@ -42,8 +41,6 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
 
     void Start()
     {
-        DontDestroyOnLoad(gameObject);  // 얜 죽으면 안됨.
-        
         playerInput = GetComponent<PlayerInput>();
         
         moveAction = playerInput.actions["Move"];

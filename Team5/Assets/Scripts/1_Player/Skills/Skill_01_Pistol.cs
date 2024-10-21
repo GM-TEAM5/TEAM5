@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+using BW.Util;
+
 
 [CreateAssetMenu(fileName = "Skill_01_Pistol", menuName = "SO/PlayerSkill/01")]
 public class Skill_01_Pistol :PlayerSkillSO  
@@ -14,7 +16,7 @@ public class Skill_01_Pistol :PlayerSkillSO
         Vector3 playerPos = Player.Instance.t_player.position;
         Vector3 ret = playerPos;
 
-        Collider[] hits = Physics.OverlapSphere(playerPos, 50f, Util.GameConstants.enemyLayer);         
+        Collider[] hits = Physics.OverlapSphere(playerPos, 50f, GameConstants.enemyLayer);         
 
         if (hits.Length>0)
         {
