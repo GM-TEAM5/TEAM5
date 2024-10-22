@@ -67,6 +67,8 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
         TryUseSkills();
         Drawing();
 
+
+        UpdateSpriteDir();
         // Rotate(playerInput.mouseDir);
         //shoot
         // if (playerInput.leftClick)
@@ -146,6 +148,14 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
         lastMoveDir = transform.right * moveVector.x + transform.forward * moveVector.y;
         lastMoveDir.y = 0;      // 방향 조절에 필요 없기떄문.
         controller.Move(lastMoveDir.normalized * Time.deltaTime * status.movementSpeed);
+    }
+    
+    /// <summary>
+    /// 마지막 이동한 방향을 보도록함. 
+    /// </summary>
+    void UpdateSpriteDir()
+    {
+        spriteEntity.Flip(lastMoveDir.x);
     }
 
 

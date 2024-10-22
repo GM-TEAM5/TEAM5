@@ -79,6 +79,7 @@ public class Enemy : MonoBehaviour, IPoolObject
 
         TryUseSkills();
         Move(); 
+        UpdateSpriteDir(t_target.position);
     }
 
     void OnTriggerEnter(Collider other)
@@ -174,10 +175,6 @@ public class Enemy : MonoBehaviour, IPoolObject
         }  
     }
 
-
-
-
-
     public void GetDamaged( float damage)
     {
         // GetKnockback(10, hitPoint);
@@ -248,6 +245,17 @@ public class Enemy : MonoBehaviour, IPoolObject
         }
             
     }
+
+    /// <summary>
+    /// targetPos 방향으로 스프라이트 방향을 세팅한다. 
+    /// </summary>
+    /// <param name="targetPos"></param>
+    void UpdateSpriteDir(Vector3 targetPos)
+    {
+        Vector3 dir = targetPos - t.position;
+        spriteEntity.Flip(dir.x);
+    }
+
 
     //=============================================================
     #region SKill
