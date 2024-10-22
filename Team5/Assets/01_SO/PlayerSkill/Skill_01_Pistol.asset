@@ -15,6 +15,6 @@ MonoBehaviour:
   id: 01
   skillName: Pistol
   icon: {fileID: 21300000, guid: 7af47fbdc83bdb241819309208da4afa, type: 3}
-  cooltime: 1.5
+  cooltime: 4
   bulletPrefab: {fileID: 8472310981955695257, guid: 15957db00d72e3249b5e31893d5f531e,
     type: 3}

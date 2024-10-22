@@ -5,7 +5,9 @@ using UnityEngine;
 using UnityEngine.AI;
 
 
-
+/// <summary>
+/// 적들의 움직임 AI - 추후 비해비어 트리로 변경할거임.
+/// </summary>
 public class EnemyMove : MonoBehaviour
 {
     Enemy enemy;
@@ -16,33 +18,41 @@ public class EnemyMove : MonoBehaviour
 
     Vector3 rangeOffset;
 
-    public void StartMoveRoutine(Enemy enemy)
+    // public void StartMoveRoutine(Enemy enemy)
+    // {
+       
+    //     if (moveRoutine!= null)
+    //     {
+    //         StopCoroutine(moveRoutine);
+    //     }
+    //     moveRoutine = StartCoroutine(MoveRoutine());
+    // }
+
+    // IEnumerator MoveRoutine()
+    // {
+    //     var moveCooltime = new WaitForSeconds( enemy.enemyData.moveCooltime );
+    //     var waitWhileStunned = new WaitWhile(()=>enemy.stunned);
+
+    //     while(GamePlayManager.isGamePlaying)
+    //     {
+    //         if (enemy.isAlive )
+    //         {
+    //             // yield return waitWhileStunned;
+                
+    //             Move( enemy.enemyData, enemy.navAgent, enemy.t_target.position );
+    //         }
+    //         else
+    //         {
+    //             yield break;            
+    //         }
+    //         yield return moveCooltime;            
+    //     }
+    // }
+
+    public void Init(Enemy enemy)
     {
         t = transform;
         this.enemy = enemy;
-        if (moveRoutine!= null)
-        {
-            StopCoroutine(moveRoutine);
-        }
-        moveRoutine = StartCoroutine(MoveRoutine());
-    }
-
-    IEnumerator MoveRoutine()
-    {
-        var moveCooltime = new WaitForSeconds( enemy.enemyData.moveCooltime );
-        
-        while(GamePlayManager.isGamePlaying)
-        {
-            if (enemy.isAlive )
-            {
-                Move( enemy.enemyData, enemy.navAgent, enemy.t_target.position );
-            }
-            else
-            {
-                yield break;            
-            }
-            yield return moveCooltime;            
-        }
     }
 
     /// <summary>
@@ -50,8 +60,8 @@ public class EnemyMove : MonoBehaviour
     /// </summary>
     /// <param name="navAgent"></param>
     /// <param name="targetPos"></param>
-    public void Move(EnemySO enemyData, NavMeshAgent navAgent, Vector3 targetPos)
-    {
+    public void Move(EnemyDataSO enemyData, NavMeshAgent navAgent, Vector3 targetPos)
+    {        
         switch (enemyData.attackType)
         {
             case EnemyAttackType.Melee:

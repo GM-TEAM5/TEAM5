@@ -5,6 +5,7 @@ using UnityEngine.AI;
 using System;
 
 using DG.Tweening;
+using BW.Util;
 
 
 
@@ -12,12 +13,13 @@ using DG.Tweening;
                     typeof(SpriteEntity))]
 public class Enemy : MonoBehaviour, IPoolObject
 {
-    public EnemySO enemyData;   //적의 데이터
+    public EnemyDataSO enemyData;   //적의 데이터
     EnemyStateUI stateUI;
     SpriteEntity spriteEntity;
     public NavMeshAgent navAgent;
     EnemyMove move;
     Collider enemyCollider;
+    Rigidbody rb;
 
     Transform t;
     public  Transform t_target;
@@ -34,6 +36,7 @@ public class Enemy : MonoBehaviour, IPoolObject
     }  
 
     public bool isAlive => _hp>0;    
+    public bool stunned; 
     [SerializeField] float  rangeWeight = 1f ;     // 원거리의 경우 각 개체마다 사거리 보정이 있다. - 자연스러움을 위해
     public float range => enemyData.range * rangeWeight;
 
@@ -43,32 +46,53 @@ public class Enemy : MonoBehaviour, IPoolObject
     //
     List<EnemySkill> skills = new();    // 공격을 스킬로 대신함. 
 
+    //
+    float lastMoveTime;
+    bool moveCooltimeOk => Time.time >= lastMoveTime + enemyData.moveCooltime;
+
+    bool canMove => moveCooltimeOk && stunned==false;
+
+    public Vector3 lastHitPoint;
+
     //===============================================================
 
     void Update()
     {
-        if (isAlive == false || GamePlayManager.isGamePlaying == false)
+        if (GamePlayManager.isGamePlaying == false || isAlive==false)
         {
             return;
         }
         
         targetDistSqr = Vector3.SqrMagnitude(t_target.position - transform.position);
         // Debug.Log($"{targetDistSqr} {range}, {range *range} ");
+        
+        if( stunned )
+        {
+            navAgent.isStopped = true;
+            return;
+        }
+        else
+        {
+            navAgent.isStopped = false;
+        }
+        
+
         TryUseSkills();
+        Move(); 
     }
 
     void OnTriggerEnter(Collider other)
     {
-        Vector3 hitPoint = other.ClosestPoint(transform.position);
+        lastHitPoint = other.ClosestPoint(transform.position);
         //
         if (other.CompareTag("Projectile"))
         {
-            GetDamaged(hitPoint, 10);
+            GetDamaged( 10);
         }
         //
         else if (other.CompareTag("Brush"))
         {
-            GetDamaged(hitPoint,100);
+            GetDamaged(100);
         }
     }
 
@@ -83,6 +107,7 @@ public class Enemy : MonoBehaviour, IPoolObject
         stateUI = GetComponent<EnemyStateUI>();
         spriteEntity = GetComponent<SpriteEntity>();
         enemyCollider = GetComponent<Collider>();
+        rb = GetComponent<Rigidbody>();
         move = GetComponent<EnemyMove>();
 
         t = transform;
@@ -100,7 +125,7 @@ public class Enemy : MonoBehaviour, IPoolObject
     /// 척 스텟 초기화 - pool에서 생성되거나, 재탕될 때 호출됨. 
     /// </summary>
     /// <param name="enemyData"></param>
-    public void Init(EnemySO enemyData, Vector3 initPos)
+    public void Init(EnemyDataSO enemyData, Vector3 initPos)
     {
         //
         transform.position = initPos;
@@ -127,11 +152,36 @@ public class Enemy : MonoBehaviour, IPoolObject
 
         //
         t_target = Player.Instance.transform;
-        move.StartMoveRoutine(this);    
+        move.Init(this);   
+
+
+        lastMoveTime = -999;
+        rb.velocity = Vector3.zero;
     }
 
-    public void GetDamaged(Vector3 hitPoint, float damage)
+    //===========================================================================================
+
+    void Move()
     {
+        // Debug.Log($" move {canMove} : {lastMoveTime} +  {enemyData.moveCooltime}  <> {Time.time}");
+        
+        if (moveCooltimeOk)
+        {
+            navAgent.isStopped = false;
+            move.Move(enemyData,navAgent,t_target.position );
+
+            lastMoveTime = Time.time;
+        }  
+    }
+
+
+
+
+
+    public void GetDamaged( float damage)
+    {
+        // GetKnockback(10, hitPoint);
+        
         hp -= damage;
 
         if (hp <=0)
@@ -145,7 +195,7 @@ public class Enemy : MonoBehaviour, IPoolObject
 
 
         // 데미지 텍스트 생성
-        PoolManager.Instance.GetDamageText(hitPoint, damage); 
+        PoolManager.Instance.GetDamageText(lastHitPoint, damage); 
     }
 
     public void GetHealed(float heal)
@@ -155,15 +205,34 @@ public class Enemy : MonoBehaviour, IPoolObject
         stateUI.UpdateCurrHp(hp);
     }
 
-    void Die()
+    //=========================================================================================
+    // knockBack 
+    public void GetKnockback(float power, Vector3 hitPoint)
+    {
+        stunned = true;
+        
+        Vector3 dir = (t.position - hitPoint).WithFloorHeight().normalized;
+        rb.velocity = dir * power;
+        
+        DOTween.Sequence()
+        .AppendInterval(0.2f)
+        .AppendCallback( ()=>rb.velocity = Vector3.zero)
+        .AppendInterval(0.5f)
+        .AppendCallback( ()=>stunned = false)
+        .Play();
+    }
+
+
+    void Die()  
     {
         enemyCollider.enabled = false;       // 적 탐색 및 총알 충돌에 걸리지 않도록.
         navAgent.isStopped = true;          // 이동중지
-
+        
+        enemyData.OnDie(this);
         DropItem();
         //
         PlaySequence_Death();   //
-
+        
         stateUI.OnDie();
         //
         TestManager.Instance.TestSFX_enemyDeath();
@@ -195,6 +264,7 @@ public class Enemy : MonoBehaviour, IPoolObject
 
     public void TryUseSkills()
     {  
+
         for (int i = 0; i < skills.Count; i++)
         {
             if (  CanUse( skills[i] ))
@@ -221,6 +291,7 @@ public class Enemy : MonoBehaviour, IPoolObject
     {
         DOTween.Sequence()
         .OnComplete( ()=> PoolManager.Instance.TakeToPool<Enemy>(this) )
+        .AppendInterval(0.3f)
         .Append(spriteEntity.spriteRenderer.DOFade(0,1f))
         .Play();
     }

@@ -541,6 +541,7 @@ GameObject:
   m_Component:
   - component: {fileID: 399578592778408637}
   - component: {fileID: 9128017957678440838}
+  - component: {fileID: 5118105576974433740}
   - component: {fileID: 9200602310104076901}
   - component: {fileID: 552011692710847559}
   - component: {fileID: 2342430051140074879}
@@ -591,6 +592,33 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 3
+--- !u!54 &5118105576974433740
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5204065735764080572}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!136 &9200602310104076901
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -630,6 +658,7 @@ MonoBehaviour:
   navAgent: {fileID: 0}
   t_target: {fileID: 0}
   _hp: 0
+  stunned: 0
   rangeWeight: 1
   targetDistSqr: 0
 --- !u!114 &2342430051140074879
@@ -660,6 +689,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteShadow: {fileID: 2100000, guid: 27f239c432540ce4386ac924d33c3f9e, type: 2}
   spriteRenderer: {fileID: 0}
+  t_sprite: {fileID: 0}
+  t_camera: {fileID: 0}
 --- !u!114 &6392195132447447795
 MonoBehaviour:
   m_ObjectHideFlags: 0

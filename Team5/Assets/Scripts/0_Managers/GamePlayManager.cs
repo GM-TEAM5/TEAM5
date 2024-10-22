@@ -79,26 +79,27 @@ public class GamePlayManager : Singleton<GamePlayManager>
     {
         DirectingManager.Instance.ZoomIn(Player.Instance.t_player);
         PauseGamePlay(true);
-        yield return new WaitForSecondsRealtime(1.5f);
+        yield return new WaitForSecondsRealtime(1f);
+        PauseGamePlay(false,1f);
         yield return StartCoroutine(DirectingManager.Instance.FadeSequene() );
         gameOverPanel.Open();
-        PauseGamePlay(false);
-        
     }
 
 
 
-    public void PauseGamePlay(bool pause)
+    public void PauseGamePlay(bool pause, float duration = 0f)
     {
-        
-        if(pause)
+        float targetTimeScale= pause? 0: 1f;
+        if (duration == 0f)
         {
-            Time.timeScale = 0;
+            Time.timeScale = targetTimeScale;
         }
         else
         {
-            Time.timeScale = 1f;
+            DOTween.To( ()=> Time.timeScale, x=> Time.timeScale = x ,targetTimeScale, duration ).SetUpdate(true).Play();
+            
         }
+       
         
     }
 }
