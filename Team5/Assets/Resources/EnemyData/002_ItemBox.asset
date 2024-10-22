@@ -18,12 +18,13 @@ MonoBehaviour:
   size: 0
   rank: 0
   attackType: 0
-  maxHp: 200
+  maxHp: 100
   armor: 0
   range: 1
   attackSpeed: 0
   ad: 0
   ap: 0
-  movementSpeed: 5
+  moveCooltime: 0.2
+  movementSpeed: 0
   exp: 10
   skils: []

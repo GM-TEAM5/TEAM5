@@ -31,9 +31,9 @@ public class EnemyMove : MonoBehaviour
     {
         var moveCooltime = new WaitForSeconds( enemy.enemyData.moveCooltime );
         
-        while(true)
+        while(GamePlayManager.isGamePlaying)
         {
-            if (enemy.isAlive)
+            if (enemy.isAlive )
             {
                 Move( enemy.enemyData, enemy.navAgent, enemy.t_target.position );
             }

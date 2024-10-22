@@ -47,7 +47,7 @@ public class Enemy : MonoBehaviour, IPoolObject
 
     void Update()
     {
-        if (isAlive == false)
+        if (isAlive == false || GamePlayManager.isGamePlaying == false)
         {
             return;
         }

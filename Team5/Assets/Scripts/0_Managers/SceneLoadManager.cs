@@ -4,33 +4,20 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-using DG.Tweening;
-using UnityEditor.Experimental.GraphView;
-
 public class SceneLoadManager : Singleton<SceneLoadManager>
 {
     
     public static readonly string lobbySceneName = "1_Lobby";
     public static readonly string cutSceneName = "2_CutScene";
     public static readonly string mainSceneName = "3_Main";
+    public static readonly string UnderWorldSceneName = "4_UnderWorld";
 
 
 
-    [SerializeField] Image fade;
-    [SerializeField] Color fadeColor;
 
-    [SerializeField] bool isCompleted_fade;
     [SerializeField] bool isCompleted_sceneLoaded;
 
-    bool canSwtichScene => isCompleted_fade && isCompleted_sceneLoaded;     // 
-
-
-    void Start()
-    {
-        fade.color  = new Color(fadeColor.r,fadeColor.g,fadeColor.b,0);
-        fade.gameObject.SetActive(false);
-    }
-
+    bool canSwtichScene => DirectingManager.Instance.isCompleted_fade && isCompleted_sceneLoaded;     // 
 
 
     //====================
@@ -38,7 +25,7 @@ public class SceneLoadManager : Singleton<SceneLoadManager>
     //===================
     public void LoadScene(string sceneName)
     {
-        StartCoroutine(FadeSequene());              // 페이드 인/아웃 진행
+        StartCoroutine( DirectingManager.Instance.FadeSequene(()=>canSwtichScene) );              // 페이드 인/아웃 진행
         StartCoroutine(LoadScene_async(sceneName)); // 씬 전환 작업
     }
 
@@ -70,47 +57,21 @@ public class SceneLoadManager : Singleton<SceneLoadManager>
         true가 될 때까지 asyncLoad.progress 가0.9로 고정되어있어서 isDone 이 true가 될 수 없다. 
         그래서 위처럼  씬 로드가 완료되었다는 플래그를 asyncLoad.progress >= 0.9f 로 사용한다. 
         */
+
+        OnSceneChanged();
     }
 
-
-    //===========
-    #region ==== FADE ====
-    IEnumerator FadeSequene()
+    void OnSceneChanged()
     {
-        FadeIn();   //페이드 인 하고, 
 
-        yield return new WaitUntil(  ()=>canSwtichScene );      //  씬넘어갈 때까지 ㄱㄷ.
-
-        FadeOut();  
     }
 
-
-    /// <summary>
-    ///  페이드인 : 화면 까매짐
-    /// </summary>
-    void FadeIn()
+    //================================
+    public void Load_UnderWorld()
     {
-        isCompleted_fade =false;
-        
-        fade.gameObject.SetActive(true);
-
-        DOTween.Sequence()
-        .OnComplete( ()=>{isCompleted_fade= true;})
-        .Append(fade.DOFade(1,1f))
-        .Play();
+        LoadScene(UnderWorldSceneName);
     }
 
-    /// <summary>
-    /// 페이드 아웃 : 화면 밝아짐 - 씬 전환되고 
-    /// </summary>
-    void FadeOut()
-    {
-        DOTween.Sequence()
-        .OnComplete( ()=>{fade.gameObject.SetActive(false);})
-        .Append(fade.DOFade(0,1f))
-        .Play();
-    }
 
-    #endregion
 
 }

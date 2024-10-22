@@ -8,12 +8,12 @@ public class Singleton<T> : MonoBehaviour where T : Component
             if (instance == null) {
                 instance = FindObjectOfType<T> ();
 
-                if (instance == null) {
-                    GameObject g = new GameObject ("Controller");
-                    instance = g.AddComponent<T> ();
-                    //g.hideFlags = HideFlags.HideInHierarchy;  
+                // if (instance == null) {
+                //     GameObject g = new GameObject ("Controller");
+                //     instance = g.AddComponent<T> ();
+                //     //g.hideFlags = HideFlags.HideInHierarchy;  
 
-                }
+                // }
             }
             return instance;
         }

@@ -72,6 +72,5 @@ public class PlayerStatus
     void SetNextMaxExp(int level)
     {
         maxExp = maxExp + expIncrementTable[level % expIncrementTable.Length];
-        Debug.Log($"{level}: {maxExp}");
     }
 }

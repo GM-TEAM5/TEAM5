@@ -26,6 +26,6 @@ MonoBehaviour:
   ap: 0
   moveCooltime: 0.2
   movementSpeed: 4
-  exp: 700
+  exp: 30
   skils:
   - {fileID: 11400000, guid: 1d3b684378794034ebf35c7408d8235e, type: 2}

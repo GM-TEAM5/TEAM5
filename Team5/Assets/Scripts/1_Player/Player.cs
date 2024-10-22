@@ -22,6 +22,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     //
     PlayerInputManager playerInput;
     CharacterController controller;
+    [SerializeField] Collider playerCollider;
 
 
     List<PlayerSkill> skills = new();
@@ -32,12 +33,15 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     BrushAttack brushAttack;
     bool isDrawing = false;
 
-    #region Move
+
+
     // [SerializeField] Vector3 playerVelocity;
     [SerializeField] Vector3 lastMoveDir;
-    #endregion
 
 
+    public bool isAlive => status.hp >0;
+
+    public int reinforcementLevel;
 
 
     //====================================================================================
@@ -53,6 +57,11 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     void Update()
     {
         //controller.Move(playerVelocity * Time.deltaTime);
+        if (isAlive==false)
+        {
+            return;
+        }
+
 
         Move();
         TryUseSkills();
@@ -97,6 +106,8 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
 
         controller = GetComponent<CharacterController>();
         playerInput = PlayerInputManager.Instance;
+        playerCollider = GetComponent<Collider>();
+        playerCollider.enabled = true;
 
         status = new PlayerStatus();      // 플레이어 스탯 초기화.
         foreach (var skill in TestManager.Instance.initSkillData)
@@ -104,18 +115,24 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
             GetSkill(skill);
         }
 
-
+        
 
         stateUI = GetComponent<PlayerStateUI>();
         stateUI.Init(this);     // 상태 ui 초기화
 
         skillsUI = FindObjectOfType<PlayerSkillsUI>();
-        skillsUI.Init(skills);
+        if(skillsUI != null)
+        {
+            skillsUI.Init(skills);
+        }
+        
 
         spriteEntity = GetComponent<SpriteEntity>();
         spriteEntity.Init(controller.radius, controller.height);
 
         brushAttack = GetComponent<BrushAttack>();
+
+        reinforcementLevel = status.level;
     }
 
     //========================================================================
@@ -139,7 +156,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
 
         if (status.hp <= 0)
         {
-            Debug.LogError("플레이어 사망");
+            Die();
         }
 
         // ui
@@ -157,6 +174,16 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
         stateUI.UpdateCurrHp(status.hp);
 
         PoolManager.Instance.GetDamageText(transform.position, amount);
+    }
+
+    void Die()
+    {
+        brushAttack.drawArea.gameObject.SetActive(false);
+        
+        playerCollider.enabled = false;        // 이게 brush collider 는 true로 세팅하네??
+
+
+        GamePlayManager.Instance.GameOver();
     }
 
 
@@ -198,6 +225,12 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
 
     public void TryUseSkills()
     {
+        if (GamePlayManager.isGamePlaying==false)
+        {
+            return;
+        }
+        
+        //
         for (int i = 0; i < skills.Count; i++)
         {
             if (skills[i].isAvailable)
