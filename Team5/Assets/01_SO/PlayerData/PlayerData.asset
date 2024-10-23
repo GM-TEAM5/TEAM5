@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   traitPoint: 123
-  currChapter: 0
-  currStage: 0
+  currChapter: 1
+  currStage: 1
   currStagePlayCount: 0
+  deathCount: 0

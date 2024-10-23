@@ -66,7 +66,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     void Update()
     {
         //controller.Move(playerVelocity * Time.deltaTime);
-        if (isAlive==false)
+        if (isAlive==false )
         {
             return;
         }
@@ -157,6 +157,12 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     /// </summary>
     void MeleeAttack()
     {
+        if ( GamePlayManager.isGamePlaying==false )
+        {
+            return;
+        }
+        
+        
         if (meleeAttackOk == false)
         {
             return;
@@ -283,7 +289,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     /// 움직임
     /// </summary>
     void Move()
-    {
+    {        
         // 땅위의 경우
         Vector2 moveVector = playerInput.moveVector;
 
@@ -378,11 +384,10 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
 
     public void TryUseSkills()
     {
-        if (GamePlayManager.isGamePlaying==false)
+        if ( GamePlayManager.isGamePlaying==false )
         {
             return;
         }
-        
         //
         for (int i = 0; i < skills.Count; i++)
         {

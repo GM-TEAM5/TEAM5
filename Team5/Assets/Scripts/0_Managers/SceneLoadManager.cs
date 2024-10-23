@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Unity.Loading;
 
 public class SceneLoadManager : Singleton<SceneLoadManager>
 {
@@ -14,6 +15,7 @@ public class SceneLoadManager : Singleton<SceneLoadManager>
 
 
 
+    bool isLoading;
 
     [SerializeField] bool isCompleted_sceneLoaded;
 
@@ -25,6 +27,13 @@ public class SceneLoadManager : Singleton<SceneLoadManager>
     //===================
     public void LoadScene(string sceneName)
     {
+        if( isLoading )
+        {
+            return;
+        }
+        isLoading = true;
+
+
         StartCoroutine( DirectingManager.Instance.FadeSequene(()=>canSwtichScene) );              // 페이드 인/아웃 진행
         StartCoroutine(LoadScene_async(sceneName)); // 씬 전환 작업
     }
@@ -50,6 +59,7 @@ public class SceneLoadManager : Singleton<SceneLoadManager>
             asyncLoad.allowSceneActivation = true;      // 이거 하면 씬 넘어감
         }
 
+        isLoading = false;
         /* 정보 : 
         asyncLoad.isDone 이라는 프로퍼티가 있는데,
         이건 asyncLoad.progress 가 1이 되어야 true가 된다. 
@@ -70,6 +80,11 @@ public class SceneLoadManager : Singleton<SceneLoadManager>
     public void Load_UnderWorld()
     {
         LoadScene(UnderWorldSceneName);
+    }
+
+    public void Load_MainScene()
+    {
+        LoadScene(mainSceneName);
     }
 
 

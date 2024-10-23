@@ -1708,6 +1708,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7665522212054138302, guid: f6a8952bfb0882c4386daa0922f02686,
+        type: 3}
+      propertyPath: mouseLeftButtonAction.m_Name
+      value: Mouse Left Button
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
