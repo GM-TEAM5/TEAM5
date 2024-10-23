@@ -405,7 +405,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
         stateUI.UpdateCurrInk(status.currInk);
 
         // 그림 그리기 여부에 따라 처리
-        if (isDrawing &&   playerInput.isMouseLeftButtonOn && status.currInk > 0)
+        if (isDrawingMode &&   playerInput.isMouseLeftButtonOn && status.currInk > 0)
         {
             // 잉크 사용
             UseInk();
