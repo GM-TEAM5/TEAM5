@@ -83,6 +83,8 @@ public class DropItem : MonoBehaviour, IPoolObject
         
         transform.position = initPos + offset;
         
+        Vector3 dir = new Vector3(Random.Range(-1,1 ),0,Random.Range(-1,1 ) ).normalized;
+        rb.AddForce(dir*4f, ForceMode.Impulse);
     }
 
 
