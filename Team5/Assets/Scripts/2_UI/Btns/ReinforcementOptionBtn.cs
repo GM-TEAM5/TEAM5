@@ -47,6 +47,8 @@ public class ReinforcementOptionBtn : MonoBehaviour
 
         //
         GamePlayManager.Instance.OnSelect_ReinforcementOption();
+
+        Player.Instance.reinforcementLevel ++;
     }
 
 

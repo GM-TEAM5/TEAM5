@@ -9,20 +9,19 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
     [SerializeField] PlayerInput playerInput;
     
     public InputAction moveAction;
-    public InputAction drawAction;
+    public InputAction mouseLeftButtonAction;
     InputAction lookAction;
-    // InputAction jumpAction;
-    // InputAction aimAction;
+
+
+    public bool isMouseLeftButtonOn;        //마우스를 누르고 있는 중인지.
+
+
 
     //
     public Vector2 moveVector {get;private set;}
     public Vector2 mouseMoveVector {get;private set;}
 
-    // public bool jump {get{return jumpAction.triggered;}}
 
-    // public bool aim { get ;private set;}
-
-    // public bool shoot {get;private set;}
 
     public Vector3 mouseDir {get;private set;}   // 마우스가 가리키는 방향 
     public Vector3 mouseWorldPos {get;private set;} // 마우스가 가리키는 곳의 월드 좌표 
@@ -44,12 +43,7 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
         playerInput = GetComponent<PlayerInput>();
         
         moveAction = playerInput.actions["Move"];
-        drawAction = playerInput.actions["Draw"];
-
-
-        // lookAction = playerInput.actions["Look"];
-        // jumpAction = playerInput.actions["Jump"];
-        // aimAction = playerInput.actions["Aim"];
+        mouseLeftButtonAction = playerInput.actions["MouseLeftButton"];
 
         drawingPlane = new Plane(Vector3.up, Vector3.zero);
     }
@@ -64,6 +58,13 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
         {
             mouseWorldPos = ray.GetPoint(enter);
         }
+        
+
+        isMouseLeftButtonOn = mouseLeftButtonAction.ReadValue<float>()>0;
+
+
+
+
         
         // mouseMoveVector = lookAction.ReadValue<Vector2>();
         // aim = aimAction.ReadValue<float>()>0;

@@ -7,7 +7,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ReinforcementPanel : MonoBehaviour
+public class ReinforcementPanel : GamePlayPanel 
 {
     public readonly int optionsNum = 3;
     
@@ -16,22 +16,25 @@ public class ReinforcementPanel : MonoBehaviour
     [SerializeField] GameObject prefab_optionBtn;
 
 
-
+    //===========================================================
+    protected override void Init()
+    {
+        //
+    }
+    
     /// <summary>
     /// 강화 패널 열기 - level 에 따라 더 좋은 선택지 세팅하도록~
     /// </summary>
     /// <param name="level"></param>
-    public void Open(int level)
+    protected override void OnOpen()
     {
-        SetOptions(level, optionsNum);     // 선택지 세팅. 
-        gameObject.SetActive(true);
+        SetOptions(Player.Instance.reinforcementLevel, optionsNum);     // 선택지 세팅. 
     }
 
-    public void Close()
+    protected override void OnClose()
     {
-        gameObject.SetActive(false);
+        
     }
-
 
     //=============================================
     void SetOptions(int level, int num)
@@ -49,5 +52,6 @@ public class ReinforcementPanel : MonoBehaviour
             optionBtn.SetOption( new TestOptionData(null, $"이름 {i}", $"내용 {i}"));    // 나중에는 옵션 랜덤으로 뽑아다가 쓸거임. 
         }
     }
+
 
 }

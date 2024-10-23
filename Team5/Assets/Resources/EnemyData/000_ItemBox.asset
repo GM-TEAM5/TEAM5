@@ -9,23 +9,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9faaa0ab8d62e244aca65f65e6c36c7, type: 3}
-  m_Name: 000_Dummy
+  m_Script: {fileID: 11500000, guid: 3fa3e6610f2dc4d4fb6d270340a92978, type: 3}
+  m_Name: 000_ItemBox
   m_EditorClassIdentifier: 
   id: 000
-  entityName: Dummy
-  sprite: {fileID: 21300000, guid: 9fff920755f5d8f40aec205f1eeb8708, type: 3}
+  entityName: ItemBox
+  sprite: {fileID: 21300000, guid: c1fcb977b2bad2c448d4ab902180ffd1, type: 3}
   size: 0
   rank: 0
-  attackType: 1
-  maxHp: 30
+  attackType: 0
+  maxHp: 100
   armor: 0
-  range: 1.5
+  range: 1
   attackSpeed: 0
   ad: 20
   ap: 0
-  moveCooltime: 0.2
-  movementSpeed: 4
-  exp: 700
-  skils:
-  - {fileID: 11400000, guid: 1d3b684378794034ebf35c7408d8235e, type: 2}
+  moveCooltime: 1
+  movementSpeed: 0
+  exp: 0
+  skils: []

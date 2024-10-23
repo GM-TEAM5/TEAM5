@@ -26,7 +26,8 @@ public class PlayerStatus
         }        
     }       
     public float maxHp = 500;     // 최대체력
-    public float ad = 100;     // 공격력
+    public float ad = 10;     // 공격력
+    public float attackSpeed = 0.3f;
     public float armor;     // 방어력
     public float movementSpeed = 10;    // 이동속도
     public float range = 4f;
@@ -72,6 +73,5 @@ public class PlayerStatus
     void SetNextMaxExp(int level)
     {
         maxExp = maxExp + expIncrementTable[level % expIncrementTable.Length];
-        Debug.Log($"{level}: {maxExp}");
     }
 }

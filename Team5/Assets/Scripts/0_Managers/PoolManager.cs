@@ -167,7 +167,7 @@ public class PoolManager : Singleton<PoolManager>
     public Enemy GetEnemy( string id ,Vector3 initPos)
     {
         Enemy enemy = GetFromPool<Enemy>(); 
-        EnemySO enemyData =  ResourceManager.Instance.GetEnemyData(id);
+        EnemyDataSO enemyData =  ResourceManager.Instance.GetEnemyData(id);
         enemy.Init( enemyData ,initPos);
     
         return enemy;

@@ -15,7 +15,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Draw",
+                    "name": "MouseLeftButton",
                     "type": "Button",
                     "id": "a735f4f0-4223-4f85-a6a0-119422acdf14",
                     "expectedControlType": "Button",
@@ -87,7 +87,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "PC",
-                    "action": "Draw",
+                    "action": "MouseLeftButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

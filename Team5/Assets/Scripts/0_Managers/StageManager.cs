@@ -12,12 +12,23 @@ public class StageManager : Singleton<StageManager>
     public StageDataSO stageData;
 
     public float stageStartTime;    // 해당 스테이지 시작 시간.
-    public float stagePlayTime => Time.time - stageStartTime; 
+    public float stagePlayTime; 
+
+    void Update()
+    {
+        if (GamePlayManager.isGamePlaying == false)
+        {
+            return;
+        }
+
+        stagePlayTime += Time.deltaTime;
+    }
 
 
 
     public void Init(StageDataSO stageData)
     {
+
         this.stageData = stageData;
 
         stageStartTime = Time.time;
