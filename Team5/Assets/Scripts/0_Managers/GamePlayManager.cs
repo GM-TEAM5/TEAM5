@@ -6,6 +6,7 @@ using DG.Tweening;
 
 public class GamePlayManager : Singleton<GamePlayManager>
 {
+    // public static bool isPaused;
     public static bool isGamePlaying = false;
     
     
@@ -42,7 +43,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
              if (reinforcementPanel.gameObject.activeSelf==false)
             {
                 reinforcementPanel.Open();
-                PauseGamePlay(true);
+                GameManager.Instance.PauseGamePlay(true);
             } })
         .Play(); 
     }
@@ -51,7 +52,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
     public void OnSelect_ReinforcementOption()
     {
         reinforcementPanel.Close();
-        PauseGamePlay(false);
+        GameManager.Instance.PauseGamePlay(false);
 
         if(Player.Instance.reinforcementLevel < Player.Instance.status.level)
         {
@@ -71,35 +72,20 @@ public class GamePlayManager : Singleton<GamePlayManager>
         
         Debug.Log("----게임오버 ------");
         isGamePlaying = false;
-
+        GameEventManager.Instance.onGameOver.Invoke();
         StartCoroutine(GameOverSequence());
     }
 
     IEnumerator GameOverSequence()
     {
         DirectingManager.Instance.ZoomIn(Player.Instance.t_player);
-        PauseGamePlay(true);
+        GameManager.Instance.PauseGamePlay(true);
         yield return new WaitForSecondsRealtime(1f);
-        PauseGamePlay(false,1f);
+        GameManager.Instance.PauseGamePlay(false,1.5f);
+        yield return new WaitForSecondsRealtime(1f);
         yield return StartCoroutine(DirectingManager.Instance.FadeSequene() );
         gameOverPanel.Open();
     }
 
 
-
-    public void PauseGamePlay(bool pause, float duration = 0f)
-    {
-        float targetTimeScale= pause? 0: 1f;
-        if (duration == 0f)
-        {
-            Time.timeScale = targetTimeScale;
-        }
-        else
-        {
-            DOTween.To( ()=> Time.timeScale, x=> Time.timeScale = x ,targetTimeScale, duration ).SetUpdate(true).Play();
-            
-        }
-       
-        
-    }
 }

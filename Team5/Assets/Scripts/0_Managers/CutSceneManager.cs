@@ -9,6 +9,7 @@ public class CutSceneManager : MonoBehaviour
 {
     [SerializeField] bool initialized;
     [SerializeField] bool isCutSceneFinished;
+    bool isSceneLoading;
     Sequence cutSceneSeq;
 
 
@@ -30,7 +31,7 @@ public class CutSceneManager : MonoBehaviour
         }
         
         // 스페이스 누르면 컷씬 바로 끝내기. 끝난상태에서 한번 더 스페이스 누르면 게임 시작
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) )
         { 
             if (isCutSceneFinished ==false && cutSceneSeq.IsActive())
             {
@@ -39,6 +40,7 @@ public class CutSceneManager : MonoBehaviour
             }
             else 
             {
+                
                 StartGame();
             }
         }
@@ -66,7 +68,7 @@ public class CutSceneManager : MonoBehaviour
 
     void StartGame()
     {
-        SceneLoadManager.Instance.LoadScene(SceneLoadManager.mainSceneName);
+        SceneLoadManager.Instance.Load_UnderWorld();
     }
 
     //==========================================

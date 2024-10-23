@@ -68,6 +68,11 @@ public class SpriteEntity : MonoBehaviour
     
     public void Flip(float dirX)
     {
+        if(GameManager.isPaused)
+        {
+            return;
+        } 
+        
         spriteRenderer.flipX = dirX<0;
     }
 
