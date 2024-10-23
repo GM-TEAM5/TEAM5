@@ -175,7 +175,15 @@ public class Enemy : MonoBehaviour, IPoolObject
         }  
     }
 
-    public void GetDamaged( float damage)
+
+    
+    public void GetDamaged(Vector3 hitPoint,float damage)
+    {
+        lastHitPoint = hitPoint;
+        GetDamaged(damage);
+    }
+
+    public void GetDamaged(float damage)
     {
         // GetKnockback(10, hitPoint);
         
