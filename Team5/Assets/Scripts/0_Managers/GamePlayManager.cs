@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using TMPro;
+using System.Threading;
 
 /// <summary>
 /// 메인 씬의 게임 플레이 로직 및 ui를 관리
@@ -17,6 +19,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
     [SerializeField] GamePlayStartUI gamePlayStartUI;    // 스테이지 시작시 안내창
     [SerializeField] ReinforcementPanel reinforcementPanel; //레벨업 시 강화 패널
     [SerializeField] GameOverPanel gameOverPanel;   //게임오버 패널
+    [SerializeField] TextMeshProUGUI text_timer;   //게임오버 패널
 
     
     //=======================================================================================
@@ -39,6 +42,8 @@ public class GamePlayManager : Singleton<GamePlayManager>
         isGamePlaying = true;
 
         StartCoroutine( CheckLevelUp() );        
+        StartCoroutine( SetTimer() );       
+        
         StageManager.Instance.OnStartGamePlay();
     }
 
@@ -50,8 +55,6 @@ public class GamePlayManager : Singleton<GamePlayManager>
         }
 
         gamePlayTime += Time.deltaTime;
-
-
     }
 
     //========================================
@@ -113,6 +116,27 @@ public class GamePlayManager : Singleton<GamePlayManager>
         yield return StartCoroutine(DirectingManager.Instance.FadeSequene() );
         gameOverPanel.Open();
     }
+
+
+    //====================================================
+    IEnumerator SetTimer()
+    {
+        var waitForSeconds = new WaitForSeconds(1f);
+        while( isGamePlaying )
+        {
+            
+            //
+            int mins = (int)gamePlayTime/60;
+            int secs = (int)gamePlayTime % 60;
+        
+            text_timer.SetText($"{mins:00}:{secs:00}");
+            
+            yield return waitForSeconds;
+        }
+        
+
+    }
+
 
 
 }
