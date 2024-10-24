@@ -1,44 +1,62 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using DG.Tweening;
 
+/// <summary>
+/// 메인 씬의 게임 플레이 로직 및 ui를 관리
+/// </summary>
 public class GamePlayManager : Singleton<GamePlayManager>
 {
     // public static bool isPaused;
     public static bool isGamePlaying = false;
+    public float gameStartTime;    // 해당 스테이지 시작 시간.
+    public float gamePlayTime; 
     
-    
-    
-    // [SerializeField] int reinforcementLevel;    // 강화패널 레벨 ( 상점 레벨 ) - 플레이어 레벨을 따라가며, 레벨이 높을 수록 더 좋은 선택지가 나옴. 나중에 따로 스크립트 뺄거임. 
-    
+    //
+    [SerializeField] GamePlayStartUI gamePlayStartUI;    // 스테이지 시작시 안내창
     [SerializeField] ReinforcementPanel reinforcementPanel; //레벨업 시 강화 패널
-
-
-    [SerializeField] GameOverPanel gameOverPanel;
+    [SerializeField] GameOverPanel gameOverPanel;   //게임오버 패널
 
     
     //=======================================================================================
-
     void Start()
     {           
+        isGamePlaying = false;
         GameEventManager.Instance.onLevelUp.AddListener(OnLevelUp);
         
-        StageManager.Instance.Init(TestManager.Instance.testStageData); 
+        StageManager.Instance.Init(TestManager.Instance.testStageData);     
         
-
-        // gameStart;
-        isGamePlaying = true;
+        StartCoroutine( StartGamePlaySequence());
     }
 
+    IEnumerator StartGamePlaySequence()
+    {
+        Sequence startSequence = gamePlayStartUI.StartGamePlaySequence();
+        yield return new WaitUntil( ()=>startSequence.IsActive()==false);
+
+        gameStartTime = Time.time;
+        isGamePlaying = true;
+        
+        StageManager.Instance.OnStartGamePlay();
+    }
+
+    void Update()
+    {
+        if (isGamePlaying == false)
+        {
+            return;
+        }
+
+        gamePlayTime += Time.deltaTime;
+    }
 
     //========================================
 
     public void OnLevelUp()
     {
         DOTween.Sequence()
-        .AppendInterval(0.5f) // 조금의 딜레이~
+        .AppendInterval(0.5f) // 조금의 딜레이~ 이것때문에 지금 버그 생기는중. 
         .AppendCallback( ()=> {
              if (reinforcementPanel.gameObject.activeSelf==false)
             {
@@ -81,7 +99,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
         DirectingManager.Instance.ZoomIn(Player.Instance.t_player);
         GameManager.Instance.PauseGamePlay(true);
         yield return new WaitForSecondsRealtime(1f);
-        GameManager.Instance.PauseGamePlay(false,1.5f);
+        GameManager.Instance.PauseGamePlay(false,2f);
         yield return new WaitForSecondsRealtime(1f);
         yield return StartCoroutine(DirectingManager.Instance.FadeSequene() );
         gameOverPanel.Open();

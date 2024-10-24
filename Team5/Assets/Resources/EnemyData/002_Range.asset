@@ -16,6 +16,7 @@ MonoBehaviour:
   entityName: Range
   sprite: {fileID: 21300000, guid: 50e2b4e9845fa3a48bc6fc5656a2b5fd, type: 3}
   size: 0
+  type: 1
   rank: 0
   attackType: 2
   maxHp: 50

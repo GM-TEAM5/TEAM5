@@ -58,7 +58,7 @@ public class Enemy : MonoBehaviour, IPoolObject
 
     void Update()
     {
-        if (GamePlayManager.isGamePlaying == false || isAlive==false)
+        if (isAlive==false || GamePlayManager.isGamePlaying == false )
         {
             return;
         }
@@ -246,7 +246,7 @@ public class Enemy : MonoBehaviour, IPoolObject
         
         stateUI.OnDie();
         //
-        TestManager.Instance.TestSFX_enemyDeath();
+        TestManager.Instance.TestSFX_enemyDeath(enemyData.type);
     }
 
     void DropItem()

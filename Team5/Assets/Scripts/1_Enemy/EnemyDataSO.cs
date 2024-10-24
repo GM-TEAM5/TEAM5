@@ -22,6 +22,16 @@ public enum EnemyRank
     Elite
 }
 
+/// <summary>
+/// 적 타입
+/// </summary>
+public enum EnemyType
+{
+    Ghost,
+    Beast
+}
+
+
 
 public abstract class EnemyDataSO : ScriptableObject
 {
@@ -30,6 +40,7 @@ public abstract class EnemyDataSO : ScriptableObject
     public Sprite sprite;       // 개체의 스프라이트
     public float size;       // 기준보다 몇배가 큰지.
     //
+    public EnemyType type;
     public EnemyRank rank;
     public EnemyAttackType attackType;
 
@@ -39,7 +50,7 @@ public abstract class EnemyDataSO : ScriptableObject
 
     public float range  =1;         // 공격 사거리 
     public float attackSpeed;       // 평타 공격속도
-    public float ad = 20;            // 평타 뎀지 
+    public float ad = 20;           // 평타 뎀지 
     public float ap;            // Ability power - 몬스터 특수 기술의 공격력!?
     
     [Min(0.1f)]public float moveCooltime = 0.2f;      // 연산량을 줄이고 좀 더 자연스러운 움직임을 위해 이동에 쿨타임을 적용한다. 

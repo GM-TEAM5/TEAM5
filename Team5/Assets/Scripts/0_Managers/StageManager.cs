@@ -11,36 +11,32 @@ public class StageManager : Singleton<StageManager>
     // [SerializeField] NavMeshSurface stageNavMesh;
     public StageDataSO stageData;
 
-    public float stageStartTime;    // 해당 스테이지 시작 시간.
-    public float stagePlayTime; 
-
-    void Update()
-    {
-        if (GamePlayManager.isGamePlaying == false)
-        {
-            return;
-        }
-
-        stagePlayTime += Time.deltaTime;
-    }
 
 
-
+    /// <summary>
+    /// 스테이지 초기화 - 데이터 및 지형 세팅
+    /// </summary>
+    /// <param name="stageData"></param>
     public void Init(StageDataSO stageData)
     {
 
         this.stageData = stageData;
 
-        stageStartTime = Time.time;
 
+        //
+        initialized = true;
+    }
+
+    /// <summary>
+    /// 게임플레이가 시작될 때, 웨이브 시작
+    /// </summary>
+    public void OnStartGamePlay()
+    {
         // 웨이브 시작. 
         foreach(var wave in stageData.waves)
         {
             StartCoroutine(wave.WaveRoutine());
         }
-
-        //
-        initialized = true;
     }
 
     public static Vector3 GetRandomPosition(Vector3 center,float range )

@@ -111,13 +111,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87ad656f400953d43b47a1888d6bdad8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initSkillData: []
+  initSkillData:
+  - {fileID: 11400000, guid: ea7204fbdab788c43ad0039ecde11c89, type: 2}
   initProjSprite: {fileID: 21300000, guid: 1396c40b41c55a745a385648ec3e7152, type: 3}
   damageText: {fileID: 6403899980032326514, guid: a537ae7bbd7ea544e892012b3c972e1a,
     type: 3}
   enemyData: {fileID: 11400000, guid: d01bd1dd1f8a73f428d2c2c19be7ad69, type: 2}
   testStageData: {fileID: 11400000, guid: 6084220f7ec65f84ba55697acff44cae, type: 2}
   testEnemyDeathSFX: {fileID: 8300000, guid: d42ae79f9dcb40f449196f5abe26daa8, type: 3}
+  testNormalAttackSFX: {fileID: 8300000, guid: 25e3668157ffdb546bd66f29e8d4b0c0, type: 3}
+  testEnhancedAttackSFX: {fileID: 8300000, guid: afb19af91c436cb4fae2a03f88c44ad3,
+    type: 3}
   simpleSFX: {fileID: 3356766389577947961, guid: 295d54b2ceb9e8c42882363f4e26c038,
     type: 3}
 --- !u!114 &760930456658816313
@@ -136,6 +140,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   onLevelUp:
+    m_PersistentCalls:
+      m_Calls: []
+  onGameOver:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &5031679521403383433
@@ -222,15 +229,16 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
-  drawAction:
-    m_Name: Draw
+  mouseLeftButtonAction:
+    m_Name: 
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: 7e0d3b6c-507a-4660-b6fa-94b2eb8ce91c
+    m_Id: 33abb5f7-0cd8-41d8-9d2a-a9aed956b296
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+  isMouseLeftButtonOn: 0
 --- !u!114 &8452372033382595405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -637,7 +645,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
   m_Lens:
-    FieldOfView: 5
+    FieldOfView: 6
     OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 100

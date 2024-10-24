@@ -66,7 +66,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     void Update()
     {
         //controller.Move(playerVelocity * Time.deltaTime);
-        if (isAlive==false )
+        if (isAlive==false || GamePlayManager.isGamePlaying == false )
         {
             return;
         }
@@ -156,13 +156,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     ///  좌클릭시 근접공격 - 1,2타 : 찌르기, 3타 베기 
     /// </summary>
     void MeleeAttack()
-    {
-        if ( GamePlayManager.isGamePlaying==false )
-        {
-            return;
-        }
-        
-        
+    {        
         if (meleeAttackOk == false)
         {
             return;
@@ -216,7 +210,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
             }
         }
 
-
+        TestManager.Instance.TestSFX_NormalAttack();
         // for debug.
         lastCastDirection = dir;
         debug_normalAttack = true;
@@ -283,6 +277,9 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
         }
         lastCastDirection = mouseDir;
         debug_normalAttack = true;
+
+
+        TestManager.Instance.TestSFX_EnhancedAttack();
     }
 
     /// <summary>
@@ -394,10 +391,6 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
 
     public void TryUseSkills()
     {
-        if ( GamePlayManager.isGamePlaying==false )
-        {
-            return;
-        }
         //
         for (int i = 0; i < skills.Count; i++)
         {

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b219b41eb012244fba197aaabcaa7d5, type: 3}
   m_Name: DropItem_03_Ink
   m_EditorClassIdentifier: 
-  id: 
-  itemName: 
-  sprite: {fileID: 0}
+  id: 03
+  itemName: Ink
+  sprite: {fileID: 21300000, guid: 6f5a7db522b71cf46aa6f48280bd6c06, type: 3}

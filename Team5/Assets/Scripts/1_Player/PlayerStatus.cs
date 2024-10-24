@@ -70,6 +70,7 @@ public class PlayerStatus
         return isLevelUp;
     }
 
+    
     void SetNextMaxExp(int level)
     {
         maxExp = maxExp + expIncrementTable[level % expIncrementTable.Length];

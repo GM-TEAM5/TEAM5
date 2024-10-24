@@ -12,6 +12,7 @@ public class Door : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             SceneLoadManager.Instance.Load_MainScene();
+            GetComponent<Collider>().enabled = false;
         }
     }
 }
