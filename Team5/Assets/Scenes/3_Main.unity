@@ -328,6 +328,11 @@ PrefabInstance:
       propertyPath: testEnemyDeathSFX_ghost
       value: 
       objectReference: {fileID: 8300000, guid: 85f98b2369b624f4aaa38cb3d6b04340, type: 3}
+    - target: {fileID: 4964979423805334565, guid: f6a8952bfb0882c4386daa0922f02686,
+        type: 3}
+      propertyPath: initSkillData.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6079161161061999894, guid: f6a8952bfb0882c4386daa0922f02686,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2955,7 +2960,7 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 30
+          m_FloatArgument: 300
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2

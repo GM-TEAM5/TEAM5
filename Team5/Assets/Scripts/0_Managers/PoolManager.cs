@@ -192,15 +192,13 @@ public class PoolManager : Singleton<PoolManager>
     }
 
 
-    public DamageText GetDamageText(Vector3 hitPoint, float damage)
+    public DamageText GetDamageText(Vector3 hitPoint, float damage, DamageType type)
     {
         DamageText damageText = GetFromPool<DamageText>();
-        
-        damageText.Init(hitPoint, damage);
-
+        damageText.Init(hitPoint, damage, type);
         return damageText;
     }
-
+    
     
 
     public DropItem GetExp(float value, Vector3 initPos)

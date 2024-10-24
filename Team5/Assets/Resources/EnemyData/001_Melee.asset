@@ -16,6 +16,7 @@ MonoBehaviour:
   entityName: Melee
   sprite: {fileID: 21300000, guid: 9fff920755f5d8f40aec205f1eeb8708, type: 3}
   size: 0
+  type: 0
   rank: 0
   attackType: 1
   maxHp: 50

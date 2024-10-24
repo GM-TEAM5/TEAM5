@@ -88,7 +88,7 @@ public class Enemy : MonoBehaviour, IPoolObject
         //
         if (other.CompareTag("Projectile"))
         {
-            GetDamaged( 10);
+            GetDamaged(10);
         }
         //
         else if (other.CompareTag("Brush"))
@@ -112,7 +112,6 @@ public class Enemy : MonoBehaviour, IPoolObject
         move = GetComponent<EnemyMove>();
 
         t = transform;
-        
     }
 
     public void OnGettingFromPool()
@@ -132,7 +131,6 @@ public class Enemy : MonoBehaviour, IPoolObject
         transform.position = initPos;
         enemyCollider.enabled = true;
         navAgent.isStopped = false;
-        
         
         //
         this.enemyData = enemyData;
@@ -204,9 +202,9 @@ public class Enemy : MonoBehaviour, IPoolObject
         // ui
         stateUI.UpdateCurrHp(hp);
 
-
         // 데미지 텍스트 생성
-        PoolManager.Instance.GetDamageText(lastHitPoint, damage); 
+        DamageType damageType = isEnhancedAttack ? DamageType.DMG_CRITICAL : DamageType.DMG_NORMAL;
+        PoolManager.Instance.GetDamageText(lastHitPoint, damage, damageType); 
     }
 
     public void GetHealed(float heal)

@@ -23,7 +23,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
     void Start()
     {           
         isGamePlaying = false;
-        GameEventManager.Instance.onLevelUp.AddListener(OnLevelUp);
+        // GameEventManager.Instance.onLevelUp.AddListener(OnLevelUp);
         
         StageManager.Instance.Init(TestManager.Instance.testStageData);     
         
@@ -37,7 +37,8 @@ public class GamePlayManager : Singleton<GamePlayManager>
 
         gameStartTime = Time.time;
         isGamePlaying = true;
-        
+
+        StartCoroutine( CheckLevelUp() );        
         StageManager.Instance.OnStartGamePlay();
     }
 
@@ -49,33 +50,41 @@ public class GamePlayManager : Singleton<GamePlayManager>
         }
 
         gamePlayTime += Time.deltaTime;
+
+
     }
 
     //========================================
 
-    public void OnLevelUp()
+    /// <summary>
+    /// 게임 진행 중 강화 선택지 창을 연다.  - 레벨업을 하여 강화를 해야할 때, 
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator CheckLevelUp()
     {
-        DOTween.Sequence()
-        .AppendInterval(0.5f) // 조금의 딜레이~ 이것때문에 지금 버그 생기는중. 
-        .AppendCallback( ()=> {
-             if (reinforcementPanel.gameObject.activeSelf==false)
+        var waitForSeconds = new WaitForSeconds(0.25f);
+        while( isGamePlaying )
+        {
+            bool isAvailable = Player.Instance.reinforcementLevel < Player.Instance.status.level;
+            
+            if (reinforcementPanel.gameObject.activeSelf == false  &&  isAvailable )
             {
                 reinforcementPanel.Open();
                 GameManager.Instance.PauseGamePlay(true);
-            } })
-        .Play(); 
+            } 
+            
+            yield return waitForSeconds;
+        }
+
     }
 
-    
+    /// <summary>
+    ///  강화 선택지를 누르면 창을 닫고 resume
+    /// </summary>
     public void OnSelect_ReinforcementOption()
     {
         reinforcementPanel.Close();
         GameManager.Instance.PauseGamePlay(false);
-
-        if(Player.Instance.reinforcementLevel < Player.Instance.status.level)
-        {
-            OnLevelUp();
-        }
     }
 
 
