@@ -163,6 +163,14 @@ public class PoolManager : Singleton<PoolManager>
 
 
     //================================================================================
+    public EnemySpawner GetEnemySpawner(string id, Vector3 initPos)
+    {
+        EnemySpawner enemySpawner = GetFromPool<EnemySpawner>(); 
+        enemySpawner.SpawnEnemy( id, initPos, 2f);
+    
+        return enemySpawner;
+    }
+
 
     public Enemy GetEnemy( string id ,Vector3 initPos)
     {
@@ -170,6 +178,8 @@ public class PoolManager : Singleton<PoolManager>
         EnemyDataSO enemyData =  ResourceManager.Instance.GetEnemyData(id);
         enemy.Init( enemyData ,initPos);
     
+        
+
         return enemy;
     }
 
