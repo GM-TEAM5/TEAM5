@@ -192,6 +192,7 @@ public class PoolManager : Singleton<PoolManager>
     }
 
 
+
     public DropItem GetExp(float value, Vector3 initPos)
     {
         DropItem dropItem = GetFromPool<DropItem>();
@@ -213,6 +214,14 @@ public class PoolManager : Singleton<PoolManager>
     {
         DropItem dropItem = GetFromPool<DropItem>();
         DropItemDataSO itemData =  ResourceManager.Instance.GetDropItemData("02");
+        dropItem.Init(itemData,value,initPos);
+        return dropItem;
+    }
+    
+    public DropItem GetInk(float value, Vector3 initPos)
+    {
+        DropItem dropItem = GetFromPool<DropItem>();
+        DropItemDataSO itemData =  ResourceManager.Instance.GetDropItemData("03");
         dropItem.Init(itemData,value,initPos);
         return dropItem;
     }

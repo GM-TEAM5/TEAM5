@@ -41,7 +41,7 @@ public class PlayerStatus
     public PlayerStatus()
     {
         hp = maxHp;     
-        currInk = maxInk;
+        currInk = maxInk *0.3f;
     }
 
     //====================================

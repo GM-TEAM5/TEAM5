@@ -277,12 +277,12 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
                 Enemy enemy = hitCollider.GetComponent<Enemy>();
                 if (enemy != null)
                 {
-                    enemy.GetDamaged( hitCollider.ClosestPoint( t_player.position ), status.ad  *1.5f);
+                    enemy.GetDamaged( hitCollider.ClosestPoint( t_player.position ), status.ad  *1.5f, true);
                 }
             }
         }
-
-
+        lastCastDirection = mouseDir;
+        debug_normalAttack = true;
     }
 
     /// <summary>
@@ -334,6 +334,16 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
 
         PoolManager.Instance.GetDamageText(transform.position, amount);
     }
+
+    public void GetInk(float amount)
+    {
+        status.currInk += amount;
+
+        stateUI.UpdateCurrInk(status.currInk);
+
+
+    }
+
 
     void Die()
     {
@@ -404,7 +414,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     void Drawing()
     {
         // 잉크 충전
-        ChargeInk();
+        // ChargeInk(); // 자동으로 안차도록
 
         // UI 업데이트
         stateUI.UpdateCurrInk(status.currInk);

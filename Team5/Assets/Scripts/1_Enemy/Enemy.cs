@@ -177,18 +177,24 @@ public class Enemy : MonoBehaviour, IPoolObject
 
 
     
-    public void GetDamaged(Vector3 hitPoint,float damage)
+    public void GetDamaged(Vector3 hitPoint,float damage,bool isEnhancedAttack = false)
     {
         lastHitPoint = hitPoint;
-        GetDamaged(damage);
+        GetDamaged(damage, isEnhancedAttack );
+
     }
 
-    public void GetDamaged(float damage)
+    public void GetDamaged(float damage, bool isEnhancedAttack = false)
     {
-        // GetKnockback(10, hitPoint);
-        
+        float nockbackPower= 5;
+        if (isEnhancedAttack)
+        {
+            DropInk();
+            nockbackPower = 10;
+        }
+        GetKnockback(nockbackPower, lastHitPoint);
+        //
         hp -= damage;
-
         if (hp <=0)
         {
             Die();
@@ -253,6 +259,16 @@ public class Enemy : MonoBehaviour, IPoolObject
         }
             
     }
+
+
+    /// <summary>
+    /// 강공격에 맞으면 잉크 떨구도록
+    /// </summary>
+    public void DropInk()
+    {
+        PoolManager.Instance.GetInk( 5, transform.position);
+    }
+
 
     /// <summary>
     /// targetPos 방향으로 스프라이트 방향을 세팅한다. 
