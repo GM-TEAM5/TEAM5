@@ -43,11 +43,11 @@ public class SpriteEntity : MonoBehaviour
         t_sprite.localPosition = new Vector3(0,0,-entityWidth);
         
         //
-        Canvas enemyCanvas = GetComponentInChildren<Canvas>();
-        if (enemyCanvas != null)
-        {
-            enemyCanvas.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, entityHeight);
-        }
+        // Canvas enemyCanvas = GetComponentInChildren<Canvas>();
+        // if (enemyCanvas != null)
+        // {
+        //     enemyCanvas.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, entityHeight) * 1/transform.localScale.x ;
+        // }
     }
 
     void Update()
@@ -76,8 +76,11 @@ public class SpriteEntity : MonoBehaviour
         {
             return;
         } 
+        if( dirX!=0)
+        {
+            spriteRenderer.flipX = dirX<0;
+        }
         
-        spriteRenderer.flipX = dirX<0;
     }
 
     

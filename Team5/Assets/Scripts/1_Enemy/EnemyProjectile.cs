@@ -6,6 +6,9 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody),typeof(Collider))]
 public class EnemyProjectile : MonoBehaviour, IPoolObject
 {
+    Transform t_sprite;
+    Transform t_camera;
+    
     public Collider projCollider;
     public Rigidbody rb;
 
@@ -16,6 +19,17 @@ public class EnemyProjectile : MonoBehaviour, IPoolObject
     Coroutine destroyRoutine;
     
     //=======================================================
+    void Update()
+    {
+        Billboard();
+    }
+
+        void Billboard()
+    {
+        t_sprite.rotation = Quaternion.LookRotation(t_sprite.position - t_camera.position);
+        t_sprite.rotation = Quaternion.Euler(t_sprite.rotation.eulerAngles.x,0,0);
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -40,6 +54,9 @@ public class EnemyProjectile : MonoBehaviour, IPoolObject
         //
         transform.position = initPos;
         DestroyProjectile(lifeTime);
+
+        t_camera = Camera.main.transform;
+        t_sprite = GetComponentInChildren<SpriteRenderer>().transform;
     }
 
     public void SetDirAndSpeed(Vector3 dir,float speed)
