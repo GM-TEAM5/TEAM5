@@ -16,7 +16,7 @@ public class GamePlayStartUI : MonoBehaviour
     public Sequence startSequence;
 
 
-    public Sequence StartGamePlaySequence()
+    public Sequence GetSeq_GamePlayStart()
     {
         gameObject.SetActive(true);
         
@@ -39,10 +39,8 @@ public class GamePlayStartUI : MonoBehaviour
         //
         .Append(img.DOFade(0f,1f))
         .Join(text_stageStart.DOFade(0f,1f ))
-        .Join(text_stageNum.DOFade(0f,1f))
+        .Join(text_stageNum.DOFade(0f,1f));
         //
-        .AppendInterval(1f)
-        .Play();
 
         //
         return startSequence;

@@ -120,13 +120,19 @@ MonoBehaviour:
     type: 3}
   enemyData: {fileID: 11400000, guid: d01bd1dd1f8a73f428d2c2c19be7ad69, type: 2}
   testStageData: {fileID: 11400000, guid: 6084220f7ec65f84ba55697acff44cae, type: 2}
-  testEnemyDeathSFX_ghost: {fileID: 0}
-  testEnemyDeathSFX_beast: {fileID: 0}
+  testEnemyDeathSFX_ghost: {fileID: 8300000, guid: 85f98b2369b624f4aaa38cb3d6b04340,
+    type: 3}
+  testEnemyDeathSFX_beast: {fileID: 8300000, guid: ede2faa1318cf4044bd58702444b3f66,
+    type: 3}
   testNormalAttackSFX: {fileID: 8300000, guid: 25e3668157ffdb546bd66f29e8d4b0c0, type: 3}
   testEnhancedAttackSFX: {fileID: 8300000, guid: afb19af91c436cb4fae2a03f88c44ad3,
     type: 3}
   simpleSFX: {fileID: 3356766389577947961, guid: 295d54b2ceb9e8c42882363f4e26c038,
     type: 3}
+  boundImages:
+  - {fileID: 21300000, guid: 8f24c041968b07f48bbc1f6f4362fbac, type: 3}
+  - {fileID: 21300000, guid: bc4e6dac57c698b45bb086f4e83f2346, type: 3}
+  - {fileID: 21300000, guid: 067ef9b054e0b35419cb04901eeff2c5, type: 3}
 --- !u!114 &760930456658816313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -620,7 +626,7 @@ Transform:
   m_GameObject: {fileID: 8083971351564222781}
   serializedVersion: 2
   m_LocalRotation: {x: 0.38268343, y: -0, z: -0, w: 0.92387956}
-  m_LocalPosition: {x: 9.332857, y: 44.72373, z: -38.685783}
+  m_LocalPosition: {x: 18.01937, y: 41, z: -22.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

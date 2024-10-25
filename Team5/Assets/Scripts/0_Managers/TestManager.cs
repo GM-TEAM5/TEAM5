@@ -22,10 +22,10 @@ public class TestManager :  Singleton<TestManager>
 
     public List<Sprite> boundImages=new();
 
-    void Start()
-    {
-        SetBoundImage();
-    }
+    // void Start()
+    // {
+    //     SetBoundImage();
+    // }
 
 
     //
