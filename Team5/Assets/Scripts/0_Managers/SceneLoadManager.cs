@@ -77,6 +77,12 @@ public class SceneLoadManager : Singleton<SceneLoadManager>
     }
 
     //================================
+    public void Load_Lobby()
+    {
+        LoadScene(lobbySceneName);
+    }
+
+
     public void Load_UnderWorld()
     {
         LoadScene(UnderWorldSceneName);

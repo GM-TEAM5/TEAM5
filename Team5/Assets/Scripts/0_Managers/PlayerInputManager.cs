@@ -65,6 +65,13 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
         isMouseLeftButtonOn = mouseLeftButtonAction.ReadValue<float>() > 0;
 
         CheckNumberKeys();
+
+
+        // hidden command 
+        if ( Input.GetKey(KeyCode.LeftControl)  && Input.GetKey(KeyCode.Alpha0))
+        {
+            SceneLoadManager.Instance.Load_Lobby();
+        }
     }
 
     // 커서고정
