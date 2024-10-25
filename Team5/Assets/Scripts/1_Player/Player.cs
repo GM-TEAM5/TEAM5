@@ -8,8 +8,6 @@ using UnityEngine;
                  typeof(SpriteEntity))]
 public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포넌트에 접근하기 쉽도록 싱글톤
 {
-    // [SerializeField] Sprite playerSprite;
-
     public Transform t_player;
 
     public PlayerStatus status;     // 플레이어의 능력치 정보 
@@ -27,21 +25,17 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
 
 
     List<PlayerSkill> skills = new();
-
     int maxSkillNum = 5;
+    int currentSkill = 0;
 
     // 붓칠
-    bool isDrawingMode = false;
-    BrushAttack brushAttack;
-    bool isDrawing = false;
-
-
+    // bool isDrawingMode = false;
 
     // [SerializeField] Vector3 playerVelocity;
     [SerializeField] Vector3 lastMoveDir;
 
 
-    public bool isAlive => status.hp >0;
+    public bool isAlive => status.hp > 0;
 
     public int reinforcementLevel;
 
@@ -49,8 +43,8 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     // -- melee attack ---
     float lastMeleeAttackTime;
     bool meleeAttackOk => Time.time > lastMeleeAttackTime + status.attackSpeed;
-    int combo=0;
-    
+    int combo = 0;
+
 
 
     //====================================================================================
@@ -59,14 +53,14 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     {
 
         InitPlayer();
-
+        skills[currentSkill].On();
         // t_camera = Camera.main.transform;
     }
 
     void Update()
     {
         //controller.Move(playerVelocity * Time.deltaTime);
-        if (isAlive==false )
+        if (isAlive == false)
         {
             return;
         }
@@ -74,24 +68,13 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
 
         Move();
         TryUseSkills();
-        Drawing();
-
 
         UpdateSpriteDir();
 
-        // 마우스 좌클릭이 눌렸으면, 
-        if ( playerInput.isMouseLeftButtonOn)
+        // 스킬 변경
+        if (playerInput.pressedNumber != currentSkill)
         {
-            // 그리기 모드,
-            if (isDrawingMode)
-            {
-
-            }  
-            // 일반 근접 공격
-            else
-            {
-                MeleeAttack();
-            }             
+            ChangeSkill(playerInput.pressedNumber);
         }
     }
 
@@ -145,7 +128,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
         spriteEntity = GetComponent<SpriteEntity>();
         spriteEntity.Init(controller.radius, controller.height);
 
-        brushAttack = GetComponent<BrushAttack>();
+        // brushAttack = GetComponent<BrushAttack>();
 
         reinforcementLevel = status.level;
     }
@@ -337,9 +320,9 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
 
     void Die()
     {
-        brushAttack.drawArea.gameObject.SetActive(false);
+        // brushAttack.drawArea.gameObject.SetActive(false);
         
-        playerCollider.enabled = false;        // 이게 brush collider 는 true로 세팅하네??
+        // playerCollider.enabled = false;        // 이게 brush collider 는 true로 세팅하네??
 
 
         GamePlayManager.Instance.GameOver();
@@ -382,64 +365,49 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
         // 그리고 ui 업뎃
     }
 
+    public void ChangeSkill(int index)
+    {
+        skills[currentSkill].Off();
+        currentSkill = index;
+        skills[currentSkill].On();
+    }
+
     public void TryUseSkills()
     {
-        if ( GamePlayManager.isGamePlaying==false )
+        if (!GamePlayManager.isGamePlaying)
         {
             return;
         }
-        //
-        for (int i = 0; i < skills.Count; i++)
+
+        // 공격 시
+        if (playerInput.isMouseLeftButtonOn)
         {
-            if (skills[i].isAvailable)
+            // TODO SO로 옮기기 / 기본공격
+            if (currentSkill == 0)
             {
-                skills[i].Use();
+                ChargeInk();
+                MeleeAttack();
+            }
+            else if (status.currInk > 0)
+            {
+                // 잉크 사용
+                UseInk();
             }
         }
-    }
-
-    #endregion
-
-    #region ===== Drawing =====
-    void Drawing()
-    {
-        // 잉크 충전
-        ChargeInk();
-
-        // UI 업데이트
-        stateUI.UpdateCurrInk(status.currInk);
-
-        // 그림 그리기 여부에 따라 처리
-        if (isDrawingMode &&   playerInput.isMouseLeftButtonOn && status.currInk > 0)
+        else
         {
-            // 잉크 사용
-            UseInk();
-
-            // 공격 실행
-            Vector3 mouseWorldPos = playerInput.mouseWorldPos;
-            brushAttack.Brushing(mouseWorldPos);
-
-            if (!isDrawing)
-            {
-                isDrawing = true;
-                brushAttack.StartBrushing();
-            }
+            ChargeInk();
         }
-        else if (isDrawing)
-        {
-            isDrawing = false;
-            brushAttack.StopBrushing();
-        }
+
+        // 공격 실행
+        skills[currentSkill].Use(playerInput.isMouseLeftButtonOn, playerInput.mouseWorldPos);
     }
 
     void ChargeInk()
     {
-        // 그리지 않고 있을 때만 충전
-        if (!isDrawing && status.currInk < status.maxInk)
-        {
-            status.currInk += status.inkChargeRate * Time.deltaTime;
-            status.currInk = Mathf.Min(status.currInk, status.maxInk);
-        }
+        status.currInk += status.inkChargeRate * Time.deltaTime;
+        status.currInk = Mathf.Min(status.currInk, status.maxInk);
+        stateUI.UpdateCurrInk(status.currInk);
     }
 
     void UseInk()
@@ -447,6 +415,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
         // 붓칠 게이지가 0이 되지 않도록 소모
         status.currInk -= status.inkUseRate * Time.deltaTime;
         status.currInk = Mathf.Max(status.currInk, 0f);
+        stateUI.UpdateCurrInk(status.currInk);
     }
     #endregion
 }

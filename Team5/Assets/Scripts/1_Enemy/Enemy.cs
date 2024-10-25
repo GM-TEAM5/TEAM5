@@ -85,7 +85,8 @@ public class Enemy : MonoBehaviour, IPoolObject
     void OnTriggerEnter(Collider other)
     {
         lastHitPoint = other.ClosestPoint(transform.position);
-        //
+
+        // TODO 삭제 예정
         if (other.CompareTag("Projectile"))
         {
             GetDamaged( 10);
