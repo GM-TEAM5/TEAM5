@@ -6,12 +6,13 @@ using TMPro;
 using DG.Tweening;
 
 
-public enum damageType
+public enum DamageType
 {
     DMG_NORMAL,
     DMG_CRITICAL,
     DMG_TICK,
-    DMG_PLAYER
+    DMG_PLAYER,
+    HEAL_PLAYER
 }
 
 public class DamageText : MonoBehaviour, IPoolObject
@@ -31,16 +32,29 @@ public class DamageText : MonoBehaviour, IPoolObject
     }
 
 
-    public void Init(Vector3 hitPoint, float damage)
+    public void Init(Vector3 hitPoint, float damage, DamageType type = DamageType.DMG_NORMAL)
     {
         transform.position = hitPoint + new Vector3(Random.Range(-1,1), 0, 0); 
         
         text.SetText( damage.ToString("0"));
-
+        Color textColor = Color.white;
+        switch(type)
+        {
+            case DamageType.DMG_CRITICAL:
+                textColor = new Color(1,1,0.5f);
+                break;
+            case DamageType.DMG_PLAYER:
+                textColor = new Color(1,0.2f,0.2f);
+                break;
+            case DamageType.HEAL_PLAYER:
+                textColor = new Color(0,1,0.5f);
+                break;
+        }
+        text.color = textColor;
         PlayAnim_MoveAndFade();
     }
 
- 
+    
     void PlayAnim_MoveAndFade()
     {
         DOTween.Sequence()

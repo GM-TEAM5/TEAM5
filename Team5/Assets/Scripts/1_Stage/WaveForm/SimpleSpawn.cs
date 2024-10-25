@@ -17,8 +17,8 @@ public class SimpleSpawn : WaveFormSO
             // 세팅하기. 
             // PoolManager.Instance.GetEnemy(id);
 
-            Vector3 randPos = StageManager.GetRandomPosition( Player.Instance.t_player.position, 10f );
-            PoolManager.Instance.GetEnemy(id, randPos);
+            Vector3 randPos = StageManager.GetRandomPosition( Player.Instance.t_player.position, 15f );
+            PoolManager.Instance.GetEnemySpawner(id, randPos);
 
 
             // Debug.Log($"적 생성 {id} at {spawnPoint}");

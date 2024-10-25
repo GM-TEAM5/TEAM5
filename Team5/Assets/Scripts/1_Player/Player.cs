@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using System.Net.Mail;
 using BW.Util;
-using Unity.VisualScripting;
+
 using UnityEngine;
+using DG.Tweening;
+using UnityEngine.UIElements;
 
 [RequireComponent(typeof(CharacterController),
                  typeof(SpriteEntity))]
@@ -42,9 +44,18 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
 
     // -- melee attack ---
     float lastMeleeAttackTime;
-    bool meleeAttackOk => Time.time > lastMeleeAttackTime + status.attackSpeed;
-    int combo = 0;
+    bool meleeAttackOk => Time.time >= lastMeleeAttackTime + status.attackSpeed;
+    int combo=0;
+    bool canMoveAfterMeleeAttack => Time.time >= lastMeleeAttackTime + focusTime;
+    float focusTime = 0.1f;
+    
 
+    //------- after hit--------
+    bool isInvincible => Time.time < lastInvincibleTime + invincibleDuration;
+    float lastInvincibleTime = -2f;
+    float invincibleDuration = 1f;
+
+    Sequence onHitSeq;
 
 
     //====================================================================================
@@ -60,7 +71,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     void Update()
     {
         //controller.Move(playerVelocity * Time.deltaTime);
-        if (isAlive == false)
+        if (isAlive==false || GamePlayManager.isGamePlaying == false )
         {
             return;
         }
@@ -82,9 +93,18 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     void OnTriggerEnter(Collider other)
     {
         if( other.CompareTag("EnemyProjectile"))
-        {
-            EnemyProjectile ep = other.GetComponent<EnemyProjectile>();
-            
+        {    
+            //
+            // Debug.Log($"{Time.time} {lastInvincibleTime} {invincibleDuration}");
+            if (isInvincible)
+            {
+                return;
+            }
+            lastInvincibleTime = Time.time;
+            PlayAnim_PlayerHit();
+
+            //
+            EnemyProjectile ep = other.GetComponent<EnemyProjectile>();    
             GetDamaged(ep.damage);
         }
         else if ( other.CompareTag("DropItem"))
@@ -130,6 +150,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
 
         // brushAttack = GetComponent<BrushAttack>();
 
+        //
         reinforcementLevel = status.level;
     }
 
@@ -139,13 +160,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     ///  좌클릭시 근접공격 - 1,2타 : 찌르기, 3타 베기 
     /// </summary>
     void MeleeAttack()
-    {
-        if ( GamePlayManager.isGamePlaying==false )
-        {
-            return;
-        }
-        
-        
+    {        
         if (meleeAttackOk == false)
         {
             return;
@@ -199,7 +214,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
             }
         }
 
-
+        TestManager.Instance.TestSFX_NormalAttack();
         // for debug.
         lastCastDirection = dir;
         debug_normalAttack = true;
@@ -260,12 +275,15 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
                 Enemy enemy = hitCollider.GetComponent<Enemy>();
                 if (enemy != null)
                 {
-                    enemy.GetDamaged( hitCollider.ClosestPoint( t_player.position ), status.ad  *1.5f);
+                    enemy.GetDamaged( hitCollider.ClosestPoint( t_player.position ), status.ad  *1.5f, true);
                 }
             }
         }
+        lastCastDirection = mouseDir;
+        debug_normalAttack = true;
 
 
+        TestManager.Instance.TestSFX_EnhancedAttack();
     }
 
     /// <summary>
@@ -273,6 +291,11 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     /// </summary>
     void Move()
     {        
+        if( canMoveAfterMeleeAttack == false)
+        {
+            return;
+        }
+        
         // 땅위의 경우
         Vector2 moveVector = playerInput.moveVector;
 
@@ -304,7 +327,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
         // ui
         stateUI.UpdateCurrHp(status.hp);
 
-        PoolManager.Instance.GetDamageText(transform.position, amount);
+        PoolManager.Instance.GetDamageText(transform.position, amount , DamageType.DMG_PLAYER);
     }
 
 
@@ -315,8 +338,18 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
         // ui
         stateUI.UpdateCurrHp(status.hp);
 
-        PoolManager.Instance.GetDamageText(transform.position, amount);
+        PoolManager.Instance.GetDamageText(transform.position, amount , DamageType.HEAL_PLAYER);
     }
+
+    public void GetInk(float amount)
+    {
+        status.currInk += amount;
+
+        stateUI.UpdateCurrInk(status.currInk);
+
+
+    }
+
 
     void Die()
     {
@@ -385,7 +418,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
             // TODO SO로 옮기기 / 기본공격
             if (currentSkill == 0)
             {
-                ChargeInk();
+                // ChargeInk();
                 MeleeAttack();
             }
             else if (status.currInk > 0)
@@ -394,10 +427,10 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
                 UseInk();
             }
         }
-        else
-        {
-            ChargeInk();
-        }
+        // else
+        // {
+        //     ChargeInk();
+        // }
 
         // 공격 실행
         skills[currentSkill].Use(playerInput.isMouseLeftButtonOn, playerInput.mouseWorldPos);
@@ -417,5 +450,39 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
         status.currInk = Mathf.Max(status.currInk, 0f);
         stateUI.UpdateCurrInk(status.currInk);
     }
+    #endregion
+
+
+
+
+
+
+    #region ==== 연출 ======
+
+    
+    /// <summary>
+    ///  맞으면 빨간색으로 깜빡깜빡임
+    /// </summary>
+    public void PlayAnim_PlayerHit()
+    {
+        Color targetColor = new Color(1,0.2f,0.2f);
+        Color originColor = Color.white;
+
+        if(onHitSeq!=null && onHitSeq.IsActive())
+        {
+            onHitSeq.Kill();
+        }
+
+        onHitSeq = DOTween.Sequence()
+        .OnComplete( ()=>{
+            spriteEntity.spriteRenderer.color = originColor;
+
+        } )
+        .Append( spriteEntity.spriteRenderer.DOColor( targetColor, 0.05f))
+        .Append( spriteEntity.spriteRenderer.DOColor( originColor, 0.05f))
+        .SetLoops(4)
+        .Play();
+    }
+
     #endregion
 }

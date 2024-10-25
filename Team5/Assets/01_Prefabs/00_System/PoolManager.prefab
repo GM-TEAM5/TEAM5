@@ -49,6 +49,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pools:
+  - _name: EnemySpawner
+    _component: {fileID: 6378841269461837925, guid: 53a90804d91958345ad3f98342ed0f7f,
+      type: 3}
+    _count: 0
+    _container: {fileID: 9046887364893803182}
+    _nonLazy: 0
   - _name: Enemy
     _component: {fileID: 552011692710847559, guid: f14d518494921cc44abff38b0b5c22d5,
       type: 3}

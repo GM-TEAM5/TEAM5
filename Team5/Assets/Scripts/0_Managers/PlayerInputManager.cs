@@ -24,6 +24,7 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
 
 
     public Vector3 mouseDir {get;private set;}   // 마우스가 가리키는 방향 
+    public Vector3 mousePosition {get;private set;}
     public Vector3 mouseWorldPos {get;private set;} // 마우스가 가리키는 곳의 월드 좌표 
     public float xAxis{get;private set;}        //마우스 움직임 x축
     public float yAxis {get;private set;}       // 마우스 움직임 y축
@@ -53,7 +54,7 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
     {
         moveVector = moveAction.ReadValue<Vector2>();
 
-        Vector2 mousePosition = Mouse.current.position.ReadValue();
+        mousePosition = Mouse.current.position.ReadValue();
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
         if (drawingPlane.Raycast(ray, out float enter))
         {

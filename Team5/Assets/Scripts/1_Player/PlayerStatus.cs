@@ -41,7 +41,7 @@ public class PlayerStatus
     public PlayerStatus()
     {
         hp = maxHp;     
-        currInk = maxInk;
+        currInk = maxInk *0.3f;
     }
 
     //====================================
@@ -70,6 +70,7 @@ public class PlayerStatus
         return isLevelUp;
     }
 
+    
     void SetNextMaxExp(int level)
     {
         maxExp = maxExp + expIncrementTable[level % expIncrementTable.Length];

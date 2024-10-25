@@ -163,6 +163,14 @@ public class PoolManager : Singleton<PoolManager>
 
 
     //================================================================================
+    public EnemySpawner GetEnemySpawner(string id, Vector3 initPos)
+    {
+        EnemySpawner enemySpawner = GetFromPool<EnemySpawner>(); 
+        enemySpawner.SpawnEnemy( id, initPos, 2f);
+    
+        return enemySpawner;
+    }
+
 
     public Enemy GetEnemy( string id ,Vector3 initPos)
     {
@@ -170,6 +178,8 @@ public class PoolManager : Singleton<PoolManager>
         EnemyDataSO enemyData =  ResourceManager.Instance.GetEnemyData(id);
         enemy.Init( enemyData ,initPos);
     
+        
+
         return enemy;
     }
 
@@ -182,15 +192,14 @@ public class PoolManager : Singleton<PoolManager>
     }
 
 
-    public DamageText GetDamageText(Vector3 hitPoint, float damage)
+    public DamageText GetDamageText(Vector3 hitPoint, float damage, DamageType type)
     {
         DamageText damageText = GetFromPool<DamageText>();
-        
-        damageText.Init(hitPoint, damage);
-
+        damageText.Init(hitPoint, damage, type);
         return damageText;
     }
-
+    
+    
 
     public DropItem GetExp(float value, Vector3 initPos)
     {
@@ -213,6 +222,14 @@ public class PoolManager : Singleton<PoolManager>
     {
         DropItem dropItem = GetFromPool<DropItem>();
         DropItemDataSO itemData =  ResourceManager.Instance.GetDropItemData("02");
+        dropItem.Init(itemData,value,initPos);
+        return dropItem;
+    }
+
+    public DropItem GetInk(float value, Vector3 initPos)
+    {
+        DropItem dropItem = GetFromPool<DropItem>();
+        DropItemDataSO itemData =  ResourceManager.Instance.GetDropItemData("03");
         dropItem.Init(itemData,value,initPos);
         return dropItem;
     }

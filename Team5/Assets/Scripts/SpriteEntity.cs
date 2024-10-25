@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 
@@ -65,7 +66,10 @@ public class SpriteEntity : MonoBehaviour
         t_sprite.rotation = Quaternion.Euler(t_sprite.rotation.eulerAngles.x,0,0);
     }
 
-    
+    /// <summary>
+    /// dirX 방향으로 뒤집는다.  ( 오른쪽이 기본값 )
+    /// </summary>
+    /// <param name="dirX"></param>
     public void Flip(float dirX)
     {
         if(GameManager.isPaused)
@@ -76,4 +80,5 @@ public class SpriteEntity : MonoBehaviour
         spriteRenderer.flipX = dirX<0;
     }
 
+    
 }

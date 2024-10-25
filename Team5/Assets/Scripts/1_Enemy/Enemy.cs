@@ -58,7 +58,7 @@ public class Enemy : MonoBehaviour, IPoolObject
 
     void Update()
     {
-        if (GamePlayManager.isGamePlaying == false || isAlive==false)
+        if (isAlive==false || GamePlayManager.isGamePlaying == false )
         {
             return;
         }
@@ -89,7 +89,7 @@ public class Enemy : MonoBehaviour, IPoolObject
         // TODO 삭제 예정
         if (other.CompareTag("Projectile"))
         {
-            GetDamaged( 10);
+            GetDamaged(10);
         }
         //
         else if (other.CompareTag("Brush"))
@@ -113,7 +113,6 @@ public class Enemy : MonoBehaviour, IPoolObject
         move = GetComponent<EnemyMove>();
 
         t = transform;
-        
     }
 
     public void OnGettingFromPool()
@@ -133,7 +132,6 @@ public class Enemy : MonoBehaviour, IPoolObject
         transform.position = initPos;
         enemyCollider.enabled = true;
         navAgent.isStopped = false;
-        
         
         //
         this.enemyData = enemyData;
@@ -178,18 +176,24 @@ public class Enemy : MonoBehaviour, IPoolObject
 
 
     
-    public void GetDamaged(Vector3 hitPoint,float damage)
+    public void GetDamaged(Vector3 hitPoint,float damage,bool isEnhancedAttack = false)
     {
         lastHitPoint = hitPoint;
-        GetDamaged(damage);
+        GetDamaged(damage, isEnhancedAttack );
+
     }
 
-    public void GetDamaged(float damage)
+    public void GetDamaged(float damage, bool isEnhancedAttack = false)
     {
-        // GetKnockback(10, hitPoint);
-        
+        float nockbackPower= 5;
+        if (isEnhancedAttack)
+        {
+            DropInk();
+            nockbackPower = 10;
+        }
+        GetKnockback(nockbackPower, lastHitPoint);
+        //
         hp -= damage;
-
         if (hp <=0)
         {
             Die();
@@ -199,9 +203,9 @@ public class Enemy : MonoBehaviour, IPoolObject
         // ui
         stateUI.UpdateCurrHp(hp);
 
-
         // 데미지 텍스트 생성
-        PoolManager.Instance.GetDamageText(lastHitPoint, damage); 
+        DamageType damageType = isEnhancedAttack ? DamageType.DMG_CRITICAL : DamageType.DMG_NORMAL;
+        PoolManager.Instance.GetDamageText(lastHitPoint, damage, damageType); 
     }
 
     public void GetHealed(float heal)
@@ -241,7 +245,7 @@ public class Enemy : MonoBehaviour, IPoolObject
         
         stateUI.OnDie();
         //
-        TestManager.Instance.TestSFX_enemyDeath();
+        TestManager.Instance.TestSFX_enemyDeath(enemyData.type);
     }
 
     void DropItem()
@@ -254,6 +258,16 @@ public class Enemy : MonoBehaviour, IPoolObject
         }
             
     }
+
+
+    /// <summary>
+    /// 강공격에 맞으면 잉크 떨구도록
+    /// </summary>
+    public void DropInk()
+    {
+        PoolManager.Instance.GetInk( 5, transform.position);
+    }
+
 
     /// <summary>
     /// targetPos 방향으로 스프라이트 방향을 세팅한다. 
