@@ -13,7 +13,7 @@ public class Skill_02_Brush : PlayerSkillSO
     private bool isDrawing = false;
     private bool canDrawing = true;
     private List<Vector3> drawnPoints = new List<Vector3>();
-    private float pointInterval = 0.2f;
+    private float pointInterval = 0.1f;
     private Vector3 lastPoint;
 
     // TrailRenderer 설정
@@ -21,7 +21,7 @@ public class Skill_02_Brush : PlayerSkillSO
 
     // 폭발 설정
     private float damage = 10f;
-    private float explosionInterval = 0.5f;
+    private float explosionInterval = 0.05f;
     private float explosionRadius = 1f;
 
     // 폭발 파티클
@@ -51,6 +51,11 @@ public class Skill_02_Brush : PlayerSkillSO
 
     public override void Use(bool isMouseLeftButtonOn, Vector3 mouseWorldPos)
     {
+        if (!canDrawing)
+        {
+            return;
+        }
+
         if (isMouseLeftButtonOn && canDrawing)
         {
             if (!isDrawing)
@@ -155,22 +160,26 @@ public class Skill_02_Brush : PlayerSkillSO
 
     private void CreateExplosion(Vector3 position)
     {
+        // 작은 랜덤 오프셋 추가
+        Vector3 randomOffset = Random.insideUnitSphere * 0.05f;
+        Vector3 explosionPosition = position + randomOffset;
+
         // 파티클 생성
         if (explosionParticlePrefab != null)
         {
-            ParticleSystem particleInstance = GameObject.Instantiate(explosionParticlePrefab, position, Quaternion.identity);
+            ParticleSystem particleInstance = GameObject.Instantiate(explosionParticlePrefab, explosionPosition, Quaternion.identity);
             particleInstance.Play();
             GameObject.Destroy(particleInstance.gameObject, particleLifetime);
         }
 
         // TODO: Enemy.cs로 이동 / 데미지 처리
-        Collider[] hits = Physics.OverlapSphere(position, explosionRadius);
+        Collider[] hits = Physics.OverlapSphere(explosionPosition, explosionRadius);
         foreach (var hit in hits)
         {
             Enemy enemy = hit.GetComponent<Enemy>();
             if (enemy != null && enemy.isAlive)
             {
-                enemy.GetDamaged(position, damage);
+                enemy.GetDamaged(explosionPosition, damage);
             }
         }
     }
