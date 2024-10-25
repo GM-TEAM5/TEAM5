@@ -16,6 +16,8 @@ public class GamePlayManager : Singleton<GamePlayManager>
     public float gamePlayTime; 
     
     //
+    [SerializeField] AudioSource bgm;
+    [SerializeField] EntrancePortal entrancePortal;
     [SerializeField] GamePlayStartUI gamePlayStartUI;    // 스테이지 시작시 안내창
     [SerializeField] ReinforcementPanel reinforcementPanel; //레벨업 시 강화 패널
     [SerializeField] GameOverPanel gameOverPanel;   //게임오버 패널
@@ -27,19 +29,40 @@ public class GamePlayManager : Singleton<GamePlayManager>
     {           
         isGamePlaying = false;
         // GameEventManager.Instance.onLevelUp.AddListener(OnLevelUp);
-        
+
         StageManager.Instance.Init(TestManager.Instance.testStageData);     
-        
+        TestManager.Instance.SetBoundImage();
+
+        Player.Instance.InitPlayer();
         StartCoroutine( StartGamePlaySequence());
     }
 
     IEnumerator StartGamePlaySequence()
     {
-        Sequence startSequence = gamePlayStartUI.StartGamePlaySequence();
+        Sequence startSequence = gamePlayStartUI.GetSeq_GamePlayStart();
+        Sequence generatePortalSeq = entrancePortal.GetSeq_GeneratePortal(1.5f);
+        Sequence playerEnterPortalSeq = Player.Instance.GetSequence_EnterPortal(false, 1f);
+        //
+        generatePortalSeq.Play();
+        yield return new WaitUntil( ()=> generatePortalSeq.IsActive()==false );
+
+        yield return new WaitForSeconds(0.5f);    //대기시간
+
+        playerEnterPortalSeq.Play();
+        yield return new WaitUntil( ()=> playerEnterPortalSeq.IsActive()==false );
+
+        startSequence.Play();
         yield return new WaitUntil( ()=>startSequence.IsActive()==false);
+
+        entrancePortal.PlaySeq_DestroyPortal(2f);
+        
+
+        Player.Instance.OnStartGamePlay();
+
 
         gameStartTime = Time.time;
         isGamePlaying = true;
+        bgm.Play();
 
         StartCoroutine( CheckLevelUp() );        
         StartCoroutine( SetTimer() );       

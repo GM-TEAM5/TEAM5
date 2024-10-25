@@ -11,7 +11,7 @@ public class Door : MonoBehaviour
         
         if (other.CompareTag("Player"))
         {
-            SceneLoadManager.Instance.Load_MainScene();
+            UnderWorldManager.Instance.LeaveUnderWorld();
             GetComponent<Collider>().enabled = false;
         }
     }

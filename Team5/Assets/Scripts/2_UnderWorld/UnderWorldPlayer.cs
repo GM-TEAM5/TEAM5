@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
+using DG.Tweening;
 
 
 public class UnderWorldPlayer : Singleton<UnderWorldPlayer>
@@ -28,11 +28,6 @@ public class UnderWorldPlayer : Singleton<UnderWorldPlayer>
 
 
     //====================================================================================
-
-    private void Start()
-    {
-        InitPlayer();
-    }
 
     void Update()
     {
@@ -97,6 +92,19 @@ public class UnderWorldPlayer : Singleton<UnderWorldPlayer>
         spriteEntity.Flip(lastMoveDir.x);
     }
 
+    /// <summary>
+    /// 포탈에서 나오거나/들어가는 애니메이션 - 플레이어 페이드 인/아웃
+    /// </summary>
+    /// <param name="isEnter"></param>
+    public Sequence GetSequence_EnterPortal(bool isEnter, float playTime)
+    {
+        
+        float startValue = isEnter?1:0;
+        float targetValue = isEnter?0:1;
 
+        spriteEntity.spriteRenderer.color = new Color(1,1,1, startValue);
+        return DOTween.Sequence()
+        .Append( spriteEntity.spriteRenderer.DOFade( targetValue, playTime));
+    }
  
 }

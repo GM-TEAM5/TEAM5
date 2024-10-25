@@ -24,7 +24,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     PlayerInputManager playerInput;
     CharacterController controller;
     [SerializeField] Collider playerCollider;
-
+    [SerializeField] Canvas playerCanvas;
 
     List<PlayerSkill> skills = new();
     int maxSkillNum = 5;
@@ -62,8 +62,6 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
 
     private void Start()
     {
-
-        InitPlayer();
         skills[currentSkill].On();
         // t_camera = Camera.main.transform;
     }
@@ -152,6 +150,10 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
 
         //
         reinforcementLevel = status.level;
+
+
+        
+        playerCanvas.gameObject.SetActive(false);
     }
 
     //========================================================================
@@ -480,6 +482,26 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
         .Append( spriteEntity.spriteRenderer.DOColor( originColor, 0.05f))
         .SetLoops(4)
         .Play();
+    }
+
+    /// <summary>
+    /// 포탈에서 나오거나/들어가는 애니메이션 - 플레이어 페이드 인/아웃
+    /// </summary>
+    /// <param name="isEnter"></param>
+    public Sequence GetSequence_EnterPortal(bool isEnter, float playTime)
+    {
+        
+        float startValue = isEnter?1:0;
+        float targetValue = isEnter?0:1;
+
+        spriteEntity.spriteRenderer.color = new Color(1,1,1, startValue);
+        return DOTween.Sequence()
+        .Append( spriteEntity.spriteRenderer.DOFade( targetValue, playTime));
+    }
+
+    public void OnStartGamePlay()
+    {
+        playerCanvas.gameObject.SetActive(true);
     }
 
     #endregion
