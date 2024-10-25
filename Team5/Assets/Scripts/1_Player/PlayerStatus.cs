@@ -34,7 +34,17 @@ public class PlayerStatus
     // 붓칠 관련 변수
     public float drawRange = 10f; // 그리기 사용 가능 범위  
     public float maxInk = 100f;   // 최대 잉크 양
-    public float currInk;   // 현재 잉크 양
+    [SerializeField]float _currInk;   // 현재 잉크 양
+    public float currInk  // 현재체력
+    {
+        get => _currInk;
+        set 
+        {
+            _currInk = Math.Clamp(value,0,maxInk);
+        }        
+    }     
+
+
     public float inkUseRate = 20f;    // 초당 잉크 사용량
     public float inkChargeRate = 20f; // 초당 잉크 충전량
 

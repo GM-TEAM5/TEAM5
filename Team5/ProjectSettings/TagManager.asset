@@ -9,6 +9,7 @@ TagManager:
   - Brush
   - EnemyProjectile
   - DropItem
+  - InstantDeath
   layers:
   - Default
   - TransparentFX

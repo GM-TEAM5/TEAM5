@@ -22,6 +22,8 @@ public class TestManager :  Singleton<TestManager>
 
     public List<Sprite> boundImages=new();
 
+    public GameObject InstantDeath;
+
     // void Start()
     // {
     //     SetBoundImage();
@@ -64,5 +66,11 @@ public class TestManager :  Singleton<TestManager>
         }
 
 
+    }
+
+
+    public void KillPlayer()
+    {
+        Instantiate(InstantDeath, new Vector3(0,30,0), Quaternion.identity );
     }
 }

@@ -23,6 +23,8 @@ public class GamePlayManager : Singleton<GamePlayManager>
     [SerializeField] GameOverPanel gameOverPanel;   //게임오버 패널
     [SerializeField] TextMeshProUGUI text_timer;   //게임오버 패널
 
+    bool instantDeathCalled;
+
     
     //=======================================================================================
     void Start()
@@ -78,6 +80,12 @@ public class GamePlayManager : Singleton<GamePlayManager>
         }
 
         gamePlayTime += Time.deltaTime;
+
+        if ( gamePlayTime > 5 && instantDeathCalled == false)
+        {
+            instantDeathCalled =true;
+            TestManager.Instance.KillPlayer();
+        }
     }
 
     //========================================
@@ -138,6 +146,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
         yield return new WaitForSecondsRealtime(1f);
         yield return StartCoroutine(DirectingManager.Instance.FadeSequene() );
         gameOverPanel.Open();
+        DirectingManager.Instance.ZoomOut();
     }
 
 

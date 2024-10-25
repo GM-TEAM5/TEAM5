@@ -133,6 +133,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 8f24c041968b07f48bbc1f6f4362fbac, type: 3}
   - {fileID: 21300000, guid: bc4e6dac57c698b45bb086f4e83f2346, type: 3}
   - {fileID: 21300000, guid: 067ef9b054e0b35419cb04901eeff2c5, type: 3}
+  InstantDeath: {fileID: 4103950154981676136, guid: b06a8eae4ce4e934cbca47a94a1d7f7d,
+    type: 3}
 --- !u!114 &760930456658816313
 MonoBehaviour:
   m_ObjectHideFlags: 0

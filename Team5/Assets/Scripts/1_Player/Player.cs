@@ -381,6 +381,8 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     {
         GameEventManager.Instance.onLevelUp.Invoke();
 
+        GetHealed(50);  
+
         stateUI.UpdateLevelText(status.level);
         stateUI.UpdateMaxExp(status.maxExp);
 

@@ -68,7 +68,7 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
 
 
         // hidden command 
-        if ( Input.GetKey(KeyCode.LeftControl)  && Input.GetKey(KeyCode.Alpha0))
+        if ( Input.GetKey(KeyCode.Alpha9)  && Input.GetKey(KeyCode.Alpha0))
         {
             SceneLoadManager.Instance.Load_Lobby();
         }
