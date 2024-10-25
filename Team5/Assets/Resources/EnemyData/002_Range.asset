@@ -23,7 +23,7 @@ MonoBehaviour:
   armor: 0
   range: 8
   attackSpeed: 0
-  ad: 20
+  ad: 100
   ap: 0
   moveCooltime: 0.2
   movementSpeed: 5
