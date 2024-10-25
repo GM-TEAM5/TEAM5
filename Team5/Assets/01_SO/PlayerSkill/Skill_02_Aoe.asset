@@ -15,13 +15,12 @@ MonoBehaviour:
   id: 02
   skillName: AOE
   icon: {fileID: 21300000, guid: 4363087f0635bc4418eb8fa3d4e3c522, type: 3}
-  brushRange: 10
-  brushHeight: 0.1
-  trailDuration: 2
-  trailWidth: 0.1
-  damage: 10
-  explosionInterval: 0.1
-  explosionRadius: 1
-  explosionParticlePrefab: {fileID: 607747851575600874, guid: 6b053bf7a291c824db75f5c1130c7402,
+  explosionDelay: 0.08
+  explosionRadius: 2
+  skillDamage: 10
+  isEnhancedAttack: 1
+  explosionEffectPrefab: {fileID: 607747851575600874, guid: 6b053bf7a291c824db75f5c1130c7402,
     type: 3}
-  particleLifetime: 1
+  lineWidth: 0.2
+  lineMaterial: {fileID: 2100000, guid: ea81c8431a3f37c42ad206c7fc903d16, type: 2}
+  segmentDistance: 0.1
