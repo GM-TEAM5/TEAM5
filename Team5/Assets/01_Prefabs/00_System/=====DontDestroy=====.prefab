@@ -112,13 +112,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initSkillData:
-  - {fileID: 11400000, guid: ea7204fbdab788c43ad0039ecde11c89, type: 2}
+  - {fileID: 11400000, guid: 98735bd5f90003e49a836ac35f0b10e3, type: 2}
+  - {fileID: 11400000, guid: 61270e87cd57e6f4b8a169e66c93b6ce, type: 2}
+  - {fileID: 11400000, guid: 647faeb1c80a70347921cb76676061b4, type: 2}
   initProjSprite: {fileID: 21300000, guid: 1396c40b41c55a745a385648ec3e7152, type: 3}
   damageText: {fileID: 6403899980032326514, guid: a537ae7bbd7ea544e892012b3c972e1a,
     type: 3}
   enemyData: {fileID: 11400000, guid: d01bd1dd1f8a73f428d2c2c19be7ad69, type: 2}
   testStageData: {fileID: 11400000, guid: 6084220f7ec65f84ba55697acff44cae, type: 2}
-  testEnemyDeathSFX: {fileID: 8300000, guid: d42ae79f9dcb40f449196f5abe26daa8, type: 3}
+  testEnemyDeathSFX_ghost: {fileID: 0}
+  testEnemyDeathSFX_beast: {fileID: 0}
   testNormalAttackSFX: {fileID: 8300000, guid: 25e3668157ffdb546bd66f29e8d4b0c0, type: 3}
   testEnhancedAttackSFX: {fileID: 8300000, guid: afb19af91c436cb4fae2a03f88c44ad3,
     type: 3}
@@ -230,7 +233,7 @@ MonoBehaviour:
     m_SingletonActionBindings: []
     m_Flags: 0
   mouseLeftButtonAction:
-    m_Name: 
+    m_Name: Mouse Left Button
     m_Type: 0
     m_ExpectedControlType: 
     m_Id: 33abb5f7-0cd8-41d8-9d2a-a9aed956b296

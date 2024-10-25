@@ -20,6 +20,14 @@ public class TestManager :  Singleton<TestManager>
     public SimpleSFX simpleSFX;
 
 
+    public List<Sprite> boundImages=new();
+
+    void Start()
+    {
+        SetBoundImage();
+    }
+
+
     //
     public void TestSFX_enemyDeath(EnemyType enemyType)
     {
@@ -41,5 +49,20 @@ public class TestManager :  Singleton<TestManager>
     public void TestSFX_EnhancedAttack()
     {
         Instantiate(simpleSFX).PlaySFX(testEnhancedAttackSFX);
+    }
+
+    public void SetBoundImage()
+    {
+        var imgs = FindObjectsOfType<TestBillboard>();
+
+        foreach(var img in imgs)
+        {
+            int randIdx = Random.Range(0, boundImages.Count);
+            
+            img.GetComponent<SpriteRenderer>().sprite = boundImages[randIdx];
+
+        }
+
+
     }
 }
