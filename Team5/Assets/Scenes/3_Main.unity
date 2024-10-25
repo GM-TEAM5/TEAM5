@@ -1673,6 +1673,7 @@ MonoBehaviour:
   reinforcementPanel: {fileID: 860831137}
   gameOverPanel: {fileID: 291544998}
   text_timer: {fileID: 2107285196}
+  instantDeathTime: 120
 --- !u!82 &318556924
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3498,7 +3499,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &652466678
 RectTransform:
   m_ObjectHideFlags: 0
