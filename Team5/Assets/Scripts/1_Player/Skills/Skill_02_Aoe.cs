@@ -3,184 +3,235 @@ using System.Collections;
 using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "Skill_02_Aoe", menuName = "SO/PlayerSkill/02")]
-public class Skill_02_Brush : PlayerSkillSO
+public class Skill_02_Aoe : PlayerSkillSO
 {
-    // 그리는 영역 설정
     private Transform drawArea;
-    private float rangeRadius;
     private Transform brush;
-    private TrailRenderer brushTrail;
+    private float rangeRadius;
+    private Collider brushCollider;
     private bool isDrawing = false;
-    private bool canDrawing = true;
-    private List<Vector3> drawnPoints = new List<Vector3>();
-    private float pointInterval = 0.1f;
-    private Vector3 lastPoint;
 
-    // TrailRenderer 설정
-    private float trailDuration = 2f;
+    [Header("Effect")]
+    [SerializeField] private float explosionDelay = 0.05f;
+    [SerializeField] private float explosionRadius = 2f;
+    [SerializeField] private float skillDamage = 10f;
+    [SerializeField] private bool isEnhancedAttack = true;
+    [SerializeField] private ParticleSystem explosionEffectPrefab;
 
-    // 폭발 설정
-    private float damage = 10f;
-    private float explosionInterval = 0.05f;
-    private float explosionRadius = 1f;
+    [Header("Line")]
+    [SerializeField] private float lineWidth = 1f;
+    [SerializeField] private Material lineMaterial;
+    [SerializeField] private float segmentDistance = 0.05f;
 
-    // 폭발 파티클
-    [Header("Visual Effects")]
-    [SerializeField] private ParticleSystem explosionParticlePrefab;
-    private float particleLifetime = 1f;
+    private List<Vector3> linePositions = new List<Vector3>();
+    private LineRenderer mainLine;
+    private GameObject lineContainer;
+    private Coroutine skillCoroutine;
+    private float initialLength;
+    private int explosionIndex = 0;
 
     public override void On()
     {
-        // 그리기 영역 설정
+        isDrawing = false;
+        linePositions.Clear();
+        ClearLine();
+
         drawArea = Player.Instance.t_player.Find("DrawArea");
         drawArea.gameObject.SetActive(true);
         rangeRadius = 10f;
 
-        // 붓칠 설정
-        brush = Player.Instance.t_player.Find("Aoe");
-        brushTrail = brush.GetComponentInChildren<TrailRenderer>();
+        brush = Player.Instance.t_player.Find("Brush");
+        brushCollider = brush.GetComponentInChildren<Collider>();
 
-        // TrailRenderer 설정
-        brushTrail.time = trailDuration;
+        if (lineContainer == null)
+        {
+            lineContainer = new GameObject("LineContainer");
+            mainLine = lineContainer.AddComponent<LineRenderer>();
+            SetupLineRenderer(mainLine);
+        }
+    }
+
+    private void SetupLineRenderer(LineRenderer line)
+    {
+        line.material = lineMaterial;
+        line.startWidth = lineWidth;
+        line.endWidth = lineWidth;
+        line.positionCount = 0;
+        line.useWorldSpace = true;
+    }
+
+    private void ClearLine()
+    {
+        if (lineContainer != null)
+        {
+            Destroy(lineContainer);
+            mainLine = null;
+        }
     }
 
     public override void Off()
     {
+        if (linePositions.Count > 1)
+        {
+            explosionIndex = 0;
+            initialLength = GetTotalLineLength();
+            StartExplosionSequence();
+        }
+
         drawArea.gameObject.SetActive(false);
+        brush.gameObject.SetActive(false);
+        brushCollider.enabled = false;
     }
 
     public override void Use(bool isMouseLeftButtonOn, Vector3 mouseWorldPos)
     {
-        if (!canDrawing)
+        if (isMouseLeftButtonOn)
         {
-            return;
-        }
+            Brushing(mouseWorldPos);
 
-        if (isMouseLeftButtonOn && canDrawing)
-        {
             if (!isDrawing)
             {
-                StartDrawing(mouseWorldPos);
+                StartBrushing();
+                isDrawing = true;
             }
-            else
-            {
-                UpdateDrawing(mouseWorldPos);
-            }
+
+            RecordLinePosition();
+            UpdateLine();
         }
-        else
+        else if (isDrawing)
         {
-            StopDrawing();
+            StopBrushing();
+            isDrawing = false;
+            Off();
         }
     }
 
-    private void StartDrawing(Vector3 mouseWorldPos)
+    private float GetTotalLineLength()
+    {
+        float length = 0;
+        for (int i = 0; i < linePositions.Count - 1; i++)
+        {
+            length += Vector3.Distance(linePositions[i], linePositions[i + 1]);
+        }
+        return length;
+    }
+
+    private void StartBrushing()
     {
         brush.gameObject.SetActive(true);
-        brushTrail.Clear();
-
-        isDrawing = true;
-        drawnPoints.Clear();
+        brushCollider.enabled = true;
+        linePositions.Clear();
+        mainLine.positionCount = 0;
     }
 
-    private void UpdateDrawing(Vector3 mouseWorldPos)
+    private void Brushing(Vector3 mouseWorldPos)
     {
-        // 마우스 영역 가져오기
         mouseWorldPos.y = 0.1f;
 
-        // 붓칠 범위
-        Vector3 direction = mouseWorldPos - Player.Instance.transform.position;
+        Vector3 direction = mouseWorldPos - Player.Instance.t_player.position;
         float distance = direction.magnitude;
         bool isWithinRange = distance <= rangeRadius;
 
-        // 범위를 벗어나면 중심에서 반지름만큼 이동
         if (!isWithinRange)
         {
             direction.Normalize();
-            mouseWorldPos = Player.Instance.transform.position + direction * rangeRadius;
+            mouseWorldPos = Player.Instance.t_player.position + direction * rangeRadius;
         }
-
         brush.position = mouseWorldPos;
-        if (drawnPoints.Count == 0)
-        {
-            brushTrail.Clear();
-        }
-
-        if (Vector3.Distance(mouseWorldPos, lastPoint) >= pointInterval)
-        {
-            RecordPoint(mouseWorldPos);
-        }
     }
 
-    private void RecordPoint(Vector3 point)
+    private void StopBrushing()
     {
-        drawnPoints.Add(point);
-        lastPoint = point;
-    }
-
-    private void StopDrawing()
-    {
-        isDrawing = false;
-
-        if (drawnPoints.Count > 0)
-        {
-            Player.Instance.StartCoroutine(FadeAndExplode());
-        }
-
         brush.gameObject.SetActive(false);
-        brushTrail.Clear();
+        brushCollider.enabled = false;
     }
 
-    private IEnumerator FadeAndExplode()
+    private void RecordLinePosition()
     {
-        canDrawing = false;
-
-        // 트레일이 사라지는 시간동안 대기 후 폭발
-        float elapsedTime = 0f;
-        int currentPointIndex = 0;
-
-        while (elapsedTime < trailDuration)
+        if (linePositions.Count == 0 ||
+            Vector3.Distance(linePositions[linePositions.Count - 1], brush.position) > segmentDistance)
         {
-            // 폭발할 포인트 계산
-            float explosionProgress = elapsedTime / trailDuration;
-            int targetPointIndex = Mathf.FloorToInt(drawnPoints.Count * explosionProgress);
-
-            // 새로운 포인트에 도달할 때마다 폭발
-            while (currentPointIndex < targetPointIndex)
-            {
-                Vector3 explosionPoint = drawnPoints[currentPointIndex];
-                CreateExplosion(explosionPoint);
-                currentPointIndex++;
-            }
-            elapsedTime += explosionInterval;
-            yield return new WaitForSeconds(explosionInterval);
+            linePositions.Add(brush.position);
         }
-        drawnPoints.Clear();
-        canDrawing = true;
     }
 
-    private void CreateExplosion(Vector3 position)
+    private void UpdateLine()
     {
-        // 작은 랜덤 오프셋 추가
-        Vector3 randomOffset = Random.insideUnitSphere * 0.05f;
-        Vector3 explosionPosition = position + randomOffset;
-
-        // 파티클 생성
-        if (explosionParticlePrefab != null)
+        if (mainLine != null && linePositions.Count > 0)
         {
-            ParticleSystem particleInstance = GameObject.Instantiate(explosionParticlePrefab, explosionPosition, Quaternion.identity);
-            particleInstance.Play();
-            GameObject.Destroy(particleInstance.gameObject, particleLifetime);
+            mainLine.positionCount = linePositions.Count;
+            mainLine.SetPositions(linePositions.ToArray());
         }
+    }
 
-        // TODO: Enemy.cs로 이동 / 데미지 처리
-        Collider[] hits = Physics.OverlapSphere(explosionPosition, explosionRadius);
-        foreach (var hit in hits)
+    private void StartExplosionSequence()
+    {
+        if (skillCoroutine == null)
         {
-            Enemy enemy = hit.GetComponent<Enemy>();
-            if (enemy != null && enemy.isAlive)
+            skillCoroutine = Player.Instance.StartCoroutine(ExplosionCoroutine());
+        }
+    }
+
+    private IEnumerator ExplosionCoroutine()
+    {
+        float currentLength = 0;
+
+        for (int i = 0; i < linePositions.Count - 1; i++)
+        {
+            Vector3 explosionPos = linePositions[i];
+            Vector3 nextPos = linePositions[i + 1];
+
+            // 폭발 이펙트 생성
+            if (explosionEffectPrefab != null)
             {
-                enemy.GetDamaged(explosionPosition, damage);
+                ParticleSystem explosion = Instantiate(explosionEffectPrefab, explosionPos, Quaternion.identity);
+                explosion.Play();
+                float duration = explosion.main.duration;
+                Destroy(explosion.gameObject, duration);
             }
+
+            // 대미지 적용
+            Collider[] hitColliders = Physics.OverlapSphere(explosionPos, explosionRadius);
+            foreach (var hitCollider in hitColliders)
+            {
+                Enemy enemy = hitCollider.GetComponent<Enemy>();
+                if (enemy != null && enemy.isAlive)
+                {
+                    enemy.GetDamaged(explosionPos, skillDamage, isEnhancedAttack);
+                }
+            }
+
+            // 라인 업데이트 - 폭발 지점까지의 라인을 제거하고 나머지만 표시
+            List<Vector3> remainingPositions = new List<Vector3>();
+            remainingPositions.Add(explosionPos); // 현재 폭발 지점을 시작점으로
+            remainingPositions.AddRange(linePositions.GetRange(i + 1, linePositions.Count - (i + 1))); // 나머지 점들 추가
+
+            mainLine.positionCount = remainingPositions.Count;
+            mainLine.SetPositions(remainingPositions.ToArray());
+
+            yield return new WaitForSeconds(explosionDelay);
         }
+
+        // 마지막 폭발
+        if (linePositions.Count > 0)
+        {
+            Vector3 lastPos = linePositions[linePositions.Count - 1];
+            if (explosionEffectPrefab != null)
+            {
+                ParticleSystem explosion = Instantiate(explosionEffectPrefab, lastPos, Quaternion.identity);
+                explosion.Play();
+                Destroy(explosion.gameObject, explosion.main.duration);
+            }
+
+            mainLine.positionCount = 0;
+        }
+
+        // 모든 폭발이 끝나면 정리
+        Destroy(lineContainer);
+        lineContainer = null;
+        mainLine = null;
+        linePositions.Clear();
+        Off();
+        skillCoroutine = null;
     }
 }

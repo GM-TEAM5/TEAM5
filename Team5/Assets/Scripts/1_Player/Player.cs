@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Net.Mail;
 using BW.Util;
@@ -29,11 +30,9 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     List<PlayerSkill> skills = new();
     int maxSkillNum = 5;
     int currentSkill = 0;
+    bool skillActive = false;
+    private Coroutine skillCoroutine;
 
-    // 붓칠
-    // bool isDrawingMode = false;
-
-    // [SerializeField] Vector3 playerVelocity;
     [SerializeField] Vector3 lastMoveDir;
 
 
@@ -45,10 +44,10 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     // -- melee attack ---
     float lastMeleeAttackTime;
     bool meleeAttackOk => Time.time >= lastMeleeAttackTime + status.attackSpeed;
-    int combo=0;
+    int combo = 0;
     bool canMoveAfterMeleeAttack => Time.time >= lastMeleeAttackTime + focusTime;
     float focusTime = 0.1f;
-    
+
 
     //------- after hit--------
     bool isInvincible => Time.time < lastInvincibleTime + invincibleDuration;
@@ -62,14 +61,13 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
 
     private void Start()
     {
-        skills[currentSkill].On();
         // t_camera = Camera.main.transform;
     }
 
     void Update()
     {
         //controller.Move(playerVelocity * Time.deltaTime);
-        if (isAlive==false || GamePlayManager.isGamePlaying == false )
+        if (isAlive == false || GamePlayManager.isGamePlaying == false)
         {
             return;
         }
@@ -77,21 +75,14 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
 
         Move();
         TryUseSkills();
-
         UpdateSpriteDir();
-
-        // 스킬 변경
-        if (playerInput.pressedNumber != currentSkill)
-        {
-            ChangeSkill(playerInput.pressedNumber);
-        }
     }
 
     //============================================================================
     void OnTriggerEnter(Collider other)
     {
-        if( other.CompareTag("EnemyProjectile"))
-        {    
+        if (other.CompareTag("EnemyProjectile"))
+        {
             //
             // Debug.Log($"{Time.time} {lastInvincibleTime} {invincibleDuration}");
             if (isInvincible)
@@ -102,14 +93,14 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
             PlayAnim_PlayerHit();
 
             //
-            EnemyProjectile ep = other.GetComponent<EnemyProjectile>();    
+            EnemyProjectile ep = other.GetComponent<EnemyProjectile>();
             GetDamaged(ep.damage);
         }
-        else if ( other.CompareTag("DropItem"))
+        else if (other.CompareTag("DropItem"))
         {
             DropItem di = other.GetComponent<DropItem>();
             di.PickUp();
-        } 
+        }
     }
 
 
@@ -131,17 +122,17 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
             GetSkill(skill);
         }
 
-        
+
 
         stateUI = GetComponent<PlayerStateUI>();
         stateUI.Init(this);     // 상태 ui 초기화
 
         skillsUI = FindObjectOfType<PlayerSkillsUI>();
-        if(skillsUI != null)
+        if (skillsUI != null)
         {
             skillsUI.Init(skills);
         }
-        
+
 
         spriteEntity = GetComponent<SpriteEntity>();
         spriteEntity.Init(controller.radius, controller.height);
@@ -152,7 +143,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
         reinforcementLevel = status.level;
 
 
-        
+
         playerCanvas.gameObject.SetActive(false);
     }
 
@@ -162,7 +153,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     ///  좌클릭시 근접공격 - 1,2타 : 찌르기, 3타 베기 
     /// </summary>
     void MeleeAttack()
-    {        
+    {
         if (meleeAttackOk == false)
         {
             return;
@@ -170,19 +161,19 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
 
         //
         lastMeleeAttackTime = Time.time;
-        bool isEnhancedAttack = ++combo==3;
+        bool isEnhancedAttack = ++combo == 3;
         //
-        if( isEnhancedAttack )
+        if (isEnhancedAttack)
         {
             combo = 0;
-            lastMeleeAttackTime += status.attackSpeed*2;    // 강화 후엔 딜레이 좀 두려고
+            lastMeleeAttackTime += status.attackSpeed * 2;    // 강화 후엔 딜레이 좀 두려고
 
             MeleeAttack_Enhanced();
         }
         else
         {
             MeleeAttack_Normal();
-        }               
+        }
     }
 
 
@@ -197,17 +188,17 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
         Debug.Log("일반공격");
         Vector3 mouseWorldPos = playerInput.mouseWorldPos;
 
-        Vector3 dir = (mouseWorldPos- t_player.position).WithFloorHeight().normalized;
+        Vector3 dir = (mouseWorldPos - t_player.position).WithFloorHeight().normalized;
         float radius = 1;
         float maxDist = 5;
 
         RaycastHit[] hits = Physics.SphereCastAll(t_player.position.WithStandardHeight(), radius, dir, maxDist, GameConstants.enemyLayer);
 
         // 충돌된 오브젝트들에 대해 반복 실행
-        for(int i=0;i<hits.Length;i++)
+        for (int i = 0; i < hits.Length; i++)
         {
             RaycastHit hit = hits[i];
-            
+
             // 적에게 피해를 입히는 로직
             Enemy enemy = hit.collider.GetComponent<Enemy>();
             if (enemy != null)
@@ -253,15 +244,15 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     void MeleeAttack_Enhanced()
     {
         Debug.Log("강화공격!!!!!");
-        
+
         Vector3 mouseWorldPos = playerInput.mouseWorldPos;
-        Vector3 mouseDir = (mouseWorldPos- t_player.position).WithFloorHeight().normalized;
+        Vector3 mouseDir = (mouseWorldPos - t_player.position).WithFloorHeight().normalized;
 
         // OverlapSphere를 사용해 모든 적을 반경 내에서 감지
         float maxDist = 8;
         Collider[] hitColliders = Physics.OverlapSphere(t_player.position.WithStandardHeight(), maxDist, GameConstants.enemyLayer);
 
-        for(int i=0;i<hitColliders.Length;i++)
+        for (int i = 0; i < hitColliders.Length; i++)
         {
             Collider hitCollider = hitColliders[i];
 
@@ -277,7 +268,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
                 Enemy enemy = hitCollider.GetComponent<Enemy>();
                 if (enemy != null)
                 {
-                    enemy.GetDamaged( hitCollider.ClosestPoint( t_player.position ), status.ad  *1.5f, true);
+                    enemy.GetDamaged(hitCollider.ClosestPoint(t_player.position), status.ad * 1.5f, true);
                 }
             }
         }
@@ -292,12 +283,12 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     /// 움직임
     /// </summary>
     void Move()
-    {        
-        if( canMoveAfterMeleeAttack == false)
+    {
+        if (canMoveAfterMeleeAttack == false)
         {
             return;
         }
-        
+
         // 땅위의 경우
         Vector2 moveVector = playerInput.moveVector;
 
@@ -306,7 +297,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
         lastMoveDir.y = 0;      // 방향 조절에 필요 없기떄문.
         controller.Move(lastMoveDir.normalized * Time.deltaTime * status.movementSpeed);
     }
-    
+
     /// <summary>
     /// 마지막 이동한 방향을 보도록함. 
     /// </summary>
@@ -329,7 +320,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
         // ui
         stateUI.UpdateCurrHp(status.hp);
 
-        PoolManager.Instance.GetDamageText(transform.position, amount , DamageType.DMG_PLAYER);
+        PoolManager.Instance.GetDamageText(transform.position, amount, DamageType.DMG_PLAYER);
     }
 
 
@@ -340,7 +331,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
         // ui
         stateUI.UpdateCurrHp(status.hp);
 
-        PoolManager.Instance.GetDamageText(transform.position, amount , DamageType.HEAL_PLAYER);
+        PoolManager.Instance.GetDamageText(transform.position, amount, DamageType.HEAL_PLAYER);
     }
 
     public void GetInk(float amount)
@@ -356,7 +347,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     void Die()
     {
         // brushAttack.drawArea.gameObject.SetActive(false);
-        
+
         // playerCollider.enabled = false;        // 이게 brush collider 는 true로 세팅하네??
 
 
@@ -368,7 +359,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     public void GetExp(float exp)
     {
         //
-        if(status.GetExp(exp))
+        if (status.GetExp(exp))
         {
             OnLevelUp();
         }
@@ -381,7 +372,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     {
         GameEventManager.Instance.onLevelUp.Invoke();
 
-        GetHealed(50);  
+        GetHealed(50);
 
         stateUI.UpdateLevelText(status.level);
         stateUI.UpdateMaxExp(status.maxExp);
@@ -402,13 +393,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
         // 그리고 ui 업뎃
     }
 
-    public void ChangeSkill(int index)
-    {
-        skills[currentSkill].Off();
-        currentSkill = index;
-        skills[currentSkill].On();
-    }
-
+    // TODO: 구조 개선 필요
     public void TryUseSkills()
     {
         if (!GamePlayManager.isGamePlaying)
@@ -416,33 +401,72 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
             return;
         }
 
-        // 공격 시
+        // 스킬 변경 체크
+        if (!skillActive && playerInput.pressedNumber != 0)
+        {
+            if (playerInput.pressedNumber > skills.Count)
+            {
+                return;
+            }
+
+            // 스킬 사용
+            currentSkill = playerInput.pressedNumber - 1;
+            skills[currentSkill].On();
+            playerInput.pressedNumber = 0;
+            skillActive = true;
+
+            switch (currentSkill)
+            {
+                case 0:
+                    skillCoroutine = StartCoroutine(AutoOffCoroutine(8));
+                    break;
+                case 1:
+                    skillCoroutine = StartCoroutine(AutoOffCoroutine(3));
+                    break;
+            }
+        }
+
+        if (playerInput.pressedNumber != 0 && skillActive)
+        {
+            playerInput.pressedNumber = 0;
+        }
+
+        // 마우스 좌클릭
         if (playerInput.isMouseLeftButtonOn)
         {
-            // TODO SO로 옮기기 / 기본공격
-            if (currentSkill == 0)
+            if (skillActive)
+            {
+                UseInk();
+            }
+            else
             {
                 MeleeAttack();
             }
-            else if (status.currInk > 0)
-            {
-                // 잉크 사용
-                UseInk();
-            }
         }
 
-        // 공격 실행
-        if (status.currInk > 0)
+        if (skillActive)
         {
             skills[currentSkill].Use(playerInput.isMouseLeftButtonOn, playerInput.mouseWorldPos);
         }
+
+        // 잉크가 부족한경우
+        if (skillActive && status.currInk <= 0)
+        {
+            skills[currentSkill].Off();
+            skillActive = false;
+            StopCoroutine(skillCoroutine);
+        }
     }
 
-    void ChargeInk()
+    // N초 후 자동 Off
+    private IEnumerator AutoOffCoroutine(float seconds)
     {
-        status.currInk += status.inkChargeRate * Time.deltaTime;
-        status.currInk = Mathf.Min(status.currInk, status.maxInk);
-        stateUI.UpdateCurrInk(status.currInk);
+        yield return new WaitForSeconds(seconds);
+        if (skillActive)
+        {
+            skills[currentSkill].Off();
+            skillActive = false;
+        }
     }
 
     void UseInk()
@@ -461,27 +485,28 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
 
     #region ==== 연출 ======
 
-    
+
     /// <summary>
     ///  맞으면 빨간색으로 깜빡깜빡임
     /// </summary>
     public void PlayAnim_PlayerHit()
     {
-        Color targetColor = new Color(1,0.2f,0.2f);
+        Color targetColor = new Color(1, 0.2f, 0.2f);
         Color originColor = Color.white;
 
-        if(onHitSeq!=null && onHitSeq.IsActive())
+        if (onHitSeq != null && onHitSeq.IsActive())
         {
             onHitSeq.Kill();
         }
 
         onHitSeq = DOTween.Sequence()
-        .OnComplete( ()=>{
+        .OnComplete(() =>
+        {
             spriteEntity.spriteRenderer.color = originColor;
 
-        } )
-        .Append( spriteEntity.spriteRenderer.DOColor( targetColor, 0.05f))
-        .Append( spriteEntity.spriteRenderer.DOColor( originColor, 0.05f))
+        })
+        .Append(spriteEntity.spriteRenderer.DOColor(targetColor, 0.05f))
+        .Append(spriteEntity.spriteRenderer.DOColor(originColor, 0.05f))
         .SetLoops(4)
         .Play();
     }
@@ -492,13 +517,13 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     /// <param name="isEnter"></param>
     public Sequence GetSequence_EnterPortal(bool isEnter, float playTime)
     {
-        
-        float startValue = isEnter?1:0;
-        float targetValue = isEnter?0:1;
 
-        spriteEntity.spriteRenderer.color = new Color(1,1,1, startValue);
+        float startValue = isEnter ? 1 : 0;
+        float targetValue = isEnter ? 0 : 1;
+
+        spriteEntity.spriteRenderer.color = new Color(1, 1, 1, startValue);
         return DOTween.Sequence()
-        .Append( spriteEntity.spriteRenderer.DOFade( targetValue, playTime));
+        .Append(spriteEntity.spriteRenderer.DOFade(targetValue, playTime));
     }
 
     public void OnStartGamePlay()

@@ -12,6 +12,8 @@ public class Skill_01_Brush : PlayerSkillSO
 
     public override void On()
     {
+        isDrawing = false;
+
         // 그리기 영역 설정
         drawArea = Player.Instance.t_player.Find("DrawArea");
         drawArea.gameObject.SetActive(true);
@@ -27,6 +29,8 @@ public class Skill_01_Brush : PlayerSkillSO
     {
         drawArea.gameObject.SetActive(false);
         brush.gameObject.SetActive(false);
+        brushCollider.enabled = false;
+        brushTrail.enabled = false;
     }
 
     public override void Use(bool isMouseLeftButtonOn, Vector3 mouseWorldPos)
@@ -54,6 +58,8 @@ public class Skill_01_Brush : PlayerSkillSO
     {
         brush.gameObject.SetActive(true);
         brushTrail.Clear();
+        brushCollider.enabled = true;
+        brushTrail.enabled = true;
     }
 
     public void Brushing(Vector3 mouseWorldPos)
@@ -79,5 +85,7 @@ public class Skill_01_Brush : PlayerSkillSO
     public void StopBrushing()
     {
         brush.gameObject.SetActive(false);
+        brushCollider.enabled = false;
+        brushTrail.enabled = false;
     }
 }

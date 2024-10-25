@@ -32,7 +32,7 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
     // TODO: 그리기 범위 수정
     private Plane drawingPlane;
 
-    public int pressedNumber { get; private set; } = 0; // 숫자 키 입력
+    public int pressedNumber { get; set; } = 0; // 숫자 키 입력
     //
 
     // [SerializeField] LayerMask aimColliderLayerMask = new();
@@ -88,11 +88,11 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
 
     private void CheckNumberKeys()
     {
-        if (Keyboard.current[Key.Digit1].wasPressedThisFrame) pressedNumber = 0;
-        else if (Keyboard.current[Key.Digit2].wasPressedThisFrame) pressedNumber = 1;
-        else if (Keyboard.current[Key.Digit3].wasPressedThisFrame) pressedNumber = 2;
-        else if (Keyboard.current[Key.Digit4].wasPressedThisFrame) pressedNumber = 3;
-        else if (Keyboard.current[Key.Digit5].wasPressedThisFrame) pressedNumber = 4;
+        if (Keyboard.current[Key.Digit1].wasPressedThisFrame) pressedNumber = 1;
+        else if (Keyboard.current[Key.Digit2].wasPressedThisFrame) pressedNumber = 2;
+        else if (Keyboard.current[Key.Digit3].wasPressedThisFrame) pressedNumber = 3;
+        else if (Keyboard.current[Key.Digit4].wasPressedThisFrame) pressedNumber = 4;
+        else if (Keyboard.current[Key.Digit5].wasPressedThisFrame) pressedNumber = 5;
     }
 }
 
