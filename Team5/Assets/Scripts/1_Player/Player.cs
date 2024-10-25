@@ -418,7 +418,6 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
             // TODO SO로 옮기기 / 기본공격
             if (currentSkill == 0)
             {
-                // ChargeInk();
                 MeleeAttack();
             }
             else if (status.currInk > 0)
@@ -427,13 +426,12 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
                 UseInk();
             }
         }
-        // else
-        // {
-        //     ChargeInk();
-        // }
 
         // 공격 실행
-        skills[currentSkill].Use(playerInput.isMouseLeftButtonOn, playerInput.mouseWorldPos);
+        if (status.currInk > 0)
+        {
+            skills[currentSkill].Use(playerInput.isMouseLeftButtonOn, playerInput.mouseWorldPos);
+        }
     }
 
     void ChargeInk()
