@@ -9,6 +9,9 @@ public class PlayerStateUI : MonoBehaviour
     [SerializeField] Slider hpBar;
     [SerializeField] Slider expBar;
     [SerializeField] Slider inkBar;
+    [SerializeField] Slider topHpBar;
+    [SerializeField] Slider topExpBar;
+    [SerializeField] Slider topInkBar;
 
     [SerializeField] TextMeshProUGUI levelText;
 
@@ -38,6 +41,7 @@ public class PlayerStateUI : MonoBehaviour
     public void UpdateMaxHp(float maxHp)
     {
         hpBar.maxValue = maxHp;
+        topHpBar.maxValue = maxHp;
     }
 
     /// <summary>
@@ -46,6 +50,7 @@ public class PlayerStateUI : MonoBehaviour
     public void UpdateCurrHp(float hp)
     {
         hpBar.value = hp;
+        topHpBar.value = hp;
     }
 
     #endregion
@@ -57,6 +62,7 @@ public class PlayerStateUI : MonoBehaviour
     public void UpdateMaxExp(float maxExp)
     {
         expBar.maxValue = maxExp;
+        topExpBar.maxValue = maxExp;
     }
 
     /// <summary>
@@ -65,6 +71,7 @@ public class PlayerStateUI : MonoBehaviour
     public void UpdateCurrExp(float currExp)
     {
         expBar.value = currExp;
+        topExpBar.value = currExp;
     }
 
     /// <summary>
@@ -84,6 +91,7 @@ public class PlayerStateUI : MonoBehaviour
     public void UpdateMaxInk(float maxInk)
     {
         inkBar.maxValue = maxInk;
+        topInkBar.maxValue = maxInk;
     }
 
     /// <summary>
@@ -92,6 +100,7 @@ public class PlayerStateUI : MonoBehaviour
     public void UpdateCurrInk(float currInk)
     {
         inkBar.value = currInk;
+        topInkBar.value = currInk;
     }
     #endregion
 }
