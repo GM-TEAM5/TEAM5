@@ -1673,7 +1673,7 @@ MonoBehaviour:
   reinforcementPanel: {fileID: 860831137}
   gameOverPanel: {fileID: 291544998}
   text_timer: {fileID: 2107285196}
-  instantDeathTime: 120
+  instantDeathTime: 180
 --- !u!82 &318556924
 AudioSource:
   m_ObjectHideFlags: 0

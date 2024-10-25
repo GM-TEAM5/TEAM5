@@ -23,7 +23,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
     [SerializeField] GameOverPanel gameOverPanel;   //게임오버 패널
     [SerializeField] TextMeshProUGUI text_timer;   //게임오버 패널
 
-    [SerializeField] float instantDeathTime = 120;
+    [SerializeField] float instantDeathTime = 180;
     bool instantDeathCalled;
 
     
