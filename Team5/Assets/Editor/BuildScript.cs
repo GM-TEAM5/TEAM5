@@ -8,7 +8,12 @@ public class BuildScript : MonoBehaviour
     public static void MyBuild_Windows()
     {
         BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions();
-        buildPlayerOptions.scenes = new[] { "Assets/Scenes/SampleScene.unity" };
+        buildPlayerOptions.scenes = new[] {
+            "Assets/Scenes/1_Lobby.unity",
+            "Assets/Scenes/2_CutScene.unity",
+            "Assets/Scenes/3_Main.unity",
+            "Assets/Scenes/4_UnderWorld.unity",
+        };
         buildPlayerOptions.locationPathName = "Build/Game.exe";
         buildPlayerOptions.target = BuildTarget.StandaloneWindows64;
         buildPlayerOptions.options = BuildOptions.None;
