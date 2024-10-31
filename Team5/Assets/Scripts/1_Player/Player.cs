@@ -204,6 +204,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
             if (enemy != null)
             {
                 enemy.GetDamaged(hit.point, status.ad);
+                // Debug.Log($" 악 {hit.point}");
             }
         }
 

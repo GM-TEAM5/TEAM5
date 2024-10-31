@@ -6,6 +6,7 @@ using System;
 
 using DG.Tweening;
 using BW.Util;
+using Unity.VisualScripting;
 
 
 
@@ -36,7 +37,15 @@ public class Enemy : MonoBehaviour, IPoolObject
     }  
 
     public bool isAlive => _hp>0;    
-    public bool stunned; 
+    //
+    [SerializeField] float stopDurationRemain;
+    public bool stopped => stopDurationRemain >0;
+    //
+    public float stunDurationRemain; 
+    public bool stunned => stunDurationRemain >0; 
+    
+    
+
     [SerializeField] float  rangeWeight = 1f ;     // 원거리의 경우 각 개체마다 사거리 보정이 있다. - 자연스러움을 위해
     public float range => enemyData.range * rangeWeight;
 
@@ -45,12 +54,13 @@ public class Enemy : MonoBehaviour, IPoolObject
 
     //
     List<EnemySkill> skills = new();    // 공격을 스킬로 대신함. 
+    EnemySkill usingSkill;
 
     //
     float lastMoveTime;
-    bool moveCooltimeOk => Time.time >= lastMoveTime + enemyData.moveCooltime;
 
-    bool canMove => moveCooltimeOk && stunned==false;
+    bool moveCooltimeOk => Time.time >= lastMoveTime + enemyData.moveCooltime;
+    // bool canMove => stopDurationRemain<=0  && stunDurationRemain <=0;  
 
     public Vector3 lastHitPoint;
 
@@ -66,17 +76,23 @@ public class Enemy : MonoBehaviour, IPoolObject
         targetDistSqr = Vector3.SqrMagnitude(t_target.position - transform.position);
         // Debug.Log($"{targetDistSqr} {range}, {range *range} ");
         
-        if( stunned )
+        // 정지 지속시간 감소
+        if( stopDurationRemain>0)
         {
-            navAgent.isStopped = true;
+            stopDurationRemain -= Time.deltaTime;
+        }
+        // 스턴 지속시간 감소
+        if( stunDurationRemain>0)
+        {
+            stunDurationRemain -= Time.deltaTime;
+        }
+
+        if(stunned)
+        {
             return;
         }
-        else
-        {
-            navAgent.isStopped = false;
-        }
-        
 
+        // 스턴걸리면 아래까지 안내려가게.
         TryUseSkills();
         Move(); 
         UpdateSpriteDir(t_target.position);
@@ -143,6 +159,10 @@ public class Enemy : MonoBehaviour, IPoolObject
         navAgent.speed = enemyData.movementSpeed;
         // data 에 따라 radius 및 이동속도 도 세팅해야함. 
 
+        stunDurationRemain = 0;
+        stopDurationRemain = 0;
+
+
 
         InitSkill();
         
@@ -164,10 +184,12 @@ public class Enemy : MonoBehaviour, IPoolObject
     void Move()
     {
         // Debug.Log($" move {canMove} : {lastMoveTime} +  {enemyData.moveCooltime}  <> {Time.time}");
-        
-        if (moveCooltimeOk)
+        if (moveCooltimeOk && stopDurationRemain<=0)
         {
-            navAgent.isStopped = false;
+            navAgent.isStopped  = false;
+            navAgent.velocity = navAgent.desiredVelocity;   //  원래는 velocity 가 점진적으로 가속을 받기 때문에, 즉시 원하는 이동속도 적용
+
+            //
             move.Move(enemyData,navAgent,t_target.position );
 
             lastMoveTime = Time.time;
@@ -178,9 +200,9 @@ public class Enemy : MonoBehaviour, IPoolObject
     
     public void GetDamaged(Vector3 hitPoint,float damage,bool isEnhancedAttack = false)
     {
-        lastHitPoint = hitPoint;
+        lastHitPoint = hitPoint == Vector3.zero? enemyCollider.ClosestPoint(t_target.position) :hitPoint;      // 플레이어와 적 개체의 콜라이더가 겹쳐있는 경우, hitPoint 가 (0,0,0)이 나옴;
+        
         GetDamaged(damage, isEnhancedAttack );
-
     }
 
     public void GetDamaged(float damage, bool isEnhancedAttack = false)
@@ -216,19 +238,47 @@ public class Enemy : MonoBehaviour, IPoolObject
     }
 
     //=========================================================================================
+    
+    /// <summary>
+    ///  정지 상태 적용 - 움직이지 못하게. - 스킬 사용, 피격 or 사망  등
+    /// </summary>
+    /// <param name="duration"></param>
+    public void SetStopped( float duration )
+    {
+        stopDurationRemain = Math.Max(stopDurationRemain,duration );
+        navAgent.isStopped = true;
+        navAgent.velocity = Vector3.zero;
+    }
+
+    /// <summary>
+    /// 기절 상태 적용 - 넉백시. or 기타 군중제어 
+    /// </summary>
+    /// <param name="duration"></param>
+    void SetStunned( float duration )
+    {
+        stunDurationRemain = Math.Max(stunDurationRemain, duration);
+        SetStopped(duration);    // 
+    }
+    
+    
+    
     // knockBack 
     public void GetKnockback(float power, Vector3 hitPoint)
     {
-        stunned = true;
-        
+        if(usingSkill!=null)
+        {
+            usingSkill.Interrupt(this);
+            usingSkill=null;
+        }
+
+        SetStunned(0.5f);
+
         Vector3 dir = (t.position - hitPoint).WithFloorHeight().normalized;
         rb.velocity = dir * power;
         
         DOTween.Sequence()
         .AppendInterval(0.2f)
         .AppendCallback( ()=>rb.velocity = Vector3.zero)
-        .AppendInterval(0.5f)
-        .AppendCallback( ()=>stunned = false)
         .Play();
     }
 
@@ -280,10 +330,16 @@ public class Enemy : MonoBehaviour, IPoolObject
     }
 
 
+
+
+
+
     //=============================================================
     #region SKill
     public void InitSkill()
     {
+        usingSkill = null;
+        
         skills.Clear();
         foreach(var skillData in enemyData.skils)
         {
@@ -295,14 +351,29 @@ public class Enemy : MonoBehaviour, IPoolObject
 
     public void TryUseSkills()
     {  
+        if( usingSkill!=null)
+        {
+            return;
+        }
 
         for (int i = 0; i < skills.Count; i++)
         {
-            if (  CanUse( skills[i] ))
+            EnemySkill skill = skills[i];
+            
+            if (  CanUse( skill ) )
             {
-                skills[i].Use(this,t_target.position);
+                usingSkill = skill;
+
+                skill.Use(this,t_target.position);
+                SetStopped(skill.skillData.delay_beforeCast + skill.skillData.delay_afterCast);
+
             }
         }
+    }
+
+    public void OnFinish_Skill()
+    {
+        usingSkill = null;
     }
 
     bool CanUse(EnemySkill skill)

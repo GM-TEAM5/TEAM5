@@ -16,11 +16,11 @@ MonoBehaviour:
   waves:
   - enemyIds:
     - 001
-    n: 2
+    n: 1
     waveForm: {fileID: 11400000, guid: 254f42f2f62d31643970295c0301736c, type: 2}
     startTime: 0
     endTime: 0
-    frequency: 5
+    frequency: 500
     testCurve:
       serializedVersion: 2
       m_Curve:
@@ -47,11 +47,11 @@ MonoBehaviour:
       m_RotationOrder: 4
   - enemyIds:
     - 002
-    n: 1
+    n: 0
     waveForm: {fileID: 11400000, guid: 254f42f2f62d31643970295c0301736c, type: 2}
     startTime: 5
     endTime: 0
-    frequency: 7
+    frequency: 20
     testCurve:
       serializedVersion: 2
       m_Curve:

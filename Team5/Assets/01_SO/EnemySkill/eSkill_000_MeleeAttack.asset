@@ -17,3 +17,6 @@ MonoBehaviour:
   icon: {fileID: 0}
   lifeTime: 1
   cooltime: 1.5
+  interruptionDefense: 0
+  delay_beforeCast: 0.5
+  delay_afterCast: 0.5

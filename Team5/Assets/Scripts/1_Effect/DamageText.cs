@@ -34,7 +34,7 @@ public class DamageText : MonoBehaviour, IPoolObject
 
     public void Init(Vector3 hitPoint, float damage, DamageType type = DamageType.DMG_NORMAL)
     {
-        transform.position = hitPoint + new Vector3(Random.Range(-1,1), 0, 0); 
+        transform.position = hitPoint + new Vector3(Random.Range(-0.5f,0.5f), 0, 0); 
         
         text.SetText( damage.ToString("0"));
         Color textColor = Color.white;

@@ -12,6 +12,8 @@ public class EnemySkill
     public float cooltimeRemain => lastUseTime + skillData.cooltime - Time.time;
     public bool isCooltimeOk => cooltimeRemain <= 0;
 
+    Coroutine skillRoutine;
+
     public EnemySkill(EnemySkillSO skillData)
     {
         this.skillData = skillData;
@@ -22,9 +24,35 @@ public class EnemySkill
     public void Use(Enemy enemy, Vector3 targetPos)
     {
         useCount ++;
-        lastUseTime = Time.time; //시간기록
         
         //        
+        skillRoutine = enemy.StartCoroutine( UseSkillRoutine(enemy, targetPos));
+    }
+
+    IEnumerator UseSkillRoutine( Enemy enemy, Vector3 targetPos )
+    {
+        // 스킬 상태 진입.
+        yield return new WaitForSeconds( skillData.delay_beforeCast );
+        if (enemy.isAlive == false)
+        {
+            yield break;
+        }
         skillData.Use( enemy, targetPos );
+        yield return new WaitForSeconds( skillData.delay_afterCast );
+        if (enemy.isAlive == false)
+        {
+            yield break;
+        }
+        // 스킬 상태 해제 
+        enemy.OnFinish_Skill();
+        lastUseTime = Time.time; //시간기록
+    }
+
+    public void Interrupt(Enemy enemy)
+    {
+        if (skillData.interruptionDefense==false)
+        {
+            enemy.StopCoroutine( skillRoutine );
+        }
     }
 }
