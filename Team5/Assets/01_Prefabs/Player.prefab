@@ -471,7 +471,7 @@ GameObject:
   - component: {fileID: 2482353749107652102}
   - component: {fileID: 4950403964581278901}
   - component: {fileID: 5738430724439540145}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -572,7 +572,7 @@ MonoBehaviour:
     range: 4
     drawRange: 0
     maxInk: 100
-    currInk: 100
+    _currInk: 30.000002
     inkUseRate: 20
     inkChargeRate: 20
   playerCollider: {fileID: 0}

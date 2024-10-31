@@ -6,6 +6,7 @@ namespace BW.Util
 {
     public static class GameConstants 
     {
+        public static int playerLayer =  1<<LayerMask.NameToLayer("Player");
         public static int enemyLayer =  1<<LayerMask.NameToLayer("Enemy");
     }
 }

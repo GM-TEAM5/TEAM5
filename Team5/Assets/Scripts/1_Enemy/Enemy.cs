@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour, IPoolObject
     Collider enemyCollider;
     Rigidbody rb;
 
-    Transform t;
+    public Transform t;
     public  Transform t_target;
 
 
@@ -95,7 +95,7 @@ public class Enemy : MonoBehaviour, IPoolObject
         // 스턴걸리면 아래까지 안내려가게.
         TryUseSkills();
         Move(); 
-        UpdateSpriteDir(t_target.position);
+        
     }
 
     void OnTriggerEnter(Collider other)
@@ -193,7 +193,10 @@ public class Enemy : MonoBehaviour, IPoolObject
             move.Move(enemyData,navAgent,t_target.position );
 
             lastMoveTime = Time.time;
-        }  
+
+
+            UpdateSpriteDir(t_target.position);
+        } 
     }
 
 
