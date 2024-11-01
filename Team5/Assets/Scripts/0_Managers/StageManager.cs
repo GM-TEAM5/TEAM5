@@ -11,8 +11,6 @@ public class StageManager : Singleton<StageManager>
     // [SerializeField] NavMeshSurface stageNavMesh;
     public StageDataSO stageData;
 
-
-
     /// <summary>
     /// 스테이지 초기화 - 데이터 및 지형 세팅
     /// </summary>

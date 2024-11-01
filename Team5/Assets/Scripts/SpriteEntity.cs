@@ -13,6 +13,19 @@ public class SpriteEntity : MonoBehaviour
     [SerializeField] Transform t_sprite;
     [SerializeField] Transform t_camera;
 
+
+    public void Init()
+    {
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        spriteRenderer.color = Color.white;     // 풀에서 다시 가져올 때 투명한 상태기 때문에. 
+        
+        spriteRenderer.spriteSortPoint = SpriteSortPoint.Pivot;
+        spriteRenderer.material = spriteShadow;
+
+        t_sprite = spriteRenderer.transform;
+        t_camera = Camera.main.transform;
+    }
+
     /// <summary>
     /// 지정된 스프라이트, 크기로 초기화
     /// </summary>

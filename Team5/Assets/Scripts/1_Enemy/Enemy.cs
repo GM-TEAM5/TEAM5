@@ -303,7 +303,7 @@ public class Enemy : MonoBehaviour, IPoolObject
 
     void DropItem()
     {
-        PoolManager.Instance.GetExp( enemyData.exp, transform.position);
+        // PoolManager.Instance.GetExp( enemyData.exp, transform.position);
 
         if ( UnityEngine.Random.Range(0,100) < 50  )
         {

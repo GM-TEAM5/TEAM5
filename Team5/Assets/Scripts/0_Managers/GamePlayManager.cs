@@ -42,23 +42,25 @@ public class GamePlayManager : Singleton<GamePlayManager>
 
     IEnumerator StartGamePlaySequence()
     {
-        Sequence startSequence = gamePlayStartUI.GetSeq_GamePlayStart();
-        Sequence generatePortalSeq = entrancePortal.GetSeq_GeneratePortal(1.5f);
-        Sequence playerEnterPortalSeq = Player.Instance.GetSequence_EnterPortal(false, 1f);
+        // Sequence startSequence = gamePlayStartUI.GetSeq_GamePlayStart();
+        // Sequence generatePortalSeq = entrancePortal.GetSeq_GeneratePortal(1.5f);
+        // Sequence playerEnterPortalSeq = Player.Instance.GetSequence_EnterPortal(false, 1f);
         //
-        generatePortalSeq.Play();
-        yield return new WaitUntil( ()=> generatePortalSeq.IsActive()==false );
+        // generatePortalSeq.Play();
+        // yield return new WaitUntil( ()=> generatePortalSeq.IsActive()==false );
 
-        yield return new WaitForSeconds(0.5f);    //대기시간
+        // yield return new WaitForSeconds(0.5f);    //대기시간
 
-        playerEnterPortalSeq.Play();
-        yield return new WaitUntil( ()=> playerEnterPortalSeq.IsActive()==false );
+        // playerEnterPortalSeq.Play();
+        // yield return new WaitUntil( ()=> playerEnterPortalSeq.IsActive()==false );
 
-        startSequence.Play();
-        yield return new WaitUntil( ()=>startSequence.IsActive()==false);
+        // startSequence.Play();
+        // yield return new WaitUntil( ()=>startSequence.IsActive()==false);
 
-        entrancePortal.PlaySeq_DestroyPortal(2f);
+        // entrancePortal.PlaySeq_DestroyPortal(2f);
         
+
+        yield return null;
 
         Player.Instance.OnStartGamePlay();
 
@@ -67,8 +69,8 @@ public class GamePlayManager : Singleton<GamePlayManager>
         isGamePlaying = true;
         bgm.Play();
 
-        StartCoroutine( CheckLevelUp() );        
-        StartCoroutine( SetTimer() );       
+        // StartCoroutine( CheckLevelUp() );        
+        // StartCoroutine( SetTimer() );       
         
         StageManager.Instance.OnStartGamePlay();
     }
@@ -95,23 +97,23 @@ public class GamePlayManager : Singleton<GamePlayManager>
     /// 게임 진행 중 강화 선택지 창을 연다.  - 레벨업을 하여 강화를 해야할 때, 
     /// </summary>
     /// <returns></returns>
-    IEnumerator CheckLevelUp()
-    {
-        var waitForSeconds = new WaitForSeconds(0.25f);
-        while( isGamePlaying )
-        {
-            bool isAvailable = Player.Instance.reinforcementLevel < Player.Instance.status.level;
+    // IEnumerator CheckLevelUp()
+    // {
+    //     var waitForSeconds = new WaitForSeconds(0.25f);
+    //     while( isGamePlaying )
+    //     {
+    //         bool isAvailable = Player.Instance.reinforcementLevel < Player.Instance.status.level;
             
-            if (reinforcementPanel.gameObject.activeSelf == false  &&  isAvailable )
-            {
-                reinforcementPanel.Open();
-                GameManager.Instance.PauseGamePlay(true);
-            } 
+    //         if (reinforcementPanel.gameObject.activeSelf == false  &&  isAvailable )
+    //         {
+    //             reinforcementPanel.Open();
+    //             GameManager.Instance.PauseGamePlay(true);
+    //         } 
             
-            yield return waitForSeconds;
-        }
+    //         yield return waitForSeconds;
+    //     }
 
-    }
+    // }
 
     /// <summary>
     ///  강화 선택지를 누르면 창을 닫고 resume
@@ -152,23 +154,23 @@ public class GamePlayManager : Singleton<GamePlayManager>
 
 
     //====================================================
-    IEnumerator SetTimer()
-    {
-        var waitForSeconds = new WaitForSeconds(1f);
-        while( isGamePlaying )
-        {
+    // IEnumerator SetTimer()
+    // {
+    //     var waitForSeconds = new WaitForSeconds(1f);
+    //     while( isGamePlaying )
+    //     {
             
-            //
-            int mins = (int)gamePlayTime/60;
-            int secs = (int)gamePlayTime % 60;
+    //         //
+    //         int mins = (int)gamePlayTime/60;
+    //         int secs = (int)gamePlayTime % 60;
         
-            text_timer.SetText($"{mins:00}:{secs:00}");
+    //         text_timer.SetText($"{mins:00}:{secs:00}");
             
-            yield return waitForSeconds;
-        }
+    //         yield return waitForSeconds;
+    //     }
         
 
-    }
+    // }
 
 
 

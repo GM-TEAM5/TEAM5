@@ -22,10 +22,10 @@ public class WaveInfo
     
     
     // 이건 나중에 시간별로 해당 웨이브의 생성 빈도를 조정하기 위함
-    public AnimationCurve testCurve = new AnimationCurve(       
-                                                        new Keyframe(0.0f, 0.0f),  // 첫 번째 키프레임
-                                                        new Keyframe(10.0f, 1.0f)   // 두 번째 키프레임);
-                                                    );
+    // public AnimationCurve testCurve = new AnimationCurve(       
+    //                                                     new Keyframe(0.0f, 0.0f),  // 첫 번째 키프레임
+    //                                                     new Keyframe(10.0f, 1.0f)   // 두 번째 키프레임);
+    //                                                 );
 
 
 

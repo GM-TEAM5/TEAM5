@@ -161,19 +161,19 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
 
         //
         lastMeleeAttackTime = Time.time;
-        bool isEnhancedAttack = ++combo == 3;
+        // bool isEnhancedAttack = ++combo == 3;
         //
-        if (isEnhancedAttack)
-        {
-            combo = 0;
-            lastMeleeAttackTime += status.attackSpeed * 2;    // 강화 후엔 딜레이 좀 두려고
+        // if (isEnhancedAttack)
+        // {
+        //     combo = 0;
+        //     lastMeleeAttackTime += status.attackSpeed * 2;    // 강화 후엔 딜레이 좀 두려고
 
-            MeleeAttack_Enhanced();
-        }
-        else
-        {
+            // MeleeAttack_Enhanced();
+        // }
+        // else
+        // {
             MeleeAttack_Normal();
-        }
+        // }
     }
 
 
@@ -242,53 +242,53 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     /// <summary>
     /// 강화 공격 - 플레어가 보는 방향의 180도를 휩쓸기 공격을 한다.
     /// </summary>
-    void MeleeAttack_Enhanced()
-    {
-        Debug.Log("강화공격!!!!!");
+    // void MeleeAttack_Enhanced()
+    // {
+    //     Debug.Log("강화공격!!!!!");
 
-        Vector3 mouseWorldPos = playerInput.mouseWorldPos;
-        Vector3 mouseDir = (mouseWorldPos - t_player.position).WithFloorHeight().normalized;
+    //     Vector3 mouseWorldPos = playerInput.mouseWorldPos;
+    //     Vector3 mouseDir = (mouseWorldPos - t_player.position).WithFloorHeight().normalized;
 
-        // OverlapSphere를 사용해 모든 적을 반경 내에서 감지
-        float maxDist = 8;
-        Collider[] hitColliders = Physics.OverlapSphere(t_player.position.WithStandardHeight(), maxDist, GameConstants.enemyLayer);
+    //     // OverlapSphere를 사용해 모든 적을 반경 내에서 감지
+    //     float maxDist = 8;
+    //     Collider[] hitColliders = Physics.OverlapSphere(t_player.position.WithStandardHeight(), maxDist, GameConstants.enemyLayer);
 
-        for (int i = 0; i < hitColliders.Length; i++)
-        {
-            Collider hitCollider = hitColliders[i];
-
-
-            // 방향 벡터 계산 (origin에서 적으로)
-            Vector3 enemyDir = (hitCollider.transform.position - t_player.position).normalized;
-            float angleWithEnemy = Vector3.Angle(mouseDir, enemyDir);
-
-            // 각도가 설정된 범위 내에 있는지 확인 (90도 이하만 허용 = 반구)
-            if (angleWithEnemy <= 90)
-            {
-                // 적에게 피해를 입힘
-                Enemy enemy = hitCollider.GetComponent<Enemy>();
-                if (enemy != null)
-                {
-                    enemy.GetDamaged(hitCollider.ClosestPoint(t_player.position), status.ad * 1.5f, true);
-                }
-            }
-        }
-        lastCastDirection = mouseDir;
-        debug_normalAttack = true;
+    //     for (int i = 0; i < hitColliders.Length; i++)
+    //     {
+    //         Collider hitCollider = hitColliders[i];
 
 
-        TestManager.Instance.TestSFX_EnhancedAttack();
-    }
+    //         // 방향 벡터 계산 (origin에서 적으로)
+    //         Vector3 enemyDir = (hitCollider.transform.position - t_player.position).normalized;
+    //         float angleWithEnemy = Vector3.Angle(mouseDir, enemyDir);
+
+    //         // 각도가 설정된 범위 내에 있는지 확인 (90도 이하만 허용 = 반구)
+    //         if (angleWithEnemy <= 90)
+    //         {
+    //             // 적에게 피해를 입힘
+    //             Enemy enemy = hitCollider.GetComponent<Enemy>();
+    //             if (enemy != null)
+    //             {
+    //                 enemy.GetDamaged(hitCollider.ClosestPoint(t_player.position), status.ad * 1.5f, true);
+    //             }
+    //         }
+    //     }
+    //     lastCastDirection = mouseDir;
+    //     debug_normalAttack = true;
+
+
+    //     TestManager.Instance.TestSFX_EnhancedAttack();
+    // }
 
     /// <summary>
     /// 움직임
     /// </summary>
     void Move()
     {
-        if (canMoveAfterMeleeAttack == false)
-        {
-            return;
-        }
+        // if (canMoveAfterMeleeAttack == false)
+        // {
+        //     return;
+        // }
 
         // 땅위의 경우
         Vector2 moveVector = playerInput.moveVector;

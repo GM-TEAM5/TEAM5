@@ -10,9 +10,11 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
     
     public InputAction moveAction;
     public InputAction mouseLeftButtonAction;
+    public KeyCode interactAction = KeyCode.F;
     InputAction lookAction;
 
 
+    public bool isInteractOn;
     public bool isMouseLeftButtonOn;        //마우스를 누르고 있는 중인지.
 
 
@@ -46,6 +48,7 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
         
         moveAction = playerInput.actions["Move"];
         mouseLeftButtonAction = playerInput.actions["MouseLeftButton"];
+        // mouseLeftButtonAction = playerInput.actions["MouseLeftButton"];
 
         drawingPlane = new Plane(Vector3.up, Vector3.zero);
     }
@@ -63,6 +66,7 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
 
 
         isMouseLeftButtonOn = mouseLeftButtonAction.ReadValue<float>() > 0;
+        isInteractOn = Input.GetKeyDown(interactAction);
 
         CheckNumberKeys();
 
