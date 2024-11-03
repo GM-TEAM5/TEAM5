@@ -53,4 +53,5 @@ public abstract class InteractableObject : MonoBehaviour
     protected abstract void OnEnter(bool isOn);
 
     protected abstract void OnInteract();
+
 }

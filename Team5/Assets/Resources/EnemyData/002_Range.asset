@@ -19,7 +19,7 @@ MonoBehaviour:
   type: 1
   rank: 0
   attackType: 2
-  maxHp: 50
+  maxHp: 10
   armor: 0
   range: 8
   attackSpeed: 0

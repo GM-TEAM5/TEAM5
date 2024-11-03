@@ -13,66 +13,61 @@ MonoBehaviour:
   m_Name: Stage_00
   m_EditorClassIdentifier: 
   id: 00
+  prefab_stage: {fileID: 3519405793876131887, guid: 6684c2c6438e8824a8e03cf1e106efa3,
+    type: 3}
   waves:
-  - enemyIds:
-    - 001
-    n: 1
-    waveForm: {fileID: 11400000, guid: 254f42f2f62d31643970295c0301736c, type: 2}
-    startTime: 0
-    endTime: 0
-    frequency: 5
-    testCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 10
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-  - enemyIds:
-    - 002
-    n: 1
-    waveForm: {fileID: 11400000, guid: 254f42f2f62d31643970295c0301736c, type: 2}
-    startTime: 5
-    endTime: 0
-    frequency: 7
-    testCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 10
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
+    array:
+    - Key: 1
+      Value:
+      - waveNum: 1
+        enemyIds:
+        - 001
+        totalNum: 15
+        spawnDuration: 15
+        totalCycle: 1
+        waveForm: 0
+        spawnStartTime: 0
+      - waveNum: 1
+        enemyIds:
+        - 002
+        totalNum: 5
+        spawnDuration: 0
+        totalCycle: 1
+        waveForm: 0
+        spawnStartTime: 0
+    - Key: 2
+      Value:
+      - waveNum: 2
+        enemyIds:
+        - 001
+        totalNum: 15
+        spawnDuration: 0
+        totalCycle: 1
+        waveForm: 0
+        spawnStartTime: 0
+      - waveNum: 2
+        enemyIds:
+        - 003
+        totalNum: 5
+        spawnDuration: 0
+        totalCycle: 1
+        waveForm: 0
+        spawnStartTime: 0
+    - Key: 3
+      Value:
+      - waveNum: 3
+        enemyIds:
+        - 003
+        totalNum: 7
+        spawnDuration: 0
+        totalCycle: 1
+        waveForm: 0
+        spawnStartTime: 0
+      - waveNum: 3
+        enemyIds:
+        - 002
+        totalNum: 10
+        spawnDuration: 0
+        totalCycle: 1
+        waveForm: 0
+        spawnStartTime: 0

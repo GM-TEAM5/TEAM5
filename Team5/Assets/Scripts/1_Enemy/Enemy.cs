@@ -100,6 +100,8 @@ public class Enemy : MonoBehaviour, IPoolObject
 
     void OnTriggerEnter(Collider other)
     {
+        
+        
         lastHitPoint = other.ClosestPoint(transform.position);
 
         // TODO 삭제 예정
@@ -299,6 +301,8 @@ public class Enemy : MonoBehaviour, IPoolObject
         stateUI.OnDie();
         //
         TestManager.Instance.TestSFX_enemyDeath(enemyData.type);
+
+        //
     }
 
     void DropItem()
@@ -395,7 +399,10 @@ public class Enemy : MonoBehaviour, IPoolObject
     void PlaySequence_Death()
     {
         DOTween.Sequence()
-        .OnComplete( ()=> PoolManager.Instance.TakeToPool<Enemy>(this) )
+        .OnComplete( ()=> {
+            PoolManager.Instance.TakeEnemy(this);
+            GameEventManager.Instance.onEnemyDie.Invoke(this);
+            })
         .AppendInterval(0.3f)
         .Append(spriteEntity.spriteRenderer.DOFade(0,1f))
         .Play();

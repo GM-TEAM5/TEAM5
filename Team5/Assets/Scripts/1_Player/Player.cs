@@ -185,7 +185,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     /// </summary>
     void MeleeAttack_Normal()
     {
-        Debug.Log("일반공격");
+        // Debug.Log("일반공격");
         Vector3 mouseWorldPos = playerInput.mouseWorldPos;
 
         Vector3 dir = (mouseWorldPos - t_player.position).WithFloorHeight().normalized;
@@ -397,11 +397,6 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     // TODO: 구조 개선 필요
     public void TryUseSkills()
     {
-        if (!GamePlayManager.isGamePlaying)
-        {
-            return;
-        }
-
         // 스킬 변경 체크
         if (!skillActive && playerInput.pressedNumber != 0)
         {

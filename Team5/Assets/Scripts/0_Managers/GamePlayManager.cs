@@ -32,11 +32,12 @@ public class GamePlayManager : Singleton<GamePlayManager>
     {           
         isGamePlaying = false;
         // GameEventManager.Instance.onLevelUp.AddListener(OnLevelUp);
-
+        
+        Player.Instance.InitPlayer();
         StageManager.Instance.Init(TestManager.Instance.testStageData);     
         TestManager.Instance.SetBoundImage();
 
-        Player.Instance.InitPlayer();
+        
         StartCoroutine( StartGamePlaySequence());
     }
 
@@ -154,6 +155,14 @@ public class GamePlayManager : Singleton<GamePlayManager>
 
 
     //====================================================
+    public void OnStageClear()
+    {
+
+    }
+
+
+
+
     // IEnumerator SetTimer()
     // {
     //     var waitForSeconds = new WaitForSeconds(1f);
