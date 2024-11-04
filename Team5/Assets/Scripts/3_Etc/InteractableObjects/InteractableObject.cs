@@ -2,22 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(SphereCollider))]
+// [RequireComponent(typeof(SphereCollider))]
 public abstract class InteractableObject : MonoBehaviour
 {
-    SphereCollider sphereCollider;
-    bool isPlayerInRange;
+    Collider _collider;
+    [SerializeField] protected bool isPlayerInRange;
     [SerializeField] protected bool locked;
 
     
 
 
-    void Start()
+    protected virtual void Start()
     {
-        sphereCollider = GetComponent<SphereCollider>();
+        _collider = GetComponent<Collider>();
         OnEnter(false);
 
-        GetComponent<SpriteEntity>().Init();
+        GetComponent<SpriteEntity>()?.Init();
     }
 
     void OnTriggerEnter(Collider other)
@@ -40,15 +40,32 @@ public abstract class InteractableObject : MonoBehaviour
         }
     }
 
-    void Update()
+    protected virtual void Update()
     {
         if (locked==false && isPlayerInRange && PlayerInputManager.Instance.isInteractOn)
         {
+            Deactivate();
             OnInteract();
         }
     }
 
     //==============================================================================
+    
+    protected void Activate()
+    {
+        locked = false;
+
+        GetComponent<Collider>().enabled = true;
+    }
+
+    protected void Deactivate()
+    {
+        locked = true;
+        
+        OnEnter(false);
+        GetComponent<Collider>().enabled = false;
+    }
+
     
     protected abstract void OnEnter(bool isOn);
 

@@ -17,20 +17,14 @@ public class WaveActivationSwitch : InteractableObject
 
     protected override void OnInteract()
     {
-        locked = true;
         Debug.Log("웨이브 활성화");
 
-        StageManager.Instance.StartWave();
-
-        OnEnter(false);
-        GetComponent<SphereCollider>().enabled = false;
+        GamePlayManager.Instance.StartWave();
     }
 
-    public void OnWaveClear()
+    public void OnSelect_Item()
     {
-        locked = false;
-
-        GetComponent<SphereCollider>().enabled = true;
+        Activate();
     }
 
 }

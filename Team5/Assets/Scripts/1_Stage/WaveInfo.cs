@@ -24,26 +24,28 @@ public class WaveInfo
     public float spawnDuration;         //  전체 생성 지속 시간  
     [Min(1f)] public int totalCycle = 1;         //  분할 생성 수 . 
     // public int currCycle;
-    public bool isWaveFinished  {get;private set;}    // 웨이브가 끝났는지. 
+    
+    // public bool isWaveFinished => currSpawnCount == totalNum;
 
     // public WaveFormSO waveForm;     // 생성 형태 
     public WaveForm waveForm;     // 생성 형태
 
-    public float spawnStartTime;
-
-    
+    public float spawnStartTime;    
 
 
 
     //
     public IEnumerator WaveRoutine()
     {
+        GamePlayManager.Instance.targetSpawnCount_currWave +=  totalNum;  // 이번 웨이브에 생성해야할 적 수를 기록
+        
+        yield return new WaitForSeconds(spawnStartTime);   
+        
+        //
         if (totalCycle >0)
         {
             int spawnPerCycle = (int)Math.Ceiling( (double)totalNum/totalCycle);
             float cycleInterval = spawnDuration/totalCycle;
-            
-            yield return new WaitForSeconds(spawnStartTime);   
             
             //
             for(int i=0;i<totalCycle;i++)
@@ -55,9 +57,16 @@ public class WaveInfo
 
                 yield return new WaitForSeconds(cycleInterval); // 추후엔 하데스 처럼 모든 적이 섬멸 되었을 때 바로 웨이브 시작하도록 수정하자. 
             }
-            
         }
-        isWaveFinished  = true;
+        // 예외 처리
+        else
+        {
+            //
+            for(int j=0;j<totalNum;j++)
+            {
+                SpawnWave();
+            }
+        }
     }
 
 
@@ -77,6 +86,8 @@ public class WaveInfo
                 Spawn_RandomArea();
                 break; 
         }
+
+        GamePlayManager.Instance.spawnCount_currWave++;
     }
 
     //=======================================================================================

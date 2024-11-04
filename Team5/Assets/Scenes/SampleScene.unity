@@ -2276,15 +2276,18 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
-  drawAction:
-    m_Name: Draw
+  mouseLeftButtonAction:
+    m_Name: 
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: 7e0d3b6c-507a-4660-b6fa-94b2eb8ce91c
+    m_Id: 85f4b2aa-f16d-4a4d-8fd9-5a5d776a1ada
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+  interactAction: 102
+  isInteractOn: 0
+  isMouseLeftButtonOn: 0
 --- !u!4 &1235957011
 Transform:
   m_ObjectHideFlags: 0
@@ -2787,7 +2790,8 @@ MonoBehaviour:
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -3018,6 +3022,15 @@ MonoBehaviour:
   initProjSprite: {fileID: 21300000, guid: 1396c40b41c55a745a385648ec3e7152, type: 3}
   damageText: {fileID: 6403899980032326514, guid: a537ae7bbd7ea544e892012b3c972e1a,
     type: 3}
+  enemyData: {fileID: 0}
+  testStageData: {fileID: 0}
+  testEnemyDeathSFX_ghost: {fileID: 0}
+  testEnemyDeathSFX_beast: {fileID: 0}
+  testNormalAttackSFX: {fileID: 0}
+  testEnhancedAttackSFX: {fileID: 0}
+  simpleSFX: {fileID: 0}
+  boundImages: []
+  InstantDeath: {fileID: 0}
 --- !u!4 &1682831513
 Transform:
   m_ObjectHideFlags: 0

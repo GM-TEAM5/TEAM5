@@ -6,7 +6,10 @@ public abstract class GamePlayPanel : MonoBehaviour
 {
     protected bool initialized;
 
-
+    public void ForceInit()
+    {
+        Init();
+    }
     protected abstract void Init();
 
 

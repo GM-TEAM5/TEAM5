@@ -9,7 +9,13 @@ public class StagePortal : InteractableObject
 {
     [SerializeField] TextMeshPro text;
     
-    
+    public void Init()
+    {
+        gameObject.SetActive(false);
+
+    }
+
+
     protected override void OnEnter(bool isOn)
     {
         text.gameObject.SetActive(isOn);
@@ -17,13 +23,8 @@ public class StagePortal : InteractableObject
 
     protected override void OnInteract()
     {
-        locked = true;
         Debug.Log("포탈 진입");
 
-
-        OnEnter(false);
-        GetComponent<SphereCollider>().enabled = false;
-        
         //
         GoToNextStage();
     }
@@ -31,9 +32,7 @@ public class StagePortal : InteractableObject
     public void OnStageClear()
     {
         gameObject.SetActive(true);
-        
-        locked = false;
-        GetComponent<SphereCollider>().enabled = true;
+        Activate();
     }
 
     

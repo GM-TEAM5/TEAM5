@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Stage : MonoBehaviour
@@ -13,7 +14,8 @@ public class Stage : MonoBehaviour
 
     public WaveActivationSwitch waveActivationSwitch;
 
-    public StagePortal portal;
+    public StagePortal stagePortal;
+    public SelectableItemList selectableItemList;
 
 
 
@@ -23,9 +25,13 @@ public class Stage : MonoBehaviour
     {
         enemySpawnArea = t_enemySpawnAreaParent.GetComponentsInChildren<BoxCollider>();
         waveActivationSwitch = GetComponentInChildren<WaveActivationSwitch>();
-        portal = GetComponentInChildren<StagePortal>();
+        
+        selectableItemList = GetComponentInChildren<SelectableItemList>();
+        selectableItemList.Init();
 
-        portal.gameObject.SetActive(false);
+        stagePortal = GetComponentInChildren<StagePortal>();
+        stagePortal.Init();
+
     }
 
 

@@ -20,24 +20,40 @@ public class GamePlayManager : Singleton<GamePlayManager>
     [SerializeField] EntrancePortal entrancePortal;
     [SerializeField] GamePlayStartUI gamePlayStartUI;    // 스테이지 시작시 안내창
     [SerializeField] ReinforcementPanel reinforcementPanel; //레벨업 시 강화 패널
+
+    //
+    [SerializeField] SelectableItemInfoPanel selectableItemInfoPanel;   // 웨이브 종료시 나타나는 아이템 설명 팝업창
+    [SerializeField] WaveActivationSwitch waveActivationSwitch;
+    [SerializeField] SelectableItemList selectableItemList;
+    [SerializeField] StagePortal stagePortal;
+
+
     [SerializeField] GameOverPanel gameOverPanel;   //게임오버 패널
     [SerializeField] TextMeshProUGUI text_timer;   //게임오버 패널
 
     [SerializeField] float instantDeathTime = 180;
     bool instantDeathCalled;
 
-    
-    //=======================================================================================
+
+    public int totalEnemySpawnCount;
+    public int totalEnemyKillCount;
+
+
+
+    //===================================================================================================================================================
     void Start()
     {           
         isGamePlaying = false;
         // GameEventManager.Instance.onLevelUp.AddListener(OnLevelUp);
+
+        // GameEventManager.Instance.onEnemyDie.AddListener((Enemy e)=> CheckWaveClear());
+
         
         Player.Instance.InitPlayer();
         StageManager.Instance.Init(TestManager.Instance.testStageData);     
-        TestManager.Instance.SetBoundImage();
-
+        InitStageObjects( StageManager.Instance.currStage);
         
+        TestManager.Instance.SetBoundImage();
         StartCoroutine( StartGamePlaySequence());
     }
 
@@ -72,8 +88,6 @@ public class GamePlayManager : Singleton<GamePlayManager>
 
         // StartCoroutine( CheckLevelUp() );        
         // StartCoroutine( SetTimer() );       
-        
-        StageManager.Instance.OnStartGamePlay();
     }
 
     void Update()
@@ -92,7 +106,112 @@ public class GamePlayManager : Singleton<GamePlayManager>
         }
     }
 
+
+    /// 이미 초기화는 끝난 상태. 변수 리디렉션만 함. 
+    public void InitStageObjects(Stage stage)
+    {
+        selectableItemInfoPanel.ForceInit();
+        
+        waveActivationSwitch = stage.waveActivationSwitch;
+        selectableItemList = stage.selectableItemList;
+        stagePortal = stage.stagePortal;
+    }
+
     //========================================
+
+    #region ==== Stage ====
+
+
+    //--------------------------------------------------
+    [Header("Stage")]
+    public int targetSpawnCount_currWave;    // 이번 웨이브에서 생성해야할 적의 수 
+    public int spawnCount_currWave;          // 이번 웨이브에서 생성한 적의 수 
+    public int killCount_currWave;
+
+
+    public bool inProgress_waveSpawn =>  spawnCount_currWave != targetSpawnCount_currWave;  //웨이브 스폰이 진행중인지. 
+    public bool inProgress_waveBattle => killCount_currWave <   targetSpawnCount_currWave ; //웨이브가 전투중인지. (생성된 적이 다 안죽었는 지)
+
+    //--------------------------------------------------
+
+    public void StartStage()
+    {
+
+    }
+
+
+    /// 웨이브를 시작시킨다. 
+    public void StartWave()
+    {
+        targetSpawnCount_currWave = 0;
+        spawnCount_currWave = 0;
+        killCount_currWave = 0;
+        
+        
+        StageManager.Instance.StartWave();
+        
+        selectableItemList.OnWaveStart();
+
+        StartCoroutine( CheckWaveClear() );
+    }
+
+    /// <summary>
+    /// 웨이브 종료를 감지하고, 종료 후엔 그에 맞는 처리를 한다. 
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator CheckWaveClear()
+    {
+        // 
+        yield return new WaitUntil( ()=> inProgress_waveSpawn == false && inProgress_waveBattle == false);      // 웨이브가 종료될 때 까지 기다림. 
+    
+        ClearWave();        // 웨이브 클리어 처리. 
+
+        if (StageManager.Instance.IsStageClear())
+        {
+            ClearStage();
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void ClearWave()
+    {
+        StageManager.Instance.OnWaveClear();
+
+        selectableItemList.OnWaveClear(); 
+    }
+    
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    public void ClearStage()
+    {
+        stagePortal.OnStageClear();
+
+        StageManager.Instance.OnStageClear();
+    }
+
+
+    #endregion
+    //==========================================================
+    #region Selectable Items
+
+    public void Select_SelectableItem(SelectableItem selectableItem)
+    {
+        Debug.Log($"선택띠 : {selectableItem.debugText.text}");
+        selectableItemInfoPanel.Close();
+
+        //
+        selectableItemList.OnWaveStart();   // 선택하면 off 
+        if (StageManager.Instance.IsStageClear()==false)        // 기획 회의 필요 : 아이템 나오는 곳과 웨이브 시작 지점을 꼭 다르게 가져갈 필요가 있을까?
+        {
+            waveActivationSwitch.OnSelect_Item();
+        }
+    }
+
+    #endregion
 
     /// <summary>
     /// 게임 진행 중 강화 선택지 창을 연다.  - 레벨업을 하여 강화를 해야할 때, 
@@ -126,6 +245,8 @@ public class GamePlayManager : Singleton<GamePlayManager>
     }
 
 
+
+
     //========================================
     public void GameOver()
     {
@@ -155,11 +276,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
 
 
     //====================================================
-    public void OnStageClear()
-    {
-
-    }
-
+    
 
 
 
