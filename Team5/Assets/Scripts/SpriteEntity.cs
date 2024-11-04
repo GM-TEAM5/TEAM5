@@ -75,6 +75,10 @@ public class SpriteEntity : MonoBehaviour
     /// </summary>
     void Billboard()
     {
+        if (t_sprite == null)
+        {
+            return;
+        }
         t_sprite.rotation = Quaternion.LookRotation(t_sprite.position - t_camera.position);
         t_sprite.rotation = Quaternion.Euler(t_sprite.rotation.eulerAngles.x,0,0);
     }

@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using Unity.AI.Navigation;
@@ -31,12 +32,8 @@ public class StageManager : Singleton<StageManager>
     {
         GameEventManager.Instance.onEnemyDie.AddListener((Enemy e)=> CheckWaveClear());
 
-        
-        
         //
         this.stageData = stageData;
-        
-
         
         //
         currStage = Instantiate( stageData.prefab_stage, Vector3.zero, Quaternion.identity ).GetComponent<Stage>();
@@ -70,6 +67,8 @@ public class StageManager : Singleton<StageManager>
     public void ClearStage()
     {
         Debug.Log("스테이지 클리어");
+
+        currStage.portal.OnStageClear();
     }
 
 

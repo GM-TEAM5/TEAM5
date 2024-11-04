@@ -13,10 +13,19 @@ public class Stage : MonoBehaviour
 
     public WaveActivationSwitch waveActivationSwitch;
 
+    public StagePortal portal;
+
+
+
+    //
+
     public void Init()
     {
         enemySpawnArea = t_enemySpawnAreaParent.GetComponentsInChildren<BoxCollider>();
         waveActivationSwitch = GetComponentInChildren<WaveActivationSwitch>();
+        portal = GetComponentInChildren<StagePortal>();
+
+        portal.gameObject.SetActive(false);
     }
 
 

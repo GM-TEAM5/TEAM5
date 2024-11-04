@@ -7259,11 +7259,6 @@ PrefabInstance:
       propertyPath: topInkBar
       value: 
       objectReference: {fileID: 750590894}
-    - target: {fileID: 5871620991480303010, guid: d5212e8c9338ab14598ccd81bd8b95bd,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6752467946420604799, guid: d5212e8c9338ab14598ccd81bd8b95bd,
         type: 3}
       propertyPath: m_AnchorMax.x
