@@ -1476,9 +1476,17 @@ MonoBehaviour:
   gamePlayStartUI: {fileID: 2142400990}
   reinforcementPanel: {fileID: 860831137}
   selectableItemInfoPanel: {fileID: 423620081}
+  waveActivationSwitch: {fileID: 0}
+  selectableItemList: {fileID: 0}
+  stagePortal: {fileID: 0}
   gameOverPanel: {fileID: 291544998}
   text_timer: {fileID: 2107285196}
   instantDeathTime: 180
+  totalEnemySpawnCount: 0
+  totalEnemyKillCount: 0
+  targetSpawnCount_currWave: 0
+  spawnCount_currWave: 0
+  killCount_currWave: 0
 --- !u!82 &318556924
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4983,6 +4991,7 @@ MonoBehaviour:
   initialized: 0
   clearedWaveNum: 0
   stageData: {fileID: 0}
+  currStage: {fileID: 0}
   isBattleInProgress: 0
   battleTime: 0
 --- !u!1 &1295873593
