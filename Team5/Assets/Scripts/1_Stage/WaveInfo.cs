@@ -1,65 +1,130 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 
+
+public enum WaveForm
+{
+    RandomArea,     //영역 내 랜덤 지정
+    SpecificPoint   // 특정 좌표 
+}
+
+
 /// <summary>
-/// 적들의 등장에 관한 데이터  - StageDataSO 에서 사용됨. 
+/// 웨이브 1개에 대한 정보 -  
 /// </summary>
 [System.Serializable]
 public class WaveInfo
 {
+    public int waveNum;
     public List<string> enemyIds= new();
-    public int n;           // 해당 웨이브 생성 수 
-    public WaveFormSO waveForm;
-    public float startTime; // 해당 웨이브 시작시간
-    public float endTime;   // 해당 웨이브가 더이상 등장하지 않는 시간
+    public int totalNum;                    // 생성할 유닛 전체 수
+    public float spawnDuration;         //  전체 생성 지속 시간  
+    [Min(1f)] public int totalCycle = 1;         //  분할 생성 수 . 
+    // public int currCycle;
     
-    
-    [Min(1f)] public float frequency; //  n 초마다 웨이브가 반복할건지, 
+    // public bool isWaveFinished => currSpawnCount == totalNum;
 
-    
-    
-    
-    // 이건 나중에 시간별로 해당 웨이브의 생성 빈도를 조정하기 위함
-    // public AnimationCurve testCurve = new AnimationCurve(       
-    //                                                     new Keyframe(0.0f, 0.0f),  // 첫 번째 키프레임
-    //                                                     new Keyframe(10.0f, 1.0f)   // 두 번째 키프레임);
-    //                                                 );
+    // public WaveFormSO waveForm;     // 생성 형태 
+    public WaveForm waveForm;     // 생성 형태
+
+    public float spawnStartTime;    
 
 
 
-
+    //
     public IEnumerator WaveRoutine()
     {
-        yield return new WaitForSeconds(startTime);        
+        GamePlayManager.Instance.targetSpawnCount_currWave +=  totalNum;  // 이번 웨이브에 생성해야할 적 수를 기록
+        
+        yield return new WaitForSeconds(spawnStartTime);   
+        
         //
-        while(true)
+        if (totalCycle >0)
         {
-            for(int i=0;i<n;i++)
+            int spawnPerCycle = (int)Math.Ceiling( (double)totalNum/totalCycle);
+            float cycleInterval = spawnDuration/totalCycle;
+            
+            //
+            for(int i=0;i<totalCycle;i++)
+            {
+                for(int j=0;j<spawnPerCycle;j++)
+                {
+                    SpawnWave();
+                }
+
+                yield return new WaitForSeconds(cycleInterval); // 추후엔 하데스 처럼 모든 적이 섬멸 되었을 때 바로 웨이브 시작하도록 수정하자. 
+            }
+        }
+        // 예외 처리
+        else
+        {
+            //
+            for(int j=0;j<totalNum;j++)
             {
                 SpawnWave();
             }
+        }
+    }
 
-            yield return new WaitForSeconds(frequency);
+
+    /// <summary>
+    /// 지정된 스폰 타입에 맞춰 스폰
+    /// </summary>
+    public void SpawnWave()
+    {   
+        //
+
+        switch( waveForm )
+        {
+            case  WaveForm.SpecificPoint: 
+                Spawn_SpecificPoint(Vector3.zero);
+                break;
+            default:
+                Spawn_RandomArea();
+                break; 
+        }
+
+        GamePlayManager.Instance.spawnCount_currWave++;
+    }
+
+    //=======================================================================================
+    /// <summary>
+    /// 스폰 영역 내 임의의 지점에서 생성.
+    /// </summary>
+    public void Spawn_RandomArea()
+    {
+        for(int i=0;i<enemyIds.Count;i++)
+        {
+            string id = enemyIds[i];
+        
+            Vector3 randPos = StageManager.Instance.GetRandomEnemySpawnPoint();
+            PoolManager.Instance.GetEnemySpawner(id, randPos);
+        }
+    }
+
+    /// <summary>
+    /// 지정된 위치에 생성 - 보통 보스 소환에 사용됨.
+    /// </summary>
+    /// <param name="spawnPoint"></param>
+    public void Spawn_SpecificPoint(Vector3 spawnPoint)
+    {
+        for(int i=0;i<enemyIds.Count;i++)
+        {
+            string id = enemyIds[i];
+            PoolManager.Instance.GetEnemySpawner(id, spawnPoint);
         }
     }
 
 
 
+    // public void SpawnWave(Vector3 spawnPoint)
+    // {
+    //     // waveForm.Spawn( enemyIds ,spawnPoint );
+    // }
 
 
-    //
-    public void SpawnWave()
-    {
-        Vector3 randomPos = new Vector3( Random.Range(-10f,10f), 0, Random.Range(-10f,10f) );
-
-        SpawnWave(randomPos);
-    }
-
-    public void SpawnWave(Vector3 spawnPoint)
-    {
-        waveForm.Spawn( enemyIds ,spawnPoint);
-    }
 }
 

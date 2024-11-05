@@ -583,6 +583,23 @@ PrefabInstance:
       propertyPath: m_Name
       value: =====DontDestroy=====
       objectReference: {fileID: 0}
+    - target: {fileID: 4964979423805334565, guid: f6a8952bfb0882c4386daa0922f02686,
+        type: 3}
+      propertyPath: initSkillData.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4964979423805334565, guid: f6a8952bfb0882c4386daa0922f02686,
+        type: 3}
+      propertyPath: initSkillData.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 61270e87cd57e6f4b8a169e66c93b6ce,
+        type: 2}
+    - target: {fileID: 4964979423805334565, guid: f6a8952bfb0882c4386daa0922f02686,
+        type: 3}
+      propertyPath: initSkillData.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 647faeb1c80a70347921cb76676061b4,
+        type: 2}
     - target: {fileID: 6079161161061999894, guid: f6a8952bfb0882c4386daa0922f02686,
         type: 3}
       propertyPath: m_LocalPosition.x

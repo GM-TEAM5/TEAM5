@@ -931,7 +931,7 @@ MonoBehaviour:
     range: 4
     drawRange: 10
     maxInk: 100
-    currInk: 30.000002
+    _currInk: 30.000002
     inkUseRate: 20
     inkChargeRate: 20
   playerCollider: {fileID: 0}

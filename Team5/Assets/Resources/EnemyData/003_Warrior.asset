@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99d1e12e5cdb0c548a5e966bc41d3e8f, type: 3}
+  m_Name: 003_Warrior
+  m_EditorClassIdentifier: 
+  id: 003
+  entityName: Melee
+  sprite: {fileID: 21300000, guid: c1fcb977b2bad2c448d4ab902180ffd1, type: 3}
+  size: 0
+  type: 0
+  rank: 0
+  attackType: 1
+  maxHp: 10
+  armor: 0
+  range: 1
+  attackSpeed: 0
+  ad: 100
+  ap: 0
+  moveCooltime: 0.2
+  movementSpeed: 5
+  exp: 30
+  skils:
+  - {fileID: 11400000, guid: 1d3b684378794034ebf35c7408d8235e, type: 2}

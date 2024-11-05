@@ -46,6 +46,10 @@ internal struct PoolData
 public class PoolManager : Singleton<PoolManager>
 
 {
+    public int aliveEnemiesNum;
+    public bool enemyNotExists => aliveEnemiesNum <= 0;
+    
+    
     [SerializeField]
     private List<PoolData> _pools;
 
@@ -165,6 +169,8 @@ public class PoolManager : Singleton<PoolManager>
     //================================================================================
     public EnemySpawner GetEnemySpawner(string id, Vector3 initPos)
     {
+        aliveEnemiesNum++; 
+        
         EnemySpawner enemySpawner = GetFromPool<EnemySpawner>(); 
         enemySpawner.SpawnEnemy( id, initPos, 2f);
     
@@ -179,9 +185,18 @@ public class PoolManager : Singleton<PoolManager>
         enemy.Init( enemyData ,initPos);
     
         
-
+    
         return enemy;
     }
+
+    public void TakeEnemy(Enemy e)
+    {
+        aliveEnemiesNum--;
+
+        TakeToPool<Enemy>(e);
+    }
+
+
 
     public EnemyProjectile GetEnemyProjectile(EnemySkillSO skillData, Enemy enemy, Vector3 initPos, float lifeTime)
     {

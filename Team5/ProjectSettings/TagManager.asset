@@ -11,6 +11,7 @@ TagManager:
   - DropItem
   - InstantDeath
   - Interactable
+  - BasicAttack
   layers:
   - Default
   - TransparentFX
@@ -19,13 +20,13 @@ TagManager:
   - Water
   - UI
   - 
-  - 
+  - BasicAttack
   - 
   - Player
   - Enemy
   - Projectile
-  - 
-  - 
+  - SpawnArea
+  - Ground
   - 
   - 
   - 
