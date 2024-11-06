@@ -1,28 +1,32 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class PlayerSkill
 {
-    public PlayerSkillSO skillData;
+    KeyCode keyCode;
+    
+    public SkillItemSO skillData;
 
-    public PlayerSkill(PlayerSkillSO skillData)
+    public PlayerSkill(SkillItemSO skillData)
     {
         this.skillData = skillData;
     }
 
-    public void On()
-    {
-        skillData.On();
-    }
+    // public void On()
+    // {
+    //     skillData.On();
+    // }
 
-    public void Off()
-    {
-        skillData.Off();
-    }
+    // public void Off()
+    // {
+    //     skillData.Off();
+    // }
 
-    public void Use(bool isMouseLeftButtonOn, Vector3 mouseWorldPos)
-    {
-        skillData.Use(isMouseLeftButtonOn, mouseWorldPos);
-    }
+    // public void Use(bool isMouseLeftButtonOn, Vector3 mouseWorldPos)
+    // {
+    //     skillData.Use(isMouseLeftButtonOn, mouseWorldPos);
+    // }
 }

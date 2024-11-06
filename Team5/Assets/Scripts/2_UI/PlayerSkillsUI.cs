@@ -1,26 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class PlayerSkillsUI : MonoBehaviour
 {
-    [SerializeField] List<PlayerSkillUI> skillUIs = new();
+    [SerializeField] GameObject prefab_skillUI;
+    [SerializeField] List<PlayerSkillUI> skillUIs;
 
 
-    public void Init(List<PlayerSkill> skills)
+    void Awake()
     {
-        skillUIs = new( GetComponentsInChildren<PlayerSkillUI>() );
-        
-        for(int i=0;i< skillUIs.Count;i++)
+        GameEventManager.Instance.onInitPlayer.AddListener( ( )=>Init(Player.Instance.skills) );
+    }
+
+
+
+    public void Init(SerializableDictionary<KeyCode,PlayerSkill> skills)
+    {
+        // 미리 만들어져 있던 거 파괴
+        for(int i=0;i<transform.childCount;i++)
         {
-            if (i< skills.Count)
-            {
-                skillUIs[i].Init(skills[i].skillData);
-            }
-            else
-            {
-                skillUIs[i].Deactivate();
-            }
+            Destroy( transform.GetChild(i).gameObject );
+        }
+
+        //  
+        skillUIs = new();
+
+        // 생성 
+        foreach( var kv in skills)
+        {
+            KeyCode keyCode = kv.Key;
+            PlayerSkill playerSkill = kv.Value;
+
+            PlayerSkillUI skillUI = Instantiate(prefab_skillUI, transform).GetComponent<PlayerSkillUI>();
+            skillUI.Init( keyCode, playerSkill );
+
+            skillUIs.Add(skillUI);
         }
     }
 }

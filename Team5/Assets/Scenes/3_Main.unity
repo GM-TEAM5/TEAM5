@@ -2447,7 +2447,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 100, y: 100}
+  m_CellSize: {x: 100, y: 120}
   m_Spacing: {x: 10, y: 10}
   m_Constraint: 1
   m_ConstraintCount: 4
@@ -2501,6 +2501,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e5471ff0f0a1514fa87d3ef66e3df91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefab_skillUI: {fileID: 1226091571348058002, guid: c925ec448f01d1a4f8dae9698a9fe008,
+    type: 3}
   skillUIs: []
 --- !u!1 &407503256
 GameObject:

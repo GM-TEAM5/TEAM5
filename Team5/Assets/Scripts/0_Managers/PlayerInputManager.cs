@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -38,6 +39,7 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
     //
 
     // [SerializeField] LayerMask aimColliderLayerMask = new();
+    public List<KeyCode> skillKeys = new() {KeyCode.Alpha1,KeyCode.Alpha2,KeyCode.Alpha3,KeyCode.Alpha4 };
 
 
     //================================================================

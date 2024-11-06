@@ -55,6 +55,10 @@ public class GamePlayManager : Singleton<GamePlayManager>
         
         TestManager.Instance.SetBoundImage();
         StartCoroutine( StartGamePlaySequence());
+
+
+
+        
     }
 
     IEnumerator StartGamePlaySequence()
@@ -180,6 +184,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
         StageManager.Instance.OnWaveClear();
 
         selectableItemList.OnWaveClear(); 
+        // waveActivationSwitch.OnWaveClear();
     }
     
     
@@ -207,10 +212,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
 
         //
         selectableItemList.OnWaveStart();   // 선택하면 off 
-        if (StageManager.Instance.IsStageClear()==false)        // 기획 회의 필요 : 아이템 나오는 곳과 웨이브 시작 지점을 꼭 다르게 가져갈 필요가 있을까?
-        {
-            waveActivationSwitch.OnSelect_Item();
-        }
+        
     }
 
 

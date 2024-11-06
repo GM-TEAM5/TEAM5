@@ -8,7 +8,7 @@ public abstract class ConsumableItemSO : ItemDataSO
     
     
     public override void Get()
-    {
+    {        
         Consume(defaultValue);      // 획득 즉시 사용 효과 발동 
     }
 

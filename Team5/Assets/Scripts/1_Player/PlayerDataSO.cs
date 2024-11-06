@@ -19,12 +19,12 @@ public class PlayerDataSO : ScriptableObject
 
     public bool isNewUser => deathCount==0 && currChapter ==1 && currStage ==1;
 
-    [Min(0)]public int maxCount_equipment = 10;
+    [Min(0)]public int maxCount_equipment = 8;
     [Min(0)]public int maxCount_skill = 4;
 
 
-    public List<EquipmentItemSO> equipments ;
-    public List<SkillItemSO> skills;
+    public List< EquipmentItemSO > equipments;
+    public List< SkillItemSO > skills;
 
 
     //==================================================================================
@@ -50,7 +50,7 @@ public class PlayerDataSO : ScriptableObject
         // 스킬
         skills = skills
         .Take( maxCount_skill) 
-        .Concat(Enumerable.Repeat( (SkillItemSO)null,  Mathf.Max(0,maxCount_skill - skills.Count)))  // 부족한 부분을 0으로 채움
+        .Concat(Enumerable.Repeat( (SkillItemSO)null, Mathf.Max(0,maxCount_skill - skills.Count)))  // 부족한 부분을 0으로 채움
         .ToList();
     }
     
@@ -68,6 +68,8 @@ public class PlayerDataSO : ScriptableObject
         if( idx != -1)
         {
             equipments[idx]  = equipment;
+
+            
             return true;
         }
     
@@ -87,6 +89,8 @@ public class PlayerDataSO : ScriptableObject
         if( idx != -1)
         {
             skills[idx]  = skill;
+            Player.Instance.ChangeSkill(idx,skill);
+            
             return true;
         }
     

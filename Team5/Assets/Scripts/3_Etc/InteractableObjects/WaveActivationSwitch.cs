@@ -22,7 +22,7 @@ public class WaveActivationSwitch : InteractableObject
         GamePlayManager.Instance.StartWave();
     }
 
-    public void OnSelect_Item()
+    public void OnWaveClear()
     {
         Activate();
     }

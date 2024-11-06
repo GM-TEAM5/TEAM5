@@ -6,6 +6,10 @@ using UnityEngine.Events;
 
 public class GameEventManager : Singleton<GameEventManager>
 {
+    public UnityEvent onInitPlayer = new();   // 메인씬 로드 직후, 필요 데이터가 초기화 된 후
+    public UnityEvent<KeyCode,PlayerSkill> onChangeSkill = new();   // 스킬을 변경했을 때,  ->  KeyCode : ,PlayerSKill 
+    
+    
     public UnityEvent onStageLoad = new();
     public UnityEvent onLevelUp = new();
 

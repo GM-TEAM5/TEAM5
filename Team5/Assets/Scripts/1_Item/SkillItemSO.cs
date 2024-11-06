@@ -19,6 +19,8 @@ public abstract class SkillItemSO : ItemDataSO
         if( GameManager.Instance.playerData.TryEquipSkill(this))
         {
             OnEquip();  // 장착효과
+
+            Debug.Log($"장착띠  {dataName}");
         }
         else
         {

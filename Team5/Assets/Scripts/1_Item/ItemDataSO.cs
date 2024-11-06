@@ -4,11 +4,11 @@ using UnityEngine;
 
 public enum Tier
 {
-    Normal,
+    // Normal,
     Rare,
     Epic,
     Unique,
-    Legendary
+    // Legendary
 }
 
 
