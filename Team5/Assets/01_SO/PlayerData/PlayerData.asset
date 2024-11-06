@@ -17,3 +17,21 @@ MonoBehaviour:
   currStage: 1
   currStagePlayCount: 0
   deathCount: 0
+  maxCount_equipment: 10
+  maxCount_skill: 4
+  equipments:
+  - {fileID: 11400000, guid: c1867c575380ef94996d77cbc70fb0eb, type: 2}
+  - {fileID: 11400000, guid: c1867c575380ef94996d77cbc70fb0eb, type: 2}
+  - {fileID: 11400000, guid: c1867c575380ef94996d77cbc70fb0eb, type: 2}
+  - {fileID: 11400000, guid: c1867c575380ef94996d77cbc70fb0eb, type: 2}
+  - {fileID: 11400000, guid: c1867c575380ef94996d77cbc70fb0eb, type: 2}
+  - {fileID: 11400000, guid: c1867c575380ef94996d77cbc70fb0eb, type: 2}
+  - {fileID: 11400000, guid: c1867c575380ef94996d77cbc70fb0eb, type: 2}
+  - {fileID: 11400000, guid: c1867c575380ef94996d77cbc70fb0eb, type: 2}
+  - {fileID: 11400000, guid: c1867c575380ef94996d77cbc70fb0eb, type: 2}
+  - {fileID: 11400000, guid: c1867c575380ef94996d77cbc70fb0eb, type: 2}
+  skills:
+  - {fileID: 11400000, guid: d20eb8df5369388499f1a3f95ffaf2fd, type: 2}
+  - {fileID: 11400000, guid: d20eb8df5369388499f1a3f95ffaf2fd, type: 2}
+  - {fileID: 11400000, guid: d20eb8df5369388499f1a3f95ffaf2fd, type: 2}
+  - {fileID: 11400000, guid: d20eb8df5369388499f1a3f95ffaf2fd, type: 2}

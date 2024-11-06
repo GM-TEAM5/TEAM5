@@ -7,22 +7,28 @@ using UnityEngine;
 [RequireComponent(typeof(BillboardSprite))]
 public class SelectableItem : MonoBehaviour
 {
-    public TextMeshPro debugText;
-    // Start is called before the first frame update
-    void Start()
+    SpriteRenderer _sr; 
+    SpriteRenderer sr
     {
-        
+        get
+        {
+            if( _sr ==null)
+            {
+                _sr = GetComponent<SpriteRenderer>();
+            }
+            return _sr;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
+    public ItemDataSO data;
 
 
-    public void Init(int i =0)
+    public void Init(ItemDataSO itemData)
     {
-        debugText.SetText(i.ToString());
+        data = itemData;
+        sr.sprite = itemData.sprite;
+
+        // debugText.SetText(i.ToString());
     }
 }

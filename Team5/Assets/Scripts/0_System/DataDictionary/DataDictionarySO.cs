@@ -9,7 +9,7 @@ using System.Linq;
 /// </summary>
 public class DataDictionarySO : ScriptableObject
 {
-    [SerializeField] List<GameData> list = new(); 
+    [SerializeField] protected List<GameData> list = new(); 
     
     
     [ReadOnly] public SerializableDictionary<string,GameData> dic = new(); 
@@ -51,6 +51,41 @@ public class DataDictionarySO : ScriptableObject
             }
         }
     }
+
+    //================================================
+
+    /// <summary>
+    /// 중복 없이 dataNum개의 데이터를 list에서 가져온다.
+    /// </summary>
+    /// <param name="dataNum"></param>
+    /// <returns></returns>
+    public List<GameData> GetRandomData( int dataNum )
+    {
+        // 
+        List<GameData> ret = new();
+        List<int> idxs = new();
+
+        int totalDataNum = list.Count;
+        //
+        for (int i = 0; i < totalDataNum; i++)
+        {
+            idxs.Add(i);
+        }
+
+        //
+        System.Random random = new System.Random();
+        
+        for (int i = 0; i < dataNum ; i++)
+        {
+            int idx = random.Next(idxs.Count);  // 랜덤으로 나온 idx
+            ret.Add( list[ idxs[idx] ]   );     // 리스트에서 아이템 뽑아냄. 
+            idxs.RemoveAt(idx);                 
+        }
+
+        //
+        return ret;
+    }
+
 
 
 

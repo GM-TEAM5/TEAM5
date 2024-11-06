@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -51,8 +52,9 @@ public class SelectableItemInfoPanel : GamePlayPanel
     {
         currItem = selectableItem;
 
-        text_itemName.SetText(currItem.debugText.text);
-        text_itemDesc.SetText(currItem.debugText.text);
+        img_icon.sprite = currItem.data.sprite;
+        text_itemName.SetText(currItem.data.dataName);
+        text_itemDesc.SetText(currItem.data.description);
     }
 
 

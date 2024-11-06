@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a00a3b836e372148919bb3acd7ef041, type: 3}
   m_Name: 1000_TestEquipment
   m_EditorClassIdentifier: 
-  id: 1000
-  itemName: TestEquipment
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 7af47fbdc83bdb241819309208da4afa, type: 3}
   tier: 0
+  description: "\uD14C\uC2A4\uD2B8 \uC7A5\uCC29\uC544\uC774\uD15C\uC785\uB2C8\uB2E4."

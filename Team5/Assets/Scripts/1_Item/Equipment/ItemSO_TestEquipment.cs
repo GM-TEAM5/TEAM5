@@ -8,6 +8,7 @@ public class ItemSO_TestEquipment : EquipmentItemSO
     public override string id => "1000";
     public override string dataName => "TestEquipment";
 
+
     //
     public override void OnEquip()
     {

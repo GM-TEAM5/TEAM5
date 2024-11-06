@@ -12,8 +12,16 @@ public abstract class EquipmentItemSO : ItemDataSO
     public void Equip()
     {
         //플레이어 장비창으로 들어가야지. 능력치 수정. 
-
-    
+        //플레이어 장비창으로 들어가야지. 능력치 수정. 
+        if( GameManager.Instance.playerData.TryEquipGear(this))
+        {
+            OnEquip();  // 장착효과
+            Debug.Log($"장착띠  {dataName}");
+        }
+        else
+        {
+            Debug.Log($"장착 실패띠  {dataName}");
+        }
         OnEquip();  // 장착효과
     }
 

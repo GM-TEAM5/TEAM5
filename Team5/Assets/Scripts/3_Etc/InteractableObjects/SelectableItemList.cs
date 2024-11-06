@@ -63,9 +63,9 @@ public class SelectableItemList : InteractableObject
         for(int i=0;i<t_items.Length;i++)
         {
             t_items[i] = t_itemList.GetChild(i).GetComponent<SelectableItem>();
-            t_items[i].Init(i); 
         }
 
+        //
         OnWaveStart();
     }
 
@@ -95,8 +95,27 @@ public class SelectableItemList : InteractableObject
 
     public void OnWaveClear()
     {
+        FillItemData();
+        
         gameObject.SetActive(true);
         Activate();
+    }
+
+    //==============================
+
+    void FillItemData()
+    {
+        List<GameData> randomItemData = ResourceManager.Instance.itemData.GetRandomData(4);
+
+        for(int i=0;i<4;i++)
+        {
+            SelectableItem si = t_items[i];
+            ItemDataSO itemData = (ItemDataSO)randomItemData[i];
+
+            si.Init(itemData);
+        }
+
+    
     }
     
 }

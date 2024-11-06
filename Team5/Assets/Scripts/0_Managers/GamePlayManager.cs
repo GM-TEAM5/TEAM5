@@ -200,7 +200,9 @@ public class GamePlayManager : Singleton<GamePlayManager>
 
     public void Select_SelectableItem(SelectableItem selectableItem)
     {
-        Debug.Log($"선택띠 : {selectableItem.debugText.text}");
+        // Debug.Log($"선택띠 : {selectableItem.data.id}, {selectableItem.data.dataName}");
+        selectableItem.data.Get();
+        
         selectableItemInfoPanel.Close();
 
         //
@@ -210,6 +212,9 @@ public class GamePlayManager : Singleton<GamePlayManager>
             waveActivationSwitch.OnSelect_Item();
         }
     }
+
+
+    
 
     #endregion
 

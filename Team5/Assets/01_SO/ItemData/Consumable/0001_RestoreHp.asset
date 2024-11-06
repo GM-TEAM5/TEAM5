@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36dba03b527a9264cb00e68904558307, type: 3}
   m_Name: 0001_RestoreHp
   m_EditorClassIdentifier: 
-  id: 0001
-  itemName: RestoreHp
   sprite: {fileID: 21300000, guid: 433e01e9572e7c14b9e7b678f96119bd, type: 3}
   tier: 0
+  description: "hp\uB97C \uC870\uAE08 \uD68C\uBCF5\uC2DC\uCF1C\uC90D\uB2C8\uB2E4."
