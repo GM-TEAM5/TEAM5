@@ -42,6 +42,8 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     //-------- skills ------------
     public SerializableDictionary<KeyCode,PlayerSkill> skills;
 
+    //
+    PlayerInteraction playerInteraction;
 
     //====================================================================================
 
@@ -59,6 +61,8 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
 
         Move();
         UpdateSpriteDir();
+
+        playerInteraction.OnUpdate();
     }
 
     //============================================================================
@@ -79,11 +83,13 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
             EnemyProjectile ep = other.GetComponent<EnemyProjectile>();
             GetDamaged(ep.damage);
         }
-        else if (other.CompareTag("DropItem"))
+        
+        if (other.CompareTag("DropItem"))
         {
             DropItem di = other.GetComponent<DropItem>();
             di.PickUp();
         }
+
     }
 
 
@@ -98,6 +104,8 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
         playerInput = PlayerInputManager.Instance;
         playerCollider = GetComponent<Collider>();
         playerCollider.enabled = true;
+
+        playerInteraction = GetComponent<PlayerInteraction>();
 
         status = new PlayerStatus();      // 플레이어 스탯 초기화.
         stateUI = GetComponent<PlayerStateUI>();
@@ -244,6 +252,12 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
 
         // Debug.Log("플레이어 레벨업!");
     }
+
+
+
+
+
+
 
     #region ==== 연출 ======
 

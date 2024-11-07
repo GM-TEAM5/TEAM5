@@ -4,8 +4,7 @@ using TMPro;
 using UnityEngine;
 
 
-[RequireComponent(typeof(BillboardSprite))]
-public class SelectableItem : MonoBehaviour
+public class SelectableItem : InteractiveObject
 {
     SpriteRenderer _sr; 
     SpriteRenderer sr
@@ -14,7 +13,7 @@ public class SelectableItem : MonoBehaviour
         {
             if( _sr ==null)
             {
-                _sr = GetComponent<SpriteRenderer>();
+                _sr = GetComponentInChildren<SpriteRenderer>();
             }
             return _sr;
         }
@@ -24,11 +23,29 @@ public class SelectableItem : MonoBehaviour
     public ItemDataSO data;
 
 
+    [SerializeField] TextMeshPro text_select;
+
+
+    //======================================================================
+
+
     public void Init(ItemDataSO itemData)
     {
         data = itemData;
         sr.sprite = itemData.sprite;
 
         // debugText.SetText(i.ToString());
+    }
+
+    protected override void OnInspect_Custom(bool isOn)
+    {
+        text_select.gameObject.SetActive(isOn);
+        
+        GameEventManager.Instance.onCloseTo_selectableItemList.Invoke(isOn);
+    }
+
+    protected override void OnInteract_Custom()
+    {
+        GamePlayManager.Instance.Select_SelectableItem(data);
     }
 }

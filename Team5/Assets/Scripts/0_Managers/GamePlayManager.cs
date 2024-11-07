@@ -184,7 +184,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
         StageManager.Instance.OnWaveClear();
 
         selectableItemList.OnWaveClear(); 
-        // waveActivationSwitch.OnWaveClear();
+        waveActivationSwitch.OnWaveClear();
     }
     
     
@@ -203,10 +203,10 @@ public class GamePlayManager : Singleton<GamePlayManager>
     //==========================================================
     #region Selectable Items
 
-    public void Select_SelectableItem(SelectableItem selectableItem)
+    public void Select_SelectableItem(ItemDataSO item)
     {
         // Debug.Log($"선택띠 : {selectableItem.data.id}, {selectableItem.data.dataName}");
-        selectableItem.data.Get();
+        item.Get();
         
         selectableItemInfoPanel.Close();
 

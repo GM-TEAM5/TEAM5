@@ -13,13 +13,13 @@ public class SelectableItemInfoPanel : GamePlayPanel
 
     [SerializeField] Button btn_select;
 
-    SelectableItem currItem;
+    ItemDataSO currItemData;
 
 
     protected override void Init()
     {
-        GameEventManager.Instance.onCloseTo_selectableItemList.AddListener( OnCloseTo_SelectableItemList );
-        GameEventManager.Instance.onUpdate_closestSelectableItem.AddListener( UpdateItemInfo );
+        GameEventManager.Instance.onUpdate_inspectingObject.AddListener( OnUpdate_inspectingObject );
+        // GameEventManager.Instance.onUpdate_closestSelectableItem.AddListener( UpdateItemInfo );
         
         // btn_select.onClick.AddListener(()=> GamePlayManager.Instance.OnSelect_SelectableItem(currItem) );
     }
@@ -34,11 +34,15 @@ public class SelectableItemInfoPanel : GamePlayPanel
         
     }
 
-    void OnCloseTo_SelectableItemList(bool isOn)
+    void OnUpdate_inspectingObject(InteractiveObject interactiveObject)
     {
-        if (isOn)
+       
+        if( interactiveObject  is  SelectableItem)
         {
+            SelectableItem selectableItem = (SelectableItem)interactiveObject;
+        
             Open();
+            UpdateItemInfo(selectableItem.data);
         }
         else
         {
@@ -48,13 +52,13 @@ public class SelectableItemInfoPanel : GamePlayPanel
 
 
 
-    public void UpdateItemInfo(SelectableItem selectableItem)
+    public void UpdateItemInfo(ItemDataSO itemData)
     {
-        currItem = selectableItem;
+        currItemData = itemData;
 
-        img_icon.sprite = currItem.data.sprite;
-        text_itemName.SetText(currItem.data.dataName);
-        text_itemDesc.SetText(currItem.data.description);
+        img_icon.sprite = currItemData.sprite;
+        text_itemName.SetText(currItemData.dataName);
+        text_itemDesc.SetText(currItemData.description);
     }
 
 

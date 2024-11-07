@@ -10,8 +10,8 @@ TagManager:
   - EnemyProjectile
   - DropItem
   - InstantDeath
-  - Interactable
   - BasicAttack
+  - Interactive
   layers:
   - Default
   - TransparentFX
