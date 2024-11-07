@@ -103,10 +103,10 @@ public class Enemy : MonoBehaviour, IPoolObject
         lastHitPoint = other.ClosestPoint(transform.position);
 
         // 데미지 적용
-        if (other.CompareTag("BasicAttack"))
-        {
-            GetDamaged(10);
-        }
+        // if (other.CompareTag("BasicAttack"))
+        // {
+        //     GetDamaged(10);
+        // }
     }
 
     //===========================
@@ -294,7 +294,7 @@ public class Enemy : MonoBehaviour, IPoolObject
         stateUI.OnDie();
         //
         TestManager.Instance.TestSFX_enemyDeath(enemyData.type);
-        GamePlayManager.Instance.killCount_currWave ++;
+        GamePlayManager.Instance.killCount_currWave++;
         //
     }
 
@@ -395,7 +395,7 @@ public class Enemy : MonoBehaviour, IPoolObject
         .OnComplete(() =>
         {
             PoolManager.Instance.TakeEnemy(this);
-            })
+        })
         .AppendInterval(0.3f)
         .Append(spriteEntity.spriteRenderer.DOFade(0, 1f))
         .Play();
