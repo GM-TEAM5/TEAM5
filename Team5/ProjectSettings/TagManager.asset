@@ -6,11 +6,9 @@ TagManager:
   tags:
   - Enemy
   - Projectile
-  - Brush
   - EnemyProjectile
   - DropItem
   - InstantDeath
-  - BasicAttack
   - Interactive
   layers:
   - Default
@@ -20,7 +18,7 @@ TagManager:
   - Water
   - UI
   - 
-  - BasicAttack
+  - 
   - 
   - Player
   - Enemy
