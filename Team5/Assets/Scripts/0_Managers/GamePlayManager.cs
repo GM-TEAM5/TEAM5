@@ -20,6 +20,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
     [SerializeField] EntrancePortal entrancePortal;
     [SerializeField] GamePlayStartUI gamePlayStartUI;    // 스테이지 시작시 안내창
     [SerializeField] ReinforcementPanel reinforcementPanel; //레벨업 시 강화 패널
+    [SerializeField] PlayerInfoPanel playerInfoPanel; //레벨업 시 강화 패널
 
     //
     [SerializeField] SelectableItemInfoPanel selectableItemInfoPanel;   // 웨이브 종료시 나타나는 아이템 설명 팝업창
@@ -55,10 +56,6 @@ public class GamePlayManager : Singleton<GamePlayManager>
         
         TestManager.Instance.SetBoundImage();
         StartCoroutine( StartGamePlaySequence());
-
-
-
-        
     }
 
     IEnumerator StartGamePlaySequence()
@@ -96,18 +93,35 @@ public class GamePlayManager : Singleton<GamePlayManager>
 
     void Update()
     {
+        // esc 누르면 상태창나옴.
+        if(PlayerInputManager.Instance.pause)
+        {
+            if(playerInfoPanel.gameObject.activeSelf == false)
+            {
+                OpenPlayerInfoPanel();
+            }
+            else
+            {
+                ClosePlayerInfoPanel();
+            }
+            
+            
+        }
+        
+        
+        
+        
         if (isGamePlaying == false)
         {
             return;
         }
 
         gamePlayTime += Time.deltaTime;
-
-        if ( gamePlayTime >= instantDeathTime && instantDeathCalled == false)
-        {
-            instantDeathCalled =true;
-            TestManager.Instance.KillPlayer();
-        }
+        // if ( gamePlayTime >= instantDeathTime && instantDeathCalled == false)
+        // {
+        //     instantDeathCalled =true;
+        //     TestManager.Instance.KillPlayer();
+        // }
     }
 
 
@@ -252,6 +266,18 @@ public class GamePlayManager : Singleton<GamePlayManager>
     }
 
 
+
+    public void OpenPlayerInfoPanel()
+    {
+        playerInfoPanel.Open();
+        GameManager.Instance.PauseGamePlay(true);   
+    }
+
+    public void ClosePlayerInfoPanel()
+    {
+        playerInfoPanel.Close();
+        GameManager.Instance.PauseGamePlay(false);
+    }
 
 
     //========================================

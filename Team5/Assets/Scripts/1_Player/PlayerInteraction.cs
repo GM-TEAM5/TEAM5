@@ -19,7 +19,7 @@ public class PlayerInteraction : MonoBehaviour
         UpdateClosesetObject();
 
         // 상호작용 
-        if( closestObject !=null && PlayerInputManager.Instance.isInteractOn)
+        if( closestObject !=null && PlayerInputManager.Instance.interact)
         {
             InteractWith(closestObject);
         }

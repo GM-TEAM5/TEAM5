@@ -13,7 +13,6 @@ public abstract class GamePlayPanel : MonoBehaviour
     protected abstract void Init();
 
 
-
     public void Open()
     {
         if (initialized==false)
@@ -21,7 +20,7 @@ public abstract class GamePlayPanel : MonoBehaviour
             Init();
             initialized = true;
         }
-    
+        
         gameObject.SetActive(true);
         OnOpen();
         
