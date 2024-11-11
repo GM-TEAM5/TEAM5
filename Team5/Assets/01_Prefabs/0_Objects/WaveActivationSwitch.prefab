@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 5958232907469387789}
   m_Layer: 0
   m_Name: WaveActivationSwitch
-  m_TagString: Enemy
+  m_TagString: Interactive
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -197,7 +197,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96994b9d3f6632e41aa10a6c060bb664, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayerInRange: 0
   locked: 0
   text: {fileID: 6344725440179048485}
 --- !u!1 &8231527924798651517

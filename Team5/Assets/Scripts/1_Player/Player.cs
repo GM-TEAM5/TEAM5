@@ -39,6 +39,12 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     Sequence onHitSeq;
 
 
+    //-------- skills ------------
+    public SerializableDictionary<KeyCode,PlayerSkill> skills;
+
+    //
+    PlayerInteraction playerInteraction;
+
     //====================================================================================
 
     private void Start()
@@ -55,6 +61,8 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
 
         Move();
         UpdateSpriteDir();
+
+        playerInteraction.OnUpdate();
     }
 
     //============================================================================
@@ -75,11 +83,13 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
             EnemyProjectile ep = other.GetComponent<EnemyProjectile>();
             GetDamaged(ep.damage);
         }
-        else if (other.CompareTag("DropItem"))
+        
+        if (other.CompareTag("DropItem"))
         {
             DropItem di = other.GetComponent<DropItem>();
             di.PickUp();
         }
+
     }
 
 
@@ -95,6 +105,8 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
         playerCollider = GetComponent<Collider>();
         playerCollider.enabled = true;
 
+        playerInteraction = GetComponent<PlayerInteraction>();
+
         status = new PlayerStatus();      // 플레이어 스탯 초기화.
         stateUI = GetComponent<PlayerStateUI>();
         stateUI.Init(this);     // 상태 ui 초기화
@@ -105,6 +117,37 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
         reinforcementLevel = status.level;
 
         playerCanvas.gameObject.SetActive(false);
+
+        InitSkills();
+
+        //
+        GameEventManager.Instance.onInitPlayer.Invoke();    // 플레이어 초기화가 필요한 ui 작업을 하기 위함. 
+    }
+
+    // 데이터 상의 모든 스킬장착
+    public void InitSkills()
+    {
+        List<SkillItemSO> skillsData = GameManager.Instance.playerData.skills;
+
+        skills = new();
+        for(int i=0;i< skillsData.Count;i++)
+        {
+            ChangeSkill( i, skillsData[i], false);
+        }
+    }
+
+    // 개별 스킬 장착
+    public void ChangeSkill(int idx, SkillItemSO skillData, bool eventCall = true)
+    {
+        KeyCode keyCode = playerInput.skillKeys[idx];
+        PlayerSkill playerSkill =  new PlayerSkill( skillData); 
+        skills[ keyCode] = playerSkill;
+
+        if (eventCall)
+        {
+            GameEventManager.Instance.onChangeSkill.Invoke( keyCode, playerSkill );
+        }
+
     }
 
     //========================================================================
@@ -209,6 +252,12 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
 
         // Debug.Log("플레이어 레벨업!");
     }
+
+
+
+
+
+
 
     #region ==== 연출 ======
 

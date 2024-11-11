@@ -20,6 +20,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
     [SerializeField] EntrancePortal entrancePortal;
     [SerializeField] GamePlayStartUI gamePlayStartUI;    // 스테이지 시작시 안내창
     [SerializeField] ReinforcementPanel reinforcementPanel; //레벨업 시 강화 패널
+    [SerializeField] PlayerInfoPanel playerInfoPanel; //레벨업 시 강화 패널
 
     //
     [SerializeField] SelectableItemInfoPanel selectableItemInfoPanel;   // 웨이브 종료시 나타나는 아이템 설명 팝업창
@@ -92,18 +93,35 @@ public class GamePlayManager : Singleton<GamePlayManager>
 
     void Update()
     {
+        // esc 누르면 상태창나옴.
+        if(PlayerInputManager.Instance.pause)
+        {
+            if(playerInfoPanel.gameObject.activeSelf == false)
+            {
+                OpenPlayerInfoPanel();
+            }
+            else
+            {
+                ClosePlayerInfoPanel();
+            }
+            
+            
+        }
+        
+        
+        
+        
         if (isGamePlaying == false)
         {
             return;
         }
 
         gamePlayTime += Time.deltaTime;
-
-        if ( gamePlayTime >= instantDeathTime && instantDeathCalled == false)
-        {
-            instantDeathCalled =true;
-            TestManager.Instance.KillPlayer();
-        }
+        // if ( gamePlayTime >= instantDeathTime && instantDeathCalled == false)
+        // {
+        //     instantDeathCalled =true;
+        //     TestManager.Instance.KillPlayer();
+        // }
     }
 
 
@@ -180,6 +198,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
         StageManager.Instance.OnWaveClear();
 
         selectableItemList.OnWaveClear(); 
+        waveActivationSwitch.OnWaveClear();
     }
     
     
@@ -198,18 +217,20 @@ public class GamePlayManager : Singleton<GamePlayManager>
     //==========================================================
     #region Selectable Items
 
-    public void Select_SelectableItem(SelectableItem selectableItem)
+    public void Select_SelectableItem(ItemDataSO item)
     {
-        Debug.Log($"선택띠 : {selectableItem.debugText.text}");
+        // Debug.Log($"선택띠 : {selectableItem.data.id}, {selectableItem.data.dataName}");
+        item.Get();
+        
         selectableItemInfoPanel.Close();
 
         //
         selectableItemList.OnWaveStart();   // 선택하면 off 
-        if (StageManager.Instance.IsStageClear()==false)        // 기획 회의 필요 : 아이템 나오는 곳과 웨이브 시작 지점을 꼭 다르게 가져갈 필요가 있을까?
-        {
-            waveActivationSwitch.OnSelect_Item();
-        }
+        
     }
+
+
+    
 
     #endregion
 
@@ -245,6 +266,18 @@ public class GamePlayManager : Singleton<GamePlayManager>
     }
 
 
+
+    public void OpenPlayerInfoPanel()
+    {
+        playerInfoPanel.Open();
+        GameManager.Instance.PauseGamePlay(true);   
+    }
+
+    public void ClosePlayerInfoPanel()
+    {
+        playerInfoPanel.Close();
+        GameManager.Instance.PauseGamePlay(false);
+    }
 
 
     //========================================

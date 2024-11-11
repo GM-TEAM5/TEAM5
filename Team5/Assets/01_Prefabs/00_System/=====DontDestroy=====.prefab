@@ -50,6 +50,7 @@ MonoBehaviour:
   dropItemData:
     m_Keys: []
     m_Values: []
+  itemData: {fileID: 0}
 --- !u!1 &1047560434824942920
 GameObject:
   m_ObjectHideFlags: 0
@@ -111,10 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87ad656f400953d43b47a1888d6bdad8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initSkillData:
-  - {fileID: 11400000, guid: 98735bd5f90003e49a836ac35f0b10e3, type: 2}
-  - {fileID: 11400000, guid: 61270e87cd57e6f4b8a169e66c93b6ce, type: 2}
-  - {fileID: 11400000, guid: 647faeb1c80a70347921cb76676061b4, type: 2}
+  initSkillData: []
   initProjSprite: {fileID: 21300000, guid: 1396c40b41c55a745a385648ec3e7152, type: 3}
   damageText: {fileID: 6403899980032326514, guid: a537ae7bbd7ea544e892012b3c972e1a,
     type: 3}
@@ -147,6 +145,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0069a74a6242bb44ca04992fb27b5e5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onInitPlayer:
+    m_PersistentCalls:
+      m_Calls: []
+  onChangeSkill:
+    m_PersistentCalls:
+      m_Calls: []
   onStageLoad:
     m_PersistentCalls:
       m_Calls: []
@@ -154,6 +158,21 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   onGameOver:
+    m_PersistentCalls:
+      m_Calls: []
+  onEnemyDie:
+    m_PersistentCalls:
+      m_Calls: []
+  onWaveClear:
+    m_PersistentCalls:
+      m_Calls: []
+  onCloseTo_selectableItemList:
+    m_PersistentCalls:
+      m_Calls: []
+  onUpdate_inspectingObject:
+    m_PersistentCalls:
+      m_Calls: []
+  onUpdate_closestSelectableItem:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &5031679521403383433
@@ -249,7 +268,12 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+  interactAction: 102
+  pauseAction: 27
+  interact: 0
+  pause: 0
   isMouseLeftButtonOn: 0
+  skillKeys: 31000000320000003300000034000000
 --- !u!114 &8452372033382595405
 MonoBehaviour:
   m_ObjectHideFlags: 0

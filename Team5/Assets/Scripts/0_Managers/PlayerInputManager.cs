@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,10 +12,13 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
     public InputAction moveAction;
     public InputAction mouseLeftButtonAction;
     public KeyCode interactAction = KeyCode.F;
+
+    public KeyCode pauseAction = KeyCode.Escape;
     InputAction lookAction;
 
 
-    public bool isInteractOn;
+    public bool interact;
+    public bool pause;
     public bool isMouseLeftButtonOn;        //마우스를 누르고 있는 중인지.
 
 
@@ -38,6 +42,7 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
     //
 
     // [SerializeField] LayerMask aimColliderLayerMask = new();
+    public List<KeyCode> skillKeys = new() {KeyCode.Alpha1,KeyCode.Alpha2,KeyCode.Alpha3,KeyCode.Alpha4 };
 
 
     //================================================================
@@ -66,7 +71,8 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
 
 
         isMouseLeftButtonOn = mouseLeftButtonAction.ReadValue<float>() > 0;
-        isInteractOn = Input.GetKeyDown(interactAction);
+        interact = Input.GetKeyDown(interactAction);
+        pause = Input.GetKeyDown(pauseAction);
 
         CheckNumberKeys();
 

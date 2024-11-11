@@ -18,6 +18,11 @@ public class ResourceManager : Singleton<ResourceManager>
 
     public SerializedDictionary<string, DropItemDataSO> dropItemData = new();
 
+
+    
+    public readonly string itemDataPath = "00_Data/itemDictionary";
+    public ItemDictionarySO itemData;
+
     //=================================================
 
 
@@ -32,6 +37,8 @@ public class ResourceManager : Singleton<ResourceManager>
         {
             dropItemData[itemData.id] = itemData;
         }
+
+        itemData = Resources.Load<ItemDictionarySO>(itemDataPath);
     }
 
     //

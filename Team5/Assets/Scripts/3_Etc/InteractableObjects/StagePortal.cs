@@ -5,7 +5,7 @@ using UnityEngine;
 using TMPro;
 
 
-public class StagePortal : InteractableObject
+public class StagePortal : InteractiveObject
 {
     [SerializeField] TextMeshPro text;
     
@@ -16,18 +16,24 @@ public class StagePortal : InteractableObject
     }
 
 
-    protected override void OnEnter(bool isOn)
+    protected override void OnInspect_Custom(bool isOn)
     {
         text.gameObject.SetActive(isOn);
     }
 
-    protected override void OnInteract()
+    protected override void OnInteract_Custom()
     {
         Debug.Log("포탈 진입");
 
         //
         GoToNextStage();
+
+        
     }
+
+
+
+
 
     public void OnStageClear()
     {
