@@ -61,11 +61,15 @@ public class PlayerInteraction : MonoBehaviour
     /// </summary>
     void UpdateClosesetObject()
     {
-        if (inspectingObjects.Count == 0)
-        {
-            closestObject = null;
-            return;
-        }
+        // if (inspectingObjects.Count == 0)
+        // {
+        //     if (closestObject !=null)
+        //     {
+        //         GameEventManager.Instance.onUpdate_inspectingObject.Invoke(null);
+        //         closestObject = null;
+        //     }
+        //     return;
+        // }
         
         InteractiveObject newClosestObject = null;
         float sqrDist_old =  Mathf.Infinity;
