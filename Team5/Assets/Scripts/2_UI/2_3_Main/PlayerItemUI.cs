@@ -8,13 +8,16 @@ using UnityEngine;
 /// </summary>
 public class PlayerItemUI : MonoBehaviour
 {
-    ItemDataSO data;
+    public int idx;
+    public ItemDataSO data;
     [SerializeField] Image img_icon;
 
-    public void Init(ItemDataSO data)
-    {
-        this.data =data;
+    public void Init(int idx, ItemDataSO data)
+    {        
+        this.idx = idx;
+        this.data = data;
         img_icon.sprite  = data?.sprite;    // null 일수도 있음.
+
     }
 
 }

@@ -8,6 +8,6 @@ public class DropItem_00_Exp : DropItemDataSO
 {
     public override void PickUp(float value)
     {
-        Player.Instance.GetExp(value);
+        // Player.Instance.GetExp(value);
     }
 }

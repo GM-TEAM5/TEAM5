@@ -24,4 +24,11 @@ public class GameEventManager : Singleton<GameEventManager>
     public UnityEvent<InteractiveObject> onUpdate_inspectingObject = new();   
     public UnityEvent<ItemDataSO> onUpdate_closestSelectableItem = new(); // 가장 가까이 있는 아이템이 달라졌을때,
 
+
+    #region 스탯 변동 
+    public UnityEvent onChangePlayerStatus_maxHp;
+    public UnityEvent onChangePlayerStatus_pDmg;
+    #endregion
+    
+
 }

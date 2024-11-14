@@ -17,10 +17,12 @@ public class GamePlayManager : Singleton<GamePlayManager>
     
     //
     [SerializeField] AudioSource bgm;
+    // [SerializeField] GameObject panelBackground;
     [SerializeField] EntrancePortal entrancePortal;
     [SerializeField] GamePlayStartUI gamePlayStartUI;    // 스테이지 시작시 안내창
     [SerializeField] ReinforcementPanel reinforcementPanel; //레벨업 시 강화 패널
-    [SerializeField] PlayerInfoPanel playerInfoPanel; //레벨업 시 강화 패널
+    [SerializeField] PlayerInfoPanel playerInfoPanel; // 플레이어 정보 패널 - esc 눌렀을 때,
+    [SerializeField] EquipmentChangePanel equipmentChangePanel; // 장비 교체 패널 - 장비칸 없었을 때 아이템 먹었을 떄, 
 
     //
     [SerializeField] SelectableItemInfoPanel selectableItemInfoPanel;   // 웨이브 종료시 나타나는 아이템 설명 팝업창
@@ -108,6 +110,11 @@ public class GamePlayManager : Singleton<GamePlayManager>
             
         }
         
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            OnInventoryFull(null);
+        }
+        
         
         
         
@@ -168,7 +175,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
         
         StageManager.Instance.StartWave();
         
-        selectableItemList.OnWaveStart();
+        selectableItemList.Deactivate();
 
         StartCoroutine( CheckWaveClear() );
     }
@@ -220,17 +227,24 @@ public class GamePlayManager : Singleton<GamePlayManager>
     public void Select_SelectableItem(ItemDataSO item)
     {
         // Debug.Log($"선택띠 : {selectableItem.data.id}, {selectableItem.data.dataName}");
-        item.Get();
-        
-        selectableItemInfoPanel.Close();
+        if (item.TryGet())
+        {
+            FinishSelection();
+        }
+    }
 
-        //
-        selectableItemList.OnWaveStart();   // 선택하면 off 
-        
+    public void FinishSelection()
+    {
+        selectableItemInfoPanel.Close();
+        selectableItemList.Deactivate(); 
     }
 
 
-    
+    public void OnInventoryFull(EquipmentItemSO equipment)
+    {
+        equipmentChangePanel.Open();
+        equipmentChangePanel.InitSelectedEquipment(equipment);
+    }
 
     #endregion
 

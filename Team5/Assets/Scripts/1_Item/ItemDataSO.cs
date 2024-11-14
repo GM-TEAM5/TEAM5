@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Tier
+public enum ItemTier
 {
     // Normal,
     Rare,
@@ -11,14 +11,49 @@ public enum Tier
     // Legendary
 }
 
+public enum ItemType
+{
+    Consumable,
+    Equipment,
+    Skill
+}
+
+public enum CantGetReason
+{
+    None,
+    NoSpace
+}
+
+
 
 public abstract class ItemDataSO : GameData 
 {
     public Sprite sprite; 
-    public Tier tier;
+    public ItemType type;
+    public ItemTier tier;
 
     [TextArea(3, 10)]  public string description;
 
-    public abstract void Get();
+    public bool TryGet()
+    {
+        if (CanGet(out CantGetReason reason))
+        {
+            Get();
+            return true;
+        }
+        else
+        {
+            OnCantGet(reason);
+            return false;
+        }
+    }
+    
+    protected abstract bool CanGet(out CantGetReason reason);
+    
+    protected abstract void Get();
+
+    protected abstract void OnCantGet(CantGetReason reason);
+
+    
 
 }

@@ -25,19 +25,22 @@ public class SelectableItemList : MonoBehaviour
         }
 
         //
-        OnWaveStart();
+        Deactivate();
     }
 
 
 
     //=======================================================
-
+    public void Deactivate()
+    {
+        gameObject.SetActive(false);
+        ActiavteItems(false);
+    }
 
 
     public void OnWaveStart()
     {
-        gameObject.SetActive(false);
-        ActiavteItems(false);
+        Deactivate();
     }
 
 

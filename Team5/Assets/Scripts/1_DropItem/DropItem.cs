@@ -31,7 +31,7 @@ public class DropItem : MonoBehaviour, IPoolObject
         get
         {
             float distSqr = Vector3.SqrMagnitude( Player.Instance.t_player.position+offset - t.position );
-            float range= Player.Instance.status.range;
+            float range= Player.Instance.status.pickUpRange;
             float rangeSqr = range * range ;  // 일단 그리기 반경
             //Debug.Log($" item  {distSqr} {rangeSqr}" );
             //
