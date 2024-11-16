@@ -198,10 +198,10 @@ public class PoolManager : Singleton<PoolManager>
 
 
 
-    public EnemyProjectile GetEnemyProjectile(EnemySkillSO skillData, Enemy enemy, Vector3 initPos, float lifeTime)
+    public EnemyProjectile GetEnemyProjectile(EnemyAbilitySO abilityData, Enemy enemy, Vector3 initPos, float lifeTime)
     {
         EnemyProjectile enemyProj = GetFromPool<EnemyProjectile>(); 
-        enemyProj.Init(skillData, enemy, initPos, lifeTime);
+        enemyProj.Init(abilityData, enemy, initPos, lifeTime);
     
         return enemyProj;
     }

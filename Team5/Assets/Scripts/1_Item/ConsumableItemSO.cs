@@ -11,7 +11,7 @@ public abstract class ConsumableItemSO : ItemDataSO
     
     
     
-    float defaultValue;        // 소비아이템 효과 기본 값
+    public float defaultValue;        // 소비아이템 효과 기본 값
     
     protected override bool CanGet(out CantGetReason reason)
     {        

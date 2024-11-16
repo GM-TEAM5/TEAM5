@@ -280,7 +280,7 @@ MonoBehaviour:
   t_enemySpawnAreaParent: {fileID: 655561691827639042}
   enemySpawnArea: []
   waveActivationSwitch: {fileID: 0}
-  portal: {fileID: 0}
+  stagePortal: {fileID: 0}
   selectableItemList: {fileID: 9206671503328134083}
 --- !u!1 &4008043461630390949
 GameObject:
@@ -437,7 +437,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 799b0a0bd4d811543956458b5015a3a7, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 6f3f36b26f27c064e81ba2a380e2671d, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1 &6255104455998626773
 GameObject:

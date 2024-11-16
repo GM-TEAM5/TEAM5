@@ -22,7 +22,7 @@ MonoBehaviour:
       - waveNum: 1
         enemyIds:
         - 001
-        totalNum: 15
+        totalNum: 1
         spawnDuration: 15
         totalCycle: 1
         waveForm: 0
@@ -30,7 +30,7 @@ MonoBehaviour:
       - waveNum: 1
         enemyIds:
         - 002
-        totalNum: 5
+        totalNum: 0
         spawnDuration: 0
         totalCycle: 1
         waveForm: 0
@@ -40,7 +40,7 @@ MonoBehaviour:
       - waveNum: 2
         enemyIds:
         - 001
-        totalNum: 15
+        totalNum: 1
         spawnDuration: 0
         totalCycle: 1
         waveForm: 0

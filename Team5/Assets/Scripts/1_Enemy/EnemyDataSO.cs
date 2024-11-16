@@ -49,6 +49,7 @@ public abstract class EnemyDataSO : ScriptableObject
     public float armor;
 
     public float range  =1;         // 공격 사거리 
+    public float retreatRange;  // 후퇴 사거리.
     public float attackSpeed;       // 평타 공격속도
     public float ad = 20;           // 평타 뎀지 
     public float ap;            // Ability power - 몬스터 특수 기술의 공격력!?
@@ -58,7 +59,7 @@ public abstract class EnemyDataSO : ScriptableObject
 
     public float exp = 30;   // 주는 경험치
     
-    public List<EnemySkillSO> skils;  // 스킬이 있을 수도 있음.
+    public List<EnemyAbilitySO> abilities;  // 스킬이 있을 수도 있음.
 
 
     public abstract void OnAttack(Enemy enemy);
