@@ -19,7 +19,7 @@ public class PlayerInteraction : MonoBehaviour
         UpdateClosesetObject();
 
         // 상호작용 
-        if( closestObject !=null && PlayerInputManager.Instance.interact)
+        if( closestObject !=null && Player.Instance.isStunned == false &&PlayerInputManager.Instance.interact)
         {
             InteractWith(closestObject);
         }
@@ -74,7 +74,7 @@ public class PlayerInteraction : MonoBehaviour
         InteractiveObject newClosestObject = null;
         float sqrDist_old =  Mathf.Infinity;
 
-        Vector3 playerPos = Player.Instance.t_player.position;
+        Vector3 playerPos = Player.Instance.t.position;
         
         for(int i=0;i<inspectingObjects.Count;i++)
         {

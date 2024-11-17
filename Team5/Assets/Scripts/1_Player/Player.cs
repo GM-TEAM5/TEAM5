@@ -1,18 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Net.Mail;
 using BW.Util;
 
 using UnityEngine;
 using DG.Tweening;
-using UnityEngine.Playables;
+using JetBrains.Annotations;
 
 
 [RequireComponent(typeof(CharacterController),  typeof(SpriteEntity))]
 [RequireComponent(typeof(PlayerEquipments),  typeof(PlayerInteraction))]            
 public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포넌트에 접근하기 쉽도록 싱글톤
 {
-    public Transform t_player;
+    public Transform t;
 
     public PlayerStatus status;     // 플레이어의 능력치 정보 
     SpriteEntity spriteEntity;
@@ -51,6 +50,18 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     //
     PlayerInteraction playerInteraction;
 
+    // 스턴
+    public bool isStunned => isNockbackOn;
+
+    // 넉백
+    [SerializeField] Vector3 knockbackVelocity; 
+    [SerializeField] float knockbackDamping = 10f; // 넉백 감소 속도
+    [SerializeField] bool isNockbackOn => knockbackVelocity.magnitude > 0.3f;
+
+    //
+    public float stunDurationRemain;
+    public bool stunned => stunDurationRemain > 0;
+
     //====================================================================================
 
     private void Start()
@@ -65,10 +76,22 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
             return;
         }
 
+        // 스턴 지속시간 감소
+        if (stunDurationRemain > 0)
+        {
+            stunDurationRemain -= Time.deltaTime;
+        }
+        else if ( isNockbackOn  )
+        {
+            knockbackVelocity = Vector3.Lerp(knockbackVelocity, Vector3.zero, knockbackDamping * Time.deltaTime);
+        }
+
+
+
         Move();
         UpdateSpriteDir();
 
-        playerInteraction.OnUpdate();
+        playerInteraction.OnUpdate();    
     }
 
     //============================================================================
@@ -104,7 +127,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     /// </summary>
     public void InitPlayer()
     {
-        t_player = transform;
+        t = transform;
 
         controller = GetComponent<CharacterController>();
         playerInput = PlayerInputManager.Instance;
@@ -201,14 +224,26 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
         // {
         //     return;
         // }
+        Vector3 moveVector = Vector3.zero; 
 
-        // 땅위의 경우
-        Vector2 moveVector = playerInput.moveVector;
+        // 넉백 처리
+        if (isNockbackOn)
+        {
+            moveVector = knockbackVelocity; // 넉백 벡터 추가
+        }
+        else
+        {
+            // 땅위의 경우
+            Vector2 inputVector = playerInput.moveVector;
 
-        // Debug.Log(moveVector);
-        lastMoveDir = transform.right * moveVector.x + transform.forward * moveVector.y;
-        lastMoveDir.y = 0;      // 방향 조절에 필요 없기떄문.
-        controller.Move(lastMoveDir.normalized * Time.deltaTime * status.movementSpeed);
+            // Debug.Log(moveVector);
+            lastMoveDir = transform.right * inputVector.x + transform.forward * inputVector.y;
+            lastMoveDir.y = 0;      // 방향 조절에 필요 없기떄문.
+
+            moveVector = lastMoveDir.normalized *status.movementSpeed;
+        }
+
+        controller.Move(moveVector* Time.deltaTime);
     }
 
     /// <summary>
@@ -221,6 +256,12 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
 
 
     //========================================================================
+    public void GetImpulsiveDamaged(float dmg,Vector3 enemyPos, Vector3 hitPoint, float impulse)
+    {
+        GetNockback(hitPoint,enemyPos,  impulse);
+        GetDamaged(dmg);
+    }
+    
     public void GetDamaged(float amount)
     {
         status.currHp -= amount;
@@ -234,6 +275,25 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
         stateUI.UpdateCurrHp(status.currHp);
 
         PoolManager.Instance.GetDamageText(transform.position, amount, DamageType.DMG_PLAYER);
+    }
+
+    //==============================================================
+    void GetNockback(Vector3 enemyPos, Vector3 hitPoint,  float impulse)
+    {
+        Vector3 dir = t.position - hitPoint;
+        if (dir == Vector3.zero)
+        {
+            dir = t.position-enemyPos;
+        }
+        dir = dir.WithFloorHeight().normalized;
+        
+        knockbackVelocity = dir * impulse;
+        SetStunned(0.2f);
+    }
+
+    void SetStunned(float duration)
+    {
+        stunDurationRemain = System.Math.Max(stunDurationRemain, duration);
     }
 
 
@@ -266,6 +326,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
 
         GamePlayManager.Instance.GameOver();
     }
+
 
 
     //=====================================================

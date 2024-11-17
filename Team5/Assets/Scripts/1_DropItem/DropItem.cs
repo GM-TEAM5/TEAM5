@@ -30,7 +30,7 @@ public class DropItem : MonoBehaviour, IPoolObject
     {
         get
         {
-            float distSqr = Vector3.SqrMagnitude( Player.Instance.t_player.position+offset - t.position );
+            float distSqr = Vector3.SqrMagnitude( Player.Instance.t.position+offset - t.position );
             float range= Player.Instance.status.pickUpRange;
             float rangeSqr = range * range ;  // 일단 그리기 반경
             //Debug.Log($" item  {distSqr} {rangeSqr}" );
@@ -102,7 +102,7 @@ public class DropItem : MonoBehaviour, IPoolObject
         {
             
             // 방향구하기
-            Vector3 dir = (Player.Instance.t_player.position+offset - t.position).normalized;
+            Vector3 dir = (Player.Instance.t.position+offset - t.position).normalized;
             
             rb.velocity = dir * speed;
 

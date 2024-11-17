@@ -58,17 +58,12 @@ public class EnemyAbilitySystem : MonoBehaviour
 
     public void TryUse()
     {
-        if (usingAbility == null)
+        if (usingAbility == null || usingAbility.CanUse(enemy)== false)
         {
             return;
         }
 
-        Debug.Log("스킬사용!");
-        if (usingAbility.CanUse(enemy))
-        {
-            abilityRoutine = StartCoroutine(UseAbility( enemy ));
-        }
-        
+        abilityRoutine = StartCoroutine(UseAbility( enemy ));
     }
 
     

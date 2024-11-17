@@ -2,6 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum IndicatorType
+{
+    None,
+    AreaCircle,
+    AreaBox,
+    Direction,
+}
+
+
 public abstract class EnemyAbilitySO : ScriptableObject
 {
     public string id;
@@ -9,6 +18,7 @@ public abstract class EnemyAbilitySO : ScriptableObject
     public Sprite icon;
     //
     [Header("InGameSetting")]
+    public IndicatorType indicatorType;
     public float range;
     public int priority;    // 우선순위 : 높을 수록 먼저 시전.
     public float cooltime;      //쿨타임 ( 초 ) 

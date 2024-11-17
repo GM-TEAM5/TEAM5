@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyAbility
 {
 
-   public EnemyAbilitySO data;
+    public EnemyAbilitySO data;
     
     public int useCount; 
     public float lastUseTime;   // 스킬 마지막 사용시간 

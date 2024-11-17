@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 using BW.Util;
 
-[CreateAssetMenu(fileName = "EA_00100", menuName = "SO/EnemyAbility/00100")]
-public class EnemyAbility_00100 : EnemyAbilitySO
+
+
+[CreateAssetMenu(fileName = "EA_00300", menuName = "SO/EnemyAbility/00300")]
+public class EnemyAbility_00300 :  EnemyAbilitySO
 {
     [Header("Extra")]
-    public float radius = 1;
-    
+    public float radius = 3;
+    public float impulse = 20;
     
     
     public override bool ActivationConditions(Enemy enemy)
@@ -25,7 +28,6 @@ public class EnemyAbility_00100 : EnemyAbilitySO
     public override void Use(Enemy enemy)
     {
         Vector3 targetPos = enemy.t_target.position;
-        // Vector3 dir = (targetPos - enemy.t.position).WithFloorHeight().normalized;
 
         Collider[] hits = Physics.OverlapSphere(targetPos.WithStandardHeight(), radius,GameConstants.playerLayer);
 
@@ -38,8 +40,13 @@ public class EnemyAbility_00100 : EnemyAbilitySO
             Player player = hit.GetComponent<Player>();
             if (player != null)
             {
-                player.GetDamaged(enemy.data.ad);
+                player.GetImpulsiveDamaged(enemy.data.ad, enemy.t.position, targetPos, impulse);
             }
         }
     }
+
+
+
+
+
 }

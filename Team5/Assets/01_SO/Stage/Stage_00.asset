@@ -21,7 +21,7 @@ MonoBehaviour:
       Value:
       - waveNum: 1
         enemyIds:
-        - 001
+        - 003
         totalNum: 1
         spawnDuration: 15
         totalCycle: 1

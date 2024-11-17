@@ -311,7 +311,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
 
     IEnumerator GameOverSequence()
     {
-        DirectingManager.Instance.ZoomIn(Player.Instance.t_player);
+        DirectingManager.Instance.ZoomIn(Player.Instance.t);
         GameManager.Instance.PauseGamePlay(true);
         yield return new WaitForSecondsRealtime(1f);
         GameManager.Instance.PauseGamePlay(false,2f);

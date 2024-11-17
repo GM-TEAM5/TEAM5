@@ -42,7 +42,7 @@ public class Stage : MonoBehaviour
     /// <returns></returns>
     public Vector3 GetRandomSpawnPoint()
     {
-        Vector3 ret = Player.Instance.t_player.position;
+        Vector3 ret = Player.Instance.t.position;
 
         if (enemySpawnArea.Length>0)
         {

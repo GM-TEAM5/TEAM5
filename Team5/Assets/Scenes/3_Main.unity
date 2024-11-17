@@ -11059,6 +11059,11 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 330585545}
+    - target: {fileID: 2482353749107652102, guid: d5212e8c9338ab14598ccd81bd8b95bd,
+        type: 3}
+      propertyPath: knockbackDamping
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 2591433327750361634, guid: d5212e8c9338ab14598ccd81bd8b95bd,
         type: 3}
       propertyPath: m_Name
