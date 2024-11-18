@@ -4,6 +4,7 @@ Shader "Custom/AbilityArea"
     {
         _Radius ("Outer Radius", Float) = 0.5 // 바깥 원 반경
         _InnerThickness ("Inner Thickness", Float) = 1.0 // 외곽선 안쪽 두께 (픽셀 단위)
+        _InnerThreshold ("Inner Threshold", Float) = 0.9
     }
     SubShader
     {
@@ -32,6 +33,8 @@ Shader "Custom/AbilityArea"
 
             float _Radius;
             float _InnerThickness;
+            float _InnerThreshold;
+
 
             v2f vert (appdata v)
             {
@@ -50,43 +53,56 @@ Shader "Custom/AbilityArea"
                 fixed4 color = i.color; // Use the color passed from the vertex
 
                 // Define the threshold for the inner region (90% of _Radius) 
-                float innerThreshold = 0.9 * _Radius;
+                float innerThreshold = _InnerThreshold * _Radius;
 
                 // Calculate screen size and pixel size for thickness scaling
                 float2 screenSize = float2(_ScreenParams.x, _ScreenParams.y); // Screen dimensions
-                float pixelSize = 1.0 / screenSize.y; // Pixel size based on vertical resolution
+                float pixelSize = 1.0 /  max(screenSize.x, screenSize.y); // Pixel size based on vertical resolution
                 float scaledInnerThickness = _InnerThickness * pixelSize; // Scale thickness to normalized units
 
-                if (dist > _Radius - scaledInnerThickness && dist <= innerThreshold) 
+                if (innerThreshold - scaledInnerThickness < dist  && dist <= innerThreshold) 
                 {
-                    float innerFactor = (dist - (_Radius - scaledInnerThickness)) / scaledInnerThickness; // 안쪽 비율 (0~1)
-                    float alpha = innerFactor * color.a; // 알파값 적용
-                    return fixed4(color.rgb, alpha); // 알파값이 최종 출력에 반영
+                    // float innerFactor = (dist - (_Radius - scaledInnerThickness)) / scaledInnerThickness; // 안쪽 비율 (0~1)
+                    // float alpha = innerFactor * color.a; // 알파값 적용
+                    
+                    float innerFactor = smoothstep(
+                        innerThreshold - scaledInnerThickness,
+                        innerThreshold,
+                        dist
+                    );
+
+
+
+                    return fixed4(color.rgb, innerFactor * color.a);
+                    // return fixed4(color.rgb, alpha); // 알파값이 최종 출력에 반영
                 }
-                else if (dist > innerThreshold && dist <= _Radius)
+                else if (innerThreshold < dist && dist <= _Radius)
                 {
+                    float transitionFactor = smoothstep(
+                        innerThreshold,
+                        _Radius,
+                        dist
+                    );
+                    return fixed4(color.rgb, (1.0 - transitionFactor) * color.a);
+                    
+                    
                     // Transition region: Apply smooth alpha gradient
 
                     // Calculate how far into the transition region the fragment is
-                    float transitionFactor = (dist - innerThreshold) / ( _Radius - innerThreshold );
+                    // float transitionFactor = (dist - innerThreshold) / ( _Radius - innerThreshold );
 
                     // Optionally, you can use smoothstep for a smoother transition
                     // float smoothFactor = smoothstep(0.0, 1.0, transitionFactor);
 
                     // Calculate alpha based on the transition factor
-                    float alpha = (1.0 - transitionFactor) * color.a;
+                    // float alpha = (1.0 - transitionFactor) * color.a;
 
                     // Optionally, you can modulate alpha with the inner thickness
                     // float alpha = (1.0 - transitionFactor) * (1.0 - transitionFactor) * color.a;
 
-                    return fixed4(color.rgb, alpha);
+                    // return fixed4(color.rgb, alpha);
                 }
-                else
-                {
-                    // Outside the circle: Discard the fragment
-                    discard;
-                }
-                return color;
+                return fixed4(0, 0, 0, 0);
             }
             ENDCG
         }
