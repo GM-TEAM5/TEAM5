@@ -62,6 +62,7 @@ public class PlayerStatus
     public float rangeModifier =1;
     public float cooltimeModifier =1;
     public float luck;
+    public int rerollCount;
 
 
     public float pDmg;  // physical dmg;
@@ -102,6 +103,7 @@ public class PlayerStatus
     {
         currHp = maxHp;     
         currInk = maxInk *0.3f;
+        rerollCount = 10;
     }
 
 
@@ -166,6 +168,10 @@ public class PlayerStatus
         }
     }
 
+    public void ChangeRerollCount(int amount)
+    {
+        rerollCount += amount;
+    }
 
     #endregion
 }

@@ -12,12 +12,14 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
     public InputAction moveAction;
     public InputAction mouseLeftButtonAction;
     public KeyCode interactAction = KeyCode.F;
+    public KeyCode secondaryInteractAction = KeyCode.R;
 
     public KeyCode pauseAction = KeyCode.Escape;
     InputAction lookAction;
 
 
     public bool interact;
+    public bool secondaryInteract;
     public bool pause;
     public bool isMouseLeftButtonOn;        //마우스를 누르고 있는 중인지.
 
@@ -72,6 +74,7 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
 
         isMouseLeftButtonOn = mouseLeftButtonAction.ReadValue<float>() > 0;
         interact = Input.GetKeyDown(interactAction);
+        secondaryInteract = Input.GetKeyDown(secondaryInteractAction);
         pause = Input.GetKeyDown(pauseAction);
 
         CheckNumberKeys();

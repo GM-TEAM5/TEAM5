@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 1001_TestHpUp
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 59687399831753744bdc351c9c758e6d, type: 3}
-  tier: 0
+  type: 1
+  tier: 1
   description: "\uCD5C\uB300 \uCCB4\uB825\uC774 100 \uC99D\uAC00\uD569\uB2C8\uB2E4"
   amount: 100

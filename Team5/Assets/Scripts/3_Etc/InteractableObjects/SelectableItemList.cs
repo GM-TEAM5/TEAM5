@@ -11,17 +11,17 @@ public class SelectableItemList : MonoBehaviour
 {
     [SerializeField] TextMeshPro text;
     [SerializeField] Transform t_itemList;
-    [SerializeField] SelectableItem[] t_items;
+    [SerializeField] SelectableItem[] items;
 
     
     
 
     public void Init()
     {
-        t_items = new SelectableItem[t_itemList.childCount];
-        for(int i=0;i<t_items.Length;i++)
+        items = new SelectableItem[t_itemList.childCount];
+        for(int i=0;i<items.Length;i++)
         {
-            t_items[i] = t_itemList.GetChild(i).GetComponent<SelectableItem>();
+            items[i] = t_itemList.GetChild(i).GetComponent<SelectableItem>();
         }
 
         //
@@ -61,7 +61,7 @@ public class SelectableItemList : MonoBehaviour
 
         for(int i=0;i<4;i++)
         {
-            SelectableItem si = t_items[i];
+            SelectableItem si = items[i];
             ItemDataSO itemData = (ItemDataSO)randomItemData[i];
 
             si.Init(i,itemData);
@@ -72,22 +72,24 @@ public class SelectableItemList : MonoBehaviour
     {
         int idx = selectableItem.idx;
 
-        List<GameData> exception = new();
-        foreach( var item in t_items)
+        List<GameData> exception = items.Select(x=> (GameData)x.data).ToList();
+        List<GameData> randomItemData = ResourceManager.Instance.itemData.GetRandomData(1, exception );
+        if (randomItemData.Count>0)
         {
-            exception.Add(item.data);
+            items[idx].Init(idx, (ItemDataSO)randomItemData[0] );
         }
-        List<GameData> randomItemData = ResourceManager.Instance.itemData.GetRandomData(1,exception);
-        
+
+        //
+        items[idx].OnInspect(true);
     }
 
 
 
     void ActiavteItems(bool isOn)
     {
-        for(int i=0;i<t_items.Length;i++)
+        for(int i=0;i<items.Length;i++)
         {
-            t_items[i].gameObject.SetActive(isOn);
+            items[i].gameObject.SetActive(isOn);
         }
 
         //

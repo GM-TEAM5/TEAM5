@@ -19,9 +19,16 @@ public class PlayerInteraction : MonoBehaviour
         UpdateClosesetObject();
 
         // 상호작용 
-        if( closestObject !=null && Player.Instance.isStunned == false &&PlayerInputManager.Instance.interact)
+        if( closestObject !=null && Player.Instance.isStunned == false)
         {
-            InteractWith(closestObject);
+            if ( PlayerInputManager.Instance.interact)
+            {
+                InteractWith(closestObject);
+            }
+            else if(PlayerInputManager.Instance.secondaryInteract )
+            {
+                SecondaryInteractWith(closestObject);
+            }
         }
 
 
@@ -118,7 +125,7 @@ public class PlayerInteraction : MonoBehaviour
     }
 
 
-    public void Inspect(InteractiveObject interactiveObject)
+    void Inspect(InteractiveObject interactiveObject)
     {
         if (interactiveObject ==null)
         {
@@ -137,9 +144,14 @@ public class PlayerInteraction : MonoBehaviour
     }
 
 
-    public void InteractWith(InteractiveObject interactiveObject)
+    void InteractWith(InteractiveObject interactiveObject)
     {
         interactiveObject.OnInteract();
+    }
+
+    void SecondaryInteractWith(InteractiveObject interactiveObject)
+    {
+        interactiveObject.OnSecondaryInteract();
     }
 
 }

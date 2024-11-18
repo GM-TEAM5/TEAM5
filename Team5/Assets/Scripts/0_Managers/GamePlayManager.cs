@@ -246,6 +246,18 @@ public class GamePlayManager : Singleton<GamePlayManager>
         equipmentChangePanel.InitSelectedEquipment(equipment);
     }
 
+    public void Reroll(SelectableItem selectableItem)
+    {
+        if (Player.Instance.status.rerollCount <=0)
+        {
+            return;
+        }
+        selectableItemList.Reroll(selectableItem);
+        Player.Instance.status.ChangeRerollCount(-1);
+        GameEventManager.Instance.onReroll.Invoke(selectableItem);
+        
+    }
+
     #endregion
 
     /// <summary>
