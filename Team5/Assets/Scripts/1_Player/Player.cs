@@ -18,7 +18,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
 
     //======= ui ========
     PlayerStateUI stateUI;
-
+    PlayerDraw playerDraw;
     //
     PlayerInputManager playerInput;
     CharacterController controller;
@@ -91,7 +91,8 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
         Move();
         UpdateSpriteDir();
 
-        playerInteraction.OnUpdate();    
+        playerInteraction.OnUpdate();   
+        playerDraw.OnUpdate(); 
     }
 
     //============================================================================
@@ -136,7 +137,9 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
 
         status = new PlayerStatus();      // 플레이어 스탯 초기화.
         //--------- after init status --------------
-
+        playerDraw = GetComponentInChildren<PlayerDraw>();
+        playerDraw.Init();
+        
         playerInteraction = GetComponent<PlayerInteraction>();
         playerEquipments = GetComponent<PlayerEquipments>();
         playerEquipments.InitEquipments();                      // 스텟을 조정하기 때문에, 스탯 초기화 이후에 진행해야함. 

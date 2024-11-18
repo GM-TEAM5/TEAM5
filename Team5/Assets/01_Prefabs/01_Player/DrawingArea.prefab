@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7428555689440304281}
   - component: {fileID: 1993771614841578859}
-  - component: {fileID: 3337230128489638219}
+  - component: {fileID: 4355985137529661167}
   m_Layer: 0
   m_Name: DrawingArea
   m_TagString: Untagged
@@ -86,7 +86,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3337230128489638219
+--- !u!114 &4355985137529661167
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,14 +95,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 20382047634466800}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06836687fc67ef641bcdf527aa6a5088, type: 3}
+  m_Script: {fileID: 11500000, guid: c6f30b26255d2e44694b59aa7436271d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initSize: {x: 0, y: 0}
-  sr_currProgress: {fileID: 7508245963675803528}
-  sr_outline: {fileID: 0}
-  defaultColor: {r: 1, g: 0, b: 0, a: 1}
-  emphasisColor: {r: 1, g: 0.7780148, b: 0, a: 0.5019608}
+  targetRadius: 30
+  activationTime: 0
+  deactivationTime: 0
+  isActivated: 0
 --- !u!1 &7843497220324390358
 GameObject:
   m_ObjectHideFlags: 0
