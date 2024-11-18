@@ -25,9 +25,9 @@ public class EnemyAbility_00300 :  EnemyAbilitySO
         return inRange;
     }
 
-    public override void Use(Enemy enemy)
+    public override void ApplyAbility(Vector3 castingPos, Enemy enemy)
     {
-        Vector3 targetPos = enemy.t_target.position;
+        Vector3 targetPos = castingPos;
 
         Collider[] hits = Physics.OverlapSphere(targetPos.WithStandardHeight(), radius,GameConstants.playerLayer);
 
@@ -45,8 +45,10 @@ public class EnemyAbility_00300 :  EnemyAbilitySO
         }
     }
 
-
-
-
-
+    public override void StartCast(Enemy enemy)
+    {
+        Vector3 targetPos = enemy.t_target.position;
+        
+        PoolManager.Instance.GetAreaIndicator_Circle(targetPos, Vector2.one * radius * 2, castingTime );
+    }
 }

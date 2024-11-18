@@ -24,15 +24,18 @@ public class EnemyAbility_00200 : EnemyAbilitySO
         return inRange;
     }
 
-    public override void Use(Enemy enemy)
+    public override void ApplyAbility(Vector3 castingPos,Enemy enemy)
     {
         Vector3 initPos = enemy.t.position.WithStandardHeight();
-        Vector3 targetPos = enemy.t_target.position.WithStandardHeight();
+        Vector3 targetPos = castingPos.WithStandardHeight();
         
         EnemyProjectile enemyProjectile = PoolManager.Instance.GetEnemyProjectile(this, enemy,initPos, lifeTime);
         Vector3 dir = (targetPos - initPos).normalized;
         enemyProjectile.SetDirAndSpeed(dir,movementSpeed); // 날라갈수있게 세팅
     }
 
-
+    public override void StartCast(Enemy enemy)
+    {
+        
+    }
 }

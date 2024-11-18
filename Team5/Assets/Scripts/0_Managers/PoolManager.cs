@@ -248,6 +248,15 @@ public class PoolManager : Singleton<PoolManager>
         dropItem.Init(itemData,value,initPos);
         return dropItem;
     }
+    
+    public AreaIndicator GetAreaIndicator_Circle(Vector3 initPos, Vector2 size, float duration)
+    {
+        AreaIndicator areaIndicator = GetFromPool<AreaIndicator>();
+        AreaIndicatorSO data = (AreaIndicatorSO)ResourceManager.Instance.areaIndicatorData.GetData("00");
+        areaIndicator.Init(data,initPos, size, duration );
+
+        return areaIndicator;
+    }
 
 
     //=====================================================================

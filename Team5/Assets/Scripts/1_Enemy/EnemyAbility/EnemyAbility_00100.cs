@@ -22,12 +22,12 @@ public class EnemyAbility_00100 : EnemyAbilitySO
         return inRange;
     }
 
-    public override void Use(Enemy enemy)
+    public override void ApplyAbility(Vector3 castingPos, Enemy enemy)
     {
-        Vector3 targetPos = enemy.t_target.position;
+        Vector3 targetPos = castingPos.WithStandardHeight();
         // Vector3 dir = (targetPos - enemy.t.position).WithFloorHeight().normalized;
 
-        Collider[] hits = Physics.OverlapSphere(targetPos.WithStandardHeight(), radius,GameConstants.playerLayer);
+        Collider[] hits = Physics.OverlapSphere(targetPos, radius,GameConstants.playerLayer);
 
         // 충돌지역에 플레이어가 있으면. 
         if(hits.Length>0)
@@ -41,5 +41,10 @@ public class EnemyAbility_00100 : EnemyAbilitySO
                 player.GetDamaged(enemy.data.ad);
             }
         }
+    }
+
+    public override void StartCast(Enemy enemy)
+    {
+        
     }
 }

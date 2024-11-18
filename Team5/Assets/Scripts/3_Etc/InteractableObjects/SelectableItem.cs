@@ -19,7 +19,7 @@ public class SelectableItem : InteractiveObject
         }
     }
 
-
+    public int idx;
     public ItemDataSO data;
 
 
@@ -29,8 +29,9 @@ public class SelectableItem : InteractiveObject
     //======================================================================
 
 
-    public void Init(ItemDataSO itemData)
+    public void Init(int idx, ItemDataSO itemData)
     {
+        this.idx = idx;
         data = itemData;
         sr.sprite = itemData.sprite;
 

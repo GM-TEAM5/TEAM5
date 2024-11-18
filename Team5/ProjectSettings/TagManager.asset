@@ -10,6 +10,7 @@ TagManager:
   - DropItem
   - InstantDeath
   - Interactive
+  - BasicAttack
   layers:
   - Default
   - TransparentFX
@@ -46,4 +47,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: SpriteEntity
+    uniqueID: 4013130283
     locked: 0

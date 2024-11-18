@@ -64,9 +64,24 @@ public class SelectableItemList : MonoBehaviour
             SelectableItem si = t_items[i];
             ItemDataSO itemData = (ItemDataSO)randomItemData[i];
 
-            si.Init(itemData);
+            si.Init(i,itemData);
         }
     }
+
+    public void Reroll(SelectableItem selectableItem)
+    {
+        int idx = selectableItem.idx;
+
+        List<GameData> exception = new();
+        foreach( var item in t_items)
+        {
+            exception.Add(item.data);
+        }
+        List<GameData> randomItemData = ResourceManager.Instance.itemData.GetRandomData(1,exception);
+        
+    }
+
+
 
     void ActiavteItems(bool isOn)
     {

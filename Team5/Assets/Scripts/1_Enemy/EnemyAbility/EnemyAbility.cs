@@ -14,6 +14,7 @@ public class EnemyAbility
     public bool isCooltimeOk => cooltimeRemain <= 0;
 
     // Coroutine abilityRoutine;
+    Vector3 usingPos;
 
     public EnemyAbility(EnemyAbilitySO data)
     {
@@ -33,10 +34,10 @@ public class EnemyAbility
     }
 
 
-    public void Use(Enemy enemy)
+    public void ApplyAbility(Vector3 castingPos, Enemy enemy)
     {
         useCount ++;
-        data.Use( enemy );
+        data.ApplyAbility( castingPos, enemy );
         lastUseTime = Time.time; //시간기록
     }
 }

@@ -20,7 +20,7 @@ MonoBehaviour:
   priority: 0
   cooltime: 3
   uninterruptible: 1
-  delay_beforeCast: 0.5
+  castingTime: 1
   delay_afterCast: 1
-  radius: 5
+  radius: 3
   impulse: 10

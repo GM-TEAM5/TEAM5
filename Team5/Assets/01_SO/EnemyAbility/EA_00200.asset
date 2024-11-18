@@ -15,11 +15,12 @@ MonoBehaviour:
   id: 00200
   skillName: FireBall
   icon: {fileID: 0}
+  indicatorType: 0
   range: 10
   priority: 0
   cooltime: 3
   uninterruptible: 0
-  delay_beforeCast: 0.5
+  castingTime: 0.5
   delay_afterCast: 0.5
   movementSpeed: 6
   lifeTime: 5

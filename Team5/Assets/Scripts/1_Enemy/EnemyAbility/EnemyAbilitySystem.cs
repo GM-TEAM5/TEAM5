@@ -71,9 +71,11 @@ public class EnemyAbilitySystem : MonoBehaviour
     {
         // 스킬 상태 진입.
         isCasting = true;
-
-        yield return new WaitForSeconds( usingAbility.data.delay_beforeCast );
-        usingAbility.Use( enemy );
+        
+        Vector3 castingPos = enemy.t_target.position;
+        usingAbility.data.StartCast(enemy);
+        yield return new WaitForSeconds( usingAbility.data.castingTime );
+        usingAbility.ApplyAbility( castingPos, enemy );
         yield return new WaitForSeconds( usingAbility.data.delay_afterCast );
         
         // 스킬 상태 해제 

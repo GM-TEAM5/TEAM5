@@ -14,6 +14,8 @@ public class DataDictionarySO : ScriptableObject
     
     [ReadOnly] public SerializableDictionary<string,GameData> dic = new(); 
 
+    System.Random random = new System.Random();
+
 
     // 유니티 에디터에서 값이 변경될 때마다 호출되는 메서드
     private void OnValidate()
@@ -57,36 +59,62 @@ public class DataDictionarySO : ScriptableObject
     /// <summary>
     /// 중복 없이 dataNum개의 데이터를 list에서 가져온다.
     /// </summary>
-    /// <param name="dataNum"></param>
+    /// <param name="targetNum"></param>
     /// <returns></returns>
-    public List<GameData> GetRandomData( int dataNum )
+    public List<GameData> GetRandomData( int targetNum, List<GameData> exception=null)
     {
         // 
-        List<GameData> ret = new();
-        List<int> idxs = new();
+        List<GameData> ret = GetItemsWithExption(list, exception);
+        ret = GetRandomUniqueItems(ret, targetNum);
 
-        int totalDataNum = list.Count;
-        //
-        for (int i = 0; i < totalDataNum; i++)
-        {
-            idxs.Add(i);
-        }
-
-        //
-        System.Random random = new System.Random();
-        
-        for (int i = 0; i < dataNum ; i++)
-        {
-            int idx = random.Next(idxs.Count);  // 랜덤으로 나온 idx
-            ret.Add( list[ idxs[idx] ]   );     // 리스트에서 아이템 뽑아냄. 
-            idxs.RemoveAt(idx);                 
-        }
 
         //
         return ret;
     }
 
+    /// <summary>
+    /// 특정 데이터를 제외한 데이터를 받아온다. 
+    /// </summary>
+    /// <param name="sourceList"></param>
+    /// <param name="exception"></param>
+    /// <returns></returns>
+    public List<GameData> GetItemsWithExption( List<GameData> sourceList, List<GameData> exception)
+    {
+        if (exception == null || exception.Count == 0)
+        {
+            return sourceList;
+        }
 
+        return sourceList.Except(exception).ToList();
+    }
+
+    /// <summary>
+    /// 지정된 리스트에서 중복없는 n개의 원소를 얻는다. 
+    /// </summary>
+    /// <param name="sourceList"></param>
+    /// <param name="n"></param>
+    /// <returns></returns>
+    public List<GameData> GetRandomUniqueItems( List<GameData> sourceList, int n)
+    {
+        if (n > sourceList.Count)
+        {
+            n = sourceList.Count;
+        }
+           
+
+        // 랜덤하게 섞기
+        return sourceList.OrderBy(x => random.Next()).Take(n).ToList();
+    }
+
+    public GameData GetData(string id)
+    {
+        if (dic.ContainsKey(id))
+        {
+            return dic[id];
+        }
+
+        return null;
+    }
 
 
 }

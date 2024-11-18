@@ -26,12 +26,13 @@ public abstract class EnemyAbilitySO : ScriptableObject
 
     
     //
-    public float delay_beforeCast;  // 선딜 : 공격 기술이 
+    public float castingTime;  // 기술 시전시간
     public float delay_afterCast;   // 후딜
 
     //
     // public abstract Transform GetTarget(Enemy enemy);ㅔ
     public abstract bool ActivationConditions(Enemy enemy);
     public abstract bool UsageConditions(Enemy enemy);
-    public abstract void Use(Enemy enemy);
+    public abstract void StartCast(Enemy enemy);
+    public abstract void ApplyAbility(Vector3 castingPos, Enemy enemy);
 }

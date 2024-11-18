@@ -12,6 +12,7 @@ public class SelectableItemInfoPanel : GamePlayPanel
     [SerializeField] TextMeshProUGUI text_itemDesc;
 
     [SerializeField] Button btn_select;
+    [SerializeField] Button btn_reroll;
 
     ItemDataSO currItemData;
 

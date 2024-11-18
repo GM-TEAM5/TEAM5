@@ -23,6 +23,10 @@ public class ResourceManager : Singleton<ResourceManager>
     public readonly string itemDataPath = "00_Data/itemDictionary";
     public ItemDictionarySO itemData;
 
+
+    public readonly string areaIndicatorDataPath = "00_Data/areaIndicatorDictionary";
+    public AreaIndicatorDictionarySO areaIndicatorData;
+
     //=================================================
 
 
@@ -39,6 +43,7 @@ public class ResourceManager : Singleton<ResourceManager>
         }
 
         itemData = Resources.Load<ItemDictionarySO>(itemDataPath);
+        areaIndicatorData  = Resources.Load<AreaIndicatorDictionarySO>(areaIndicatorDataPath);
     }
 
     //
