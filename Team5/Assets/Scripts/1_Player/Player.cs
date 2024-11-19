@@ -26,6 +26,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     [SerializeField] Canvas playerCanvas;
     [SerializeField] Vector3 lastMoveDir;
 
+    public PlayerAnimator animator;
 
     public bool isAlive => status.currHp > 0;
 
@@ -49,9 +50,11 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
 
     //
     PlayerInteraction playerInteraction;
+    PlayerBasicAttack playerBasicAttack;
 
     // 스턴
     public bool isStunned => isNockbackOn;
+    
 
     // 넉백
     [SerializeField] Vector3 knockbackVelocity; 
@@ -87,10 +90,13 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
         }
 
 
+        playerBasicAttack.OnUpdate();
 
+         
         Move();
         UpdateSpriteDir();
 
+        
         playerInteraction.OnUpdate();   
         playerDraw.OnUpdate(); 
     }
@@ -144,6 +150,9 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
         playerEquipments = GetComponent<PlayerEquipments>();
         playerEquipments.InitEquipments();                      // 스텟을 조정하기 때문에, 스탯 초기화 이후에 진행해야함. 
 
+        playerBasicAttack = GetComponentInChildren<PlayerBasicAttack>();
+
+        animator = GetComponentInChildren<PlayerAnimator>();
         //----------- after init finished ---------------------
 
         stateUI = GetComponent<PlayerStateUI>();
@@ -247,6 +256,8 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
         }
 
         controller.Move(moveVector* Time.deltaTime);
+
+        animator.OnMove(moveVector.magnitude);
     }
 
     /// <summary>

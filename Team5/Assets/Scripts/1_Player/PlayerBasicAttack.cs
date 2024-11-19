@@ -13,14 +13,17 @@ public class PlayerBasicAttack : MonoBehaviour
     private Vector3 attackDirection;
     private PlayerInputManager playerInput;
 
+    public Player player;
+
     void Start()
     {
+        player = Player.Instance;
         playerInput = PlayerInputManager.Instance;
         slash = GetComponentInChildren<Transform>().Find("Slash").gameObject;
         slash.SetActive(false);
     }
 
-    void Update()
+    public void OnUpdate()
     {
         attackDirection = (playerInput.mouseWorldPos - transform.position).normalized;
         attackDirection.y = 0;
@@ -34,6 +37,7 @@ public class PlayerBasicAttack : MonoBehaviour
     IEnumerator Attack()
     {
         isAttacking = true;
+        player.animator.OnBasicAttackStart();
 
         yield return new WaitForSeconds(attackDelay);
 
@@ -58,6 +62,8 @@ public class PlayerBasicAttack : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         slash.SetActive(false);
         isAttacking = false;
+
+        // player.animator.OnBasicAttackFinish();
     }
 
     private void OnDrawGizmos()

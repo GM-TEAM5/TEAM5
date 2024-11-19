@@ -4656,6 +4656,33 @@ MonoBehaviour:
   t_btnParent: {fileID: 64081346}
   prefab_optionBtn: {fileID: 5334049650243697456, guid: dc3431ae626d35a4e900b005d10c55cf,
     type: 3}
+--- !u!1 &871396312 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6964155114841845843, guid: d5212e8c9338ab14598ccd81bd8b95bd,
+    type: 3}
+  m_PrefabInstance: {fileID: 2377294873601026309}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &871396315
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 871396312}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 00054f7bebf011344bf8dd794eb90487, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!224 &874725029 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7368066794353450322, guid: dc3431ae626d35a4e900b005d10c55cf,
@@ -11921,7 +11948,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6964155114841845843, guid: d5212e8c9338ab14598ccd81bd8b95bd,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 871396315}
   m_SourcePrefab: {fileID: 100100000, guid: d5212e8c9338ab14598ccd81bd8b95bd, type: 3}
 --- !u!1 &2401652352969257628
 GameObject:
