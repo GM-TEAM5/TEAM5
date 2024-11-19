@@ -1418,31 +1418,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3757623594117269426, guid: 4de64f77dbe56854aba9e5e78d67e3cd,
-        type: 3}
-      propertyPath: m_Name
-      value: DrawingCamera
-      objectReference: {fileID: 0}
-    - target: {fileID: 3922178531298209993, guid: 4de64f77dbe56854aba9e5e78d67e3cd,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 3922178531298209993, guid: 4de64f77dbe56854aba9e5e78d67e3cd,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 15
-      objectReference: {fileID: 0}
     - target: {fileID: 7009693863319479779, guid: 4de64f77dbe56854aba9e5e78d67e3cd,
         type: 3}
       propertyPath: m_Follow
       value: 
       objectReference: {fileID: 739172247990353431}
-    - target: {fileID: 7009693863319479779, guid: 4de64f77dbe56854aba9e5e78d67e3cd,
-        type: 3}
-      propertyPath: m_Priority
-      value: 11
-      objectReference: {fileID: 0}
     - target: {fileID: 7563227804930870791, guid: 4de64f77dbe56854aba9e5e78d67e3cd,
         type: 3}
       propertyPath: m_Name

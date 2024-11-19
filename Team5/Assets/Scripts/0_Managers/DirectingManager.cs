@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using Cinemachine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
+using System.Linq.Expressions;
 
 public class DirectingManager : Singleton<DirectingManager>
 {
@@ -15,6 +18,13 @@ public class DirectingManager : Singleton<DirectingManager>
     [SerializeField] Color fadeColor;
 
     public bool isCompleted_fade;
+
+    //
+    [SerializeField] Volume volume;
+    [SerializeField] Vignette vignette; 
+    float intensity_default = 0.2f;
+
+
 
 
     //========================================
@@ -98,5 +108,23 @@ public class DirectingManager : Singleton<DirectingManager>
         
     }
 
+    #endregion
+
+
+    #region ====== Volume =================
+
+    public void SetVignette(float targetIntensity,float duration = 0)
+    {             
+        if (volume.profile.TryGet(out vignette))
+        {
+            DOTween.To(() => vignette.intensity.value, x => vignette.intensity.value = x, targetIntensity, duration).SetUpdate(true).Play();
+        }
+    }
+
+    public void InitVignette(float duration)
+    {     
+        SetVignette(intensity_default,duration);
+    }
+    
     #endregion
 }
