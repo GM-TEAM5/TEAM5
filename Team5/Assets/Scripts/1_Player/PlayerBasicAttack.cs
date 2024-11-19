@@ -4,113 +4,78 @@ using UnityEngine;
 
 public class PlayerBasicAttack : MonoBehaviour
 {
-    [Header("Attack Settings")]
-    [SerializeField] private GameObject slashPrefab;
     [SerializeField] private float attackDelay = 0.2f;
     [SerializeField] private float damage = 30f;
-    [SerializeField] private float comboResetTime = 5f;
-    [SerializeField] private float attackRadius = 2f;
-    [SerializeField] private float attackAngle = 90f;
+    [SerializeField] private float attackRange = 2f;
 
-    private PlayerInputManager playerInput;
     private bool isAttacking = false;
-    private int currentCombo = 0;
-    private float lastAttackTime;
-    private GameObject currentSlashEffect;
+    private GameObject slash;
     private Vector3 attackDirection;
+    private PlayerInputManager playerInput;
 
     void Start()
     {
         playerInput = PlayerInputManager.Instance;
-
-        currentSlashEffect = Instantiate(slashPrefab, transform.position, Quaternion.identity, transform);
-        currentSlashEffect.SetActive(false);
+        slash = GetComponentInChildren<Transform>().Find("Slash").gameObject;
+        slash.SetActive(false);
     }
 
     void Update()
     {
-        if (Time.time - lastAttackTime > comboResetTime)
-        {
-            currentCombo = 0;
-        }
+        attackDirection = (playerInput.mouseWorldPos - transform.position).normalized;
+        attackDirection.y = 0;
 
-        if (playerInput.isMouseLeftButtonOn && !isAttacking)
+        if (Input.GetMouseButtonDown(0) && !isAttacking)
         {
-            UpdateAttackDirection();
-            isAttacking = true;
-            StartCoroutine(BasicAttack());
+            StartCoroutine(Attack());
         }
     }
 
-    void UpdateAttackDirection()
+    IEnumerator Attack()
     {
-        Vector3 mouseWorldPosition = playerInput.mouseWorldPos;
-        Vector3 direction = mouseWorldPosition - transform.position;
-        direction.y = 0;
-        attackDirection = direction.normalized;
-    }
+        isAttacking = true;
 
-    IEnumerator BasicAttack()
-    {
         yield return new WaitForSeconds(attackDelay);
 
-        float angle = Mathf.Atan2(attackDirection.x, attackDirection.z) * Mathf.Rad2Deg;
+        float angle = Mathf.Atan2(attackDirection.x, attackDirection.z) * Mathf.Rad2Deg - 90f;
+        Vector3 spherePosition = attackDirection * attackRange;
+        spherePosition.y = 1.5f;
+        
+        slash.transform.localPosition = spherePosition - (attackDirection * 1.5f);  // 이펙트 위치를 sphere보다 1.5f 뒤로
+        slash.transform.localRotation = Quaternion.Euler(0, angle, 0);
+        slash.SetActive(true);
 
-        // 콤보에 따른 회전 설정
-        Vector3 rotation;
-        if (currentCombo == 0)
+        Collider[] hits = Physics.OverlapSphere(transform.position + spherePosition, 1f);
+        foreach (var hit in hits)
         {
-            rotation = new Vector3(0, angle, 0);
+            Enemy enemy = hit.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                enemy.GetDamaged(damage);
+            }
         }
-        else if (currentCombo == 1)
-        {
-            rotation = new Vector3(0, angle, -180);
-        }
-        else
-        {
-            rotation = new Vector3(-30, angle, -30);
-        }
-
-        // 마우스가 가리키는 방향으로 이펙트 위치 설정
-        Vector3 effectPosition = attackDirection * (attackRadius - 1);
-        effectPosition.y = 1.5f;
-        currentSlashEffect.transform.localPosition = effectPosition;
-
-        currentSlashEffect.transform.rotation = Quaternion.Euler(rotation);
-        currentSlashEffect.SetActive(true);
-
-        ApplyDamage();
-
-        lastAttackTime = Time.time;
 
         yield return new WaitForSeconds(0.5f);
-        currentSlashEffect.SetActive(false);
-
-        currentCombo = (currentCombo + 1) % 3;
-
+        slash.SetActive(false);
         isAttacking = false;
     }
 
-    void ApplyDamage()
+    private void OnDrawGizmos()
     {
-        Vector3 damageOrigin = transform.position + Vector3.up * 1.5f;
-
-        Collider[] hitColliders = Physics.OverlapSphere(damageOrigin, attackRadius, GameConstants.enemyLayer);
-
-        foreach (var hitCollider in hitColliders)
+        if (slash != null && slash.activeSelf)
         {
-            Vector3 directionToTarget = (hitCollider.transform.position - damageOrigin).normalized;
-            directionToTarget.y = 0;
-            float angle = Vector3.Angle(attackDirection, directionToTarget);
-
-            if (angle <= attackAngle / 2)
-            {
-                Enemy enemy = hitCollider.GetComponent<Enemy>();
-                if (enemy != null)
-                {
-                    enemy.GetDamaged(damage);
-                }
-            }
+            Gizmos.color = Color.red;
+            Vector3 spherePos = transform.position + (slash.transform.localPosition + (attackDirection * 2f));
+            Gizmos.DrawWireSphere(spherePos, 1f);
+            Gizmos.DrawLine(transform.position, spherePos);
         }
     }
+
+    #if UNITY_EDITOR
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+    }
+    #endif
 }

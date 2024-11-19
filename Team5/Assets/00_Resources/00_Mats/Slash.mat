@@ -60,7 +60,7 @@ Material:
     - _Blend: 0
     - _Boolean: 0
     - _CastShadows: 0
-    - _Core_Height: 0.25
+    - _Core_Height: 0.14
     - _Core_Size: 0.5
     - _Core_Width: 5
     - _Cull: 0
@@ -73,7 +73,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Scroll: -0.29
-    - _Slide: 0.05
+    - _Slide: 0
     - _SrcBlend: 5
     - _Start_Color_Lerp: 0
     - _Surface: 1
@@ -84,9 +84,9 @@ Material:
     - _ZWrite: 1
     - _ZWriteControl: 1
     m_Colors:
-    - _Core_Color: {r: 29.508848, g: 4.2449923, b: 2.9230464, a: 0}
-    - _Distortion_Speed: {r: -1, g: 0, b: 0, a: 0}
-    - _Distortion_Tilling: {r: 0.4, g: 5, b: 0, a: 0}
+    - _Core_Color: {r: 1.2292016, g: 1.1770185, b: 1.1770185, a: 0}
+    - _Distortion_Speed: {r: 0.5, g: 0.5, b: 0, a: 0}
+    - _Distortion_Tilling: {r: 0.4, g: 10, b: 0, a: 0}
     - _Outer_Color: {r: 0, g: 0, b: 0, a: 0}
-    - _Start_Color: {r: 67.79352, g: 3.5793176, b: 3.5793176, a: 0}
+    - _Start_Color: {r: 3.3449974, g: 3.0136533, b: 3.0136533, a: 0}
   m_BuildTextureStacks: []

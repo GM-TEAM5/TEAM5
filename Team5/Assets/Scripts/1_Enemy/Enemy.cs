@@ -3,28 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using System;
-
 using DG.Tweening;
 using BW.Util;
 
 
-
 [RequireComponent(typeof(NavMeshAgent),
-                    typeof(SpriteEntity))]
-                        
-
+    typeof(SpriteEntity))]
 [RequireComponent(typeof(EnemyAI))]
-                        
-
 public class Enemy : MonoBehaviour, IPoolObject
 {
-    public EnemyDataSO data;   //적의 데이터
+    public EnemyDataSO data; //적의 데이터
     EnemyStateUI stateUI;
     public SpriteEntity spriteEntity;
-    
-    
+
+
     public EnemyAI ai;
-    
+
     // EnemyMove move;
     Collider enemyCollider;
     Rigidbody rb;
@@ -35,25 +29,26 @@ public class Enemy : MonoBehaviour, IPoolObject
 
 
     [SerializeField] float _hp;
-    public float hp  // 현재체력
+
+    public float hp // 현재체력
     {
         get => _hp;
-        set
-        {
-            _hp = Math.Clamp(value, 0, data.maxHp);
-        }
+        set { _hp = Math.Clamp(value, 0, data.maxHp); }
     }
 
     public bool isAlive => _hp > 0;
+
     //
     [SerializeField] float stopDurationRemain;
+
     public bool stopped => stopDurationRemain > 0;
+
     //
     public float stunDurationRemain;
     public bool stunned => stunDurationRemain > 0;
 
 
-    [SerializeField] float rangeWeight = 1f;     // 원거리의 경우 각 개체마다 사거리 보정이 있다. - 자연스러움을 위해
+    [SerializeField] float rangeWeight = 1f; // 원거리의 경우 각 개체마다 사거리 보정이 있다. - 자연스러움을 위해
     public float range => data.range * rangeWeight;
 
     public Vector3 lastHitPoint;
@@ -74,14 +69,15 @@ public class Enemy : MonoBehaviour, IPoolObject
         {
             stopDurationRemain -= Time.deltaTime;
         }
+
         // 스턴 지속시간 감소
         if (stunDurationRemain > 0)
         {
             stunDurationRemain -= Time.deltaTime;
         }
-        
+
         // 업뎃 성공하면, 
-        if(ai.TryUpdate())
+        if (ai.TryUpdate())
         {
             UpdateSpriteDir(t_target.position);
         }
@@ -90,12 +86,6 @@ public class Enemy : MonoBehaviour, IPoolObject
     void OnTriggerEnter(Collider other)
     {
         lastHitPoint = other.ClosestPoint(transform.position);
-
-        // 데미지 적용
-        // if (other.CompareTag("BasicAttack"))
-        // {
-        //     GetDamaged(10);
-        // }
     }
 
     //===========================
@@ -116,7 +106,6 @@ public class Enemy : MonoBehaviour, IPoolObject
 
     public void OnGettingFromPool()
     {
-
     }
 
 
@@ -138,6 +127,7 @@ public class Enemy : MonoBehaviour, IPoolObject
         {
             rangeWeight = UnityEngine.Random.Range(0.8f, 1.2f);
         }
+
         // data 에 따라 radius 및 이동속도 도 세팅해야함. 
         stunDurationRemain = 0;
         stopDurationRemain = 0;
@@ -147,41 +137,45 @@ public class Enemy : MonoBehaviour, IPoolObject
 
         //
         stateUI.Init(this);
-        
+
 
         //
         t_target = Player.Instance.transform;
 
         rb.velocity = Vector3.zero;
-        
+
         //
         spriteEntity.Init(data.sprite, ai.navAgent.radius, ai.navAgent.height);
     }
 
     //===========================================================================================
 
-    public void GetDamaged(Vector3 hitPoint, float damage, bool isEnhancedAttack = false)
-    {
-        lastHitPoint = hitPoint == Vector3.zero ? enemyCollider.ClosestPoint(t_target.position) : hitPoint;      // 플레이어와 적 개체의 콜라이더가 겹쳐있는 경우, hitPoint 가 (0,0,0)이 나옴;
-
-        GetDamaged(damage, isEnhancedAttack);
-    }
+    // public void GetDamaged(Vector3 hitPoint, float damage, bool isEnhancedAttack = false)
+    // {
+    //     // lastHitPoint = hitPoint == Vector3.zero ? enemyCollider.ClosestPoint(t_target.position) : hitPoint;      // 플레이어와 적 개체의 콜라이더가 겹쳐있는 경우, hitPoint 가 (0,0,0)이 나옴;
+    //     lastHitPoint = hitPoint == Vector3.zero ? transform.position : hitPoint;
+    //     Debug.Log(lastHitPoint);
+    //
+    //     GetDamaged(damage, isEnhancedAttack);
+    // }
 
     public void GetDamaged(float damage, bool isEnhancedAttack = false)
     {
+        lastHitPoint = transform.position;
+
         float nockbackPower = 5;
         if (isEnhancedAttack)
         {
             DropInk();
             nockbackPower = 10;
         }
+
         GetKnockback(nockbackPower, lastHitPoint);
         //
         hp -= damage;
         if (hp <= 0)
         {
             Die();
-
         }
 
         // ui
@@ -222,7 +216,6 @@ public class Enemy : MonoBehaviour, IPoolObject
     }
 
 
-
     // knockBack 
     public void GetKnockback(float power, Vector3 hitPoint)
     {
@@ -232,21 +225,21 @@ public class Enemy : MonoBehaviour, IPoolObject
         rb.velocity = dir * power;
 
         DOTween.Sequence()
-        .AppendInterval(0.2f)
-        .AppendCallback(() => rb.velocity = Vector3.zero)
-        .Play();
+            .AppendInterval(0.2f)
+            .AppendCallback(() => rb.velocity = Vector3.zero)
+            .Play();
     }
 
 
     void Die()
     {
-        enemyCollider.enabled = false;       // 적 탐색 및 총알 충돌에 걸리지 않도록.
+        enemyCollider.enabled = false; // 적 탐색 및 총알 충돌에 걸리지 않도록.
         ai.OnDie();
-        
+
         data.OnDie(this);
         DropItem();
         //
-        PlaySequence_Death();   //
+        PlaySequence_Death(); //
 
         stateUI.OnDie();
         //
@@ -263,7 +256,6 @@ public class Enemy : MonoBehaviour, IPoolObject
         {
             PoolManager.Instance.GetMoney(data.exp, transform.position);
         }
-
     }
 
 
@@ -287,7 +279,6 @@ public class Enemy : MonoBehaviour, IPoolObject
     }
 
 
-
     //==================================================
     /// <summary>
     /// 적 사망 애니메이션을 재생하고, 해당 애니메이션이 종료후 오브젝트를 제거한다. 
@@ -295,13 +286,9 @@ public class Enemy : MonoBehaviour, IPoolObject
     void PlaySequence_Death()
     {
         DOTween.Sequence()
-        .OnComplete(() =>
-        {
-            PoolManager.Instance.TakeEnemy(this);
-        })
-        .AppendInterval(0.3f)
-        .Append(spriteEntity.spriteRenderer.DOFade(0, 1f))
-        .Play();
+            .OnComplete(() => { PoolManager.Instance.TakeEnemy(this); })
+            .AppendInterval(0.3f)
+            .Append(spriteEntity.spriteRenderer.DOFade(0, 1f))
+            .Play();
     }
-
 }
