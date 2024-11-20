@@ -30,6 +30,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
     // [SerializeField] SelectableItemInfoPanel selectableItemInfoPanel;   // 웨이브 종료시 나타나는 아이템 설명 팝업창
     [SerializeField] UpgradePanel upgradePanel;   //게임오버 패널
     [SerializeField] GameOverPanel gameOverPanel;   //게임오버 패널
+    [SerializeField] StageClearUI stageClearUI;   //게임오버 패널
 
 
 
@@ -67,7 +68,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
 
     IEnumerator StartGamePlaySequence()
     {
-        // Sequence startSequence = gamePlayStartUI.GetSeq_GamePlayStart();
+        Sequence startSequence = gamePlayStartUI.GetSeq_GamePlayStart();
         // Sequence generatePortalSeq = entrancePortal.GetSeq_GeneratePortal(1.5f);
         // Sequence playerEnterPortalSeq = Player.Instance.GetSequence_EnterPortal(false, 1f);
         //
@@ -79,13 +80,11 @@ public class GamePlayManager : Singleton<GamePlayManager>
         // playerEnterPortalSeq.Play();
         // yield return new WaitUntil( ()=> playerEnterPortalSeq.IsActive()==false );
 
-        // startSequence.Play();
-        // yield return new WaitUntil( ()=>startSequence.IsActive()==false);
+        startSequence.Play();
+        yield return new WaitUntil( ()=>startSequence.IsActive()==false);
 
         // entrancePortal.PlaySeq_DestroyPortal(2f);
         
-
-        yield return null;
 
         Player.Instance.OnStartGamePlay();
 
@@ -115,10 +114,10 @@ public class GamePlayManager : Singleton<GamePlayManager>
             
         }
         
-        if (Input.GetKeyDown(KeyCode.Alpha6))
+
+        if( Input.GetKeyDown(KeyCode.Alpha6))
         {
-            // OnInventoryFull(null);
-            OpenUpgradePanel();
+            StartWave();
         }
         
         
@@ -167,7 +166,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
 
     public void StartStage()
     {
-
+        
     }
 
 
@@ -220,11 +219,20 @@ public class GamePlayManager : Singleton<GamePlayManager>
     /// </summary>
     public void ClearStage()
     {
-        stagePortal.OnStageClear();
-
         StageManager.Instance.OnStageClear();
+        StartCoroutine(StageClearSequence());
     }
 
+    IEnumerator StageClearSequence()
+    {
+        Sequence seq_stageClear = stageClearUI.GetSeq_StageClear();
+        seq_stageClear.Play();
+        yield return new WaitUntil( ()=> seq_stageClear.IsActive()==false );
+
+
+        upgradePanel.Open();
+        stagePortal.OnStageClear();
+    }
 
     #endregion
     //==========================================================
