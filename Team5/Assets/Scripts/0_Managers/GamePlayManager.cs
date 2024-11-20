@@ -19,6 +19,8 @@ public class GamePlayManager : Singleton<GamePlayManager>
     [SerializeField] AudioSource bgm;
     // [SerializeField] GameObject panelBackground;
     [SerializeField] EntrancePortal entrancePortal;
+
+    [Header("UI Panels")]
     [SerializeField] GamePlayStartUI gamePlayStartUI;    // 스테이지 시작시 안내창
     [SerializeField] ReinforcementPanel reinforcementPanel; //레벨업 시 강화 패널
     [SerializeField] PlayerInfoPanel playerInfoPanel; // 플레이어 정보 패널 - esc 눌렀을 때,
@@ -26,12 +28,15 @@ public class GamePlayManager : Singleton<GamePlayManager>
 
     //
     [SerializeField] SelectableItemInfoPanel selectableItemInfoPanel;   // 웨이브 종료시 나타나는 아이템 설명 팝업창
+    [SerializeField] UpgradePanel upgradePanel;   //게임오버 패널
+    [SerializeField] GameOverPanel gameOverPanel;   //게임오버 패널
+
+
+
+    [Header("etc")]
     [SerializeField] WaveActivationSwitch waveActivationSwitch;
     [SerializeField] SelectableItemList selectableItemList;
     [SerializeField] StagePortal stagePortal;
-
-
-    [SerializeField] GameOverPanel gameOverPanel;   //게임오버 패널
     [SerializeField] TextMeshProUGUI text_timer;   //게임오버 패널
 
     [SerializeField] float instantDeathTime = 180;
@@ -112,7 +117,8 @@ public class GamePlayManager : Singleton<GamePlayManager>
         
         if (Input.GetKeyDown(KeyCode.Alpha6))
         {
-            OnInventoryFull(null);
+            // OnInventoryFull(null);
+            upgradePanel.Open();
         }
         
         
@@ -246,16 +252,29 @@ public class GamePlayManager : Singleton<GamePlayManager>
         equipmentChangePanel.InitSelectedEquipment(equipment);
     }
 
-    public void Reroll(SelectableItem selectableItem)
+    // public void Reroll(SelectableItem selectableItem)
+    // {
+    //     if (Player.Instance.status.rerollCount <=0)
+    //     {
+    //         return;
+    //     }
+    //     selectableItemList.Reroll(selectableItem);
+    //     Player.Instance.status.ChangeRerollCount(-1);
+    //     GameEventManager.Instance.onReroll.Invoke(selectableItem);
+        
+    // }
+
+    public void Reroll(UpgradeSelection selection)
     {
         if (Player.Instance.status.rerollCount <=0)
         {
             return;
         }
-        selectableItemList.Reroll(selectableItem);
+        //
         Player.Instance.status.ChangeRerollCount(-1);
-        GameEventManager.Instance.onReroll.Invoke(selectableItem);
-        
+        upgradePanel.Reroll(selection);
+        GameEventManager.Instance.onUpgradeReroll.Invoke();
+        //
     }
 
     #endregion

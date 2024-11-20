@@ -17,7 +17,7 @@ public class Btn_RerollItem : MonoBehaviour
     
     public void Init()
     {
-        GameEventManager.Instance.onReroll.AddListener((a) => UpdateBtn() );
+        GameEventManager.Instance.onUpgradeReroll.AddListener(UpdateBtn);
 
 
         UpdateBtn();
@@ -25,7 +25,7 @@ public class Btn_RerollItem : MonoBehaviour
 
     void UpdateBtn()
     {
-        text_btn.SetText($"재입고 ({Player.Instance.status.rerollCount})");
+        btn.interactable =  Player.Instance.status.rerollCount > 0;
     }
 
 

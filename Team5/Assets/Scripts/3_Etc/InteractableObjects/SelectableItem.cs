@@ -54,6 +54,6 @@ public class SelectableItem : InteractiveObject
 
     protected override void OnSecondaryInteract_Custom()
     {
-        GamePlayManager.Instance.Reroll(this);
+        // GamePlayManager.Instance.Reroll(this);
     }
 }

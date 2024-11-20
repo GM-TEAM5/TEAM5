@@ -105,7 +105,7 @@ public class EnemyState_Retreat : EnemyFSMState
     public override void OnUpdate()
     {
         destDistSqr = (currDest - enemy.t.position).sqrMagnitude;
-        Debug.Log($"{destDistSqr} = {currDest} ");
+        // Debug.Log($"{destDistSqr} = {currDest} ");
         if (destDistSqr < 2f)
         {
             SetNewDest();

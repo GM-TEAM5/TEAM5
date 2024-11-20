@@ -63,6 +63,7 @@ public class PlayerStatus
     public float cooltimeModifier =1;
     public float luck;
     public int rerollCount;
+    public int selectionCount;
 
 
     public float pDmg;  // physical dmg;
@@ -104,6 +105,7 @@ public class PlayerStatus
         currHp = maxHp;     
         currInk = maxInk *0.3f;
         rerollCount = 10;
+        selectionCount=3;
     }
 
 
