@@ -682,6 +682,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: WaveActivationSwitch
       objectReference: {fileID: 0}
+    - target: {fileID: 8069647888166455829, guid: 467b727109aed2b49ae27f904b4e0403,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -705,6 +710,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SelectableItems
+      objectReference: {fileID: 0}
+    - target: {fileID: 703234799043047272, guid: 9c194a871cc45b04289ceb5123851800,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4900695473859518080, guid: 9c194a871cc45b04289ceb5123851800,
         type: 3}
