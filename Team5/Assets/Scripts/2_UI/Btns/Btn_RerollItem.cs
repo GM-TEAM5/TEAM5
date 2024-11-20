@@ -7,8 +7,8 @@ using TMPro;
 
 public class Btn_RerollItem : MonoBehaviour
 {
-    [SerializeField] Button btn;
-    [SerializeField] TextMeshProUGUI text_btn;
+    // [SerializeField] Button btn;
+    // [SerializeField] TextMeshProUGUI text_btn;
     
     void Start()
     {
@@ -17,15 +17,22 @@ public class Btn_RerollItem : MonoBehaviour
     
     public void Init()
     {
-        GameEventManager.Instance.onUpgradeReroll.AddListener(UpdateBtn);
+        GameEventManager.Instance.onUpgradeReroll.AddListener(OnReroll);
+        GameEventManager.Instance.onSelectItem.AddListener( Deactivate );
 
 
-        UpdateBtn();
+        OnReroll();
     }
 
-    void UpdateBtn()
+    void OnReroll()
     {
-        btn.interactable =  Player.Instance.status.rerollCount > 0;
+        gameObject.SetActive(Player.Instance.status.rerollCount > 0); 
+    }
+
+
+    void Deactivate()
+    {
+        gameObject.SetActive(false);
     }
 
 

@@ -17,32 +17,49 @@ public class UpgradeSelection : MonoBehaviour
     [SerializeField] Button btn_select;
     [SerializeField] Button btn_reroll;
 
+    [SerializeField] GameObject vayle;
+
+    //
+    bool _initialized;
+
     //=============================================================
-
-    public void Init(int idx, ItemDataSO data)
+    void Init()
     {
-        this.idx = idx;
-        this.data = data;
-
-        UpdateItemInfo(data);
-
-
+        btn_select.onClick.AddListener(Select);
         btn_reroll.onClick.AddListener(Reroll); 
+
+         _initialized = true;
     }
 
 
-    public void UpdateItemInfo(ItemDataSO data)
+
+    public void UpdateItemInfo(int idx, ItemDataSO data)
     {
+        if (_initialized == false)
+        {
+            Init();
+        }
+        
+        //s
+        this.idx = idx;
+        this.data = data;
+        
         img_icon.sprite = data.sprite;
         text_itemName.SetText(data.dataName);
         text_itemTier.SetText($"{data.tier} 등급");
         text_itemDesc.SetText(data.description);
+
+        btn_select.gameObject.SetActive(true);  
+        btn_reroll.gameObject.SetActive(Player.Instance.status.rerollCount > 0);
+
+        vayle.SetActive(false);
     }
 
     //==============================================================
-    void OnSelect()
+    void Select()
     {
-        
+        GamePlayManager.Instance.Select_SelectableItem(data);
+        vayle.SetActive(true);
     }
 
     void Reroll()

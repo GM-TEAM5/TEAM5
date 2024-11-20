@@ -32,7 +32,7 @@ public class UpgradePanel : GamePlayPanel
         }
 
         //
-        btn_close.onClick.AddListener(Close);
+        btn_close.onClick.AddListener( GamePlayManager.Instance.CloseUpgradePanel );
     }
 
     protected override void OnOpen()
@@ -93,7 +93,7 @@ public class UpgradePanel : GamePlayPanel
             UpgradeSelection us = selections[i];
             ItemDataSO itemData = (ItemDataSO)randomItemData[i];
 
-            us.Init(i,itemData);
+            us.UpdateItemInfo(i,itemData);
         }
     }
 
@@ -106,7 +106,7 @@ public class UpgradePanel : GamePlayPanel
         List<GameData> randomItemData = ResourceManager.Instance.itemData.GetRandomData(1, exception );
         if (randomItemData.Count>0)
         {
-            selections[idx].UpdateItemInfo((ItemDataSO)randomItemData[0] );
+            selections[idx].UpdateItemInfo(idx,(ItemDataSO)randomItemData[0] );
         }
 
         //

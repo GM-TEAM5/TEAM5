@@ -22,20 +22,20 @@ public class GamePlayManager : Singleton<GamePlayManager>
 
     [Header("UI Panels")]
     [SerializeField] GamePlayStartUI gamePlayStartUI;    // 스테이지 시작시 안내창
-    [SerializeField] ReinforcementPanel reinforcementPanel; //레벨업 시 강화 패널
+    // [SerializeField] ReinforcementPanel reinforcementPanel; //레벨업 시 강화 패널
     [SerializeField] PlayerInfoPanel playerInfoPanel; // 플레이어 정보 패널 - esc 눌렀을 때,
     [SerializeField] EquipmentChangePanel equipmentChangePanel; // 장비 교체 패널 - 장비칸 없었을 때 아이템 먹었을 떄, 
 
     //
-    [SerializeField] SelectableItemInfoPanel selectableItemInfoPanel;   // 웨이브 종료시 나타나는 아이템 설명 팝업창
+    // [SerializeField] SelectableItemInfoPanel selectableItemInfoPanel;   // 웨이브 종료시 나타나는 아이템 설명 팝업창
     [SerializeField] UpgradePanel upgradePanel;   //게임오버 패널
     [SerializeField] GameOverPanel gameOverPanel;   //게임오버 패널
 
 
 
     [Header("etc")]
-    [SerializeField] WaveActivationSwitch waveActivationSwitch;
-    [SerializeField] SelectableItemList selectableItemList;
+    // [SerializeField] WaveActivationSwitch waveActivationSwitch;
+    // [SerializeField] SelectableItemList selectableItemList;
     [SerializeField] StagePortal stagePortal;
     [SerializeField] TextMeshProUGUI text_timer;   //게임오버 패널
 
@@ -118,7 +118,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
         if (Input.GetKeyDown(KeyCode.Alpha6))
         {
             // OnInventoryFull(null);
-            upgradePanel.Open();
+            OpenUpgradePanel();
         }
         
         
@@ -141,10 +141,10 @@ public class GamePlayManager : Singleton<GamePlayManager>
     /// 이미 초기화는 끝난 상태. 변수 리디렉션만 함. 
     public void InitStageObjects(Stage stage)
     {
-        selectableItemInfoPanel.ForceInit();
+        // selectableItemInfoPanel.ForceInit();
         
-        waveActivationSwitch = stage.waveActivationSwitch;
-        selectableItemList = stage.selectableItemList;
+        // waveActivationSwitch = stage.waveActivationSwitch;
+        // selectableItemList = stage.selectableItemList;
         stagePortal = stage.stagePortal;
     }
 
@@ -181,7 +181,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
         
         StageManager.Instance.StartWave();
         
-        selectableItemList.Deactivate();
+        // selectableItemList.Deactivate();
 
         StartCoroutine( CheckWaveClear() );
     }
@@ -210,8 +210,8 @@ public class GamePlayManager : Singleton<GamePlayManager>
     {
         StageManager.Instance.OnWaveClear();
 
-        selectableItemList.OnWaveClear(); 
-        waveActivationSwitch.OnWaveClear();
+        // selectableItemList.OnWaveClear(); 
+        // waveActivationSwitch.OnWaveClear();
     }
     
     
@@ -241,8 +241,9 @@ public class GamePlayManager : Singleton<GamePlayManager>
 
     public void FinishSelection()
     {
-        selectableItemInfoPanel.Close();
-        selectableItemList.Deactivate(); 
+        GameEventManager.Instance.onSelectItem.Invoke();
+        // selectableItemInfoPanel.Close();
+        // selectableItemList.Deactivate(); 
     }
 
 
@@ -306,8 +307,20 @@ public class GamePlayManager : Singleton<GamePlayManager>
     /// </summary>
     public void OnSelect_ReinforcementOption()
     {
-        reinforcementPanel.Close();
+        // reinforcementPanel.Close();
         GameManager.Instance.PauseGamePlay(false);
+    }
+
+
+    public void OpenUpgradePanel()
+    {
+       upgradePanel.Open();
+       GameManager.Instance.PauseGamePlay(true);   
+    }
+    public void CloseUpgradePanel()
+    {
+       upgradePanel.Close();
+       GameManager.Instance.PauseGamePlay(false);   
     }
 
 
