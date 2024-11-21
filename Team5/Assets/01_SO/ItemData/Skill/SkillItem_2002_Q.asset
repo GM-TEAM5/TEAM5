@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46da7bd5f35102245bec3b556cb96b95, type: 3}
-  m_Name: 2000_TestSkill
+  m_Script: {fileID: 11500000, guid: 770904df1f988ca479100f888921ed58, type: 3}
+  m_Name: SkillItem_2002_Q
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: 7af47fbdc83bdb241819309208da4afa, type: 3}
+  sprite: {fileID: 0}
+  type: 2
   tier: 0
-  description: "\uD14C\uC2A4\uD2B8 \uC2A4\uD0AC \uC785\uB2C8\uB2E4."
+  description: 

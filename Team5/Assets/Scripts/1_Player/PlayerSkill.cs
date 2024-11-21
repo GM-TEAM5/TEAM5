@@ -7,12 +7,17 @@ using UnityEngine;
 public class PlayerSkill
 {
     KeyCode keyCode;
-    
+
     public SkillItemSO skillData;
 
     public PlayerSkill(SkillItemSO skillData)
     {
         this.skillData = skillData;
+    }
+
+    public void Use()
+    {
+        skillData.Use();
     }
 
     // public void On()
