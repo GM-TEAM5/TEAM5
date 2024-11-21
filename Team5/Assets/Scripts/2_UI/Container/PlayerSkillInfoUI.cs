@@ -79,7 +79,7 @@ public class PlayerSkillInfoUI : MonoBehaviour
 
         for(int i=0;i<skillsData.Count;i++)
         {
-            playerItems[i].Init( skillsData[i] );
+            playerItems[i].Init( i,skillsData[i] );
         }
 
     }

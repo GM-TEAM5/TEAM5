@@ -11,7 +11,7 @@ public class GamePlayStartUI : MonoBehaviour
     [SerializeField] Image img;
     [SerializeField] TextMeshProUGUI text_stageNum;
     [SerializeField] TextMeshProUGUI text_stageStart;
-    public float bootingTime;
+    // public float bootingTime;
     
     public Sequence startSequence;
 
@@ -33,12 +33,12 @@ public class GamePlayStartUI : MonoBehaviour
         .Append(img.DOFade(1f,0.5f))
         //
         .Append(text_stageNum.DOFade(1f,0.5f))
-        .Join(text_stageStart.DOFade(1f,0.5f ))
+        .Join(text_stageStart.DOFade(1f,0.5f))
         //
         .AppendInterval(1f)
         //
         .Append(img.DOFade(0f,1f))
-        .Join(text_stageStart.DOFade(0f,1f ))
+        .Join(text_stageStart.DOFade(0f,1f))
         .Join(text_stageNum.DOFade(0f,1f));
         //
 

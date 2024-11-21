@@ -10,7 +10,7 @@ public class PlayerEquipmentInfoUI : MonoBehaviour
 {
     [SerializeField] GameObject prefab_itemUI;
     [SerializeField] GridLayoutGroup gridLayout;
-    [SerializeField] List<PlayerItemUI> playerItems;
+    public List<PlayerItemUI> playerItems;
 
     bool initialized;
     
@@ -48,7 +48,7 @@ public class PlayerEquipmentInfoUI : MonoBehaviour
     void SyncTableItemCount()
     {
         int currItemCount = playerItems.Count;
-        int targetItemCount = GameManager.Instance.playerData.equipments.Count;
+        int targetItemCount = Player.Instance.playerEquipments.equipments.Count;
 
         int diff = targetItemCount - currItemCount;
 
@@ -78,11 +78,11 @@ public class PlayerEquipmentInfoUI : MonoBehaviour
     /// </summary>
     void FillTableItemData()
     {
-        List<EquipmentItemSO> equipmentsData = GameManager.Instance.playerData.equipments;
+        List<EquipmentItemSO> equipmentsData = Player.Instance.playerEquipments.equipments;
 
         for(int i=0;i<equipmentsData.Count;i++)
         {
-            playerItems[i].Init( equipmentsData[i] );
+            playerItems[i].Init( i, equipmentsData[i] );
         }
 
     }

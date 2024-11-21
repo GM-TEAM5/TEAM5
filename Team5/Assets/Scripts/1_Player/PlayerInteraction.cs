@@ -19,9 +19,16 @@ public class PlayerInteraction : MonoBehaviour
         UpdateClosesetObject();
 
         // 상호작용 
-        if( closestObject !=null && PlayerInputManager.Instance.interact)
+        if( closestObject !=null && Player.Instance.isStunned == false)
         {
-            InteractWith(closestObject);
+            if ( PlayerInputManager.Instance.interact)
+            {
+                InteractWith(closestObject);
+            }
+            else if(PlayerInputManager.Instance.secondaryInteract )
+            {
+                SecondaryInteractWith(closestObject);
+            }
         }
 
 
@@ -61,16 +68,20 @@ public class PlayerInteraction : MonoBehaviour
     /// </summary>
     void UpdateClosesetObject()
     {
-        if (inspectingObjects.Count == 0)
-        {
-            closestObject = null;
-            return;
-        }
+        // if (inspectingObjects.Count == 0)
+        // {
+        //     if (closestObject !=null)
+        //     {
+        //         GameEventManager.Instance.onUpdate_inspectingObject.Invoke(null);
+        //         closestObject = null;
+        //     }
+        //     return;
+        // }
         
         InteractiveObject newClosestObject = null;
         float sqrDist_old =  Mathf.Infinity;
 
-        Vector3 playerPos = Player.Instance.t_player.position;
+        Vector3 playerPos = Player.Instance.t.position;
         
         for(int i=0;i<inspectingObjects.Count;i++)
         {
@@ -114,7 +125,7 @@ public class PlayerInteraction : MonoBehaviour
     }
 
 
-    public void Inspect(InteractiveObject interactiveObject)
+    void Inspect(InteractiveObject interactiveObject)
     {
         if (interactiveObject ==null)
         {
@@ -133,9 +144,14 @@ public class PlayerInteraction : MonoBehaviour
     }
 
 
-    public void InteractWith(InteractiveObject interactiveObject)
+    void InteractWith(InteractiveObject interactiveObject)
     {
         interactiveObject.OnInteract();
+    }
+
+    void SecondaryInteractWith(InteractiveObject interactiveObject)
+    {
+        interactiveObject.OnSecondaryInteract();
     }
 
 }

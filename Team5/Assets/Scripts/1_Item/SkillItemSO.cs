@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 /// <summary>
@@ -7,11 +8,29 @@ using UnityEngine;
 /// </summary>
 public abstract class SkillItemSO : ItemDataSO
 {
-    
-    public override void Get()
+    public SkillItemSO()
+    {
+        type = ItemType.Skill;
+    }
+
+    protected override bool CanGet(out CantGetReason reason)
+    {        
+        reason = CantGetReason.None;
+        return true;
+    }
+
+
+    protected override void Get()
     {
         Equip();        // 장비아이템 획득 시 자동으로 장착.
     }
+
+    protected override void OnCantGet(CantGetReason reason)
+    {
+        
+    }
+
+
 
     public void Equip()
     {

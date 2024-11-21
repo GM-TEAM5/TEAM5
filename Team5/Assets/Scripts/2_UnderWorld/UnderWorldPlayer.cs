@@ -24,7 +24,7 @@ public class UnderWorldPlayer : Singleton<UnderWorldPlayer>
     //-----------------
     [SerializeField] Vector3 lastMoveDir;
 
-    public bool isAlive => status.hp >0;
+    public bool isAlive => status.currHp >0;
 
 
     //====================================================================================

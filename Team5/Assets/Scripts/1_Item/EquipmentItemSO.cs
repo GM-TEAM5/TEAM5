@@ -4,37 +4,67 @@ using UnityEngine;
 
 public abstract class EquipmentItemSO : ItemDataSO
 {
-    public override void Get()
+    
+    
+    public EquipmentItemSO()
     {
-        Equip();        // 장비아이템 획득 시 자동으로 장착.
+        type = ItemType.Equipment;
+    }
+
+    protected override bool CanGet(out CantGetReason reason)
+    {        
+        reason = CantGetReason.None;
+        if (Player.Instance.playerEquipments.HasEmptySpace()==false)
+        {
+            reason = CantGetReason.NoSpace;
+        }
+
+
+        return reason == CantGetReason.None;
+    }
+
+    protected override void Get()
+    {
+        Player.Instance.EquipAutomatically(this);
+    }
+
+    protected override void OnCantGet(CantGetReason reason)
+    {
+        switch(reason)
+        {
+            case CantGetReason.NoSpace:
+                GamePlayManager.Instance.OnInventoryFull(this);
+                break;
+        }
+    }
+
+    //=====================================
+    /// <summary>
+    /// 장착 효과 없이 장비 장착
+    /// </summary>
+    public void InitEquip()
+    {
+        OnEquip();
+        
     }
 
     public void Equip()
     {
-    
-        //플레이어 장비창으로 들어가야지. 능력치 수정. 
-        //플레이어 장비창으로 들어가야지. 능력치 수정. 
-        if( GameManager.Instance.playerData.TryEquipGear(this))
-        {
-            OnEquip();  // 장착효과
-            Debug.Log($"장착띠  {dataName}");
-        }
-        else
-        {
-            Debug.Log($"장착 실패띠  {dataName}");
-        }
         OnEquip();  // 장착효과
+        EquipEvent(true);
     }
 
 
     public void UnEquip()
     {
         //플레이어 장비창에서 사라짐. 획득 능력치는삭제
-
         OnUnEquip(); // 장착효과 해제
+        EquipEvent(false);
     }
-
+    //=====================================
 
     public abstract void OnEquip();
     public abstract void OnUnEquip();
+
+    protected abstract void EquipEvent(bool isEquip);
 }

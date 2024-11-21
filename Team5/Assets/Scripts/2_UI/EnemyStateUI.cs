@@ -12,9 +12,9 @@ public class EnemyStateUI : MonoBehaviour
 
     public void Init(Enemy enemy)
     {
-        enemyCanvas.gameObject.SetActive( enemy.enemyData.rank == EnemyRank.Elite );
+        enemyCanvas.gameObject.SetActive( enemy.data.rank == EnemyRank.Elite );
         
-        UpdateMaxHp(enemy.enemyData.maxHp);
+        UpdateMaxHp(enemy.data.maxHp);
         UpdateCurrHp(enemy.hp);
     }
 

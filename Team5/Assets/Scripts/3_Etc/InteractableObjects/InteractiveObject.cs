@@ -14,6 +14,7 @@ public abstract class InteractiveObject : MonoBehaviour
 
     protected bool beingInspected; // 플레이어가 현재 바라보고 있는지;
 
+    public abstract bool hasSecondaryInteraction {get;} 
 
     void Awake()
     {
@@ -60,6 +61,16 @@ public abstract class InteractiveObject : MonoBehaviour
         OnInteract_Custom();
     }
 
+    public void OnSecondaryInteract()
+    {
+        if (hasSecondaryInteraction == false)
+        {
+            return;
+        }
+        OnSecondaryInteract_Custom();
+    }
+
     protected abstract void OnInteract_Custom();
 
+    protected abstract void OnSecondaryInteract_Custom();
 }

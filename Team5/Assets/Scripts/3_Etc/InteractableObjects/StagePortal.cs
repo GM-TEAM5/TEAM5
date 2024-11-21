@@ -8,7 +8,9 @@ using TMPro;
 public class StagePortal : InteractiveObject
 {
     [SerializeField] TextMeshPro text;
-    
+
+    public override bool hasSecondaryInteraction => false;
+
     public void Init()
     {
         gameObject.SetActive(false);
@@ -45,6 +47,11 @@ public class StagePortal : InteractiveObject
     void GoToNextStage()
     {
         SceneLoadManager.Instance.Load_MainScene();     
+    }
+
+    protected override void OnSecondaryInteract_Custom()
+    {
+        
     }
 
 

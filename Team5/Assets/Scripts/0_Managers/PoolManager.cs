@@ -198,10 +198,10 @@ public class PoolManager : Singleton<PoolManager>
 
 
 
-    public EnemyProjectile GetEnemyProjectile(EnemySkillSO skillData, Enemy enemy, Vector3 initPos, float lifeTime)
+    public EnemyProjectile GetEnemyProjectile(EnemyAbilitySO abilityData, Enemy enemy, Vector3 initPos, float lifeTime)
     {
         EnemyProjectile enemyProj = GetFromPool<EnemyProjectile>(); 
-        enemyProj.Init(skillData, enemy, initPos, lifeTime);
+        enemyProj.Init(abilityData, enemy, initPos, lifeTime);
     
         return enemyProj;
     }
@@ -247,6 +247,15 @@ public class PoolManager : Singleton<PoolManager>
         DropItemDataSO itemData =  ResourceManager.Instance.GetDropItemData("03");
         dropItem.Init(itemData,value,initPos);
         return dropItem;
+    }
+    
+    public AreaIndicator GetAreaIndicator_Circle(Vector3 initPos, Vector2 size, float duration)
+    {
+        AreaIndicator areaIndicator = GetFromPool<AreaIndicator>();
+        AreaIndicatorSO data = (AreaIndicatorSO)ResourceManager.Instance.areaIndicatorData.GetData("00");
+        areaIndicator.Init(data,initPos, size, duration );
+
+        return areaIndicator;
     }
 
 

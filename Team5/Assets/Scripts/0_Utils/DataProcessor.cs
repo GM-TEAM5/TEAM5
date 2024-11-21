@@ -16,6 +16,12 @@ namespace BW.Util
         {
             return new Vector3(pos.x, 0f, pos.z);
         }
+
+
+        // public static float GetSqrDistWith(this Vector3 pos, Vector3 targetPos)
+        // {
+        //     return (targetPos- pos).sqrMagnitude;
+        // }
     }
 }
 

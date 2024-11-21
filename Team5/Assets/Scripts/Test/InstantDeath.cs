@@ -11,7 +11,7 @@ public class InstantDeath : MonoBehaviour
         {
             return;
         }
-        Vector3 playerPos = Player.Instance.t_player.position;
+        Vector3 playerPos = Player.Instance.t.position;
         transform.position = new Vector3(playerPos.x, transform.position.y, playerPos.z-1);
         transform.position += Vector3.down * 50 * Time.deltaTime; 
 

@@ -35,7 +35,7 @@ public class StageManager : Singleton<StageManager>
 
 
         //
-        Player.Instance.t_player.position = currStage.playerInitPos;  // 플레이어 위치 지정 
+        Player.Instance.t.position = currStage.playerInitPos;  // 플레이어 위치 지정 
 
         //
         initialized = true;

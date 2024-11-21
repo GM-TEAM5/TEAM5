@@ -17,19 +17,27 @@ public class GamePlayManager : Singleton<GamePlayManager>
     
     //
     [SerializeField] AudioSource bgm;
+    // [SerializeField] GameObject panelBackground;
     [SerializeField] EntrancePortal entrancePortal;
+
+    [Header("UI Panels")]
     [SerializeField] GamePlayStartUI gamePlayStartUI;    // 스테이지 시작시 안내창
-    [SerializeField] ReinforcementPanel reinforcementPanel; //레벨업 시 강화 패널
-    [SerializeField] PlayerInfoPanel playerInfoPanel; //레벨업 시 강화 패널
+    // [SerializeField] ReinforcementPanel reinforcementPanel; //레벨업 시 강화 패널
+    [SerializeField] PlayerInfoPanel playerInfoPanel; // 플레이어 정보 패널 - esc 눌렀을 때,
+    [SerializeField] EquipmentChangePanel equipmentChangePanel; // 장비 교체 패널 - 장비칸 없었을 때 아이템 먹었을 떄, 
 
     //
-    [SerializeField] SelectableItemInfoPanel selectableItemInfoPanel;   // 웨이브 종료시 나타나는 아이템 설명 팝업창
-    [SerializeField] WaveActivationSwitch waveActivationSwitch;
-    [SerializeField] SelectableItemList selectableItemList;
-    [SerializeField] StagePortal stagePortal;
-
-
+    // [SerializeField] SelectableItemInfoPanel selectableItemInfoPanel;   // 웨이브 종료시 나타나는 아이템 설명 팝업창
+    [SerializeField] UpgradePanel upgradePanel;   //게임오버 패널
     [SerializeField] GameOverPanel gameOverPanel;   //게임오버 패널
+    [SerializeField] StageClearUI stageClearUI;   //게임오버 패널
+
+
+
+    [Header("etc")]
+    // [SerializeField] WaveActivationSwitch waveActivationSwitch;
+    // [SerializeField] SelectableItemList selectableItemList;
+    [SerializeField] StagePortal stagePortal;
     [SerializeField] TextMeshProUGUI text_timer;   //게임오버 패널
 
     [SerializeField] float instantDeathTime = 180;
@@ -60,7 +68,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
 
     IEnumerator StartGamePlaySequence()
     {
-        // Sequence startSequence = gamePlayStartUI.GetSeq_GamePlayStart();
+        Sequence startSequence = gamePlayStartUI.GetSeq_GamePlayStart();
         // Sequence generatePortalSeq = entrancePortal.GetSeq_GeneratePortal(1.5f);
         // Sequence playerEnterPortalSeq = Player.Instance.GetSequence_EnterPortal(false, 1f);
         //
@@ -72,13 +80,11 @@ public class GamePlayManager : Singleton<GamePlayManager>
         // playerEnterPortalSeq.Play();
         // yield return new WaitUntil( ()=> playerEnterPortalSeq.IsActive()==false );
 
-        // startSequence.Play();
-        // yield return new WaitUntil( ()=>startSequence.IsActive()==false);
+        startSequence.Play();
+        yield return new WaitUntil( ()=>startSequence.IsActive()==false);
 
         // entrancePortal.PlaySeq_DestroyPortal(2f);
         
-
-        yield return null;
 
         Player.Instance.OnStartGamePlay();
 
@@ -108,6 +114,12 @@ public class GamePlayManager : Singleton<GamePlayManager>
             
         }
         
+
+        if( Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            StartWave();
+        }
+        
         
         
         
@@ -128,10 +140,10 @@ public class GamePlayManager : Singleton<GamePlayManager>
     /// 이미 초기화는 끝난 상태. 변수 리디렉션만 함. 
     public void InitStageObjects(Stage stage)
     {
-        selectableItemInfoPanel.ForceInit();
+        // selectableItemInfoPanel.ForceInit();
         
-        waveActivationSwitch = stage.waveActivationSwitch;
-        selectableItemList = stage.selectableItemList;
+        // waveActivationSwitch = stage.waveActivationSwitch;
+        // selectableItemList = stage.selectableItemList;
         stagePortal = stage.stagePortal;
     }
 
@@ -154,7 +166,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
 
     public void StartStage()
     {
-
+        
     }
 
 
@@ -168,7 +180,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
         
         StageManager.Instance.StartWave();
         
-        selectableItemList.OnWaveStart();
+        // selectableItemList.Deactivate();
 
         StartCoroutine( CheckWaveClear() );
     }
@@ -197,8 +209,8 @@ public class GamePlayManager : Singleton<GamePlayManager>
     {
         StageManager.Instance.OnWaveClear();
 
-        selectableItemList.OnWaveClear(); 
-        waveActivationSwitch.OnWaveClear();
+        // selectableItemList.OnWaveClear(); 
+        // waveActivationSwitch.OnWaveClear();
     }
     
     
@@ -207,11 +219,20 @@ public class GamePlayManager : Singleton<GamePlayManager>
     /// </summary>
     public void ClearStage()
     {
-        stagePortal.OnStageClear();
-
         StageManager.Instance.OnStageClear();
+        StartCoroutine(StageClearSequence());
     }
 
+    IEnumerator StageClearSequence()
+    {
+        Sequence seq_stageClear = stageClearUI.GetSeq_StageClear();
+        seq_stageClear.Play();
+        yield return new WaitUntil( ()=> seq_stageClear.IsActive()==false );
+
+
+        upgradePanel.Open();
+        stagePortal.OnStageClear();
+    }
 
     #endregion
     //==========================================================
@@ -220,17 +241,50 @@ public class GamePlayManager : Singleton<GamePlayManager>
     public void Select_SelectableItem(ItemDataSO item)
     {
         // Debug.Log($"선택띠 : {selectableItem.data.id}, {selectableItem.data.dataName}");
-        item.Get();
-        
-        selectableItemInfoPanel.Close();
+        if (item.TryGet())
+        {
+            FinishSelection();
+        }
+    }
 
-        //
-        selectableItemList.OnWaveStart();   // 선택하면 off 
-        
+    public void FinishSelection()
+    {
+        GameEventManager.Instance.onSelectItem.Invoke();
+        // selectableItemInfoPanel.Close();
+        // selectableItemList.Deactivate(); 
     }
 
 
-    
+    public void OnInventoryFull(EquipmentItemSO equipment)
+    {
+        equipmentChangePanel.Open();
+        equipmentChangePanel.InitSelectedEquipment(equipment);
+    }
+
+    // public void Reroll(SelectableItem selectableItem)
+    // {
+    //     if (Player.Instance.status.rerollCount <=0)
+    //     {
+    //         return;
+    //     }
+    //     selectableItemList.Reroll(selectableItem);
+    //     Player.Instance.status.ChangeRerollCount(-1);
+    //     GameEventManager.Instance.onReroll.Invoke(selectableItem);
+        
+    // }
+
+    public void Reroll(UpgradeSelection selection)
+    {
+        if (Player.Instance.status.rerollCount <=0)
+        {
+            return;
+        }
+        //
+        Player.Instance.status.ChangeRerollCount(-1);
+        upgradePanel.Reroll(selection);
+        GameEventManager.Instance.onUpgradeReroll.Invoke();
+        //
+    }
 
     #endregion
 
@@ -261,8 +315,20 @@ public class GamePlayManager : Singleton<GamePlayManager>
     /// </summary>
     public void OnSelect_ReinforcementOption()
     {
-        reinforcementPanel.Close();
+        // reinforcementPanel.Close();
         GameManager.Instance.PauseGamePlay(false);
+    }
+
+
+    public void OpenUpgradePanel()
+    {
+       upgradePanel.Open();
+       GameManager.Instance.PauseGamePlay(true);   
+    }
+    public void CloseUpgradePanel()
+    {
+       upgradePanel.Close();
+       GameManager.Instance.PauseGamePlay(false);   
     }
 
 
@@ -297,7 +363,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
 
     IEnumerator GameOverSequence()
     {
-        DirectingManager.Instance.ZoomIn(Player.Instance.t_player);
+        DirectingManager.Instance.ZoomIn(Player.Instance.t);
         GameManager.Instance.PauseGamePlay(true);
         yield return new WaitForSecondsRealtime(1f);
         GameManager.Instance.PauseGamePlay(false,2f);

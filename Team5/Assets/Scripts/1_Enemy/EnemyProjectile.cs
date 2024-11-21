@@ -42,13 +42,13 @@ public class EnemyProjectile : MonoBehaviour, IPoolObject
     /// <summary>
     /// 투사체 초기화
     /// </summary>
-    /// <param name="skillData"></param> 크기 및 스프라이트 설정
+    /// <param name="abilityData"></param> 크기 및 스프라이트 설정
     /// <param name="enemy"></param>      데미지 설정
     /// <param name="initPos"></param>     초기위치
     /// <param name="lifeTime"></param>     수명
-    public void Init(EnemySkillSO skillData, Enemy enemy,Vector3 initPos, float lifeTime)
+    public void Init(EnemyAbilitySO abilityData, Enemy enemy,Vector3 initPos, float lifeTime)
     {
-        damage = enemy.enemyData.ad;
+        damage = enemy.data.ad;
         this.lifeTime = lifeTime;
 
         //

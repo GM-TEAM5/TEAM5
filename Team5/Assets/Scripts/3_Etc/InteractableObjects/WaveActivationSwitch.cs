@@ -7,8 +7,8 @@ using UnityEngine;
 public class WaveActivationSwitch : InteractiveObject
 {
     [SerializeField] TextMeshPro text;
-    
-    
+
+    public override bool hasSecondaryInteraction => false;
 
     protected override void OnInspect_Custom(bool isOn)
     {
@@ -31,4 +31,8 @@ public class WaveActivationSwitch : InteractiveObject
         Activate();
     }
 
+    protected override void OnSecondaryInteract_Custom()
+    {
+        
+    }
 }

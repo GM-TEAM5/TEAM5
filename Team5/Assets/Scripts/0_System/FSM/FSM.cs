@@ -6,7 +6,7 @@ public class FSM : MonoBehaviour
 {
     public FSMState currState;
 
-    private void Update()
+    public void UpdateFSM()
     {
         if (currState != null)
         {
@@ -20,11 +20,17 @@ public class FSM : MonoBehaviour
     {
         if (currState != null)
         {
+            
             currState.OnExit();
         }
         
-        currState = newState;
-        currState.OnEnter();
+        if (currState != newState)
+        {
+            currState = newState;
+            currState.OnEnter();        
+        }
+        
+        
     }
 
 

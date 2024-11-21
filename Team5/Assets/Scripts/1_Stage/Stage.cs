@@ -12,10 +12,10 @@ public class Stage : MonoBehaviour
     [SerializeField] Transform t_enemySpawnAreaParent;
     [SerializeField] BoxCollider[] enemySpawnArea;
 
-    public WaveActivationSwitch waveActivationSwitch;
+    // public WaveActivationSwitch waveActivationSwitch;
 
     public StagePortal stagePortal;
-    public SelectableItemList selectableItemList;
+    // public SelectableItemList selectableItemList;
 
 
 
@@ -24,10 +24,10 @@ public class Stage : MonoBehaviour
     public void Init()
     {
         enemySpawnArea = t_enemySpawnAreaParent.GetComponentsInChildren<BoxCollider>();
-        waveActivationSwitch = GetComponentInChildren<WaveActivationSwitch>();
+        // waveActivationSwitch = GetComponentInChildren<WaveActivationSwitch>();
         
-        selectableItemList = GetComponentInChildren<SelectableItemList>();
-        selectableItemList.Init();
+        // selectableItemList = GetComponentInChildren<SelectableItemList>();
+        // selectableItemList.Init();
 
         stagePortal = GetComponentInChildren<StagePortal>();
         stagePortal.Init();
@@ -42,7 +42,7 @@ public class Stage : MonoBehaviour
     /// <returns></returns>
     public Vector3 GetRandomSpawnPoint()
     {
-        Vector3 ret = Player.Instance.t_player.position;
+        Vector3 ret = Player.Instance.t.position;
 
         if (enemySpawnArea.Length>0)
         {

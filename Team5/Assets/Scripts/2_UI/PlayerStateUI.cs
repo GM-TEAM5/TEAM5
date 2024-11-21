@@ -21,14 +21,17 @@ public class PlayerStateUI : MonoBehaviour
     public void Init(Player player)
     {
         UpdateMaxHp(player.status.maxHp);
-        UpdateCurrHp(player.status.hp);
+        UpdateCurrHp(player.status.currHp);
 
-        UpdateMaxExp(player.status.maxExp);
-        UpdateCurrExp(player.status.currExp);
-        UpdateLevelText(player.status.level);
+        // UpdateMaxExp(player.status.maxExp);
+        // UpdateCurrExp(player.status.currExp);
+        // UpdateLevelText(player.status.level);
 
         UpdateMaxInk(player.status.maxInk);
         UpdateCurrInk(player.status.currInk);
+
+
+        GameEventManager.Instance.onChangePlayerStatus_maxHp.AddListener(()=>UpdateMaxHp(player.status.maxHp));
     }
 
 

@@ -546,7 +546,10 @@ GameObject:
   - component: {fileID: 552011692710847559}
   - component: {fileID: 2342430051140074879}
   - component: {fileID: 5448602303656350085}
-  - component: {fileID: 6392195132447447795}
+  - component: {fileID: 8969659670553713758}
+  - component: {fileID: 2203171650193112287}
+  - component: {fileID: 4603469081736341763}
+  - component: {fileID: 3132268831637401252}
   m_Layer: 10
   m_Name: Enemy
   m_TagString: Enemy
@@ -654,14 +657,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05257e76d70908f4ebe92cc674ad5ff6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyData: {fileID: 0}
-  navAgent: {fileID: 0}
+  data: {fileID: 0}
+  spriteEntity: {fileID: 0}
+  ai: {fileID: 0}
+  t: {fileID: 0}
   t_target: {fileID: 0}
+  targetDistSqr: 0
   _hp: 0
   stopDurationRemain: 0
   stunDurationRemain: 0
   rangeWeight: 1
-  targetDistSqr: 0
   lastHitPoint: {x: 0, y: 0, z: 0}
 --- !u!114 &2342430051140074879
 MonoBehaviour:
@@ -693,7 +698,22 @@ MonoBehaviour:
   spriteRenderer: {fileID: 0}
   t_sprite: {fileID: 0}
   t_camera: {fileID: 0}
---- !u!114 &6392195132447447795
+--- !u!111 &8969659670553713758
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5204065735764080572}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!114 &2203171650193112287
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -702,9 +722,42 @@ MonoBehaviour:
   m_GameObject: {fileID: 5204065735764080572}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ac4f86b4def52f41a061987d97677b6, type: 3}
+  m_Script: {fileID: 11500000, guid: 72dfd649aeeeebe4cb707ac2c32ed4fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4603469081736341763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5204065735764080572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36801bec2a6096b4d9e60b44d1720d27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilitySystem: {fileID: 0}
+  fsm: {fileID: 0}
+  navAgent: {fileID: 0}
+  playerDetectionRange: 10
+  abilityRange: 0
+  retreatRange: 0
+  reationRate: 0.3
+  lastReactionTime: 0
+--- !u!114 &3132268831637401252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5204065735764080572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 196f9386f33700d4d8ae80572bc3296b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isCasting: 0
 --- !u!1 &6834195862774931770
 GameObject:
   m_ObjectHideFlags: 0
@@ -1015,8 +1068,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -281837013
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 50e2b4e9845fa3a48bc6fc5656a2b5fd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

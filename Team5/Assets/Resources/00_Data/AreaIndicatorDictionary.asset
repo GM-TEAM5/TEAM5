@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f756c202777628e469a616289d995e9f, type: 3}
+  m_Name: AreaIndicatorDictionary
+  m_EditorClassIdentifier: 
+  list:
+  - {fileID: 11400000, guid: 75b1a0ebd8a2ad94f9776da3f87956f0, type: 2}
+  dic:
+    array:
+    - Key: 00
+      Value: {fileID: 11400000, guid: 75b1a0ebd8a2ad94f9776da3f87956f0, type: 2}
