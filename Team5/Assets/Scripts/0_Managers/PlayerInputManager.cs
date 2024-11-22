@@ -3,12 +3,12 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 
- // 
+// 
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerInputManager : Singleton<PlayerInputManager>
 {
     [SerializeField] PlayerInput playerInput;
-    
+
     public InputAction moveAction;
     public InputAction mouseLeftButtonAction;
     public KeyCode interactAction = KeyCode.F;
@@ -26,16 +26,16 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
 
 
     //
-    public Vector2 moveVector {get;private set;}
-    public Vector2 mouseMoveVector {get;private set;}
+    public Vector2 moveVector { get; private set; }
+    public Vector2 mouseMoveVector { get; private set; }
 
 
 
-    public Vector3 mouseDir {get;private set;}   // 마우스가 가리키는 방향 
-    public Vector3 mousePosition {get;private set;}
-    public Vector3 mouseWorldPos {get;private set;} // 마우스가 가리키는 곳의 월드 좌표 
-    public float xAxis{get;private set;}        //마우스 움직임 x축
-    public float yAxis {get;private set;}       // 마우스 움직임 y축
+    public Vector3 mouseDir { get; private set; }   // 마우스가 가리키는 방향 
+    public Vector3 mousePosition { get; private set; }
+    public Vector3 mouseWorldPos { get; private set; } // 마우스가 가리키는 곳의 월드 좌표 
+    public float xAxis { get; private set; }        //마우스 움직임 x축
+    public float yAxis { get; private set; }       // 마우스 움직임 y축
 
     // TODO: 그리기 범위 수정
     private Plane drawingPlane;
@@ -44,7 +44,7 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
     //
 
     // [SerializeField] LayerMask aimColliderLayerMask = new();
-    public List<KeyCode> skillKeys = new() {KeyCode.Alpha1,KeyCode.Alpha2,KeyCode.Alpha3,KeyCode.Alpha4 };
+    public List<KeyCode> skillKeys = new() { KeyCode.Q, KeyCode.E, KeyCode.Alpha3, KeyCode.Alpha4 };
 
 
     //================================================================
@@ -52,7 +52,7 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
     void Start()
     {
         playerInput = GetComponent<PlayerInput>();
-        
+
         moveAction = playerInput.actions["Move"];
         mouseLeftButtonAction = playerInput.actions["MouseLeftButton"];
         // mouseLeftButtonAction = playerInput.actions["MouseLeftButton"];
@@ -81,7 +81,7 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
 
 
         // hidden command 
-        if ( Input.GetKey(KeyCode.Alpha9)  && Input.GetKey(KeyCode.Alpha0))
+        if (Input.GetKey(KeyCode.Alpha9) && Input.GetKey(KeyCode.Alpha0))
         {
             SceneLoadManager.Instance.Load_Lobby();
         }
@@ -92,7 +92,7 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
     {
         // SetCursorState(hasFocus);
     }
-    
+
     //=========================================================
     private void SetCursorState(bool newState)
     {
@@ -101,8 +101,8 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
 
     private void CheckNumberKeys()
     {
-        if (Keyboard.current[Key.Digit1].wasPressedThisFrame) pressedNumber = 1;
-        else if (Keyboard.current[Key.Digit2].wasPressedThisFrame) pressedNumber = 2;
+        if (Keyboard.current[Key.Q].wasPressedThisFrame) pressedNumber = 1;
+        else if (Keyboard.current[Key.E].wasPressedThisFrame) pressedNumber = 2;
         else if (Keyboard.current[Key.Digit3].wasPressedThisFrame) pressedNumber = 3;
         else if (Keyboard.current[Key.Digit4].wasPressedThisFrame) pressedNumber = 4;
         else if (Keyboard.current[Key.Digit5].wasPressedThisFrame) pressedNumber = 5;

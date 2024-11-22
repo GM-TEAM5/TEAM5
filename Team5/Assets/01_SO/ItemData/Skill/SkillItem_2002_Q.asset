@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 770904df1f988ca479100f888921ed58, type: 3}
   m_Name: SkillItem_2002_Q
   m_EditorClassIdentifier: 
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 59687399831753744bdc351c9c758e6d, type: 3}
   type: 2
   tier: 0
   description: 

@@ -53,6 +53,12 @@ public class Enemy : MonoBehaviour, IPoolObject
 
     public Vector3 lastHitPoint;
 
+    [Header("Slow Effect")]
+    private float currentSlowAmount = 0f;
+    private float slowDuration = 0f;
+    private float originalSpeed;
+    private Coroutine slowRoutine;
+
     //===============================================================
 
     void Update()
@@ -127,6 +133,9 @@ public class Enemy : MonoBehaviour, IPoolObject
         {
             rangeWeight = UnityEngine.Random.Range(0.8f, 1.2f);
         }
+
+        originalSpeed = data.movementSpeed;
+        currentSlowAmount = 0f;
 
         // data 에 따라 radius 및 이동속도 도 세팅해야함. 
         stunDurationRemain = 0;
@@ -290,5 +299,49 @@ public class Enemy : MonoBehaviour, IPoolObject
             .AppendInterval(0.3f)
             .Append(spriteEntity.spriteRenderer.DOFade(0, 1f))
             .Play();
+    }
+
+    public void ApplySlow(float slowAmount, float duration = 1f)
+    {
+        // 더 강한 감속 효과만 적용
+        if (slowAmount > currentSlowAmount)
+        {
+            currentSlowAmount = slowAmount;
+            slowDuration = duration;
+
+            // NavMeshAgent의 속도 감소
+            if (ai != null && ai.navAgent != null)
+            {
+                ai.navAgent.speed = originalSpeed * (1 - currentSlowAmount);
+            }
+
+            // 기존 감속 코루틴 정지
+            if (slowRoutine != null)
+            {
+                StopCoroutine(slowRoutine);
+            }
+
+            // 새로운 감속 코루틴 시작
+            slowRoutine = StartCoroutine(SlowRoutine());
+        }
+    }
+
+    private IEnumerator SlowRoutine()
+    {
+        yield return new WaitForSeconds(slowDuration);
+
+        // 감속 효과 해제
+        currentSlowAmount = 0f;
+        if (ai != null && ai.navAgent != null)
+        {
+            ai.navAgent.speed = originalSpeed;
+        }
+
+        slowRoutine = null;
+    }
+
+    void OnDisable()
+    {
+        // 오브젝트가 비활성화
     }
 }
