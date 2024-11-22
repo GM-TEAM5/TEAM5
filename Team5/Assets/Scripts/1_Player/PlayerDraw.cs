@@ -18,6 +18,7 @@ public class PlayerDraw : MonoBehaviour, ITimeScaleable
     [SerializeField] GameObject drawingCamera;
     [SerializeField] float minDistance = 0.1f;
     [SerializeField] float intensity_onDraw = 0.35f;
+    [SerializeField] Transform lineContainer;  // Inspector에서 할당할 빈 GameObject
 
     private LineRenderer currentLine;
     private List<Vector3> currentPositions = new List<Vector3>();
@@ -137,7 +138,7 @@ public class PlayerDraw : MonoBehaviour, ITimeScaleable
         }
 
         GameObject newLine = new GameObject("DrawingLine");
-        newLine.transform.SetParent(drawingArea.transform);
+        newLine.transform.SetParent(lineContainer);
         currentLine = newLine.AddComponent<LineRenderer>();
         SetupLine(currentLine);
 
