@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   traitPoint: 123
   currChapter: 0
-  currStageNum: 0
+  currStageNum: 2
   currStagePlayCount: 0
-  deathCount: 8
+  deathCount: 9
   maxCount_equipment: 8
   maxCount_skill: 4
   stages:
@@ -24,8 +24,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4139757f8a71c0e4ebe00df73ef78977, type: 2}
   - {fileID: 11400000, guid: 7315a0f16d8564f478806ebb5bf0fbf5, type: 2}
   equipments:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: b35d59f53a8ffd94b866b5362b65cbc4, type: 2}
+  - {fileID: 11400000, guid: b35d59f53a8ffd94b866b5362b65cbc4, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -53,7 +53,7 @@ MonoBehaviour:
     _currHp: 500
     Inc_maxHp: 0
     d_inkChargeRate: 10
-    _currInk: 30.000002
+    _currInk: 100
     Inc_maxInk: 0
     armor: 0
     evasionRate: 0
@@ -65,5 +65,5 @@ MonoBehaviour:
     luck: 0
     rerollCount: 10
     selectionCount: 3
-    pDmg: 0
+    pDmg: 40
     mDmg: 0

@@ -42,5 +42,5 @@ MonoBehaviour:
           spawnPerCycle: 2
           cycleInterval: 0
   mapInfo:
-    width: 17
-    height: 19
+    width: 30
+    height: 40

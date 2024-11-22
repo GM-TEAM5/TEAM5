@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 003
   entityName: Warrior
-  sprite: {fileID: 21300000, guid: c1fcb977b2bad2c448d4ab902180ffd1, type: 3}
+  sprite: {fileID: 21300000, guid: cb4f737132d36a348bfd7eeb117f8533, type: 3}
   size: 0
   type: 1
   rank: 0
