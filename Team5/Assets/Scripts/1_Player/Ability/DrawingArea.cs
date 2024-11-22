@@ -4,7 +4,7 @@ using UnityEngine;
 
 using DG.Tweening;
 
-public class DrawingArea : MonoBehaviour
+public class DrawingArea : MonoBehaviour, ITimeScaleable
 {
     [SerializeField] float targetRadius;
     [SerializeField] float activationTime;
@@ -12,6 +12,7 @@ public class DrawingArea : MonoBehaviour
     [SerializeField] bool isActivated;
     [SerializeField] SpriteRenderer sr_area;
     Sequence seq_activation;
+    private float timeScale = 1f;
 
     public void Init()
     {
@@ -29,6 +30,11 @@ public class DrawingArea : MonoBehaviour
         PlaySeq_Deactivation(deactivationTime);
     }
 
+    public void SetTimeScale(float scale)
+    {
+        timeScale = scale;
+    }
+
     void PlaySeq_Activation(float duration)
     {
         if (seq_activation != null && seq_activation.IsActive())
@@ -41,6 +47,7 @@ public class DrawingArea : MonoBehaviour
         sr_area.color = new Color(sr_area.color.r, sr_area.color.g, sr_area.color.b, 0);
 
         seq_activation = DOTween.Sequence()
+            .SetUpdate(true)
             .Append(transform.DOScale(targetRadius, duration).SetEase(Ease.OutCirc))
             .Join(sr_area.DOFade(1, duration * 0.5f))
             .Play();
@@ -54,6 +61,7 @@ public class DrawingArea : MonoBehaviour
         }
 
         seq_activation = DOTween.Sequence()
+            .SetUpdate(true)
             .Append(sr_area.DOFade(0, duration))
             .Join(transform.DOScale(targetRadius * 2, duration).SetEase(Ease.OutCirc))
             .AppendCallback(() => gameObject.SetActive(false))

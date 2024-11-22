@@ -553,14 +553,17 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     public void SetTimeScale(float scale)
     {
         timeScale = scale;
-        // 플레이어 관련 컴포넌트들의 속도 조절
-        var animator = GetComponent<Animator>();
-        if (animator) animator.speed = scale;
 
-        // 자식 컴포넌트들에게도 타임스케일 적용
+        // 플레이어의 모든 ITimeScaleable 컴포넌트에 적용
         foreach (var component in GetComponentsInChildren<ITimeScaleable>())
         {
             component.SetTimeScale(scale);
+        }
+
+        // 애니메이터도 정상 속도 유지
+        if (animator != null)
+        {
+            animator.SetTimeScale(scale);
         }
     }
 }

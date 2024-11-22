@@ -72,7 +72,7 @@ public class ItemSO_ESkill : SkillItemSO, IDrawableSkill
 
         while (elapsedTime < slowFieldDuration)
         {
-            elapsedTime += Time.deltaTime;
+            elapsedTime += Time.unscaledDeltaTime;
             float completion = elapsedTime / slowFieldDuration;
 
             // 각 포인트에서 적 감지 및 슬로우 효과 적용

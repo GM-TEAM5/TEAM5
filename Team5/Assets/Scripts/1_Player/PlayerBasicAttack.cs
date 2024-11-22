@@ -2,7 +2,7 @@ using System.Collections;
 using BW.Util;
 using UnityEngine;
 
-public class PlayerBasicAttack : MonoBehaviour
+public class PlayerBasicAttack : MonoBehaviour, ITimeScaleable
 {
     [SerializeField] private float attackDelay = 0.2f;
     [SerializeField] private float damage = 30f;
@@ -15,16 +15,34 @@ public class PlayerBasicAttack : MonoBehaviour
 
     public Player player;
 
+    private float timeScale = 1f;
+
+    private PlayerDraw playerDraw;
+
+
+
+
+    public void SetTimeScale(float scale)
+    {
+        timeScale = scale;
+    }
+
     void Start()
     {
         player = Player.Instance;
         playerInput = PlayerInputManager.Instance;
+        playerDraw = player.GetComponentInChildren<PlayerDraw>();
         slash = GetComponentInChildren<Transform>().Find("Slash").gameObject;
         slash.SetActive(false);
     }
 
     public void OnUpdate()
     {
+        if (playerDraw.isInDrawMode)
+        {
+            return;
+        }
+
         attackDirection = (playerInput.mouseWorldPos - transform.position).normalized;
         attackDirection.y = 0;
 
@@ -39,12 +57,12 @@ public class PlayerBasicAttack : MonoBehaviour
         isAttacking = true;
         player.animator.OnBasicAttackStart();
 
-        yield return new WaitForSeconds(attackDelay);
+        yield return new WaitForSeconds(attackDelay / timeScale);
 
         float angle = Mathf.Atan2(attackDirection.x, attackDirection.z) * Mathf.Rad2Deg - 90f;
         Vector3 spherePosition = attackDirection * attackRange;
         spherePosition.y = 1.5f;
-        
+
         slash.transform.localPosition = spherePosition - (attackDirection * 1.5f);  // 이펙트 위치를 sphere보다 1.5f 뒤로
         slash.transform.localRotation = Quaternion.Euler(0, angle, 0);
         slash.SetActive(true);
@@ -59,7 +77,7 @@ public class PlayerBasicAttack : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.5f / timeScale);
         slash.SetActive(false);
         isAttacking = false;
 
@@ -77,11 +95,11 @@ public class PlayerBasicAttack : MonoBehaviour
         }
     }
 
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }
-    #endif
+#endif
 }

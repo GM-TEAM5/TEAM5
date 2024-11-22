@@ -80,7 +80,7 @@ public class ItemSO_QSkill : SkillItemSO, IDrawableSkill
 
         while (elapsedTime < slashDuration)
         {
-            elapsedTime += Time.deltaTime;
+            elapsedTime += Time.unscaledDeltaTime;
             float alpha = 1f - (elapsedTime / slashDuration);
             Color fadeColor = startColor;
             fadeColor.a = alpha;

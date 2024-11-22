@@ -11,7 +11,7 @@ public enum DrawType
     QuickSlash      // Q 스킬용 빠른 슬래시
 }
 
-public class PlayerDraw : MonoBehaviour
+public class PlayerDraw : MonoBehaviour, ITimeScaleable
 {
     [Header("Drawing Settings")]
     [SerializeField] DrawingArea drawingArea;
@@ -28,6 +28,7 @@ public class PlayerDraw : MonoBehaviour
     private DrawType currentDrawType;
     private System.Action<LineRenderer, List<Vector3>> onDrawComplete;
     private SkillItemSO currentSkill;
+    private float timeScale = 1f;
 
     public void Init()
     {
@@ -77,8 +78,14 @@ public class PlayerDraw : MonoBehaviour
         isInDrawMode = false;
         onDrawComplete = null;
 
-        Time.timeScale = 1f;
-        Player.Instance.SetTimeScale(1f);
+        if (currentDrawType == DrawType.QuickSlash)
+        {
+            Time.timeScale = 1f;
+            Player.Instance.SetTimeScale(1f);
+        }
+
+        currentDrawType = DrawType.GroundPattern;
+        currentSkill = null;
     }
 
     private void EndDrawing()
@@ -97,6 +104,15 @@ public class PlayerDraw : MonoBehaviour
     {
         if (!isInDrawMode) return;
 
+        float deltaTime = Time.deltaTime * timeScale;
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            EndDrawing();
+            FinishDraw();
+            return;
+        }
+
         if (Input.GetMouseButtonDown(0) && player.HasEnoughInk(GetMinInkRequired(currentSkill)))
         {
             StartLine();
@@ -104,10 +120,6 @@ public class PlayerDraw : MonoBehaviour
         else if (Input.GetMouseButton(0) && isDrawing)
         {
             ContinueDrawing();
-        }
-        else if (Input.GetMouseButtonUp(0))
-        {
-            EndDrawing();
         }
     }
 
@@ -195,6 +207,11 @@ public class PlayerDraw : MonoBehaviour
         }
         line.positionCount = 0;
         line.useWorldSpace = true;
+    }
+
+    public void SetTimeScale(float scale)
+    {
+        timeScale = scale;
     }
 }
 
