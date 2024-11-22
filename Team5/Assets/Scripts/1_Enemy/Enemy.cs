@@ -97,15 +97,11 @@ public class Enemy : MonoBehaviour, IPoolObject, ITimeScaleable
                 // 슬로우 효과 해제
                 slowAmount = 0f;
                 slowDuration = 0f;
+
+                // 원래 속도로 복구
+                ai.navAgent.speed = data.movementSpeed;
             }
         }
-
-        // 이동 속도 계산 (슬로우와 타임스케일 모두 적용)
-        // float currentSpeed = moveSpeed * (1 - slowAmount) * timeScale;
-
-        // 이동 로직
-        // Vector3 direction = (t_target.position - t.position).normalized;
-        // t.position += direction * currentSpeed * Time.deltaTime;
 
         // 업뎃 성공하면, 
         if (ai.TryUpdate())
@@ -279,23 +275,23 @@ public class Enemy : MonoBehaviour, IPoolObject, ITimeScaleable
         DropItem();
         //
         PlaySequence_Death(); //
-        
+
 
         stateUI.OnDie();
         //
         TestManager.Instance.TestSFX_enemyDeath(data.type);
-        
+
         GamePlayManager.Instance.OnEnemyKill(this);
         //
     }
 
     void CleanDeath()
     {
-        if(isAlive== false)
+        if (isAlive == false)
         {
             return;
         }
-        
+
         enemyCollider.enabled = false; // 적 탐색 및 총알 충돌에 걸리지 않도록.
         ai.OnDie();
         data.OnDie(this);
@@ -355,6 +351,9 @@ public class Enemy : MonoBehaviour, IPoolObject, ITimeScaleable
             slowAmount = amount;
             slowDuration = duration;
             slowTimer = duration;
+
+            // NavMeshAgent의 속도를 직접 조절
+            ai.navAgent.speed = data.movementSpeed * (1 - slowAmount);
         }
     }
 
