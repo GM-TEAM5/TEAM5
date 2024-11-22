@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   traitPoint: 123
   currChapter: 0
-  currStageNum: 3
+  currStageNum: 0
   currStagePlayCount: 0
   deathCount: 8
   maxCount_equipment: 8
@@ -24,8 +24,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4139757f8a71c0e4ebe00df73ef78977, type: 2}
   - {fileID: 11400000, guid: 7315a0f16d8564f478806ebb5bf0fbf5, type: 2}
   equipments:
-  - {fileID: 11400000, guid: b35d59f53a8ffd94b866b5362b65cbc4, type: 2}
-  - {fileID: 11400000, guid: b35d59f53a8ffd94b866b5362b65cbc4, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -33,12 +33,13 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   skills:
-  - {fileID: 11400000, guid: 87d9af0859a1c434fa32ead1970517d4, type: 2}
-  - {fileID: 11400000, guid: f9d7bf5c53692eb499b8d66dadb59b92, type: 2}
+  - {fileID: 11400000, guid: d20eb8df5369388499f1a3f95ffaf2fd, type: 2}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   initSkills:
-  - {fileID: 11400000, guid: d20eb8df5369388499f1a3f95ffaf2fd, type: 2}
+  - {fileID: 11400000, guid: f9d7bf5c53692eb499b8d66dadb59b92, type: 2}
+  - {fileID: 11400000, guid: 87d9af0859a1c434fa32ead1970517d4, type: 2}
   savedStatus:
     d_attackRange: 0
     d_attackArea: 0
@@ -49,11 +50,11 @@ MonoBehaviour:
     d_damage: 30
     d_attackCooltime: 1
     d_pickupRange: 4
-    _currHp: 482
+    _currHp: 500
     Inc_maxHp: 0
+    d_inkChargeRate: 10
     _currInk: 30.000002
     Inc_maxInk: 0
-    inkChargeRate: 10
     armor: 0
     evasionRate: 0
     critRate: 0
@@ -64,5 +65,5 @@ MonoBehaviour:
     luck: 0
     rerollCount: 10
     selectionCount: 3
-    pDmg: 40
+    pDmg: 0
     mDmg: 0
