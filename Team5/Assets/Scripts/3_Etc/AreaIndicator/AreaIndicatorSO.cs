@@ -21,6 +21,7 @@ public abstract class AreaIndicatorSO : GameData
         areaIndicator.seq_appear = PlaySeq_Appear(areaIndicator, duration * 0.25f);
         areaIndicator.seq_fill = PlaySeq_Fill(areaIndicator,duration);
     }
+    public abstract void OnInit(AreaIndicator areaIndicator);
     public abstract Sequence PlaySeq_Appear(AreaIndicator areaIndicator, float duration);
     public abstract Sequence PlaySeq_Fill(AreaIndicator areaIndicator, float duration);
 

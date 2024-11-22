@@ -47,7 +47,7 @@ public class EnemyAbility_B0000 : EnemyAbilitySO
     {
         Vector3 targetPos = enemy.t_target.position;
     
-        PoolManager.Instance.GetAreaIndicator_Circle(targetPos, Vector2.one * radius * 2, castingTime );
+        PoolManager.Instance.GetAreaIndicator_Circle(targetPos, enemy.t_target.position, Vector2.one * radius * 2, castingTime );
 
         // 타겟 뒤로 순간이동
         enemy.transform.position = targetPos + new Vector3( Random.Range(-1,1),0,Random.Range(-1,1)).normalized * 2f;

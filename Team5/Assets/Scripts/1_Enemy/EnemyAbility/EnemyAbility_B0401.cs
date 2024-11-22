@@ -10,7 +10,7 @@ using BW.Util;
 public class EnemyAbility_B0401 :  EnemyAbilitySO
 {
     [Header("Extra")]
-    public float radiusWeight = 1.3f;
+    public float radiusWeight = 1.5f;
     public float movementSpeed;
     public float impulse = 50;
         
@@ -35,7 +35,8 @@ public class EnemyAbility_B0401 :  EnemyAbilitySO
     {
         // Vector3 targetPos = enemy.t_target.position;
         CapsuleCollider capsuleCollider = enemy.GetComponent<CapsuleCollider>();
-        PoolManager.Instance.GetAreaIndicator_Circle(enemy.t.position, Vector2.one * capsuleCollider.radius*radiusWeight *2, castingTime );
+        // PoolManager.Instance.GetAreaIndicator_Circle(enemy.t.position,  enemy.t_target.position,  new Vector3(impulse,capsuleCollider.radius*radiusWeight *2,1), castingTime );
+        PoolManager.Instance.GetAreaIndicator_Circle(enemy.t.position,  enemy.t_target.position, Vector2.one * capsuleCollider.radius *radiusWeight  * 2, castingTime );
     }
 
     

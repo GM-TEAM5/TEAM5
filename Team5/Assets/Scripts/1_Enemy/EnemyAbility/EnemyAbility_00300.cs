@@ -49,6 +49,6 @@ public class EnemyAbility_00300 :  EnemyAbilitySO
     {
         Vector3 targetPos = enemy.t_target.position;
         
-        PoolManager.Instance.GetAreaIndicator_Circle(targetPos, Vector2.one * radius * 2, castingTime );
+        PoolManager.Instance.GetAreaIndicator_Circle(targetPos, enemy.t_target.position, Vector2.one * radius * 2, castingTime );
     }
 }

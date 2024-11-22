@@ -13,6 +13,11 @@ public class CircleAreaIndicator : AreaIndicatorSO
 
     public override string dataName => "CircleArea";
 
+    public override void OnInit(AreaIndicator areaIndicator)
+    {
+        
+    }
+
     public override DG.Tweening.Sequence PlaySeq_Appear(AreaIndicator areaIndicator, float duration)
     {
         areaIndicator.transform.localScale = new Vector3(0,0,1f);

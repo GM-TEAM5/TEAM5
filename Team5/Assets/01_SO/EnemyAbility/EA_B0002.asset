@@ -18,7 +18,7 @@ MonoBehaviour:
   indicatorType: 1
   range: 15
   priority: 0
-  cooltime: 4
+  cooltime: 3.5
   uninterruptible: 1
   dmgWeight: 1
   castingTime: 1

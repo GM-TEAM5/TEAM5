@@ -17,9 +17,9 @@ MonoBehaviour:
   icon: {fileID: 0}
   indicatorType: 1
   range: 20
-  priority: 1
-  cooltime: 8
-  uninterruptible: 0
+  priority: 2
+  cooltime: 15
+  uninterruptible: 1
   dmgWeight: 2
   castingTime: 1.5
   delay_afterCast: 1
