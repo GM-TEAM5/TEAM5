@@ -45,6 +45,11 @@ public class PlayerDraw : MonoBehaviour, ITimeScaleable
 
     public void StartDrawing(DrawType drawType, SkillItemSO skill, System.Action<LineRenderer, List<Vector3>> callback)
     {
+        if (isInDrawMode)
+        {
+            return;
+        }
+
         if (!player.HasEnoughInk(GetMinInkRequired(skill)))
         {
             Debug.Log("Not enough ink to start drawing!");
