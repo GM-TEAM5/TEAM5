@@ -61,11 +61,11 @@ public class PlayerDraw : MonoBehaviour, ITimeScaleable
         onDrawComplete = callback;
         isInDrawMode = true;
         drawingArea.Activate();
-        drawingCamera.SetActive(true);
         DirectingManager.Instance.SetVignette(intensity_onDraw, 0.5f);
 
         if (currentDrawType == DrawType.QuickSlash)
         {
+            drawingCamera.SetActive(true);
             Time.timeScale = 0.05f;
             Player.Instance.SetTimeScale(1f);
         }
@@ -78,17 +78,17 @@ public class PlayerDraw : MonoBehaviour, ITimeScaleable
             EndDrawing();
         }
         DirectingManager.Instance.InitVignette(0.5f);
-        drawingCamera.SetActive(false);
-        drawingArea.Deactivate();
-        isInDrawMode = false;
-        onDrawComplete = null;
 
         if (currentDrawType == DrawType.QuickSlash)
         {
+            drawingCamera.SetActive(false);
             Time.timeScale = 1f;
             Player.Instance.SetTimeScale(1f);
         }
 
+        drawingArea.Deactivate();
+        isInDrawMode = false;
+        onDrawComplete = null;
         currentDrawType = DrawType.GroundPattern;
         currentSkill = null;
     }
