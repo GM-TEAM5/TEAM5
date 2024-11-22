@@ -36,6 +36,7 @@ public class GamePlayStartUI : MonoBehaviour
         //
         .Append(text_stageNum.DOFade(1f,0.5f))
         .Join(text_stageStart.DOFade(1f,0.5f))
+        .AppendCallback( ()=>TestManager.Instance.TestSFX_GameStart())
         //
         .AppendInterval(1f)
         //

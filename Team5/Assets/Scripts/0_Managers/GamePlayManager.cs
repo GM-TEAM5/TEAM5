@@ -87,7 +87,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
         // yield return new WaitUntil( ()=> playerEnterPortalSeq.IsActive()==false );
 
         startSequence.Play();
-        TestManager.Instance.TestSFX_GameStart();
+        
         yield return new WaitUntil( ()=>startSequence.IsActive()==false);
 
         // entrancePortal.PlaySeq_DestroyPortal(2f);

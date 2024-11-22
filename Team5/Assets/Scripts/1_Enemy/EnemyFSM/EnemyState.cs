@@ -166,3 +166,32 @@ public class EnemyState_Attack : EnemyFSMState
         
     }
 }
+
+
+/// <summary>
+/// 기술을 쓸 때, - 
+/// </summary>
+public class EnemyState_DirectMove : EnemyFSMState
+{
+    public EnemyState_DirectMove(Enemy enemy, NavMeshAgent navAgent) : base(enemy, navAgent)
+    {
+
+    }
+
+    public override void OnEnter()
+    {
+        navAgent.isStopped = false;
+        navAgent.velocity = navAgent.desiredVelocity; 
+    
+    }
+
+    public override void OnExit()
+    {
+        
+    }
+
+    public override void OnUpdate()
+    {
+        
+    }
+}

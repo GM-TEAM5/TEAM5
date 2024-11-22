@@ -433,8 +433,9 @@ public class Player : Singleton<Player>, ITimeScaleable     // ui 등에서 플�
         }
         dir = dir.WithFloorHeight().normalized;
 
-        knockbackVelocity = dir * impulse;
-        SetStunned(0.2f);
+        knockbackVelocity = dir * impulse;  
+        float stunDuration = impulse * 0.02f;
+        SetStunned(stunDuration);
     }
 
     void SetStunned(float duration)

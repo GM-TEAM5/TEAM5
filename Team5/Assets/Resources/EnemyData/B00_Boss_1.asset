@@ -31,3 +31,5 @@ MonoBehaviour:
   exp: 30
   abilities:
   - {fileID: 11400000, guid: 37959666a0d5843448bc845d289483ae, type: 2}
+  - {fileID: 11400000, guid: 2f005f8b9e28bfe47a06de92173696f2, type: 2}
+  - {fileID: 11400000, guid: 3fed02278c81d464b92c0b379f5b54b1, type: 2}

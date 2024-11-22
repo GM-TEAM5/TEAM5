@@ -53,6 +53,10 @@ public class Enemy : MonoBehaviour, IPoolObject, ITimeScaleable
 
     public Vector3 lastHitPoint;
 
+    public bool canBodyAttack;
+
+
+
     [Header("Slow Effect")]
     private float currentSlowAmount = 0f;
     private float slowDuration = 0f;
@@ -63,7 +67,10 @@ public class Enemy : MonoBehaviour, IPoolObject, ITimeScaleable
     private float slowTimer = 0f;
     private float timeScale = 1f;
 
-    [SerializeField] private float moveSpeed = 5f;  // 기본 이동 속도
+    // [SerializeField] private float moveSpeed = 5f;  // 기본 이동 속도
+
+
+
 
     //===============================================================
 

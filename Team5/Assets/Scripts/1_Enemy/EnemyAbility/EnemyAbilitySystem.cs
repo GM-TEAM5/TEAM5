@@ -46,11 +46,21 @@ public class EnemyAbilitySystem : MonoBehaviour
 
     public void SetCurrAbility()
     {
-        // 사용할 수 있는 능력들중 우선순위 가장 높은 거
         EnemyAbility ability = abilities
-            .Where(a => a.CanActiavte(enemy)) 
-            .OrderByDescending(a => a.data.priority)
-            .FirstOrDefault(); 
+        .Where(a => a.CanUse(enemy)) 
+        .OrderByDescending(a => a.data.priority)
+        .ThenBy(a => a.useCount)
+        .FirstOrDefault(); 
+        
+        if (ability ==null)
+        {
+            // 사용할 수 있는 능력들중 우선순위 가장 높은 거
+            ability = abilities
+                .Where(a => a.CanActiavte(enemy)) 
+                .OrderByDescending(a => a.data.priority)
+                .FirstOrDefault(); 
+        }
+
 
         usingAbility = ability;
     }
