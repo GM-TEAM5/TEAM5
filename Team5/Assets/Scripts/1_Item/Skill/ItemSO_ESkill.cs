@@ -13,6 +13,7 @@ public class ItemSO_ESkill : SkillItemSO, IDrawableSkill
 
     [Header("Skill Settings")]
     public float slowFieldDuration = 3f;
+    public float slowDuration = 2f;
     public float slowAmount = 0.5f;
     public float damage = 10f;
 
@@ -70,6 +71,9 @@ public class ItemSO_ESkill : SkillItemSO, IDrawableSkill
         int totalPoints = positions.Count;
         var drawableSkill = this as IDrawableSkill;
 
+        // 이미 데미지를 받은 적들을 추적하기 위한 HashSet
+        HashSet<Enemy> damagedEnemies = new HashSet<Enemy>();
+
         while (elapsedTime < slowFieldDuration)
         {
             elapsedTime += Time.unscaledDeltaTime;
@@ -91,8 +95,15 @@ public class ItemSO_ESkill : SkillItemSO, IDrawableSkill
                     Enemy enemy = hit.collider.GetComponent<Enemy>();
                     if (enemy != null)
                     {
-                        enemy.ApplySlow(slowAmount);
-                        enemy.GetDamaged(damage * Time.deltaTime);
+                        // 슬로우 효과 적용 시 지속시간도 전달
+                        enemy.ApplySlow(slowAmount, slowDuration);
+
+                        // 데미지는 한 번만 적용
+                        if (!damagedEnemies.Contains(enemy))
+                        {
+                            enemy.GetDamaged(damage);
+                            damagedEnemies.Add(enemy);
+                        }
                     }
                 }
             }

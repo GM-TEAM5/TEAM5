@@ -10,7 +10,7 @@ using BW.Util;
 [RequireComponent(typeof(NavMeshAgent),
     typeof(SpriteEntity))]
 [RequireComponent(typeof(EnemyAI))]
-public class Enemy : MonoBehaviour, IPoolObject
+public class Enemy : MonoBehaviour, IPoolObject, ITimeScaleable
 {
     public EnemyDataSO data; //적의 데이터
     EnemyStateUI stateUI;
@@ -59,6 +59,12 @@ public class Enemy : MonoBehaviour, IPoolObject
     private float originalSpeed;
     private Coroutine slowRoutine;
 
+    private float slowAmount = 0f;
+    private float slowTimer = 0f;
+    private float timeScale = 1f;
+
+    [SerializeField] private float moveSpeed = 5f;  // 기본 이동 속도
+
     //===============================================================
 
     void Update()
@@ -81,6 +87,25 @@ public class Enemy : MonoBehaviour, IPoolObject
         {
             stunDurationRemain -= Time.deltaTime;
         }
+
+        // 슬로우 타이머 관리
+        if (slowTimer > 0)
+        {
+            slowTimer -= Time.deltaTime;
+            if (slowTimer <= 0)
+            {
+                // 슬로우 효과 해제
+                slowAmount = 0f;
+                slowDuration = 0f;
+            }
+        }
+
+        // 이동 속도 계산 (슬로우와 타임스케일 모두 적용)
+        float currentSpeed = moveSpeed * (1 - slowAmount) * timeScale;
+
+        // 이동 로직
+        Vector3 direction = (t_target.position - t.position).normalized;
+        t.position += direction * currentSpeed * Time.deltaTime;
 
         // 업뎃 성공하면, 
         if (ai.TryUpdate())
@@ -301,43 +326,20 @@ public class Enemy : MonoBehaviour, IPoolObject
             .Play();
     }
 
-    public void ApplySlow(float slowAmount, float duration = 1f)
+    public void ApplySlow(float amount, float duration)
     {
-        // 더 강한 감속 효과만 적용
-        if (slowAmount > currentSlowAmount)
+        // 새로운 슬로우가 더 강하거나, 현재 슬로우가 없을 때만 적용
+        if (amount > slowAmount || slowTimer <= 0)
         {
-            currentSlowAmount = slowAmount;
+            slowAmount = amount;
             slowDuration = duration;
-
-            // NavMeshAgent의 속도 감소
-            if (ai != null && ai.navAgent != null)
-            {
-                ai.navAgent.speed = originalSpeed * (1 - currentSlowAmount);
-            }
-
-            // 기존 감속 코루틴 정지
-            if (slowRoutine != null)
-            {
-                StopCoroutine(slowRoutine);
-            }
-
-            // 새로운 감속 코루틴 시작
-            slowRoutine = StartCoroutine(SlowRoutine());
+            slowTimer = duration;
         }
     }
 
-    private IEnumerator SlowRoutine()
+    public void SetTimeScale(float scale)
     {
-        yield return new WaitForSeconds(slowDuration);
-
-        // 감속 효과 해제
-        currentSlowAmount = 0f;
-        if (ai != null && ai.navAgent != null)
-        {
-            ai.navAgent.speed = originalSpeed;
-        }
-
-        slowRoutine = null;
+        timeScale = scale;
     }
 
     void OnDisable()

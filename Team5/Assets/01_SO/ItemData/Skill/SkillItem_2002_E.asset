@@ -16,3 +16,13 @@ MonoBehaviour:
   type: 2
   tier: 0
   description: 
+  _lineColor: {r: 0, g: 0, b: 0, a: 1}
+  _lineWidth: 0.2
+  _lineMaterial: {fileID: 0}
+  _effectRadius: 1
+  slowFieldDuration: 3
+  slowDuration: 5
+  slowAmount: 0.7
+  damage: 10
+  _inkCostPerUnit: 1
+  _minInkRequired: 10
