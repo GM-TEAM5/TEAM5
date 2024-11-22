@@ -21,7 +21,7 @@ MonoBehaviour:
   _lineMaterial: {fileID: 0}
   _effectRadius: 1
   slowFieldDuration: 3
-  slowDuration: 5
+  slowDuration: 10
   slowAmount: 0.7
   damage: 10
   _inkCostPerUnit: 1

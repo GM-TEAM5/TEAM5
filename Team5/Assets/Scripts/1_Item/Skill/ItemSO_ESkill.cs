@@ -10,6 +10,7 @@ public class ItemSO_ESkill : SkillItemSO, IDrawableSkill
     [SerializeField] private float _lineWidth = 0.2f;
     [SerializeField] private Material _lineMaterial;
     [SerializeField] private float _effectRadius = 1f;
+    [SerializeField] private float _lineDuration = 3f;
 
     [Header("Skill Settings")]
     public float slowFieldDuration = 3f;
@@ -68,19 +69,16 @@ public class ItemSO_ESkill : SkillItemSO, IDrawableSkill
     IEnumerator SlowFieldRoutine(LineRenderer line, List<Vector3> positions)
     {
         float elapsedTime = 0f;
-        int totalPoints = positions.Count;
         var drawableSkill = this as IDrawableSkill;
-
-        // 이미 데미지를 받은 적들을 추적하기 위한 HashSet
         HashSet<Enemy> damagedEnemies = new HashSet<Enemy>();
 
-        while (elapsedTime < slowFieldDuration)
+        while (elapsedTime < _lineDuration)
         {
             elapsedTime += Time.unscaledDeltaTime;
-            float completion = elapsedTime / slowFieldDuration;
+            float completion = elapsedTime / _lineDuration;
 
             // 각 포인트에서 적 감지 및 슬로우 효과 적용
-            for (int i = 0; i < totalPoints - 1; i++)
+            for (int i = 0; i < positions.Count - 1; i++)
             {
                 RaycastHit[] hits = Physics.SphereCastAll(
                     positions[i],
@@ -95,7 +93,7 @@ public class ItemSO_ESkill : SkillItemSO, IDrawableSkill
                     Enemy enemy = hit.collider.GetComponent<Enemy>();
                     if (enemy != null)
                     {
-                        // 슬로우 효과 적용 시 지속시간도 전달
+                        // 슬로우 효과 적용
                         enemy.ApplySlow(slowAmount, slowDuration);
 
                         // 데미지는 한 번만 적용
