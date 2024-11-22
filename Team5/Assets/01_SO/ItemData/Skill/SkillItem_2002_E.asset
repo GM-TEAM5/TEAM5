@@ -20,9 +20,11 @@ MonoBehaviour:
   _lineWidth: 0.2
   _lineMaterial: {fileID: 0}
   _effectRadius: 1
+  _lineDuration: 3
   slowFieldDuration: 3
   slowDuration: 10
   slowAmount: 0.7
-  damage: 10
+  damage: 30
   _inkCostPerUnit: 1
   _minInkRequired: 10
+  maxDrawDuration: 5

@@ -21,6 +21,7 @@ MonoBehaviour:
   _lineMaterial: {fileID: 0}
   _effectRadius: 1
   slashDuration: 0.5
-  damage: 30
+  damage: 60
   _inkCostPerUnit: 2
   _minInkRequired: 15
+  maxDrawDuration: 8

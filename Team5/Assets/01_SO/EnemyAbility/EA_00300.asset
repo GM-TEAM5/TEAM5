@@ -16,11 +16,12 @@ MonoBehaviour:
   skillName: GroundSlam
   icon: {fileID: 0}
   indicatorType: 1
-  range: 2.5
+  range: 5
   priority: 0
   cooltime: 3
   uninterruptible: 1
+  dmgWeight: 1
   castingTime: 1
   delay_afterCast: 1
-  radius: 3
-  impulse: 10
+  radius: 3.5
+  impulse: 15

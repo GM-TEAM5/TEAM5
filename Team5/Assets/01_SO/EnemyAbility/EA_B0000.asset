@@ -23,5 +23,5 @@ MonoBehaviour:
   dmgWeight: 1.5
   castingTime: 2
   delay_afterCast: 0.5
-  radius: 4
+  radius: 5
   impulse: 20

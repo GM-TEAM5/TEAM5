@@ -24,7 +24,7 @@ MonoBehaviour:
   range: 8
   retreatRange: 8
   attackSpeed: 0
-  ad: 55
+  ad: 50
   ap: 0
   moveCooltime: 0.2
   movementSpeed: 3

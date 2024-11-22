@@ -15,18 +15,60 @@ MonoBehaviour:
   id: 01
   missionInfo:
     goalType: 0
-    targetTime: 10
+    targetTime: 100
     waveInfos:
       array:
       - Key: 0
         Value:
         - startTime: 0
-          endTime: 2
+          endTime: 20
+          enemyData: {fileID: 11400000, guid: 62e821ebc49c5a8479cea5daad4e3b52, type: 2}
+          positionType: 0
+          spawnPoint: {x: 0, y: 0, z: 0}
+          spawnPerCycle: 1
+          cycleInterval: 2
+        - startTime: 0
+          endTime: 20
           enemyData: {fileID: 11400000, guid: 0bdb4f12b102e4b41b1d0f3e98b92b9e, type: 2}
           positionType: 0
           spawnPoint: {x: 0, y: 0, z: 0}
           spawnPerCycle: 1
-          cycleInterval: 1
+          cycleInterval: 5
+        - startTime: 20
+          endTime: 60
+          enemyData: {fileID: 11400000, guid: 62e821ebc49c5a8479cea5daad4e3b52, type: 2}
+          positionType: 0
+          spawnPoint: {x: 0, y: 0, z: 0}
+          spawnPerCycle: 3
+          cycleInterval: 4
+        - startTime: 20
+          endTime: 60
+          enemyData: {fileID: 11400000, guid: 0bdb4f12b102e4b41b1d0f3e98b92b9e, type: 2}
+          positionType: 0
+          spawnPoint: {x: 0, y: 0, z: 0}
+          spawnPerCycle: 1
+          cycleInterval: 4
+        - startTime: 60
+          endTime: 90
+          enemyData: {fileID: 11400000, guid: 62e821ebc49c5a8479cea5daad4e3b52, type: 2}
+          positionType: 0
+          spawnPoint: {x: 0, y: 0, z: 0}
+          spawnPerCycle: 3
+          cycleInterval: 5
+        - startTime: 60
+          endTime: 90
+          enemyData: {fileID: 11400000, guid: 0bdb4f12b102e4b41b1d0f3e98b92b9e, type: 2}
+          positionType: 0
+          spawnPoint: {x: 0, y: 0, z: 0}
+          spawnPerCycle: 1
+          cycleInterval: 5
+        - startTime: 60
+          endTime: 90
+          enemyData: {fileID: 11400000, guid: c7c895deb29c7e542825c05d4fe3c616, type: 2}
+          positionType: 0
+          spawnPoint: {x: 0, y: 0, z: 0}
+          spawnPerCycle: 1
+          cycleInterval: 5
   mapInfo:
     width: 50
     height: 50
