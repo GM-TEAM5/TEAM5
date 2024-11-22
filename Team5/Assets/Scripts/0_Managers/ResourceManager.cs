@@ -27,6 +27,9 @@ public class ResourceManager : Singleton<ResourceManager>
     public readonly string areaIndicatorDataPath = "00_Data/areaIndicatorDictionary";
     public AreaIndicatorDictionarySO areaIndicatorData;
 
+
+    public GameObject prefab_stage;
+
     //=================================================
 
 

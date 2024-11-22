@@ -9,22 +9,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99d1e12e5cdb0c548a5e966bc41d3e8f, type: 3}
+  m_Script: {fileID: 11500000, guid: 06ccc532ab2f60745aaf083711a01c16, type: 3}
   m_Name: 003_Warrior
   m_EditorClassIdentifier: 
   id: 003
-  entityName: Melee
-  sprite: {fileID: 21300000, guid: c1fcb977b2bad2c448d4ab902180ffd1, type: 3}
+  entityName: Warrior
+  sprite: {fileID: 21300000, guid: cb4f737132d36a348bfd7eeb117f8533, type: 3}
   size: 0
-  type: 0
+  type: 1
   rank: 0
-  attackType: 1
-  maxHp: 10
+  attackType: 0
+  maxHp: 100
   armor: 0
   range: 1
   retreatRange: 0
   attackSpeed: 0
-  ad: 3
+  ad: 33
   ap: 0
   moveCooltime: 0.2
   movementSpeed: 5

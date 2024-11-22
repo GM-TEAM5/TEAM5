@@ -12,20 +12,30 @@ using Unity.Collections;
 public class PlayerDataSO : ScriptableObject
 {
     public int traitPoint;
-    public int currChapter = 1;
-    public int currStage = 1;
+    public int currChapter = 0;
+    public int currStageNum = 0;
     public int currStagePlayCount;
     public int deathCount;
     
 
-    public bool isNewUser => deathCount==0 && currChapter ==1 && currStage ==1;
+    // public bool isNewUser => deathCount==0 && currChapter ==1 && currStageNum ==1;
 
     [Min(0)]public int maxCount_equipment = 8;
     [Min(0)]public int maxCount_skill = 4;
 
+    //
+    public List<StageDataSO> stages= new();
 
+    public bool isGameclear => currStageNum >= stages.Count;
+
+
+
+    //
     public List< EquipmentItemSO > equipments;
     public List< SkillItemSO > skills;
+
+    public List< SkillItemSO > initSkills; 
+    public PlayerStatus savedStatus;
 
 
     //==================================================================================
@@ -57,6 +67,33 @@ public class PlayerDataSO : ScriptableObject
     
 
     //==================================================================================
+    public void InitPlayerData()
+    {
+        skills.Clear();
+        
+        foreach(var skill in initSkills)
+        {
+            skills.Add(skill);  
+        }
+
+        equipments.Clear();
+        FixContainerSize();
+
+        currStageNum =0;
+
+        savedStatus = new();
+    }
+
+    public void OnStageClear( Player player )
+    {
+        currStageNum ++;
+
+        // 진행중이던 데이터 저장.  
+        equipments =  player.playerEquipments.equipments;
+        skills = player.skills.Values.Select(x=> x.skillData).ToList();
+        savedStatus = player.status;
+    }
+
 
 
     /// <summary>
@@ -98,5 +135,17 @@ public class PlayerDataSO : ScriptableObject
         }
     
         return false;
+    }
+
+
+    public StageDataSO GetCurrStageInfo()
+    {
+        if(currStageNum < stages.Count)
+        {
+            return stages[currStageNum];
+        }
+        currStageNum = 0;
+        
+        return stages[currStageNum];
     }
 }

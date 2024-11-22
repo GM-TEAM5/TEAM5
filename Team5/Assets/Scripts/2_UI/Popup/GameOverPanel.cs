@@ -40,6 +40,7 @@ public class GameOverPanel : GamePlayPanel
 
     void GoToUnderWorld()
     {
+        GameManager.Instance.playerData.InitPlayerData();
         SceneLoadManager.Instance.Load_UnderWorld();
     }
 

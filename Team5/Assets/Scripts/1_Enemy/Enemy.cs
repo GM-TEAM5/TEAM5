@@ -10,7 +10,7 @@ using BW.Util;
 [RequireComponent(typeof(NavMeshAgent),
     typeof(SpriteEntity))]
 [RequireComponent(typeof(EnemyAI))]
-public class Enemy : MonoBehaviour, IPoolObject
+public class Enemy : MonoBehaviour, IPoolObject, ITimeScaleable
 {
     public EnemyDataSO data; //적의 데이터
     EnemyStateUI stateUI;
@@ -53,6 +53,25 @@ public class Enemy : MonoBehaviour, IPoolObject
 
     public Vector3 lastHitPoint;
 
+    public bool canBodyAttack;
+
+
+
+    [Header("Slow Effect")]
+    private float currentSlowAmount = 0f;
+    private float slowDuration = 0f;
+    private float originalSpeed;
+    private Coroutine slowRoutine;
+
+    private float slowAmount = 0f;
+    private float slowTimer = 0f;
+    private float timeScale = 1f;
+
+    // [SerializeField] private float moveSpeed = 5f;  // 기본 이동 속도
+
+
+
+
     //===============================================================
 
     void Update()
@@ -74,6 +93,21 @@ public class Enemy : MonoBehaviour, IPoolObject
         if (stunDurationRemain > 0)
         {
             stunDurationRemain -= Time.deltaTime;
+        }
+
+        // 슬로우 타이머 관리
+        if (slowTimer > 0)
+        {
+            slowTimer -= Time.deltaTime;
+            if (slowTimer <= 0)
+            {
+                // 슬로우 효과 해제
+                slowAmount = 0f;
+                slowDuration = 0f;
+
+                // 원래 속도로 복구
+                ai.navAgent.speed = data.movementSpeed;
+            }
         }
 
         // 업뎃 성공하면, 
@@ -102,6 +136,9 @@ public class Enemy : MonoBehaviour, IPoolObject
         ai = GetComponent<EnemyAI>();
 
         t = transform;
+
+
+        GameEventManager.Instance.onStageFinish.AddListener(CleanDeath);
     }
 
     public void OnGettingFromPool()
@@ -128,6 +165,9 @@ public class Enemy : MonoBehaviour, IPoolObject
             rangeWeight = UnityEngine.Random.Range(0.8f, 1.2f);
         }
 
+        originalSpeed = data.movementSpeed;
+        currentSlowAmount = 0f;
+
         // data 에 따라 radius 및 이동속도 도 세팅해야함. 
         stunDurationRemain = 0;
         stopDurationRemain = 0;
@@ -137,7 +177,7 @@ public class Enemy : MonoBehaviour, IPoolObject
 
         //
         stateUI.Init(this);
-
+        data.OnInit(this);
 
         //
         t_target = Player.Instance.transform;
@@ -161,6 +201,7 @@ public class Enemy : MonoBehaviour, IPoolObject
 
     public void GetDamaged(float damage, bool isEnhancedAttack = false)
     {
+        TestManager.Instance.TestSFX_enemyHit();
         lastHitPoint = transform.position;
 
         float nockbackPower = 5;
@@ -173,6 +214,7 @@ public class Enemy : MonoBehaviour, IPoolObject
         GetKnockback(nockbackPower, lastHitPoint);
         //
         hp -= damage;
+        data.OnHit(this);
         if (hp <= 0)
         {
             Die();
@@ -199,11 +241,11 @@ public class Enemy : MonoBehaviour, IPoolObject
     ///  정지 상태 적용 - 움직이지 못하게. - 스킬 사용, 피격 or 사망  등
     /// </summary>
     /// <param name="duration"></param>
-    public void SetStopped(float duration)
-    {
-        stopDurationRemain = Math.Max(stopDurationRemain, duration);
-        ai.OnStopped();
-    }
+    // public void SetStopped(float duration)
+    // {
+    //     stopDurationRemain = Math.Max(stopDurationRemain, duration);
+    //     ai.OnStopped();
+    // }
 
     /// <summary>
     /// 기절 상태 적용 - 넉백시. or 기타 군중제어 
@@ -241,11 +283,27 @@ public class Enemy : MonoBehaviour, IPoolObject
         //
         PlaySequence_Death(); //
 
+
         stateUI.OnDie();
         //
         TestManager.Instance.TestSFX_enemyDeath(data.type);
-        GamePlayManager.Instance.killCount_currWave++;
+
+        GamePlayManager.Instance.OnEnemyKill(this);
         //
+    }
+
+    void CleanDeath()
+    {
+        if (isAlive == false)
+        {
+            return;
+        }
+
+        enemyCollider.enabled = false; // 적 탐색 및 총알 충돌에 걸리지 않도록.
+        ai.OnDie();
+        data.OnDie(this);
+        PlaySequence_Death(); //
+        stateUI.OnDie();
     }
 
     void DropItem()
@@ -290,5 +348,29 @@ public class Enemy : MonoBehaviour, IPoolObject
             .AppendInterval(0.3f)
             .Append(spriteEntity.spriteRenderer.DOFade(0, 1f))
             .Play();
+    }
+
+    public void ApplySlow(float amount, float duration)
+    {
+        // 새로운 슬로우가 더 강하거나, 현재 슬로우가 없을 때만 적용
+        if (amount > slowAmount || slowTimer <= 0)
+        {
+            slowAmount = amount;
+            slowDuration = duration;
+            slowTimer = duration;
+
+            // NavMeshAgent의 속도를 직접 조절
+            ai.navAgent.speed = data.movementSpeed * (1 - slowAmount);
+        }
+    }
+
+    public void SetTimeScale(float scale)
+    {
+        timeScale = scale;
+    }
+
+    void OnDisable()
+    {
+        // 오브젝트가 비활성화
     }
 }

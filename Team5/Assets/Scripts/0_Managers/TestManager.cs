@@ -29,6 +29,24 @@ public class TestManager :  Singleton<TestManager>
     //     SetBoundImage();
     // }
 
+    [Header("Foot Step Sound")]
+    
+    public List<AudioClip> fs_clothes= new();
+    public List<AudioClip> fs_foot= new();
+    public List<AudioClip> fs_grass= new();
+
+
+    [Header("EnemyHit")]
+
+    public AudioClip ac_enemyHit;
+
+
+    public void TestSFX_enemyHit()
+    {
+        Instantiate(simpleSFX).PlaySFX(ac_enemyHit);
+    }
+
+
 
     //
     public void TestSFX_enemyDeath(EnemyType enemyType)
@@ -53,20 +71,73 @@ public class TestManager :  Singleton<TestManager>
         Instantiate(simpleSFX).PlaySFX(testEnhancedAttackSFX);
     }
 
-    public void SetBoundImage()
+
+    public AudioClip sfx_ryoikitenkaiOn;
+    public AudioClip sfx_ryoikitenkaiOff;
+    public void TestSFX_RyoikiTenkai(bool isOn)
     {
-        var imgs = FindObjectsOfType<TestBillboard>();
-
-        foreach(var img in imgs)
+        if (isOn)
         {
-            int randIdx = Random.Range(0, boundImages.Count);
-            
-            img.GetComponent<SpriteRenderer>().sprite = boundImages[randIdx];
-
+            Instantiate(simpleSFX).PlaySFX(sfx_ryoikitenkaiOn);
         }
-
-
+        else
+        {
+            Instantiate(simpleSFX).PlaySFX(sfx_ryoikitenkaiOff);
+        }
+        
+        
     }
+
+
+    
+
+    public void TestSFX_FootStep()
+    {
+        int rand = Random.Range(0,4);
+        // Debug.Log(rand);
+         Instantiate(simpleSFX).PlaySFX(fs_clothes[rand]);
+         Instantiate(simpleSFX).PlaySFX(fs_foot[rand]);
+         Instantiate(simpleSFX).PlaySFX(fs_grass[rand]);
+    }
+
+
+    [SerializeField] SerializableDictionary<string, AudioClip> testSFXs=new(); 
+    public void TestSFX_BtnClick()
+    {
+        TestSFX("BtnClick");
+    }
+    
+    public void TestSFX_GameStart()
+    {
+        TestSFX("GameStart");
+    }
+
+    void TestSFX(string key)
+    {
+        Instantiate(simpleSFX).PlaySFX(testSFXs[key]);
+    }
+
+
+
+
+
+
+
+
+    // public void SetBoundImage()
+    // {
+    //     var imgs = FindObjectsOfType<TestBillboard>();
+
+    //     foreach(var img in imgs)
+    //     {
+    //         int randIdx = Random.Range(0, boundImages.Count);
+            
+    //         img.GetComponent<SpriteRenderer>().sprite = boundImages[randIdx];
+
+    //     }
+
+
+    // }
 
 
     public void KillPlayer()

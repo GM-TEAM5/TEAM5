@@ -20,7 +20,7 @@ public class LobbyUI : MonoBehaviour
     /// <param name="playerData"></param>
     public void Init(PlayerDataSO playerData)
     {
-        string str = $"PlayerData\n\n-Chapter.{playerData.currChapter}\n-Stage.{playerData.currStage}\n-TraitPoint.{playerData.traitPoint}";
+        string str = $"PlayerData\n\n-Chapter.{playerData.currChapter}\n-Stage.{playerData.currStageNum}\n-TraitPoint.{playerData.traitPoint}";
         
         playerDataText.SetText(str);
 

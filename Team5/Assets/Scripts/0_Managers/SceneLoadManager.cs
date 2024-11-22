@@ -13,6 +13,8 @@ public class SceneLoadManager : Singleton<SceneLoadManager>
     public static readonly string mainSceneName = "3_Main";
     public static readonly string UnderWorldSceneName = "4_UnderWorld";
 
+    public static readonly string creditSceneName = "5_Credit";
+
 
 
     bool isLoading;
@@ -93,6 +95,10 @@ public class SceneLoadManager : Singleton<SceneLoadManager>
         LoadScene(mainSceneName);
     }
 
+    public void Load_Credit()
+    {
+        LoadScene(creditSceneName);
+    }
 
 
 }

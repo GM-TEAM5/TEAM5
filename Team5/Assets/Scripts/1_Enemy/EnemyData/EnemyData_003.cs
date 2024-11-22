@@ -5,6 +5,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "EnemyData_003", menuName = "SO/Enemy/003", order = int.MaxValue)]
 public class EnemyData_003 : EnemyDataSO
 {
+    public override void OnInit(Enemy enemy)
+    {
+        
+    }
+    
     public override void OnAttack(Enemy enemy)
     {
         
@@ -14,4 +19,11 @@ public class EnemyData_003 : EnemyDataSO
     {
         
     }
+
+    public override void OnHit(Enemy enemy)
+    {
+        
+    }
+
+
 }

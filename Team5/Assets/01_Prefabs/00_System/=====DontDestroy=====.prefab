@@ -52,6 +52,8 @@ MonoBehaviour:
     m_Values: []
   itemData: {fileID: 0}
   areaIndicatorData: {fileID: 0}
+  prefab_stage: {fileID: 3519405793876131887, guid: 6684c2c6438e8824a8e03cf1e106efa3,
+    type: 3}
 --- !u!1 &1047560434824942920
 GameObject:
   m_ObjectHideFlags: 0
@@ -123,7 +125,7 @@ MonoBehaviour:
     type: 3}
   testEnemyDeathSFX_beast: {fileID: 8300000, guid: ede2faa1318cf4044bd58702444b3f66,
     type: 3}
-  testNormalAttackSFX: {fileID: 8300000, guid: 25e3668157ffdb546bd66f29e8d4b0c0, type: 3}
+  testNormalAttackSFX: {fileID: 8300000, guid: 512e35d40ae07144e94d164b0dde898b, type: 3}
   testEnhancedAttackSFX: {fileID: 8300000, guid: afb19af91c436cb4fae2a03f88c44ad3,
     type: 3}
   simpleSFX: {fileID: 3356766389577947961, guid: 295d54b2ceb9e8c42882363f4e26c038,
@@ -134,6 +136,30 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 067ef9b054e0b35419cb04901eeff2c5, type: 3}
   InstantDeath: {fileID: 4103950154981676136, guid: b06a8eae4ce4e934cbca47a94a1d7f7d,
     type: 3}
+  fs_clothes:
+  - {fileID: 8300000, guid: 4c28c124093457b4cad9eae36ca6157d, type: 3}
+  - {fileID: 8300000, guid: 3e569d2b546c2c048b8a8b263285e430, type: 3}
+  - {fileID: 8300000, guid: e045642f6e1d49640a1a2540cc8425ff, type: 3}
+  - {fileID: 8300000, guid: ba220b303118f2344b5c1ac78326271f, type: 3}
+  fs_foot:
+  - {fileID: 8300000, guid: bd74de800c0a4b647b4de0aee632ba53, type: 3}
+  - {fileID: 8300000, guid: 72997f8bad801bf4a9f184f76fb09c0d, type: 3}
+  - {fileID: 8300000, guid: 9172cbfc537ca2a49a123ae4472b74a9, type: 3}
+  - {fileID: 8300000, guid: 410b2f58e223f9a4783a145813ba4ce0, type: 3}
+  fs_grass:
+  - {fileID: 8300000, guid: c609bed292cdd124e8691fb02573ce62, type: 3}
+  - {fileID: 8300000, guid: 762d4d1e9ceef844f8e888b94d7a7e9f, type: 3}
+  - {fileID: 8300000, guid: 247bfc5352275d54eb4d669d64257a2a, type: 3}
+  - {fileID: 8300000, guid: 1f13fe5afae016a47a4dcbce1a0c9594, type: 3}
+  ac_enemyHit: {fileID: 8300000, guid: b8fe3b507ee204a428050fc5ac74c21f, type: 3}
+  sfx_ryoikitenkaiOn: {fileID: 8300000, guid: 823b82d6b4a04934ca73c93d1abf4574, type: 3}
+  sfx_ryoikitenkaiOff: {fileID: 8300000, guid: b46cdfeb13546a94ebb89bf88699463f, type: 3}
+  testSFXs:
+    array:
+    - Key: BtnClick
+      Value: {fileID: 8300000, guid: 35ccda210cf35ea4fb8c69257e2f8703, type: 3}
+    - Key: GameStart
+      Value: {fileID: 8300000, guid: 442c33e9c144e9e41be23d05e62edb21, type: 3}
 --- !u!114 &760930456658816313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,13 +178,19 @@ MonoBehaviour:
   onChangeSkill:
     m_PersistentCalls:
       m_Calls: []
+  onAlarm:
+    m_PersistentCalls:
+      m_Calls: []
   onStageLoad:
     m_PersistentCalls:
       m_Calls: []
-  onLevelUp:
+  onGameOver:
     m_PersistentCalls:
       m_Calls: []
-  onGameOver:
+  onStageStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onStageFinish:
     m_PersistentCalls:
       m_Calls: []
   onEnemyDie:
@@ -173,10 +205,13 @@ MonoBehaviour:
   onReroll:
     m_PersistentCalls:
       m_Calls: []
-  onUpdate_inspectingObject:
+  onUpgradeReroll:
     m_PersistentCalls:
       m_Calls: []
-  onUpdate_closestSelectableItem:
+  onSelectItem:
+    m_PersistentCalls:
+      m_Calls: []
+  onUpdate_inspectingObject:
     m_PersistentCalls:
       m_Calls: []
   onChangePlayerStatus_maxHp:

@@ -51,5 +51,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Team5.sln"
+    "dotnet.defaultSolution": "Team5.sln",
+    "dotnet.preferCSharpExtension": true
 }

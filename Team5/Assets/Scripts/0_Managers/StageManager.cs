@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.AI.Navigation;
+using UnityEditor.MPE;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -10,10 +11,11 @@ public class StageManager : Singleton<StageManager>
     public bool initialized;
     
     // [SerializeField] NavMeshSurface stageNavMesh;
-    public int clearedWaveNum;
+    // public int clearedWaveNum;
     
-    public StageDataSO stageData;
+    // public StageDataSO stageData;
     public Stage currStage;
+    public StageWave stageWave;
 
     public bool isBattleInProgress;
     public float battleTime;
@@ -23,36 +25,43 @@ public class StageManager : Singleton<StageManager>
     /// <summary>
     /// 스테이지 초기화 - 데이터 및 지형 세팅
     /// </summary>
-    /// <param name="stageData"></param>
-    public void Init(StageDataSO stageData)
+    /// <param name="playerData"></param> 
+    public void Init(PlayerDataSO playerData)
     {
         //
-        this.stageData = stageData;
+        int currStageNum = playerData.currStageNum;
+        StageDataSO stageData = playerData.GetCurrStageInfo();
         
-        //
-        currStage = Instantiate( stageData.prefab_stage, Vector3.zero, Quaternion.identity ).GetComponent<Stage>();
-        currStage.Init();   // 플레이어 위치 정보, 적 스폰 위치 등 초기화 
+        currStage = Instantiate( ResourceManager.Instance.prefab_stage, Vector3.zero, Quaternion.identity ).GetComponent<Stage>();
+        currStage.Init(stageData.mapInfo);   // 플레이어 위치 정보, 적 스폰 위치 등 초기화 
 
+        if( stageData.missionInfo.goalType == StageGoalType.Survival)
+        {
+            stageWave = new StageWave_Survival(stageData.missionInfo.targetTime,stageData.missionInfo.waveInfos );
+        }
+        else 
+        {
+            stageWave = new StageWave_Elimination(stageData.missionInfo.waveInfos);
+        }
+       
 
-        //
-        Player.Instance.t.position = currStage.playerInitPos;  // 플레이어 위치 지정 
-
-        //
         initialized = true;
     }
 
     //=================================================================================================
-    
     #region Stage
-    public bool IsStageClear()
+    public void StartStage()
     {
-        bool ret = stageData.totalWavesNum == clearedWaveNum;
-        return ret;
+        stageWave.StartWave( stageWave.clearedWaveNum );
     }
 
-    public void OnStageClear()
+
+    
+
+    public void StageClear()
     {
         Debug.Log("스테이지 클리어");
+        GamePlayManager.Instance.OnStageClear();
     }
 
 
@@ -62,29 +71,28 @@ public class StageManager : Singleton<StageManager>
     /// <summary>
     /// 웨이브를 활성화한다. 
     /// </summary>
-    public void StartWave()
-    {
-        List<WaveInfo> currWaveInfo =   stageData.GetCurrWaveInfo(clearedWaveNum+1);
+    // public void StartWave()
+    // {
+    //     List<WaveInfo> currWaveInfo =   stageData.GetCurrWaveInfo(clearedWaveNum+1);
         
-        foreach(var wave in currWaveInfo)
-        {
-            StartCoroutine(wave.WaveRoutine());
-        }        
-    }
+    //     foreach(var wave in currWaveInfo)
+    //     {
+    //         StartCoroutine(wave.WaveRoutine());
+    //     }        
+    // }
 
 
     /// <summary>
     /// 웨이브 클리어 처리. 
     /// </summary>
-    public void OnWaveClear()
-    {
-        Debug.Log("웨이브 클리어");
+    // public void OnWaveClear()
+    // {
+    //     Debug.Log("웨이브 클리어");
         
-        clearedWaveNum ++;
-    }
+    //     clearedWaveNum ++;
+    // }
     #endregion
     //============================================================================================
-
 
     /// <summary>
     /// Enemy Spawn Area에서 임의의 좌표를 얻는다. 

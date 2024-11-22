@@ -7,9 +7,9 @@ using DG.Tweening;
 using JetBrains.Annotations;
 
 
-[RequireComponent(typeof(CharacterController),  typeof(SpriteEntity))]
-[RequireComponent(typeof(PlayerEquipments),  typeof(PlayerInteraction))]            
-public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포넌트에 접근하기 쉽도록 싱글톤
+[RequireComponent(typeof(CharacterController), typeof(SpriteEntity))]
+[RequireComponent(typeof(PlayerEquipments), typeof(PlayerInteraction))]
+public class Player : Singleton<Player>, ITimeScaleable     // ui 등에서 플레이어 컴포넌트에 접근하기 쉽도록 싱글톤
 {
     public Transform t;
 
@@ -17,7 +17,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     SpriteEntity spriteEntity;
 
     //======= ui ========
-    PlayerStateUI stateUI;
+    public PlayerStateUI stateUI;
     PlayerDraw playerDraw;
     //
     PlayerInputManager playerInput;
@@ -41,10 +41,10 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
 
 
     //-------- skills ------------
-    public SerializableDictionary<KeyCode,PlayerSkill> skills;
+    public SerializableDictionary<KeyCode, PlayerSkill> skills;
 
 
-    
+
     //
     public PlayerEquipments playerEquipments;
 
@@ -53,11 +53,11 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     PlayerBasicAttack playerBasicAttack;
 
     // 스턴
-    public bool isStunned => isNockbackOn;
-    
+    public bool isStunned => stunDurationRemain > 0;
+
 
     // 넉백
-    [SerializeField] Vector3 knockbackVelocity; 
+    [SerializeField] Vector3 knockbackVelocity;
     [SerializeField] float knockbackDamping = 10f; // 넉백 감소 속도
     [SerializeField] bool isNockbackOn => knockbackVelocity.magnitude > 0.3f;
 
@@ -67,9 +67,69 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
 
     //====================================================================================
 
+    private Coroutine inkChargeRoutine;
+
+    [Header("Ink Charge Settings")]
+    [SerializeField] float inkChargeInterval = 0.1f;  // 잉크 충전 간격
+
+    private float timeScale = 1f;
+
     private void Start()
     {
         // t_camera = Camera.main.transform;
+        StartInkChargeRoutine();
+        GameManager.Instance.RegisterTimeScaleable(this);
+    }
+
+    private void StartInkChargeRoutine()
+    {
+        if (inkChargeRoutine != null)
+        {
+            StopCoroutine(inkChargeRoutine);
+        }
+        inkChargeRoutine = StartCoroutine(AutoChargeInkRoutine());
+    }
+
+    private IEnumerator AutoChargeInkRoutine()
+    {
+        WaitForSeconds wait = new WaitForSeconds(inkChargeInterval);
+
+        while (true)
+        {
+            if (!playerDraw.isDrawing && status.currInk < status.maxInk)
+            {
+                float chargeAmount = status.inkChargeRate * inkChargeInterval;
+                status.currInk += chargeAmount;
+                OnUpdateInk();
+            }
+            yield return wait;
+        }
+    }
+
+    public void UseInk(float amount)
+    {
+        status.currInk -= amount;
+        OnUpdateInk();
+    }
+
+    public bool HasEnoughInk(float amount)
+    {
+        return status.currInk >= amount;
+    }
+
+    private void OnUpdateInk()
+    {
+        stateUI.UpdateCurrInk(status.currInk);
+        OnUpdateStatus();
+    }
+
+    void OnDisable()
+    {
+        if (inkChargeRoutine != null)
+        {
+            StopCoroutine(inkChargeRoutine);
+            inkChargeRoutine = null;
+        }
     }
 
     void Update()
@@ -82,23 +142,42 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
         // 스턴 지속시간 감소
         if (stunDurationRemain > 0)
         {
-            stunDurationRemain -= Time.deltaTime;
+            stunDurationRemain -= Time.unscaledDeltaTime * timeScale;
         }
-        else if ( isNockbackOn  )
+        else if (isNockbackOn)
         {
-            knockbackVelocity = Vector3.Lerp(knockbackVelocity, Vector3.zero, knockbackDamping * Time.deltaTime);
+            knockbackVelocity = Vector3.Lerp(knockbackVelocity, Vector3.zero, knockbackDamping * Time.unscaledDeltaTime * timeScale);
         }
 
+        // 스킬 입력 체크 추가
+        CheckSkillInput();
 
         playerBasicAttack.OnUpdate();
 
-         
         Move();
         UpdateSpriteDir();
 
-        
-        playerInteraction.OnUpdate();   
-        playerDraw.OnUpdate(); 
+        playerInteraction.OnUpdate();
+        playerDraw.OnUpdate();
+    }
+
+    // 새로운 메서드 추가
+    void CheckSkillInput()
+    {
+        if (playerInput.pressedNumber != 0)
+        {
+            // 인덱스 범위 체크 추가
+            int index = playerInput.pressedNumber - 1;
+            if (index >= 0 && index < playerInput.skillKeys.Count)
+            {
+                KeyCode keyCode = playerInput.skillKeys[index];
+                if (skills.ContainsKey(keyCode))
+                {
+                    skills[keyCode].Use();
+                }
+            }
+            playerInput.pressedNumber = 0;
+        }
     }
 
     //============================================================================
@@ -119,7 +198,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
             EnemyProjectile ep = other.GetComponent<EnemyProjectile>();
             GetDamaged(ep.damage);
         }
-        
+
         if (other.CompareTag("DropItem"))
         {
             DropItem di = other.GetComponent<DropItem>();
@@ -132,20 +211,31 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     /// <summary>
     /// 플레이어 초기화시 호출. 
     /// </summary>
-    public void InitPlayer()
+    public void InitPlayer(PlayerDataSO playerData)
     {
         t = transform;
+        //
+        t.position = StageManager.Instance.currStage.playerInitPos;  // 플레이어 위치 지정 
 
         controller = GetComponent<CharacterController>();
         playerInput = PlayerInputManager.Instance;
         playerCollider = GetComponent<Collider>();
         playerCollider.enabled = true;
 
-        status = new PlayerStatus();      // 플레이어 스탯 초기화.
+        // 플레이어 스탯 초기화.
+        if (playerData.savedStatus != null)
+        {
+            status = new(playerData.savedStatus);
+        }
+        else
+        {
+            status = new();
+        }
+
         //--------- after init status --------------
         playerDraw = GetComponentInChildren<PlayerDraw>();
         playerDraw.Init();
-        
+
         playerInteraction = GetComponent<PlayerInteraction>();
         playerEquipments = GetComponent<PlayerEquipments>();
         playerEquipments.InitEquipments();                      // 스텟을 조정하기 때문에, 스탯 초기화 이후에 진행해야함. 
@@ -166,7 +256,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
         playerCanvas.gameObject.SetActive(false);
 
         InitSkills();
-        
+
         //
         GameEventManager.Instance.onInitPlayer.Invoke();    // 플레이어 초기화가 필요한 ui 작업을 하기 위함. 
     }
@@ -174,25 +264,67 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     // 데이터 상의 모든 스킬장착
     public void InitSkills()
     {
+        if (GameManager.Instance == null || GameManager.Instance.playerData == null)
+        {
+            Debug.LogError("GameManager or playerData is null");
+            return;
+        }
+
         List<SkillItemSO> skillsData = GameManager.Instance.playerData.skills;
+        if (skillsData == null)
+        {
+            Debug.LogError("skillsData is null");
+            return;
+        }
 
         skills = new();
-        for(int i=0;i< skillsData.Count;i++)
+
+        // PlayerInputManager가 초기화되었는지 확인
+        if (PlayerInputManager.Instance != null)
         {
-            ChangeSkill( i, skillsData[i], false);
+            for (int i = 0; i < skillsData.Count; i++)
+            {
+                if (skillsData[i] != null)
+                {
+                    ChangeSkill(i, skillsData[i], false);
+                }
+            }
+        }
+        else
+        {
+            Debug.LogError("PlayerInputManager is not initialized");
         }
     }
 
     // 개별 스킬 장착
     public void ChangeSkill(int idx, SkillItemSO skillData, bool eventCall = true)
     {
-        KeyCode keyCode = playerInput.skillKeys[idx];
-        PlayerSkill playerSkill =  new PlayerSkill( skillData); 
-        skills[ keyCode ] = playerSkill;
-
-        if (eventCall)
+        if (PlayerInputManager.Instance == null)
         {
-            GameEventManager.Instance.onChangeSkill.Invoke( keyCode, playerSkill );
+            Debug.LogError("PlayerInputManager is null");
+            return;
+        }
+
+        if (idx >= PlayerInputManager.Instance.skillKeys.Count)
+        {
+            Debug.LogError($"Skill index {idx} is out of range");
+            return;
+        }
+
+        KeyCode keyCode = PlayerInputManager.Instance.skillKeys[idx];
+        PlayerSkill playerSkill = new PlayerSkill(skillData);
+
+        if (skills != null && skills.ContainsKey(keyCode))
+        {
+            skills[keyCode].skillData.OnUnEquip();
+        }
+
+        skills[keyCode] = playerSkill;
+        skillData.OnEquip();
+
+        if (eventCall && GameEventManager.Instance != null)
+        {
+            GameEventManager.Instance.onChangeSkill.Invoke(keyCode, playerSkill);
         }
     }
 
@@ -205,7 +337,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     /// </summary>
     /// <param name="equipmentData"></param>
     public void EquipAutomatically(EquipmentItemSO equipmentData)
-    {        
+    {
         if (playerEquipments.TryEquip(equipmentData) == false)
         {
             Debug.LogError("그럴리가 없는데...?");   // 이거 나오면 로직 잘못짠거임;
@@ -218,7 +350,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     /// <param name="idx"></param>
     /// <param name="equipmentData"></param>
     public void Equip(int idx, EquipmentItemSO equipmentData)
-    {        
+    {
         playerEquipments.Equip(idx, equipmentData);
     }
 
@@ -236,7 +368,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
         // {
         //     return;
         // }
-        Vector3 moveVector = Vector3.zero; 
+        Vector3 moveVector = Vector3.zero;
 
         // 넉백 처리
         if (isNockbackOn)
@@ -252,10 +384,10 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
             lastMoveDir = transform.right * inputVector.x + transform.forward * inputVector.y;
             lastMoveDir.y = 0;      // 방향 조절에 필요 없기떄문.
 
-            moveVector = lastMoveDir.normalized *status.movementSpeed;
+            moveVector = lastMoveDir.normalized * status.movementSpeed;
         }
 
-        controller.Move(moveVector* Time.deltaTime);
+        controller.Move(moveVector * Time.unscaledDeltaTime * timeScale);
 
         animator.OnMove(moveVector.magnitude);
     }
@@ -270,12 +402,12 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
 
 
     //========================================================================
-    public void GetImpulsiveDamaged(float dmg,Vector3 enemyPos, Vector3 hitPoint, float impulse)
+    public void GetImpulsiveDamaged(float dmg, Vector3 enemyPos, Vector3 hitPoint, float impulse)
     {
-        GetNockback(hitPoint,enemyPos,  impulse);
+        GetNockback(hitPoint, enemyPos, impulse);
         GetDamaged(dmg);
     }
-    
+
     public void GetDamaged(float amount)
     {
         status.currHp -= amount;
@@ -292,17 +424,18 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     }
 
     //==============================================================
-    void GetNockback(Vector3 enemyPos, Vector3 hitPoint,  float impulse)
+    void GetNockback(Vector3 enemyPos, Vector3 hitPoint, float impulse)
     {
         Vector3 dir = t.position - hitPoint;
         if (dir == Vector3.zero)
         {
-            dir = t.position-enemyPos;
+            dir = t.position - enemyPos;
         }
         dir = dir.WithFloorHeight().normalized;
-        
-        knockbackVelocity = dir * impulse;
-        SetStunned(0.2f);
+
+        knockbackVelocity = dir * impulse;  
+        float stunDuration = impulse * 0.02f;
+        SetStunned(stunDuration);
     }
 
     void SetStunned(float duration)
@@ -369,7 +502,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     // }
 
     #region  UI
-    
+
     public void OnUpdateStatus()
     {
         stateUI.UpdateMaxHp(status.maxHp);
@@ -423,8 +556,37 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
 
     public void OnStartGamePlay()
     {
-        playerCanvas.gameObject.SetActive(true);
+        // playerCanvas.gameObject.SetActive(true);
     }
 
     #endregion
+
+    // 또는 새로운 public 메서드 추가
+    public void UpdateInk(float amount)
+    {
+        status.currInk = amount;
+        stateUI.UpdateCurrInk(status.currInk);
+    }
+
+    public void SetTimeScale(float scale)
+    {
+        timeScale = scale;
+        // 필요한 경우 자식 컴포넌트들의 timeScale도 설정
+        if (playerBasicAttack != null) playerBasicAttack.SetTimeScale(scale);
+        if (playerDraw != null) playerDraw.SetTimeScale(scale);
+        // ... 다른 타임스케일이 필요한 컴포넌트들
+    }
+
+    void OnDestroy()
+    {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.UnregisterTimeScaleable(this);
+        }
+    }
+}
+
+public interface ITimeScaleable
+{
+    void SetTimeScale(float scale);
 }

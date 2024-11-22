@@ -46,7 +46,18 @@ public class StagePortal : InteractiveObject
     
     void GoToNextStage()
     {
-        SceneLoadManager.Instance.Load_MainScene();     
+        GameManager.Instance.playerData.OnStageClear(Player.Instance);  // 데이터 저장.
+        
+        if (GameManager.Instance.playerData.isGameclear)
+        {
+            GameManager.Instance.playerData.InitPlayerData();   // 데이터 초기화.
+            SceneLoadManager.Instance.Load_Credit();     
+        }
+        else
+        {
+            SceneLoadManager.Instance.Load_MainScene();
+        }
+        
     }
 
     protected override void OnSecondaryInteract_Custom()

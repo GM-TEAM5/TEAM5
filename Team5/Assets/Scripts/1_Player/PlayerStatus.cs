@@ -18,13 +18,13 @@ public class PlayerStatus
     #region 기본값
     [SerializeField] float d_attackRange;           //공격 사거리
     [SerializeField] float d_attackArea;            // 공격 범위
-    [SerializeField] float d_drawRange =10;         // 그리기 영역 범위
+    [SerializeField] float d_drawRange = 10;         // 그리기 영역 범위
     [SerializeField] float d_movementSpeed = 10;    // 이동속도
     [SerializeField] float d_maxHp = 500;           // 최대체력
     [SerializeField] float d_maxInk = 100;          // 최대잉크
     [SerializeField] float d_damage = 30;           // 기본 데미지
     [SerializeField] float d_attackCooltime = 1;      // 
-    
+
     [SerializeField] float d_pickupRange = 4;      // 아이템 획득 범위
 
     #endregion
@@ -35,32 +35,38 @@ public class PlayerStatus
     public float currHp  // 현재체력
     {
         get => _currHp;
-        set 
+        set
         {
-            _currHp = Math.Clamp(value,0,maxHp);
-        }        
-    }  
+            _currHp = Math.Clamp(value, 0, maxHp);
+        }
+    }
 
     public float Inc_maxHp;
-    [SerializeField] float _currInk;
-    public float Inc_maxInk;
-    public float currInk  // 현재체력
+    [SerializeField] float d_inkChargeRate = 10f;    // 초당 잉크 충전량
+    [SerializeField] float _currInk;                 // 현재 잉크량
+    public float Inc_maxInk;                         // 잉크 최대치 증가량
+
+    public float inkChargeRate => d_inkChargeRate;   // 잉크 충전 속도 프로퍼티
+
+    public float currInk  // 현재 잉크
     {
         get => _currInk;
-        set 
+        set
         {
-            _currInk = Math.Clamp(value,0,maxInk);
-        }        
-    }     
+            _currInk = Math.Clamp(value, 0, GetMaxInk());
+        }
+    }
 
-    public float inkChargeRate = 10;
+    private float GetMaxInk() => d_maxInk + Inc_maxInk;
+    public float maxInk => GetMaxInk();
+
     public float armor;
     public float evasionRate;
     public float critRate;
     public float critDamageMultiplier = 1.5f;
     public float movementSpeedMultiplier = 1f;
-    public float rangeModifier =1;
-    public float cooltimeModifier =1;
+    public float rangeModifier = 1;
+    public float cooltimeModifier = 1;
     public float luck;
     public int rerollCount;
     public int selectionCount;
@@ -76,17 +82,15 @@ public class PlayerStatus
 
     #region 최종값
 
-    public float maxHp          => d_maxHp + Inc_maxHp;
-    public float maxInk         => d_maxInk + Inc_maxInk;
+    public float maxHp => d_maxHp + Inc_maxHp;
+    public float movementSpeed => d_movementSpeed * movementSpeedMultiplier;
+    public float drawRange => d_drawRange * rangeModifier;
+    public float attackRange => d_attackRange * rangeModifier;
+    public float attackArea => d_attackArea * rangeModifier;
+    public float attackCooltime => d_attackCooltime * cooltimeModifier;
+    public float basicAttackDamage => d_damage + pDmg;
 
-    public float movementSpeed      => d_movementSpeed * movementSpeedMultiplier;
-    public float drawRange          => d_drawRange * rangeModifier;
-    public float attackRange        => d_attackRange * rangeModifier;
-    public float attackArea         => d_attackArea * rangeModifier;
-    public float attackCooltime     => d_attackCooltime *  cooltimeModifier;
-    public float basicAttackDamage  => d_damage + pDmg;
-
-    public float pickUpRange        => d_pickupRange * rangeModifier;
+    public float pickUpRange => d_pickupRange * rangeModifier;
 
 
     #endregion
@@ -102,10 +106,18 @@ public class PlayerStatus
 
     public PlayerStatus()
     {
-        currHp = maxHp;     
-        currInk = maxInk *0.3f;
+        currHp = maxHp;
+        currInk = GetMaxInk() * 0.3f;
         rerollCount = 10;
-        selectionCount=3;
+        selectionCount = 3;
+    }
+
+    public PlayerStatus(PlayerStatus savedStatus)
+    {
+        currHp = savedStatus.currHp;     
+        currInk = savedStatus.currInk;
+        rerollCount = savedStatus.rerollCount;
+        selectionCount = savedStatus.selectionCount;
     }
 
 
@@ -128,16 +140,16 @@ public class PlayerStatus
     //     {
     //         level++;
     //         isLevelUp = true;
-            
+
     //         currExp -= maxExp;
-            
+
     //         SetNextMaxExp(level);
     //     }
 
     //     return isLevelUp;
     // }
 
-    
+
     // void SetNextMaxExp(int level)
     // {
     //     maxExp = maxExp + expIncrementTable[level % expIncrementTable.Length];
@@ -148,16 +160,16 @@ public class PlayerStatus
     {
         ChangeStatus(ref field, amount, isIncreasing);
     }
-    
+
     public void OnEquip(ref float field, float amount, bool isIncreasing)
     {
         ChangeStatus(ref field, amount, isIncreasing);
-        
+
         //
         Player.Instance.OnUpdateStatus();
     }
 
-    
+
     public void ChangeStatus(ref float field, float amount, bool isIncreasing)
     {
         if (isIncreasing)

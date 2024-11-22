@@ -23,6 +23,7 @@ public abstract class EnemyAbilitySO : ScriptableObject
     public int priority;    // 우선순위 : 높을 수록 먼저 시전.
     public float cooltime;      //쿨타임 ( 초 ) 
     public bool uninterruptible;    // 캐스팅을 끊을 수 있는 지. 
+    public float dmgWeight = 1;
 
     
     //
@@ -31,6 +32,10 @@ public abstract class EnemyAbilitySO : ScriptableObject
 
     //
     // public abstract Transform GetTarget(Enemy enemy);ㅔ
+    public float AbilityDmg(Enemy enemy)
+    {
+        return enemy.data.ad * dmgWeight;
+    }
     public abstract bool ActivationConditions(Enemy enemy);
     public abstract bool UsageConditions(Enemy enemy);
     public abstract void StartCast(Enemy enemy);
