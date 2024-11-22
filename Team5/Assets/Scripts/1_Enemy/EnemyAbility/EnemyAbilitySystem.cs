@@ -51,7 +51,7 @@ public class EnemyAbilitySystem : MonoBehaviour
         .OrderByDescending(a => a.data.priority)
         .ThenBy(a => a.useCount)
         .FirstOrDefault(); 
-        
+
         if (ability ==null)
         {
             // 사용할 수 있는 능력들중 우선순위 가장 높은 거
@@ -68,7 +68,7 @@ public class EnemyAbilitySystem : MonoBehaviour
 
     public void TryUse()
     {
-        if (usingAbility == null || usingAbility.CanUse(enemy)== false)
+        if (usingAbility == null || usingAbility.CanUseImediatly(enemy)== false)
         {
             return;
         }

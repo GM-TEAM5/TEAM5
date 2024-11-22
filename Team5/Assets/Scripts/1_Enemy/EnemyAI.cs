@@ -105,6 +105,7 @@ public class EnemyAI : MonoBehaviour
         navAgent.isStopped = false;
         navAgent.autoBraking = false;
         navAgent.speed = enemy.data.movementSpeed;
+        // navAgent.angularSpeed = 10000f; 
 
         fsm = GetComponent<EnemyFSM>();
         fsm.Init(enemy,navAgent);

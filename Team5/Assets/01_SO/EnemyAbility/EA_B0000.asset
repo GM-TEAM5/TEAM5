@@ -9,19 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5eb17897c96f0f9449d5fae61d68aa25, type: 3}
-  m_Name: EA_B0002
+  m_Script: {fileID: 11500000, guid: c8423026bcfcb194a9931cac9f6afd0f, type: 3}
+  m_Name: EA_B0000
   m_EditorClassIdentifier: 
-  id: B0002
-  skillName: ThrowingAxe
+  id: B0000
+  skillName: SurpriseAttack
   icon: {fileID: 0}
   indicatorType: 1
-  range: 15
-  priority: 0
-  cooltime: 4
+  range: 20
+  priority: 1
+  cooltime: 9
   uninterruptible: 1
-  dmgWeight: 1
-  castingTime: 1
+  dmgWeight: 1.5
+  castingTime: 2
   delay_afterCast: 0.5
-  movementSpeed: 10
-  lifeTime: 5
+  radius: 4
+  impulse: 20

@@ -43,8 +43,8 @@ public class GamePlayManager : Singleton<GamePlayManager>
 
     [SerializeField] EnemyHpSlider enemyHpSlider;
 
-    [SerializeField] float instantDeathTime = 180;
-    bool instantDeathCalled;
+    // [SerializeField] float instantDeathTime = 180;
+    // bool instantDeathCalled;
 
 
     public int totalEnemySpawnCount;

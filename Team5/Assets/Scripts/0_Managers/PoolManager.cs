@@ -213,6 +213,15 @@ public class PoolManager : Singleton<PoolManager>
         damageText.Init(hitPoint, damage, type);
         return damageText;
     }
+
+    
+    public DamageText GetText(Vector3 position, string content)
+    {
+        DamageText damageText = GetFromPool<DamageText>();
+        damageText.Init(position, content);
+        return damageText;
+    }
+    
     
     
 

@@ -16,12 +16,12 @@ MonoBehaviour:
   skillName: Rush
   icon: {fileID: 0}
   indicatorType: 1
-  range: 12
+  range: 20
   priority: 1
-  cooltime: 10
-  uninterruptible: 1
+  cooltime: 8
+  uninterruptible: 0
   dmgWeight: 2
-  castingTime: 2
+  castingTime: 1.5
   delay_afterCast: 1
   radiusWeight: 1.3
   movementSpeed: 20

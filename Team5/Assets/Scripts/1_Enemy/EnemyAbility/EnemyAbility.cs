@@ -31,6 +31,11 @@ public class EnemyAbility
 
     public bool CanUse(Enemy enemy)
     {
+        return isCooltimeOk == true;
+    }
+
+    public bool CanUseImediatly(Enemy enemy)
+    {
         return isCooltimeOk == true && data.UsageConditions(enemy)==true;
     }
 

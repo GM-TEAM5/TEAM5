@@ -54,6 +54,18 @@ public class DamageText : MonoBehaviour, IPoolObject
         PlayAnim_MoveAndFade();
     }
 
+        public void Init(Vector3 hitPoint, string  content, DamageType type = DamageType.DMG_NORMAL)
+    {
+        transform.position = hitPoint + new Vector3(Random.Range(-0.5f,0.5f), 0, 0); 
+        
+        text.SetText( content);
+        Color textColor = new Color(1,0.2f,0.2f);
+        text.color = textColor;
+        PlayAnim_MoveAndFade();
+    }
+    
+    
+
     
     void PlayAnim_MoveAndFade()
     {
