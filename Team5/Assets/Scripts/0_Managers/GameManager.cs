@@ -8,8 +8,13 @@ public class GameManager : Singleton<GameManager>
     public PlayerDataSO playerData;       // 얘는 결국 별도의 로딩이 필요없음.
 
     public static bool isPaused;
-    
+
     //===================================================================================
+
+    void Awake()
+    {
+        DOTween.SetTweensCapacity(1000, 50);  // tweens: 1000, sequences: 50
+    }
 
     //
     void Start()
@@ -22,14 +27,14 @@ public class GameManager : Singleton<GameManager>
     public void InitGame()
     {
         GameEventManager.Instance.onGameOver.AddListener(onGameOver);
-        
-        
+
+
         ResourceManager.Instance.Init();
     }
-    
+
     void onGameOver()
     {
-        playerData.deathCount ++;
+        playerData.deathCount++;
     }
 
 
@@ -39,22 +44,22 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     public void QuitGame()
     {
-        #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-        #else
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
             Application.Quit();
-        #endif
+#endif
     }
 
 
     public void PauseGamePlay()
     {
-        
+
     }
 
     public void PauseGamePlay(bool pause, float duration = 0f)
     {
-        float targetTimeScale= pause? 0: 1f;
+        float targetTimeScale = pause ? 0 : 1f;
         isPaused = pause;
         if (duration == 0f)
         {
@@ -62,9 +67,7 @@ public class GameManager : Singleton<GameManager>
         }
         else
         {
-            DOTween.To( ()=> Time.timeScale, x=> Time.timeScale = x ,targetTimeScale, duration ).SetUpdate(true).Play();
+            DOTween.To(() => Time.timeScale, x => Time.timeScale = x, targetTimeScale, duration).SetUpdate(true).Play();
         }
-       
-        
     }
 }
