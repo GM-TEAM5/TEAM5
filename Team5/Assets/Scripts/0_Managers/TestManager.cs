@@ -89,6 +89,8 @@ public class TestManager :  Singleton<TestManager>
     }
 
 
+    
+
     public void TestSFX_FootStep()
     {
         int rand = Random.Range(0,4);
@@ -97,6 +99,27 @@ public class TestManager :  Singleton<TestManager>
          Instantiate(simpleSFX).PlaySFX(fs_foot[rand]);
          Instantiate(simpleSFX).PlaySFX(fs_grass[rand]);
     }
+
+
+    [SerializeField] SerializableDictionary<string, AudioClip> testSFXs=new(); 
+    public void TestSFX_BtnClick()
+    {
+        TestSFX("BtnClick");
+    }
+    
+    public void TestSFX_GameStart()
+    {
+        TestSFX("GameStart");
+    }
+
+    void TestSFX(string key)
+    {
+        Instantiate(simpleSFX).PlaySFX(testSFXs[key]);
+    }
+
+
+
+
 
 
 

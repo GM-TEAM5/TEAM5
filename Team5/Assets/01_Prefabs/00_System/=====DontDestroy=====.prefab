@@ -154,6 +154,12 @@ MonoBehaviour:
   ac_enemyHit: {fileID: 8300000, guid: b8fe3b507ee204a428050fc5ac74c21f, type: 3}
   sfx_ryoikitenkaiOn: {fileID: 8300000, guid: 823b82d6b4a04934ca73c93d1abf4574, type: 3}
   sfx_ryoikitenkaiOff: {fileID: 8300000, guid: b46cdfeb13546a94ebb89bf88699463f, type: 3}
+  testSFXs:
+    array:
+    - Key: BtnClick
+      Value: {fileID: 8300000, guid: 35ccda210cf35ea4fb8c69257e2f8703, type: 3}
+    - Key: GameStart
+      Value: {fileID: 8300000, guid: 442c33e9c144e9e41be23d05e62edb21, type: 3}
 --- !u!114 &760930456658816313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,10 +184,13 @@ MonoBehaviour:
   onStageLoad:
     m_PersistentCalls:
       m_Calls: []
-  onLevelUp:
+  onGameOver:
     m_PersistentCalls:
       m_Calls: []
-  onGameOver:
+  onStageStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onStageFinish:
     m_PersistentCalls:
       m_Calls: []
   onEnemyDie:

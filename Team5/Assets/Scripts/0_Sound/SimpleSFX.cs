@@ -14,6 +14,6 @@ public class SimpleSFX : MonoBehaviour
         audioSource.Play();
 
 
-        Destroy(gameObject, 3f);
+        Destroy(gameObject, 2f);
     }
 }
