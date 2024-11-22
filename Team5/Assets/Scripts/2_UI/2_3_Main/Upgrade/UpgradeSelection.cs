@@ -45,7 +45,7 @@ public class UpgradeSelection : MonoBehaviour
         this.data = data;
         
         img_icon.sprite = data.sprite;
-        text_itemName.SetText(data.dataName);
+        text_itemName.SetText(data.dataName); 
         text_itemTier.SetText($"{data.tier} 등급");
         text_itemDesc.SetText(data.description);
 

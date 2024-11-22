@@ -33,13 +33,13 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   skills:
-  - {fileID: 11400000, guid: d20eb8df5369388499f1a3f95ffaf2fd, type: 2}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 87d9af0859a1c434fa32ead1970517d4, type: 2}
+  - {fileID: 11400000, guid: f9d7bf5c53692eb499b8d66dadb59b92, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   initSkills:
-  - {fileID: 11400000, guid: f9d7bf5c53692eb499b8d66dadb59b92, type: 2}
   - {fileID: 11400000, guid: 87d9af0859a1c434fa32ead1970517d4, type: 2}
+  - {fileID: 11400000, guid: f9d7bf5c53692eb499b8d66dadb59b92, type: 2}
   savedStatus:
     d_attackRange: 0
     d_attackArea: 0

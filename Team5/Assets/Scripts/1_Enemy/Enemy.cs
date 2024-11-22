@@ -101,11 +101,11 @@ public class Enemy : MonoBehaviour, IPoolObject, ITimeScaleable
         }
 
         // 이동 속도 계산 (슬로우와 타임스케일 모두 적용)
-        float currentSpeed = moveSpeed * (1 - slowAmount) * timeScale;
+        // float currentSpeed = moveSpeed * (1 - slowAmount) * timeScale;
 
         // 이동 로직
-        Vector3 direction = (t_target.position - t.position).normalized;
-        t.position += direction * currentSpeed * Time.deltaTime;
+        // Vector3 direction = (t_target.position - t.position).normalized;
+        // t.position += direction * currentSpeed * Time.deltaTime;
 
         // 업뎃 성공하면, 
         if (ai.TryUpdate())
@@ -238,11 +238,11 @@ public class Enemy : MonoBehaviour, IPoolObject, ITimeScaleable
     ///  정지 상태 적용 - 움직이지 못하게. - 스킬 사용, 피격 or 사망  등
     /// </summary>
     /// <param name="duration"></param>
-    public void SetStopped(float duration)
-    {
-        stopDurationRemain = Math.Max(stopDurationRemain, duration);
-        ai.OnStopped();
-    }
+    // public void SetStopped(float duration)
+    // {
+    //     stopDurationRemain = Math.Max(stopDurationRemain, duration);
+    //     ai.OnStopped();
+    // }
 
     /// <summary>
     /// 기절 상태 적용 - 넉백시. or 기타 군중제어 
