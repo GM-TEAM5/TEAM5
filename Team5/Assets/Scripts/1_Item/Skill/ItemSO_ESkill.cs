@@ -16,7 +16,7 @@ public class ItemSO_ESkill : SkillItemSO, IDrawableSkill
     public float slowFieldDuration = 3f;
     public float slowDuration = 2f;
     public float slowAmount = 0.5f;
-    public float damage = 10f;
+    public float damage = 25f;
 
     [Header("Ink Settings")]
     [SerializeField] private float _inkCostPerUnit = 1f;
@@ -116,7 +116,8 @@ public class ItemSO_ESkill : SkillItemSO, IDrawableSkill
                 Enemy enemy = hit.collider.GetComponent<Enemy>();
                 if (enemy != null && !damagedEnemies.Contains(enemy))
                 {
-                    enemy.GetDamaged(damage);
+                    float dmg = damage + Player.Instance.status.mDmg;
+                    enemy.GetDamaged(dmg );
                     damagedEnemies.Add(enemy);
                 }
             }

@@ -35,6 +35,7 @@ public class GameEventManager : Singleton<GameEventManager>
     #region 스탯 변동 
     public UnityEvent onChangePlayerStatus_maxHp = new();
     public UnityEvent onChangePlayerStatus_pDmg = new();
+    public UnityEvent onChangePlayerStatus_mDmg = new();
     #endregion
     
 

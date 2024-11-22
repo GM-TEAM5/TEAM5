@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36dba03b527a9264cb00e68904558307, type: 3}
-  m_Name: 0001_RestoreHp
+  m_Script: {fileID: 11500000, guid: 174b58dbe5b14a44e940236fbab29e4e, type: 3}
+  m_Name: 0002_DeathPotion
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: 433e01e9572e7c14b9e7b678f96119bd, type: 3}
+  sprite: {fileID: 21300000, guid: 140e2bc588a01b440ad31ddec9d2ec31, type: 3}
   type: 0
-  tier: 0
-  description: "hp\uB97C 300 \uD68C\uBCF5\uD569\uB2C8\uB2E4"
-  defaultValue: 300
+  tier: 2
+  description: "\uBA39\uC73C\uBA74 \uC8FD\uC2B5\uB2C8\uB2E4 \u314B"
+  defaultValue: 987654340

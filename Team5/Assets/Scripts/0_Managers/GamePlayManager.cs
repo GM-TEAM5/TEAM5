@@ -103,6 +103,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
 
         // StartCoroutine( CheckLevelUp() );        
         // StartCoroutine( SetTimer() );       
+        StartStage();
     }
 
     void Update()
@@ -123,10 +124,10 @@ public class GamePlayManager : Singleton<GamePlayManager>
         }
         
 
-        if( Input.GetKeyDown(KeyCode.Alpha6))
-        {
-            StartStage();
-        }
+        // if( Input.GetKeyDown(KeyCode.Alpha6))
+        // {
+        //     StartStage();
+        // }
         
         
         

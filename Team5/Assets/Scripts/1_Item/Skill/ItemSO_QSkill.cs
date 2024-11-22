@@ -24,7 +24,7 @@ public class ItemSO_QSkill : SkillItemSO, IDrawableSkill
 
     [Header("Skill Settings")]
     public float slashDuration = 0.5f;
-    public float damage = 30f;
+    public float damage = 60f;
 
     [Header("Ink Settings")]
     [SerializeField] private float _inkCostPerUnit = 2f;
@@ -120,7 +120,8 @@ public class ItemSO_QSkill : SkillItemSO, IDrawableSkill
                     Enemy enemy = hit.collider.GetComponent<Enemy>();
                     if (enemy != null && !damagedEnemies.Contains(enemy))
                     {
-                        enemy.GetDamaged(damage);
+                        float dmg = damage + Player.Instance.status.mDmg;
+                        enemy.GetDamaged( dmg );
                         damagedEnemies.Add(enemy);
                     }
                 }

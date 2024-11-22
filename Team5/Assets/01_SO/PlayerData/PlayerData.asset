@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   traitPoint: 123
   currChapter: 0
-  currStageNum: 2
+  currStageNum: 0
   currStagePlayCount: 0
-  deathCount: 9
+  deathCount: 10
   maxCount_equipment: 8
   maxCount_skill: 4
   stages:
@@ -64,7 +64,7 @@ MonoBehaviour:
     rangeModifier: 1
     cooltimeModifier: 1
     luck: 0
-    rerollCount: 10
+    rerollCount: 3
     selectionCount: 3
     pDmg: 0
     mDmg: 0

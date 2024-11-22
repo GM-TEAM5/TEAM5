@@ -19,12 +19,12 @@ MonoBehaviour:
   type: 0
   rank: 0
   attackType: 1
-  maxHp: 50
+  maxHp: 100
   armor: 0
   range: 1
   retreatRange: 0
   attackSpeed: 0
-  ad: 2
+  ad: 44
   ap: 0
   moveCooltime: 0.2
   movementSpeed: 5

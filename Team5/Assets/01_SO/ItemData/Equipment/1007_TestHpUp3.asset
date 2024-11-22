@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a00a3b836e372148919bb3acd7ef041, type: 3}
-  m_Name: 1000_TestEquipment
+  m_Script: {fileID: 11500000, guid: 5d3db184a39cf7c45aa4bd231629679b, type: 3}
+  m_Name: 1007_TestHpUp3
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: 1396c40b41c55a745a385648ec3e7152, type: 3}
+  sprite: {fileID: 21300000, guid: 92dc110cd16e6d14898b8455a1a965b9, type: 3}
   type: 1
-  tier: 0
-  description: "\uC544\uBB34 \uD6A8\uACFC\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4"
+  tier: 2
+  description: "\uCD5C\uB300 \uCCB4\uB825\uC774 7777 \uC99D\uAC00\uD569\uB2C8\uB2E4"
+  amount: 7777

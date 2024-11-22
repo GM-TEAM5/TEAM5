@@ -108,7 +108,7 @@ public class PlayerStatus
     {
         currHp = maxHp;
         currInk = GetMaxInk() * 0.3f;
-        rerollCount = 10;
+        rerollCount = 3;
         selectionCount = 3;
     }
 

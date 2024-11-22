@@ -2,15 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-[CreateAssetMenu(fileName = "EquipmentItem_1001_TestHpUp", menuName = "SO/EquipmentItem/1001_TestHpUp", order = int.MaxValue)]
-public class ItemSO_1001_TestHpUp : EquipmentItemSO
+[CreateAssetMenu(fileName = "1007_TestHpUp3", menuName = "SO/EquipmentItem/1007", order = int.MaxValue)]
+public class ItemSO_1007_TestHpUp2 :  EquipmentItemSO
 {
 
-    public override string id => "1001";
-    public override string dataName => "체력 향상 1";
+    public override string id => "1007";
+    public override string dataName => "체력 향상 3";
 
-    public int amount = 100;
+    public int amount = 7777;
 
     // public float targetField => Player.Instance.status.maxHp;
 

@@ -2,16 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
-
-[CreateAssetMenu(fileName = "EquipmentItem_1002_TestAtkUp", menuName = "SO/EquipmentItem/1002_TestAtkUp", order = int.MaxValue)]
-public class ItemSO_1002_TestAtkUp : EquipmentItemSO
+[CreateAssetMenu(fileName = "1008_TestPDmgUp3", menuName = "SO/EquipmentItem/1008", order = int.MaxValue)]
+public class ItemSO_1008_TestPDmgUp3 : EquipmentItemSO
 {
-    public override string id => "1002";
-    public override string dataName => "물리 공격력 향상 1";
+    public override string id => "1008";
+    public override string dataName => "물리 공격력 향상 3";
 
-    public int amount = 5;
+    public int amount = 777;
 
     
 
@@ -32,6 +29,5 @@ public class ItemSO_1002_TestAtkUp : EquipmentItemSO
     {
         GameEventManager.Instance.onChangePlayerStatus_pDmg.Invoke();
     }
-
 
 }

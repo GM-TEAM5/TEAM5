@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "EquipmentItem_1000_TestEquipment", menuName = "SO/EquipmentItem/1000_TestEquipment", order = int.MaxValue)]
+[CreateAssetMenu(fileName = "1000_TestEquipment", menuName = "SO/EquipmentItem/1000_TestEquipment", order = int.MaxValue)]
 public class ItemSO_1000_TestEquipment : EquipmentItemSO
 {
     public override string id => "1000";
-    public override string dataName => "TestEquipment";
+    public override string dataName => "꽝";
 
     //
     public override void OnEquip()

@@ -108,7 +108,8 @@ public class PlayerBasicAttack : MonoBehaviour, ITimeScaleable
             Enemy enemy = hit.GetComponent<Enemy>();
             if (enemy != null)
             {
-                enemy.GetDamaged(damage);
+                float dmg = player.status.basicAttackDamage;
+                enemy.GetDamaged(dmg );
             }
         }
 
