@@ -10,7 +10,7 @@ using BW.Util;
 [RequireComponent(typeof(NavMeshAgent),
     typeof(SpriteEntity))]
 [RequireComponent(typeof(EnemyAI))]
-public class Enemy : MonoBehaviour, IPoolObject
+public class Enemy : MonoBehaviour, IPoolObject, ITimeScaleable
 {
     public EnemyDataSO data; //적의 데이터
     EnemyStateUI stateUI;
@@ -53,6 +53,18 @@ public class Enemy : MonoBehaviour, IPoolObject
 
     public Vector3 lastHitPoint;
 
+    [Header("Slow Effect")]
+    private float currentSlowAmount = 0f;
+    private float slowDuration = 0f;
+    private float originalSpeed;
+    private Coroutine slowRoutine;
+
+    private float slowAmount = 0f;
+    private float slowTimer = 0f;
+    private float timeScale = 1f;
+
+    [SerializeField] private float moveSpeed = 5f;  // 기본 이동 속도
+
     //===============================================================
 
     void Update()
@@ -75,6 +87,25 @@ public class Enemy : MonoBehaviour, IPoolObject
         {
             stunDurationRemain -= Time.deltaTime;
         }
+
+        // 슬로우 타이머 관리
+        if (slowTimer > 0)
+        {
+            slowTimer -= Time.deltaTime;
+            if (slowTimer <= 0)
+            {
+                // 슬로우 효과 해제
+                slowAmount = 0f;
+                slowDuration = 0f;
+            }
+        }
+
+        // 이동 속도 계산 (슬로우와 타임스케일 모두 적용)
+        float currentSpeed = moveSpeed * (1 - slowAmount) * timeScale;
+
+        // 이동 로직
+        Vector3 direction = (t_target.position - t.position).normalized;
+        t.position += direction * currentSpeed * Time.deltaTime;
 
         // 업뎃 성공하면, 
         if (ai.TryUpdate())
@@ -130,6 +161,9 @@ public class Enemy : MonoBehaviour, IPoolObject
         {
             rangeWeight = UnityEngine.Random.Range(0.8f, 1.2f);
         }
+
+        originalSpeed = data.movementSpeed;
+        currentSlowAmount = 0f;
 
         // data 에 따라 radius 및 이동속도 도 세팅해야함. 
         stunDurationRemain = 0;
@@ -311,5 +345,26 @@ public class Enemy : MonoBehaviour, IPoolObject
             .AppendInterval(0.3f)
             .Append(spriteEntity.spriteRenderer.DOFade(0, 1f))
             .Play();
+    }
+
+    public void ApplySlow(float amount, float duration)
+    {
+        // 새로운 슬로우가 더 강하거나, 현재 슬로우가 없을 때만 적용
+        if (amount > slowAmount || slowTimer <= 0)
+        {
+            slowAmount = amount;
+            slowDuration = duration;
+            slowTimer = duration;
+        }
+    }
+
+    public void SetTimeScale(float scale)
+    {
+        timeScale = scale;
+    }
+
+    void OnDisable()
+    {
+        // 오브젝트가 비활성화
     }
 }
