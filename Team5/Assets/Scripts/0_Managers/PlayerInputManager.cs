@@ -101,11 +101,11 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
 
     private void CheckNumberKeys()
     {
-        if (Keyboard.current[Key.Q].wasPressedThisFrame) pressedNumber = 1;
-        else if (Keyboard.current[Key.E].wasPressedThisFrame) pressedNumber = 2;
-        else if (Keyboard.current[Key.Digit3].wasPressedThisFrame) pressedNumber = 3;
-        else if (Keyboard.current[Key.Digit4].wasPressedThisFrame) pressedNumber = 4;
-        else if (Keyboard.current[Key.Digit5].wasPressedThisFrame) pressedNumber = 5;
+        if (Input.GetKeyDown(KeyCode.Q)) pressedNumber = 1;
+        else if (Input.GetKeyDown(KeyCode.E)) pressedNumber = 2;
+        else if (Input.GetKeyDown(KeyCode.Alpha3)) pressedNumber = 3;
+        else if (Input.GetKeyDown(KeyCode.Alpha4)) pressedNumber = 4;
+        else if (Input.GetKeyDown(KeyCode.Alpha5)) pressedNumber = 5;
     }
 }
 

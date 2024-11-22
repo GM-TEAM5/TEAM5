@@ -165,10 +165,15 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     {
         if (playerInput.pressedNumber != 0)
         {
-            KeyCode keyCode = playerInput.skillKeys[playerInput.pressedNumber - 1];
-            if (skills.ContainsKey(keyCode))
+            // 인덱스 범위 체크 추가
+            int index = playerInput.pressedNumber - 1;
+            if (index >= 0 && index < playerInput.skillKeys.Count)
             {
-                skills[keyCode].Use();
+                KeyCode keyCode = playerInput.skillKeys[index];
+                if (skills.ContainsKey(keyCode))
+                {
+                    skills[keyCode].Use();
+                }
             }
             playerInput.pressedNumber = 0;
         }
@@ -208,7 +213,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     public void InitPlayer(PlayerDataSO playerData)
     {
         t = transform;
-                //
+        //
         t.position = StageManager.Instance.currStage.playerInitPos;  // 플레이어 위치 지정 
 
         controller = GetComponent<CharacterController>();
@@ -216,16 +221,16 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
         playerCollider = GetComponent<Collider>();
         playerCollider.enabled = true;
 
-           // 플레이어 스탯 초기화.
-        if ( playerData.savedStatus !=null)
+        // 플레이어 스탯 초기화.
+        if (playerData.savedStatus != null)
         {
-            status = new (playerData.savedStatus);
+            status = new(playerData.savedStatus);
         }
         else
         {
             status = new();
         }
-        
+
         //--------- after init status --------------
         playerDraw = GetComponentInChildren<PlayerDraw>();
         playerDraw.Init();
