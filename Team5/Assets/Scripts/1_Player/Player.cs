@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 
 [RequireComponent(typeof(CharacterController), typeof(SpriteEntity))]
 [RequireComponent(typeof(PlayerEquipments), typeof(PlayerInteraction))]
-public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포넌트에 접근하기 쉽도록 싱글톤
+public class Player : Singleton<Player>, ITimeScaleable     // ui 등에서 플레이어 컴포넌트에 접근하기 쉽도록 싱글톤
 {
     public Transform t;
 
@@ -53,7 +53,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     PlayerBasicAttack playerBasicAttack;
 
     // 스턴
-    public bool isStunned => isNockbackOn;
+    public bool isStunned => stunDurationRemain > 0;
 
 
     // 넉백
@@ -78,6 +78,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     {
         // t_camera = Camera.main.transform;
         StartInkChargeRoutine();
+        GameManager.Instance.RegisterTimeScaleable(this);
     }
 
     private void StartInkChargeRoutine()
@@ -569,17 +570,17 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     public void SetTimeScale(float scale)
     {
         timeScale = scale;
+        // 필요한 경우 자식 컴포넌트들의 timeScale도 설정
+        if (playerBasicAttack != null) playerBasicAttack.SetTimeScale(scale);
+        if (playerDraw != null) playerDraw.SetTimeScale(scale);
+        // ... 다른 타임스케일이 필요한 컴포넌트들
+    }
 
-        // 플레이어의 모든 ITimeScaleable 컴포넌트에 적용
-        foreach (var component in GetComponentsInChildren<ITimeScaleable>())
+    void OnDestroy()
+    {
+        if (GameManager.Instance != null)
         {
-            component.SetTimeScale(scale);
-        }
-
-        // 애니메이터도 정상 속도 유지
-        if (animator != null)
-        {
-            animator.SetTimeScale(scale);
+            GameManager.Instance.UnregisterTimeScaleable(this);
         }
     }
 }
