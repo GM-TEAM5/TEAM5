@@ -22,6 +22,11 @@ public class ItemSO_ESkill : SkillItemSO, IDrawableSkill
     [SerializeField] private float _inkCostPerUnit = 1f;
     [SerializeField] private float _minInkRequired = 10f;
 
+    [Header("Duration Settings")]
+    [SerializeField] private float maxDrawDuration = 5f;  // 최대 드로잉 시간
+    private float drawTimer;
+    private Coroutine drawTimerCoroutine;
+
     public override string id => "2002";
     public override string dataName => "ESkill";
 
@@ -43,6 +48,10 @@ public class ItemSO_ESkill : SkillItemSO, IDrawableSkill
     public override void OnUnEquip()
     {
         playerDraw = null;
+        if (drawTimerCoroutine != null)
+        {
+            Player.Instance.StopCoroutine(drawTimerCoroutine);
+        }
     }
 
     public override void Use()
@@ -53,12 +62,35 @@ public class ItemSO_ESkill : SkillItemSO, IDrawableSkill
         }
         else
         {
+            drawTimer = maxDrawDuration;
             playerDraw.StartDrawing(
                 DrawType.GroundPattern,
                 this,
                 (line, positions) => OnDrawComplete(line, positions)
             );
+
+            // 타이머 시작
+            if (drawTimerCoroutine != null)
+            {
+                Player.Instance.StopCoroutine(drawTimerCoroutine);
+            }
+            drawTimerCoroutine = Player.Instance.StartCoroutine(DrawTimerRoutine());
+            Debug.Log("E스킬 타이머 시작: " + maxDrawDuration + "초");
         }
+    }
+
+    private IEnumerator DrawTimerRoutine()
+    {
+        while (drawTimer > 0)  // playerDraw.isDrawing 조건 제거
+        {
+            drawTimer -= Time.deltaTime;
+            Debug.Log("E스킬 남은 시간: " + drawTimer);
+            yield return null;
+        }
+
+        Debug.Log("E스킬 시간 종료");
+        playerDraw.FinishDraw();
+        drawTimerCoroutine = null;
     }
 
     private void OnDrawComplete(LineRenderer line, List<Vector3> positions)

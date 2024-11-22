@@ -30,6 +30,11 @@ public class ItemSO_QSkill : SkillItemSO, IDrawableSkill
     [SerializeField] private float _inkCostPerUnit = 2f;
     [SerializeField] private float _minInkRequired = 15f;
 
+    [Header("Duration Settings")]
+    [SerializeField] private float maxDrawDuration = 8f;  // 최대 드로잉 시간
+    private float drawTimer;
+    private Coroutine drawTimerCoroutine;
+
     public override string id => "2001";
     public override string dataName => "QSkill";
     public new Color lineColor => _lineColor;
@@ -49,6 +54,10 @@ public class ItemSO_QSkill : SkillItemSO, IDrawableSkill
     public override void OnUnEquip()
     {
         playerDraw = null;
+        if (drawTimerCoroutine != null)
+        {
+            Player.Instance.StopCoroutine(drawTimerCoroutine);
+        }
     }
 
     public override void Use()
@@ -59,11 +68,20 @@ public class ItemSO_QSkill : SkillItemSO, IDrawableSkill
         }
         else
         {
+            drawTimer = maxDrawDuration;
             playerDraw.StartDrawing(
                 DrawType.QuickSlash,
                 this,
                 (line, positions) => OnDrawComplete(line, positions)
             );
+
+            // 타이머 시작
+            if (drawTimerCoroutine != null)
+            {
+                Player.Instance.StopCoroutine(drawTimerCoroutine);
+            }
+            drawTimerCoroutine = Player.Instance.StartCoroutine(DrawTimerRoutine());
+            Debug.Log("Q스킬 타이머 시작: " + maxDrawDuration + "초");
         }
     }
 
@@ -114,5 +132,19 @@ public class ItemSO_QSkill : SkillItemSO, IDrawableSkill
         }
 
         UnityEngine.Object.Destroy(line.gameObject);
+    }
+
+    private IEnumerator DrawTimerRoutine()
+    {
+        while (drawTimer > 0)
+        {
+            drawTimer -= Time.unscaledDeltaTime;
+            Debug.Log("Q스킬 남은 시간: " + drawTimer);
+            yield return null;
+        }
+
+        Debug.Log("Q스킬 시간 종료");
+        playerDraw.FinishDraw();
+        drawTimerCoroutine = null;
     }
 }
