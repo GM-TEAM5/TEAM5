@@ -56,7 +56,7 @@ public class ItemSO_ESkill : SkillItemSO, IDrawableSkill
 
     public override void Use()
     {
-        if (playerDraw.isDrawing)
+        if (playerDraw.isInDrawMode)
         {
             playerDraw.FinishDraw();
         }
@@ -69,13 +69,11 @@ public class ItemSO_ESkill : SkillItemSO, IDrawableSkill
                 (line, positions) => OnDrawComplete(line, positions)
             );
 
-            // 타이머 시작
             if (drawTimerCoroutine != null)
             {
                 Player.Instance.StopCoroutine(drawTimerCoroutine);
             }
             drawTimerCoroutine = Player.Instance.StartCoroutine(DrawTimerRoutine());
-            Debug.Log("E스킬 타이머 시작: " + maxDrawDuration + "초");
         }
     }
 
@@ -84,11 +82,9 @@ public class ItemSO_ESkill : SkillItemSO, IDrawableSkill
         while (drawTimer > 0)  // playerDraw.isDrawing 조건 제거
         {
             drawTimer -= Time.deltaTime;
-            Debug.Log("E스킬 남은 시간: " + drawTimer);
             yield return null;
         }
 
-        Debug.Log("E스킬 시간 종료");
         playerDraw.FinishDraw();
         drawTimerCoroutine = null;
     }

@@ -37,12 +37,12 @@ public class ItemSO_QSkill : SkillItemSO, IDrawableSkill
 
     public override string id => "2001";
     public override string dataName => "QSkill";
-    public new Color lineColor => _lineColor;
-    public new float lineWidth => _lineWidth;
-    public new Material lineMaterial => _lineMaterial;
-    public new float effectRadius => _effectRadius;
-    public new float inkCostPerUnit => _inkCostPerUnit;
-    public new float minInkRequired => _minInkRequired;
+    public Color lineColor => _lineColor;
+    public float lineWidth => _lineWidth;
+    public Material lineMaterial => _lineMaterial;
+    public float effectRadius => _effectRadius;
+    public float inkCostPerUnit => _inkCostPerUnit;
+    public float minInkRequired => _minInkRequired;
 
     PlayerDraw playerDraw;
 
@@ -62,7 +62,7 @@ public class ItemSO_QSkill : SkillItemSO, IDrawableSkill
 
     public override void Use()
     {
-        if (playerDraw.isDrawing)
+        if (playerDraw.isInDrawMode)
         {
             playerDraw.FinishDraw();
         }
@@ -75,13 +75,11 @@ public class ItemSO_QSkill : SkillItemSO, IDrawableSkill
                 (line, positions) => OnDrawComplete(line, positions)
             );
 
-            // 타이머 시작
             if (drawTimerCoroutine != null)
             {
                 Player.Instance.StopCoroutine(drawTimerCoroutine);
             }
             drawTimerCoroutine = Player.Instance.StartCoroutine(DrawTimerRoutine());
-            Debug.Log("Q스킬 타이머 시작: " + maxDrawDuration + "초");
         }
     }
 
@@ -139,11 +137,8 @@ public class ItemSO_QSkill : SkillItemSO, IDrawableSkill
         while (drawTimer > 0)
         {
             drawTimer -= Time.unscaledDeltaTime;
-            Debug.Log("Q스킬 남은 시간: " + drawTimer);
             yield return null;
         }
-
-        Debug.Log("Q스킬 시간 종료");
         playerDraw.FinishDraw();
         drawTimerCoroutine = null;
     }
