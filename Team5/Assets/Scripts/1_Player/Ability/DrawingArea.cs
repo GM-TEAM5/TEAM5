@@ -6,7 +6,9 @@ using DG.Tweening;
 
 public class DrawingArea : MonoBehaviour, ITimeScaleable
 {
-    [SerializeField] float targetRadius;
+    [SerializeField] private float _targetRadius = 5f;
+    public float TargetRadius => _targetRadius;
+
     [SerializeField] float activationTime;
     [SerializeField] float deactivationTime;
     [SerializeField] bool isActivated;
@@ -16,7 +18,7 @@ public class DrawingArea : MonoBehaviour, ITimeScaleable
 
     public void Init()
     {
-        transform.localScale = targetRadius * Vector3.one;
+        transform.localScale = _targetRadius * Vector3.one;
         gameObject.SetActive(false);
     }
 
@@ -35,6 +37,16 @@ public class DrawingArea : MonoBehaviour, ITimeScaleable
         timeScale = scale;
     }
 
+    public void SetRadius(float newRadius)
+    {
+        _targetRadius = newRadius;
+        if (gameObject.activeSelf)
+        {
+            // 활성화 상태라면 즉시 크기 업데이트
+            transform.localScale = _targetRadius * Vector3.one;
+        }
+    }
+
     void PlaySeq_Activation(float duration)
     {
         if (seq_activation != null && seq_activation.IsActive())
@@ -48,7 +60,7 @@ public class DrawingArea : MonoBehaviour, ITimeScaleable
 
         seq_activation = DOTween.Sequence()
             .SetUpdate(true)
-            .Append(transform.DOScale(targetRadius, duration).SetEase(Ease.OutCirc))
+            .Append(transform.DOScale(_targetRadius, duration).SetEase(Ease.OutCirc))
             .Join(sr_area.DOFade(1, duration * 0.5f))
             .Play();
     }
@@ -63,7 +75,7 @@ public class DrawingArea : MonoBehaviour, ITimeScaleable
         seq_activation = DOTween.Sequence()
             .SetUpdate(true)
             .Append(sr_area.DOFade(0, duration))
-            .Join(transform.DOScale(targetRadius * 2, duration).SetEase(Ease.OutCirc))
+            .Join(transform.DOScale(_targetRadius * 2, duration).SetEase(Ease.OutCirc))
             .AppendCallback(() => gameObject.SetActive(false))
             .Play();
     }

@@ -46,21 +46,20 @@ public class PlayerDraw : MonoBehaviour, ITimeScaleable
 
     public void StartDrawing(DrawType drawType, SkillItemSO skill, System.Action<LineRenderer, List<Vector3>> callback)
     {
-        if (isInDrawMode)
-        {
-            return;
-        }
-
-        if (!player.HasEnoughInk(GetMinInkRequired(skill)))
-        {
-            Debug.Log("Not enough ink to start drawing!");
-            return;
-        }
+        if (isInDrawMode) return;
 
         currentSkill = skill;
         currentDrawType = drawType;
         onDrawComplete = callback;
         isInDrawMode = true;
+
+        var drawableSkill = skill as IDrawableSkill;
+        if (drawableSkill != null)
+        {
+            float finalRadius = player.status.drawRange * drawableSkill.effectRadius;
+            drawingArea.SetRadius(finalRadius * 2f);
+        }
+
         drawingArea.Activate();
         DirectingManager.Instance.SetVignette(intensity_onDraw, 0.5f);
 
@@ -137,6 +136,13 @@ public class PlayerDraw : MonoBehaviour, ITimeScaleable
             return;
         }
 
+        Vector3 mousePos = GetMouseWorldPosition();
+
+        if (!IsInsideDrawingArea(mousePos))
+        {
+            return;
+        }
+
         GameObject newLine = new GameObject("DrawingLine");
         newLine.transform.SetParent(lineContainer);
         currentLine = newLine.AddComponent<LineRenderer>();
@@ -150,12 +156,17 @@ public class PlayerDraw : MonoBehaviour, ITimeScaleable
 
     private void ContinueDrawing()
     {
+        if (!isDrawing || currentPositions.Count == 0) return;
+
         Vector3 mousePos = GetMouseWorldPosition();
-        if (currentPositions.Count == 0) return;
-
         Vector3 lastPos = currentPositions[currentPositions.Count - 1];
-        float distance = Vector3.Distance(lastPos, mousePos);
 
+        if (!IsInsideDrawingArea(mousePos))
+        {
+            return;
+        }
+
+        float distance = Vector3.Distance(lastPos, mousePos);
         if (distance > minDistance)
         {
             var drawableSkill = currentSkill as IDrawableSkill;
@@ -219,5 +230,16 @@ public class PlayerDraw : MonoBehaviour, ITimeScaleable
     {
         timeScale = scale;
     }
-}
 
+    private bool IsInsideDrawingArea(Vector3 position)
+    {
+        Vector3 playerPos = Player.Instance.transform.position;
+        float distanceFromCenter = Vector2.Distance(
+            new Vector2(position.x, position.z),
+            new Vector2(playerPos.x, playerPos.z)
+        );
+
+        float actualRadius = (drawingArea.TargetRadius / 2f) - 0.2f;
+        return distanceFromCenter < actualRadius;
+    }
+}
