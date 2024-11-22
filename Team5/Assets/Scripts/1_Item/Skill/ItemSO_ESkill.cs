@@ -72,12 +72,35 @@ public class ItemSO_ESkill : SkillItemSO, IDrawableSkill
         var drawableSkill = this as IDrawableSkill;
         HashSet<Enemy> damagedEnemies = new HashSet<Enemy>();
 
+        // 초기 데미지 판정 (한 번만)
+        for (int i = 0; i < positions.Count - 1; i++)
+        {
+            RaycastHit[] hits = Physics.SphereCastAll(
+                positions[i],
+                drawableSkill.effectRadius,
+                Vector3.up,
+                0.1f,
+                LayerMask.GetMask("Enemy")
+            );
+
+            foreach (var hit in hits)
+            {
+                Enemy enemy = hit.collider.GetComponent<Enemy>();
+                if (enemy != null && !damagedEnemies.Contains(enemy))
+                {
+                    enemy.GetDamaged(damage);
+                    damagedEnemies.Add(enemy);
+                }
+            }
+        }
+
+        // 지속 효과 (슬로우)
         while (elapsedTime < _lineDuration)
         {
             elapsedTime += Time.unscaledDeltaTime;
             float completion = elapsedTime / _lineDuration;
 
-            // 각 포인트에서 적 감지 및 슬로우 효과 적용
+            // 슬로우 효과 적용
             for (int i = 0; i < positions.Count - 1; i++)
             {
                 RaycastHit[] hits = Physics.SphereCastAll(
@@ -93,15 +116,7 @@ public class ItemSO_ESkill : SkillItemSO, IDrawableSkill
                     Enemy enemy = hit.collider.GetComponent<Enemy>();
                     if (enemy != null)
                     {
-                        // 슬로우 효과 적용
                         enemy.ApplySlow(slowAmount, slowDuration);
-
-                        // 데미지는 한 번만 적용
-                        if (!damagedEnemies.Contains(enemy))
-                        {
-                            enemy.GetDamaged(damage);
-                            damagedEnemies.Add(enemy);
-                        }
                     }
                 }
             }

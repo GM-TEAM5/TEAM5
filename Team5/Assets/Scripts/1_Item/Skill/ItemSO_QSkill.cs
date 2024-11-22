@@ -77,6 +77,7 @@ public class ItemSO_QSkill : SkillItemSO, IDrawableSkill
         float elapsedTime = 0f;
         Color startColor = line.startColor;
         var drawableSkill = this as IDrawableSkill;
+        HashSet<Enemy> damagedEnemies = new HashSet<Enemy>();
 
         while (elapsedTime < slashDuration)
         {
@@ -101,9 +102,10 @@ public class ItemSO_QSkill : SkillItemSO, IDrawableSkill
                 foreach (var hit in hits)
                 {
                     Enemy enemy = hit.collider.GetComponent<Enemy>();
-                    if (enemy != null)
+                    if (enemy != null && !damagedEnemies.Contains(enemy))
                     {
                         enemy.GetDamaged(damage);
+                        damagedEnemies.Add(enemy);
                     }
                 }
             }
