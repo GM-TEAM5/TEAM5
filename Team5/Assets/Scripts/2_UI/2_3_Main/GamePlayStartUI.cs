@@ -13,20 +13,22 @@ public class GamePlayStartUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI text_stageStart;
     // public float bootingTime;
     
-    public Sequence startSequence;
+    // public Sequence startSequence;
 
 
     public Sequence GetSeq_GamePlayStart()
     {
         gameObject.SetActive(true);
         
+        text_stageNum.SetText( $"스테이지 {GameManager.Instance.playerData.currStageNum + 1}");
+
         img.color = new Color(1,1,1,0);
         text_stageNum.color = new Color(1,1,1,0);
         text_stageStart.color = new Color(1,1,1,0);
         //
 
         //
-        startSequence = DOTween.Sequence()
+        var ret = DOTween.Sequence()
         .OnComplete( ()=>{
             gameObject.SetActive(false);
         }) 
@@ -43,7 +45,7 @@ public class GamePlayStartUI : MonoBehaviour
         //
 
         //
-        return startSequence;
+        return ret;
     }
 
 

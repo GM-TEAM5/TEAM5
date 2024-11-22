@@ -12,8 +12,10 @@ public class GamePlayManager : Singleton<GamePlayManager>
 {
     // public static bool isPaused;
     public static bool isGamePlaying = false;
+    public bool isStageFinished = false;
     public float gameStartTime;    // 해당 스테이지 시작 시간.
     public float gamePlayTime; 
+    public List<float> alarms=new() ;
     
     //
     [SerializeField] AudioSource bgm;
@@ -38,7 +40,8 @@ public class GamePlayManager : Singleton<GamePlayManager>
     // [SerializeField] WaveActivationSwitch waveActivationSwitch;
     // [SerializeField] SelectableItemList selectableItemList;
     [SerializeField] StagePortal stagePortal;
-    [SerializeField] TextMeshProUGUI text_timer;   //게임오버 패널
+
+    [SerializeField] EnemyHpSlider enemyHpSlider;
 
     [SerializeField] float instantDeathTime = 180;
     bool instantDeathCalled;
@@ -53,16 +56,19 @@ public class GamePlayManager : Singleton<GamePlayManager>
     void Start()
     {           
         isGamePlaying = false;
+        isStageFinished = false;
         // GameEventManager.Instance.onLevelUp.AddListener(OnLevelUp);
 
         // GameEventManager.Instance.onEnemyDie.AddListener((Enemy e)=> CheckWaveClear());
 
         
-        Player.Instance.InitPlayer();
-        StageManager.Instance.Init(TestManager.Instance.testStageData);     
+        
+        StageManager.Instance.Init(GameManager.Instance.playerData);     
         InitStageObjects( StageManager.Instance.currStage);
         
-        TestManager.Instance.SetBoundImage();
+        Player.Instance.InitPlayer(GameManager.Instance.playerData);
+        // TestManager.Instance.SetBoundImage();
+        
         StartCoroutine( StartGamePlaySequence());
     }
 
@@ -91,6 +97,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
 
         gameStartTime = Time.time;
         isGamePlaying = true;
+        isStageFinished = true;
         bgm.Play();
 
         // StartCoroutine( CheckLevelUp() );        
@@ -117,7 +124,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
 
         if( Input.GetKeyDown(KeyCode.Alpha6))
         {
-            StartWave();
+            StartStage();
         }
         
         
@@ -129,6 +136,8 @@ public class GamePlayManager : Singleton<GamePlayManager>
         }
 
         gamePlayTime += Time.deltaTime;
+
+        CheckAlarms();
         // if ( gamePlayTime >= instantDeathTime && instantDeathCalled == false)
         // {
         //     instantDeathCalled =true;
@@ -146,6 +155,23 @@ public class GamePlayManager : Singleton<GamePlayManager>
         // selectableItemList = stage.selectableItemList;
         stagePortal = stage.stagePortal;
     }
+    
+    public void SetAlarm(float time)
+    {
+        alarms.Add(time);
+    }
+
+    void CheckAlarms()
+    {
+        for(int i=alarms.Count-1;i>=0;i--)
+        {
+            if( gamePlayTime >= alarms[i])
+            {
+                GameEventManager.Instance.onAlarm.Invoke(alarms[i]);
+                alarms.RemoveAt(i);       
+            }
+        }
+    }
 
     //========================================
 
@@ -159,67 +185,41 @@ public class GamePlayManager : Singleton<GamePlayManager>
     public int killCount_currWave;
 
 
-    public bool inProgress_waveSpawn =>  spawnCount_currWave != targetSpawnCount_currWave;  //웨이브 스폰이 진행중인지. 
-    public bool inProgress_waveBattle => killCount_currWave <   targetSpawnCount_currWave ; //웨이브가 전투중인지. (생성된 적이 다 안죽었는 지)
+    // public bool inProgress_waveSpawn =>  spawnCount_currWave != targetSpawnCount_currWave;  //웨이브 스폰이 진행중인지. 
+    // public bool inProgress_waveBattle => killCount_currWave <   targetSpawnCount_currWave ; //웨이브가 전투중인지. (생성된 적이 다 안죽었는 지)
 
     //--------------------------------------------------
 
     public void StartStage()
     {
-        
+        StageManager.Instance.StartStage();
+        GameEventManager.Instance.onStageStart.Invoke( StageManager.Instance.stageWave );
     }
 
 
     /// 웨이브를 시작시킨다. 
-    public void StartWave()
+    public void OnStartWave()
     {
-        targetSpawnCount_currWave = 0;
-        spawnCount_currWave = 0;
-        killCount_currWave = 0;
+        // targetSpawnCount_currWave = 0;
+        // spawnCount_currWave = 0;
+        // killCount_currWave = 0;
         
         
-        StageManager.Instance.StartWave();
+        // StageManager.Instance.StartWave();
         
         // selectableItemList.Deactivate();
 
-        StartCoroutine( CheckWaveClear() );
+        // StartCoroutine( CheckWaveClear() );
     }
 
-    /// <summary>
-    /// 웨이브 종료를 감지하고, 종료 후엔 그에 맞는 처리를 한다. 
-    /// </summary>
-    /// <returns></returns>
-    public IEnumerator CheckWaveClear()
-    {
-        // 
-        yield return new WaitUntil( ()=> inProgress_waveSpawn == false && inProgress_waveBattle == false);      // 웨이브가 종료될 때 까지 기다림. 
-    
-        ClearWave();        // 웨이브 클리어 처리. 
 
-        if (StageManager.Instance.IsStageClear())
-        {
-            ClearStage();
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public void ClearWave()
-    {
-        StageManager.Instance.OnWaveClear();
-
-        // selectableItemList.OnWaveClear(); 
-        // waveActivationSwitch.OnWaveClear();
-    }
-    
     
     /// <summary>
     /// 
     /// </summary>
-    public void ClearStage()
+    public void OnStageClear()
     {
-        StageManager.Instance.OnStageClear();
+        GameEventManager.Instance.onStageFinish.Invoke();
         StartCoroutine(StageClearSequence());
     }
 
@@ -230,8 +230,21 @@ public class GamePlayManager : Singleton<GamePlayManager>
         yield return new WaitUntil( ()=> seq_stageClear.IsActive()==false );
 
 
-        upgradePanel.Open();
+        OpenUpgradePanel();
         stagePortal.OnStageClear();
+    }
+
+    public void OnEnemyKill(Enemy enemy)
+    {
+        totalEnemyKillCount++;
+        killCount_currWave ++;
+
+        GameEventManager.Instance.onEnemyDie.Invoke(enemy);
+    }
+
+    public void UpdateEnemyHpSlider(Enemy enemy)
+    {
+        enemyHpSlider.UpdateHp(enemy);
     }
 
     #endregion
@@ -376,27 +389,5 @@ public class GamePlayManager : Singleton<GamePlayManager>
 
     //====================================================
     
-
-
-
-    // IEnumerator SetTimer()
-    // {
-    //     var waitForSeconds = new WaitForSeconds(1f);
-    //     while( isGamePlaying )
-    //     {
-            
-    //         //
-    //         int mins = (int)gamePlayTime/60;
-    //         int secs = (int)gamePlayTime % 60;
-        
-    //         text_timer.SetText($"{mins:00}:{secs:00}");
-            
-    //         yield return waitForSeconds;
-    //     }
-        
-
-    // }
-
-
 
 }

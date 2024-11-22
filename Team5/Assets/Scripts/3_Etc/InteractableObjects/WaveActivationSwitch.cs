@@ -19,7 +19,7 @@ public class WaveActivationSwitch : InteractiveObject
     {
         Debug.Log("웨이브 활성화");
 
-        GamePlayManager.Instance.StartWave();
+        // GamePlayManager.Instance.StartWave();
 
         Deactivate();
     }

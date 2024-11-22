@@ -132,16 +132,27 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
     /// <summary>
     /// 플레이어 초기화시 호출. 
     /// </summary>
-    public void InitPlayer()
+    public void InitPlayer(PlayerDataSO playerData)
     {
         t = transform;
+                //
+        t.position = StageManager.Instance.currStage.playerInitPos;  // 플레이어 위치 지정 
 
         controller = GetComponent<CharacterController>();
         playerInput = PlayerInputManager.Instance;
         playerCollider = GetComponent<Collider>();
         playerCollider.enabled = true;
 
-        status = new PlayerStatus();      // 플레이어 스탯 초기화.
+           // 플레이어 스탯 초기화.
+        if ( playerData.savedStatus !=null)
+        {
+            status = new (playerData.savedStatus);
+        }
+        else
+        {
+            status = new();
+        }
+        
         //--------- after init status --------------
         playerDraw = GetComponentInChildren<PlayerDraw>();
         playerDraw.Init();
@@ -423,7 +434,7 @@ public class Player : Singleton<Player>     // ui 등에서 플레이어 컴포�
 
     public void OnStartGamePlay()
     {
-        playerCanvas.gameObject.SetActive(true);
+        // playerCanvas.gameObject.SetActive(true);
     }
 
     #endregion

@@ -102,6 +102,9 @@ public class Enemy : MonoBehaviour, IPoolObject
         ai = GetComponent<EnemyAI>();
 
         t = transform;
+
+
+        GameEventManager.Instance.onStageFinish.AddListener(CleanDeath);
     }
 
     public void OnGettingFromPool()
@@ -137,7 +140,7 @@ public class Enemy : MonoBehaviour, IPoolObject
 
         //
         stateUI.Init(this);
-
+        data.OnInit(this);
 
         //
         t_target = Player.Instance.transform;
@@ -161,6 +164,7 @@ public class Enemy : MonoBehaviour, IPoolObject
 
     public void GetDamaged(float damage, bool isEnhancedAttack = false)
     {
+        TestManager.Instance.TestSFX_enemyHit();
         lastHitPoint = transform.position;
 
         float nockbackPower = 5;
@@ -173,6 +177,7 @@ public class Enemy : MonoBehaviour, IPoolObject
         GetKnockback(nockbackPower, lastHitPoint);
         //
         hp -= damage;
+        data.OnHit(this);
         if (hp <= 0)
         {
             Die();
@@ -240,12 +245,28 @@ public class Enemy : MonoBehaviour, IPoolObject
         DropItem();
         //
         PlaySequence_Death(); //
+        
 
         stateUI.OnDie();
         //
         TestManager.Instance.TestSFX_enemyDeath(data.type);
-        GamePlayManager.Instance.killCount_currWave++;
+        
+        GamePlayManager.Instance.OnEnemyKill(this);
         //
+    }
+
+    void CleanDeath()
+    {
+        if(isAlive== false)
+        {
+            return;
+        }
+        
+        enemyCollider.enabled = false; // 적 탐색 및 총알 충돌에 걸리지 않도록.
+        ai.OnDie();
+        data.OnDie(this);
+        PlaySequence_Death(); //
+        stateUI.OnDie();
     }
 
     void DropItem()

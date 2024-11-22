@@ -61,7 +61,8 @@ public abstract class EnemyDataSO : ScriptableObject
     
     public List<EnemyAbilitySO> abilities;  // 스킬이 있을 수도 있음.
 
-
+    public abstract void OnInit(Enemy enemy);
     public abstract void OnAttack(Enemy enemy);
+    public abstract void OnHit(Enemy enemy);
     public abstract void OnDie(Enemy enemy);
 }

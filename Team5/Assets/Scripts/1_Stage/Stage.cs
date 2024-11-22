@@ -21,8 +21,10 @@ public class Stage : MonoBehaviour
 
     //
 
-    public void Init()
+    public void Init(StageMapInfo mapInfo)
     {
+        InitByMapInfo(mapInfo);
+        
         enemySpawnArea = t_enemySpawnAreaParent.GetComponentsInChildren<BoxCollider>();
         // waveActivationSwitch = GetComponentInChildren<WaveActivationSwitch>();
         
@@ -34,6 +36,10 @@ public class Stage : MonoBehaviour
 
     }
 
+    void InitByMapInfo(StageMapInfo mapInfo)
+    {
+        
+    }
 
 
     /// <summary>

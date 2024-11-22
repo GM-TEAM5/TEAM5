@@ -38,6 +38,7 @@ public class PlayerBasicAttack : MonoBehaviour
     {
         isAttacking = true;
         player.animator.OnBasicAttackStart();
+        TestManager.Instance.TestSFX_NormalAttack();
 
         yield return new WaitForSeconds(attackDelay);
 

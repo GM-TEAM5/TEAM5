@@ -12,5 +12,8 @@ public class SimpleSFX : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         audioSource.clip = clip;
         audioSource.Play();
+
+
+        Destroy(gameObject, 3f);
     }
 }

@@ -108,6 +108,14 @@ public class PlayerStatus
         selectionCount=3;
     }
 
+    public PlayerStatus(PlayerStatus savedStatus)
+    {
+        currHp = savedStatus.currHp;     
+        currInk = savedStatus.currInk;
+        rerollCount = savedStatus.rerollCount;
+        selectionCount = savedStatus.selectionCount;
+    }
+
 
     #region 데이터 수정 
 

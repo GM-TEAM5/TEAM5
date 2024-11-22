@@ -17,6 +17,18 @@ public class GameManager : Singleton<GameManager>
         InitGame();
     }
 
+
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Keypad9 ))  
+        {
+            playerData.InitPlayerData();
+            SceneLoadManager.Instance.Load_Lobby();
+        }
+
+        
+    }
+
     //===================================================================================
 
     public void InitGame()

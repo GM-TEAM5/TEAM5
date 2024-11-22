@@ -11,7 +11,7 @@ public class StageClearUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI text;
     // public float bootingTime;
     
-    public Sequence startSequence;
+    // public Sequence startSequence;
 
 
     public Sequence GetSeq_StageClear()
@@ -21,9 +21,9 @@ public class StageClearUI : MonoBehaviour
         img.color = new Color(1,1,1,0);
         text.color = new Color(1,1,1,0);
         //
-
+        text.SetText( $"스테이지 {GameManager.Instance.playerData.currStageNum + 1} 클리어");
         //
-        startSequence = DOTween.Sequence()
+        var ret = DOTween.Sequence()
         .OnComplete( ()=>{
             gameObject.SetActive(false);
         }) 
@@ -37,6 +37,6 @@ public class StageClearUI : MonoBehaviour
         .Join(text.DOFade(0f,1f));
         
         //
-        return startSequence;
+        return ret;
     }
 }

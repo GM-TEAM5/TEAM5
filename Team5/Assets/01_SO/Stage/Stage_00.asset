@@ -13,61 +13,34 @@ MonoBehaviour:
   m_Name: Stage_00
   m_EditorClassIdentifier: 
   id: 00
-  prefab_stage: {fileID: 3519405793876131887, guid: 6684c2c6438e8824a8e03cf1e106efa3,
-    type: 3}
-  waves:
-    array:
-    - Key: 1
-      Value:
-      - waveNum: 1
-        enemyIds:
-        - 003
-        totalNum: 1
-        spawnDuration: 15
-        totalCycle: 1
-        waveForm: 0
-        spawnStartTime: 0
-      - waveNum: 1
-        enemyIds:
-        - 002
-        totalNum: 0
-        spawnDuration: 0
-        totalCycle: 1
-        waveForm: 0
-        spawnStartTime: 0
-    - Key: 2
-      Value:
-      - waveNum: 2
-        enemyIds:
-        - 001
-        totalNum: 1
-        spawnDuration: 0
-        totalCycle: 1
-        waveForm: 0
-        spawnStartTime: 0
-      - waveNum: 2
-        enemyIds:
-        - 003
-        totalNum: 5
-        spawnDuration: 0
-        totalCycle: 1
-        waveForm: 0
-        spawnStartTime: 0
-    - Key: 3
-      Value:
-      - waveNum: 3
-        enemyIds:
-        - 003
-        totalNum: 7
-        spawnDuration: 0
-        totalCycle: 1
-        waveForm: 0
-        spawnStartTime: 0
-      - waveNum: 3
-        enemyIds:
-        - 002
-        totalNum: 10
-        spawnDuration: 0
-        totalCycle: 1
-        waveForm: 0
-        spawnStartTime: 0
+  missionInfo:
+    goalType: 1
+    targetTime: 0
+    waveInfos:
+      array:
+      - Key: 0
+        Value:
+        - startTime: 0
+          endTime: 0
+          enemyData: {fileID: 11400000, guid: 62e821ebc49c5a8479cea5daad4e3b52, type: 2}
+          positionType: 0
+          spawnPoint: {x: 0, y: 0, z: 0}
+          spawnPerCycle: 2
+          cycleInterval: 0
+        - startTime: 0
+          endTime: 0
+          enemyData: {fileID: 11400000, guid: 0bdb4f12b102e4b41b1d0f3e98b92b9e, type: 2}
+          positionType: 0
+          spawnPoint: {x: 0, y: 0, z: 0}
+          spawnPerCycle: 2
+          cycleInterval: 0
+        - startTime: 0
+          endTime: 0
+          enemyData: {fileID: 11400000, guid: c7c895deb29c7e542825c05d4fe3c616, type: 2}
+          positionType: 0
+          spawnPoint: {x: 0, y: 0, z: 0}
+          spawnPerCycle: 2
+          cycleInterval: 0
+  mapInfo:
+    width: 17
+    height: 19
