@@ -21,8 +21,7 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
     public bool interact;
     public bool secondaryInteract;
     public bool pause;
-    public bool isMouseLeftButtonOn;        //마우스를 누르고 있는 중인지.
-
+    public bool isMouseLeftButtonOn; //마우스를 누르고 있는 중인지.
 
 
     //
@@ -30,12 +29,11 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
     public Vector2 mouseMoveVector { get; private set; }
 
 
-
-    public Vector3 mouseDir { get; private set; }   // 마우스가 가리키는 방향 
+    public Vector3 mouseDir { get; private set; } // 마우스가 가리키는 방향 
     public Vector3 mousePosition { get; private set; }
     public Vector3 mouseWorldPos { get; private set; } // 마우스가 가리키는 곳의 월드 좌표 
-    public float xAxis { get; private set; }        //마우스 움직임 x축
-    public float yAxis { get; private set; }       // 마우스 움직임 y축
+    public float xAxis { get; private set; } //마우스 움직임 x축
+    public float yAxis { get; private set; } // 마우스 움직임 y축
 
     // TODO: 그리기 범위 수정
     private Plane drawingPlane;
@@ -101,11 +99,17 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
 
     private void CheckNumberKeys()
     {
-        if (Keyboard.current[Key.Q].wasPressedThisFrame) pressedNumber = 1;
-        else if (Keyboard.current[Key.E].wasPressedThisFrame) pressedNumber = 2;
-        else if (Keyboard.current[Key.LeftShift].wasPressedThisFrame) pressedNumber = 3;
-        else if (Keyboard.current[Key.Digit4].wasPressedThisFrame) pressedNumber = 4;
-        else if (Keyboard.current[Key.Digit5].wasPressedThisFrame) pressedNumber = 5;
+        if (Keyboard.current[Key.Q].wasPressedThisFrame)
+        {
+            pressedNumber = 1;
+        }
+        else if (Keyboard.current[Key.E].wasPressedThisFrame)
+        {
+            pressedNumber = 2;
+        }
+        else if (Keyboard.current[Key.LeftShift].wasPressedThisFrame)
+        {
+            pressedNumber = 3;
+        }
     }
 }
-

@@ -171,6 +171,7 @@ public class Player : Singleton<Player>, ITimeScaleable     // ui 등에서 플�
             if (index >= 0 && index < playerInput.skillKeys.Count)
             {
                 KeyCode keyCode = playerInput.skillKeys[index];
+
                 if (skills.ContainsKey(keyCode))
                 {
                     skills[keyCode].Use();
@@ -279,21 +280,29 @@ public class Player : Singleton<Player>, ITimeScaleable     // ui 등에서 플�
 
         skills = new();
 
-        // PlayerInputManager가 초기화되었는지 확인
-        if (PlayerInputManager.Instance != null)
+        // 고정된 키 매핑 순서
+        Dictionary<int, KeyCode> keyMapping = new()
         {
-            for (int i = 0; i < skillsData.Count; i++)
+            {0, KeyCode.Q},
+            {1, KeyCode.E},
+            {2, KeyCode.LeftShift},
+            {3, KeyCode.Alpha4}
+        };
+
+        // 스킬 초기화
+        for (int i = 0; i < skillsData.Count; i++)
+        {
+            if (skillsData[i] != null && keyMapping.ContainsKey(i))
             {
-                if (skillsData[i] != null)
-                {
-                    ChangeSkill(i, skillsData[i], false);
-                }
+                KeyCode keyCode = keyMapping[i];
+                PlayerSkill playerSkill = new PlayerSkill(skillsData[i]);
+                skills[keyCode] = playerSkill;
+                skillsData[i].OnEquip();
             }
         }
-        else
-        {
-            Debug.LogError("PlayerInputManager is not initialized");
-        }
+
+        // PlayerInputManager의 skillKeys 업데이트
+        PlayerInputManager.Instance.skillKeys = new List<KeyCode>(keyMapping.Values);
     }
 
     // 개별 스킬 장착
@@ -433,7 +442,7 @@ public class Player : Singleton<Player>, ITimeScaleable     // ui 등에서 플�
         }
         dir = dir.WithFloorHeight().normalized;
 
-        knockbackVelocity = dir * impulse;  
+        knockbackVelocity = dir * impulse;
         float stunDuration = impulse * 0.02f;
         SetStunned(stunDuration);
     }

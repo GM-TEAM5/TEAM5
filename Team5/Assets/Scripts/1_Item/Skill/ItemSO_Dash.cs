@@ -21,16 +21,21 @@ public class ItemSO_Dash : SkillItemSO
     public override void OnEquip()
     {
         player = Player.Instance;
+        canUse = true;
+        Debug.Log("DashSkill is equipped!");
     }
 
     public override void OnUnEquip()
     {
         player = null;
+        Debug.Log("DashSkill is unequipped!");
     }
 
     public override void Use()
     {
+        Debug.Log(canUse);
         if (player == null || !canUse) return;
+        Debug.Log("Dash!");
 
         // 대시 실행
         originalMultiplier = player.status.movementSpeedMultiplier;

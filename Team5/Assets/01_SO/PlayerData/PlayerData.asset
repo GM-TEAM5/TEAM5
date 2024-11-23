@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   traitPoint: 123
   currChapter: 0
-  currStageNum: 2
+  currStageNum: 0
   currStagePlayCount: 0
-  deathCount: 12
+  deathCount: 15
   maxCount_equipment: 8
   maxCount_skill: 4
   stages:
