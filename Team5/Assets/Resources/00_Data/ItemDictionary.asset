@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: ItemDictionary
   m_EditorClassIdentifier: 
   list:
-  - {fileID: 11400000, guid: 77025e6495b84574bb3a0fe04be1bfd0, type: 2}
   - {fileID: 11400000, guid: 36e7584db72068545b1baf9bc04f6c82, type: 2}
   - {fileID: 11400000, guid: ddae9f99da46cdc43b63491c0e01a68d, type: 2}
   - {fileID: 11400000, guid: c1867c575380ef94996d77cbc70fb0eb, type: 2}
@@ -28,8 +27,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0b964d041a0bd0d45923285e293afa63, type: 2}
   dic:
     array:
-    - Key: 0000
-      Value: {fileID: 11400000, guid: 77025e6495b84574bb3a0fe04be1bfd0, type: 2}
     - Key: 0001
       Value: {fileID: 11400000, guid: 36e7584db72068545b1baf9bc04f6c82, type: 2}
     - Key: 1000
