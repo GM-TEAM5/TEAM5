@@ -1750,7 +1750,6 @@ MonoBehaviour:
   stageClearUI: {fileID: 1182112853}
   stagePortal: {fileID: 0}
   enemyHpSlider: {fileID: 7757515635410346610}
-  instantDeathTime: 180
   totalEnemySpawnCount: 0
   totalEnemyKillCount: 0
   targetSpawnCount_currWave: 0

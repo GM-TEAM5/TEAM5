@@ -11,10 +11,10 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
 
     public InputAction moveAction;
     public InputAction mouseLeftButtonAction;
-    public KeyCode interactAction = KeyCode.F;
-    public KeyCode secondaryInteractAction = KeyCode.R;
+    public KeyCode interactAction = KeyCode.F;                  // - 이벤트 형식으로 빼
+    public KeyCode secondaryInteractAction = KeyCode.R;         // - 이벤트 형식으로 빼
 
-    public KeyCode pauseAction = KeyCode.Escape;
+    public KeyCode pauseAction = KeyCode.Escape;                // - 이벤트 형식으로 빼
     InputAction lookAction;
 
 
@@ -43,6 +43,18 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
 
     // [SerializeField] LayerMask aimColliderLayerMask = new();
     public List<KeyCode> skillKeys = new() { KeyCode.Q, KeyCode.E, KeyCode.LeftShift, KeyCode.Alpha4 };
+    
+
+
+    //
+    public KeyCode skillKey_draw = KeyCode.Q;               // 이거 이벤트로,
+    public KeyCode skillKey_scroll = KeyCode.E;             // 이거 이벤트로, 
+    public KeyCode skillKey_dash = KeyCode.LeftShift;       //
+
+    public bool basicAttack;
+    public bool draw;              
+    public bool scroll;
+    public bool dash;
 
 
     //================================================================
@@ -75,14 +87,20 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
         secondaryInteract = Input.GetKeyDown(secondaryInteractAction);
         pause = Input.GetKeyDown(pauseAction);
 
-        CheckNumberKeys();
+        //
+        basicAttack = Input.GetMouseButton(0);
+        draw = Input.GetKeyDown(skillKey_draw);
+        scroll = Input.GetKeyDown(skillKey_scroll);
+        dash = Input.GetKeyDown(skillKey_dash);
+        //
+        // CheckNumberKeys();
 
 
         // hidden command 
-        if (Input.GetKey(KeyCode.Alpha9) && Input.GetKey(KeyCode.Alpha0))
-        {
-            SceneLoadManager.Instance.Load_Lobby();
-        }
+        // if (Input.GetKey(KeyCode.Alpha9) && Input.GetKey(KeyCode.Alpha0))
+        // {
+        //     SceneLoadManager.Instance.Load_Lobby();
+        // }
     }
 
     // 커서고정
@@ -97,19 +115,19 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
         Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
     }
 
-    private void CheckNumberKeys()
-    {
-        if (Keyboard.current[Key.Q].wasPressedThisFrame)
-        {
-            pressedNumber = 1;
-        }
-        else if (Keyboard.current[Key.E].wasPressedThisFrame)
-        {
-            pressedNumber = 2;
-        }
-        else if (Keyboard.current[Key.LeftShift].wasPressedThisFrame)
-        {
-            pressedNumber = 3;
-        }
-    }
+    // private void CheckNumberKeys()
+    // {
+    //     if (Keyboard.current[Key.Q].wasPressedThisFrame)
+    //     {
+    //         pressedNumber = 1;
+    //     }
+    //     else if (Keyboard.current[Key.E].wasPressedThisFrame)
+    //     {
+    //         pressedNumber = 2;
+    //     }
+    //     else if (Keyboard.current[Key.LeftShift].wasPressedThisFrame)
+    //     {
+    //         pressedNumber = 3;
+    //     }
+    // }
 }
