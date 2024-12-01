@@ -25,10 +25,10 @@ public class PlayerInteraction : MonoBehaviour
             {
                 InteractWith(closestObject);
             }
-            else if(PlayerInputManager.Instance.secondaryInteract )
-            {
-                SecondaryInteractWith(closestObject);
-            }
+            // else if(PlayerInputManager.Instance.secondaryInteract )
+            // {
+            //     SecondaryInteractWith(closestObject);
+            // }
         }
 
 

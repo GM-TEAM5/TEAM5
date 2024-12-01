@@ -9,19 +9,30 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
 {
     [SerializeField] PlayerInput playerInput;
 
-    public InputAction moveAction;
-    public InputAction mouseLeftButtonAction;
-    public KeyCode interactAction = KeyCode.F;                  // - 이벤트 형식으로 빼
-    public KeyCode secondaryInteractAction = KeyCode.R;         // - 이벤트 형식으로 빼
+    public InputAction moveAction;      // WASD
+    public InputAction mouseLeftButtonAction;       // 클릭
+    public InputAction drawAction;          // 그리기
+    public InputAction utilAction;          // 기본 대쉬
+    public InputAction scrollAction;        // 스크롤 ( 즉발형 스킬 )
+    public InputAction interactAction;      //상호작용            // - 이벤트 형식으로 빼
+    public InputAction flowControlAction;         // 게임 일시정지, 씬별로 다른 기능. 
 
-    public KeyCode pauseAction = KeyCode.Escape;                // - 이벤트 형식으로 빼
+    // public KeyCode secondaryInteractAction = KeyCode.R;         // - 이벤트 형식으로 빼
+
+    // public KeyCode pauseAction = KeyCode.Escape;                // - 이벤트 형식으로 빼
     InputAction lookAction;
 
 
     public bool interact;
-    public bool secondaryInteract;
-    public bool pause;
+    // public bool secondaryInteract;
+    public bool flowControl;
     public bool isMouseLeftButtonOn; //마우스를 누르고 있는 중인지.
+
+    public bool basicAttack;
+    public bool draw;              
+    public bool scroll;
+    public bool util;
+
 
 
     //
@@ -47,14 +58,10 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
 
 
     //
-    public KeyCode skillKey_draw = KeyCode.Q;               // 이거 이벤트로,
-    public KeyCode skillKey_scroll = KeyCode.E;             // 이거 이벤트로, 
-    public KeyCode skillKey_dash = KeyCode.LeftShift;       //
+    // public KeyCode skillKey_draw = KeyCode.Q;               // 이거 이벤트로,
+    // public KeyCode skillKey_scroll = KeyCode.E;             // 이거 이벤트로, 
+    // public KeyCode skillKey_dash = KeyCode.LeftShift;       //
 
-    public bool basicAttack;
-    public bool draw;              
-    public bool scroll;
-    public bool dash;
 
 
     //================================================================
@@ -65,6 +72,12 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
 
         moveAction = playerInput.actions["Move"];
         mouseLeftButtonAction = playerInput.actions["MouseLeftButton"];
+        interactAction = playerInput.actions["Interact"];
+        drawAction = playerInput.actions["Draw"];
+        utilAction = playerInput.actions["Util"];
+        scrollAction = playerInput.actions["Scroll"];
+        flowControlAction = playerInput.actions["FlowControl"];
+
         // mouseLeftButtonAction = playerInput.actions["MouseLeftButton"];
 
         drawingPlane = new Plane(Vector3.up, Vector3.zero);
@@ -72,6 +85,11 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
 
     void Update()
     {
+        flowControl =  flowControlAction.ReadValue<float>()>0;  
+        
+        
+        
+        
         moveVector = moveAction.ReadValue<Vector2>();
 
         mousePosition = Mouse.current.position.ReadValue();
@@ -82,16 +100,18 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
         }
 
 
+
+
         isMouseLeftButtonOn = mouseLeftButtonAction.ReadValue<float>() > 0;
-        interact = Input.GetKeyDown(interactAction);
-        secondaryInteract = Input.GetKeyDown(secondaryInteractAction);
-        pause = Input.GetKeyDown(pauseAction);
+        interact = interactAction.ReadValue<float>() > 0;
+        // secondaryInteract = Input.GetKeyDown(secondaryInteractAction);
+        
 
         //
         basicAttack = Input.GetMouseButton(0);
-        draw = Input.GetKeyDown(skillKey_draw);
-        scroll = Input.GetKeyDown(skillKey_scroll);
-        dash = Input.GetKeyDown(skillKey_dash);
+        draw = drawAction.ReadValue<float>()>0;
+        scroll = scrollAction.ReadValue<float>()>0;
+        util = utilAction.ReadValue<float>()>0;
         //
         // CheckNumberKeys();
 

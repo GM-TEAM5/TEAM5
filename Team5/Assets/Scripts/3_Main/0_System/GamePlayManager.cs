@@ -109,7 +109,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
     void Update()
     {
         // esc 누르면 상태창나옴.
-        if(PlayerInputManager.Instance.pause)
+        if(PlayerInputManager.Instance.flowControl)
         {
             if(playerInfoPanel.gameObject.activeSelf == false)
             {
