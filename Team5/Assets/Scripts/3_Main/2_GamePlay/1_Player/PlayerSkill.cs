@@ -1,22 +1,28 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using UnityEngine.InputSystem;
 
 [Serializable]
 public class PlayerSkill
-{
-    KeyCode keyCode;
-
+{    
     public SkillItemSO skillData;
 
     public PlayerSkill(SkillItemSO skillData)
+    {
+        Init(skillData);
+    }
+
+
+    public void Init(SkillItemSO skillData)
     {
         this.skillData = skillData;
     }
 
     public void Use()
     {
+        if (skillData==null)        
+        {
+            return;
+        }
         skillData.Use();
     }
 

@@ -18,14 +18,14 @@ public class ItemSO_Dash : SkillItemSO
     private float originalMultiplier;
     private bool canUse = true;
 
-    public override void OnEquip()
+    protected override void OnEquip()
     {
         player = Player.Instance;
         canUse = true;
         Debug.Log("DashSkill is equipped!");
     }
 
-    public override void OnUnEquip()
+    protected override void OnUnEquip()
     {
         player = null;
         Debug.Log("DashSkill is unequipped!");

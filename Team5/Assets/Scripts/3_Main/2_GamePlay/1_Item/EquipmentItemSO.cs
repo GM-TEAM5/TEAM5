@@ -14,7 +14,7 @@ public abstract class EquipmentItemSO : ItemDataSO
     protected override bool CanGet(out CantGetReason reason)
     {        
         reason = CantGetReason.None;
-        if (Player.Instance.playerEquipments.HasEmptySpace()==false)
+        if (Player.Instance.equipments.HasEmptySpace()==false)
         {
             reason = CantGetReason.NoSpace;
         }
@@ -25,7 +25,10 @@ public abstract class EquipmentItemSO : ItemDataSO
 
     protected override void Get()
     {
-        Player.Instance.EquipAutomatically(this);
+        if (Player.Instance.equipments.TryEquip(this) ==false)
+        {
+            Debug.Log("엥");
+        }
     }
 
     protected override void OnCantGet(CantGetReason reason)

@@ -110,7 +110,7 @@ public class EquipmentChangePanel : GamePlayPanel
     {
         // 장착.
         int idx = disposalEquipment.idx;
-        Player.Instance.Equip(idx, selectedEquipment);
+        Player.Instance.equipments.Equip(idx, selectedEquipment);
         GamePlayManager.Instance.FinishSelection();
 
         //

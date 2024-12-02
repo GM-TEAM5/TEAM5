@@ -3,11 +3,24 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
+
+public enum SkillType
+{
+    Passive,
+    BasicAttack,
+    Draw,
+    Util,
+    Scroll
+}
+
 /// <summary>
 /// 스킬은 장착 아이템이면서도, 사용 효과가 있는 아이템임. 
 /// </summary>
 public abstract class SkillItemSO : ItemDataSO
 {
+    public SkillType skillType;
+    
+    
     public SkillItemSO()
     {
         type = ItemType.Skill;
@@ -16,35 +29,37 @@ public abstract class SkillItemSO : ItemDataSO
     protected override bool CanGet(out CantGetReason reason)
     {        
         reason = CantGetReason.None;
+
+        if (Player.Instance.skills.HasEmptySpace(skillType)==false)
+        {
+            reason = CantGetReason.NoSpace;
+        }
         return true;
     }
 
 
     protected override void Get()
     {
-        Equip();        // 장비아이템 획득 시 자동으로 장착.
+        Player.Instance.skills.SwitchSkill(this);
+
     }
 
     protected override void OnCantGet(CantGetReason reason)
     {
-        
+        switch(reason)
+        {
+            case CantGetReason.NoSpace:
+                // GamePlayManager.Instance.OnInventoryFull(this);
+                Debug.Log("장착할 스킬이 없음");
+                break;
+        }
     }
 
 
 
     public void Equip()
     {
-        //플레이어 장비창으로 들어가야지. 능력치 수정. 
-        if( GameManager.Instance.playerData.TryEquipSkill(this))
-        {
-            OnEquip();  // 장착효과
-
-            Debug.Log($"장착띠  {dataName}");
-        }
-        else
-        {
-            Debug.Log($"장착 실패띠  {dataName}");
-        }
+        OnEquip();  // 장착효과
     }
 
 
@@ -56,8 +71,8 @@ public abstract class SkillItemSO : ItemDataSO
     }
 
 
-    public abstract void OnEquip();
-    public abstract void OnUnEquip();
+    protected abstract void OnEquip();
+    protected abstract void OnUnEquip();
 
     public abstract void Use();
 }

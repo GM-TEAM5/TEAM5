@@ -4,11 +4,11 @@ using BW.Util;
 
 using UnityEngine;
 using DG.Tweening;
-using JetBrains.Annotations;
+
 
 
 [RequireComponent(typeof(CharacterController), typeof(SpriteEntity))]
-[RequireComponent(typeof(PlayerEquipments), typeof(PlayerInteraction))]
+[RequireComponent(typeof(PlayerEquipments), typeof(PlayerSkills), typeof(PlayerInteraction))]
 public class Player : Singleton<Player>, ITimeScaleable     // ui 등에서 플레이어 컴포넌트에 접근하기 쉽도록 싱글톤
 {
     public Transform t;
@@ -41,12 +41,13 @@ public class Player : Singleton<Player>, ITimeScaleable     // ui 등에서 플�
 
 
     //-------- skills ------------
-    public SerializableDictionary<KeyCode, PlayerSkill> skills;
-
+    public SerializableDictionary<KeyCode, PlayerSkill> _skills;
 
 
     //
-    public PlayerEquipments playerEquipments;
+    public PlayerSkills skills;
+    //
+    public PlayerEquipments equipments;
 
     //
     PlayerInteraction playerInteraction;
@@ -149,9 +150,8 @@ public class Player : Singleton<Player>, ITimeScaleable     // ui 등에서 플�
             knockbackVelocity = Vector3.Lerp(knockbackVelocity, Vector3.zero, knockbackDamping * Time.unscaledDeltaTime * timeScale);
         }
 
-        // 스킬 입력 체크 추가
-        CheckSkillInput();
-
+        
+        skills.OnUpdate();
         playerBasicAttack.OnUpdate();
 
         Move();
@@ -161,25 +161,6 @@ public class Player : Singleton<Player>, ITimeScaleable     // ui 등에서 플�
         playerDraw.OnUpdate();
     }
 
-    // 새로운 메서드 추가
-    void CheckSkillInput()
-    {
-        if (playerInput.pressedNumber != 0)
-        {
-            // 인덱스 범위 체크 추가
-            int index = playerInput.pressedNumber - 1;
-            if (index >= 0 && index < playerInput.skillKeys.Count)
-            {
-                KeyCode keyCode = playerInput.skillKeys[index];
-
-                if (skills.ContainsKey(keyCode))
-                {
-                    skills[keyCode].Use();
-                }
-            }
-            playerInput.pressedNumber = 0;
-        }
-    }
 
     //============================================================================
     void OnTriggerEnter(Collider other)
@@ -238,8 +219,11 @@ public class Player : Singleton<Player>, ITimeScaleable     // ui 등에서 플�
         playerDraw.Init();
 
         playerInteraction = GetComponent<PlayerInteraction>();
-        playerEquipments = GetComponent<PlayerEquipments>();
-        playerEquipments.InitEquipments();                      // 스텟을 조정하기 때문에, 스탯 초기화 이후에 진행해야함. 
+        equipments = GetComponent<PlayerEquipments>();
+        equipments.InitEquipments();                      // 스텟을 조정하기 때문에, 스탯 초기화 이후에 진행해야함. 
+
+        skills = GetComponent<PlayerSkills>();
+        skills.Init();
 
         playerBasicAttack = GetComponentInChildren<PlayerBasicAttack>();
 
@@ -256,89 +240,11 @@ public class Player : Singleton<Player>, ITimeScaleable     // ui 등에서 플�
 
         playerCanvas.gameObject.SetActive(false);
 
-        InitSkills();
+        
 
         //
         GameEventManager.Instance.onInitPlayer.Invoke();    // 플레이어 초기화가 필요한 ui 작업을 하기 위함. 
     }
-
-    // 데이터 상의 모든 스킬장착
-    public void InitSkills()
-    {
-        if (GameManager.Instance == null || GameManager.Instance.playerData == null)
-        {
-            Debug.LogError("GameManager or playerData is null");
-            return;
-        }
-
-        List<SkillItemSO> skillsData = GameManager.Instance.playerData.skills;
-        if (skillsData == null)
-        {
-            Debug.LogError("skillsData is null");
-            return;
-        }
-
-        skills = new();
-
-        // 고정된 키 매핑 순서
-        Dictionary<int, KeyCode> keyMapping = new()
-        {
-            {0, KeyCode.Q},
-            {1, KeyCode.E},
-            {2, KeyCode.LeftShift},
-            {3, KeyCode.Alpha4}
-        };
-
-        // 스킬 초기화
-        for (int i = 0; i < skillsData.Count; i++)
-        {
-            if (skillsData[i] != null && keyMapping.ContainsKey(i))
-            {
-                KeyCode keyCode = keyMapping[i];
-                PlayerSkill playerSkill = new PlayerSkill(skillsData[i]);
-                skills[keyCode] = playerSkill;
-                skillsData[i].OnEquip();
-            }
-        }
-
-        // PlayerInputManager의 skillKeys 업데이트
-        PlayerInputManager.Instance.skillKeys = new List<KeyCode>(keyMapping.Values);
-    }
-
-    // 개별 스킬 장착
-    public void ChangeSkill(int idx, SkillItemSO skillData, bool eventCall = true)
-    {
-        if (PlayerInputManager.Instance == null)
-        {
-            Debug.LogError("PlayerInputManager is null");
-            return;
-        }
-
-        if (idx >= PlayerInputManager.Instance.skillKeys.Count)
-        {
-            Debug.LogError($"Skill index {idx} is out of range");
-            return;
-        }
-
-        KeyCode keyCode = PlayerInputManager.Instance.skillKeys[idx];
-        PlayerSkill playerSkill = new PlayerSkill(skillData);
-
-        if (skills != null && skills.ContainsKey(keyCode))
-        {
-            skills[keyCode].skillData.OnUnEquip();
-        }
-
-        skills[keyCode] = playerSkill;
-        skillData.OnEquip();
-
-        if (eventCall && GameEventManager.Instance != null)
-        {
-            GameEventManager.Instance.onChangeSkill.Invoke(keyCode, playerSkill);
-        }
-    }
-
-
-
 
     #region Equipment 
     /// <summary>
@@ -347,20 +253,10 @@ public class Player : Singleton<Player>, ITimeScaleable     // ui 등에서 플�
     /// <param name="equipmentData"></param>
     public void EquipAutomatically(EquipmentItemSO equipmentData)
     {
-        if (playerEquipments.TryEquip(equipmentData) == false)
+        if (equipments.TryEquip(equipmentData) == false)
         {
             Debug.LogError("그럴리가 없는데...?");   // 이거 나오면 로직 잘못짠거임;
         }
-    }
-
-    /// <summary>
-    /// 직접 해당 칸에 아이템 장착
-    /// </summary>
-    /// <param name="idx"></param>
-    /// <param name="equipmentData"></param>
-    public void Equip(int idx, EquipmentItemSO equipmentData)
-    {
-        playerEquipments.Equip(idx, equipmentData);
     }
 
     #endregion
@@ -394,11 +290,10 @@ public class Player : Singleton<Player>, ITimeScaleable     // ui 등에서 플�
             lastMoveDir.y = 0;      // 방향 조절에 필요 없기떄문.
 
             moveVector = lastMoveDir.normalized * status.movementSpeed;
+            animator.OnMove(moveVector.magnitude);
         }
 
         controller.Move(moveVector * Time.unscaledDeltaTime * timeScale);
-
-        animator.OnMove(moveVector.magnitude);
     }
 
     /// <summary>
@@ -449,7 +344,7 @@ public class Player : Singleton<Player>, ITimeScaleable     // ui 등에서 플�
 
     void SetStunned(float duration)
     {
-        stunDurationRemain = System.Math.Max(stunDurationRemain, duration);
+        stunDurationRemain = Mathf.Max(stunDurationRemain, duration);
     }
 
 

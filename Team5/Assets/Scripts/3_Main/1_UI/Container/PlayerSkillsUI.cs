@@ -11,7 +11,7 @@ public class PlayerSkillsUI : MonoBehaviour
 
     void Awake()
     {
-        GameEventManager.Instance.onInitPlayer.AddListener( ( )=>Init(Player.Instance.skills) );
+        GameEventManager.Instance.onInitPlayer.AddListener( ( )=>Init(Player.Instance._skills) );
     }
 
 

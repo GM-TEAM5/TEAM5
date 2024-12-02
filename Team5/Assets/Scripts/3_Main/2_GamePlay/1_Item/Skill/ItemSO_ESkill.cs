@@ -40,12 +40,12 @@ public class ItemSO_ESkill : SkillItemSO, IDrawableSkill
 
     PlayerDraw playerDraw;
 
-    public override void OnEquip()
+    protected override void OnEquip()
     {
         playerDraw = Player.Instance.GetComponentInChildren<PlayerDraw>();
     }
 
-    public override void OnUnEquip()
+    protected override void OnUnEquip()
     {
         playerDraw = null;
         if (drawTimerCoroutine != null)

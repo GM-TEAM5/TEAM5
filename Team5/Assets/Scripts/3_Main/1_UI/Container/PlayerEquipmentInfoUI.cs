@@ -48,7 +48,7 @@ public class PlayerEquipmentInfoUI : MonoBehaviour
     void SyncTableItemCount()
     {
         int currItemCount = playerItems.Count;
-        int targetItemCount = Player.Instance.playerEquipments.equipments.Count;
+        int targetItemCount = Player.Instance.equipments.equipments.Count;
 
         int diff = targetItemCount - currItemCount;
 
@@ -78,7 +78,7 @@ public class PlayerEquipmentInfoUI : MonoBehaviour
     /// </summary>
     void FillTableItemData()
     {
-        List<EquipmentItemSO> equipmentsData = Player.Instance.playerEquipments.equipments;
+        List<EquipmentItemSO> equipmentsData = Player.Instance.equipments.equipments;
 
         for(int i=0;i<equipmentsData.Count;i++)
         {

@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerInputManager : Singleton<PlayerInputManager>
 {
-    [SerializeField] PlayerInput playerInput;
+    // [SerializeField] PlayerInput playerInput;
 
     public InputAction moveAction;      // WASD
     public InputAction mouseLeftButtonAction;       // 클릭
@@ -33,6 +33,7 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
     public bool scroll;
     public bool util;
 
+    public bool ability;
 
 
     //
@@ -65,12 +66,12 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
 
 
     //================================================================
-
-    void Start()
+    public void Init()
     {
-        playerInput = GetComponent<PlayerInput>();
+        PlayerInput playerInput = GetComponent<PlayerInput>();
+        playerInput.actions = GameManager.Instance.playerData.inputActionSO;
 
-        moveAction = playerInput.actions["Move"];
+        moveAction =  playerInput.actions["Move"];
         mouseLeftButtonAction = playerInput.actions["MouseLeftButton"];
         interactAction = playerInput.actions["Interact"];
         drawAction = playerInput.actions["Draw"];
@@ -85,7 +86,7 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
 
     void Update()
     {
-        flowControl =  flowControlAction.ReadValue<float>()>0;  
+        flowControl =  flowControlAction.triggered;  
         
         
         
@@ -108,10 +109,10 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
         
 
         //
-        basicAttack = Input.GetMouseButton(0);
-        draw = drawAction.ReadValue<float>()>0;
-        scroll = scrollAction.ReadValue<float>()>0;
-        util = utilAction.ReadValue<float>()>0;
+        basicAttack = mouseLeftButtonAction.ReadValue<float>() > 0;
+        draw = drawAction.triggered;
+        scroll = scrollAction.triggered;
+        util = utilAction.triggered;
         //
         // CheckNumberKeys();
 

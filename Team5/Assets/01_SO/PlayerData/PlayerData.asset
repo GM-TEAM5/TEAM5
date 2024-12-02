@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78ec4a2af2a00fa449813f0756e76b8b, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
+  inputActionSO: {fileID: -944628639613478452, guid: 0ca1e7f5a8e301b479da84ef68bee2ee,
+    type: 3}
   traitPoint: 123
   currChapter: 0
   currStageNum: 0
   currStagePlayCount: 0
   deathCount: 15
   maxCount_equipment: 8
-  maxCount_skill: 4
   stages:
   - {fileID: 11400000, guid: 6084220f7ec65f84ba55697acff44cae, type: 2}
   - {fileID: 11400000, guid: 4139757f8a71c0e4ebe00df73ef78977, type: 2}
@@ -32,15 +33,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  skills:
-  - {fileID: 11400000, guid: 87d9af0859a1c434fa32ead1970517d4, type: 2}
-  - {fileID: 11400000, guid: f9d7bf5c53692eb499b8d66dadb59b92, type: 2}
-  - {fileID: 11400000, guid: df05e74d61ebc9641ae4de38704becea, type: 2}
-  - {fileID: 0}
-  initSkills:
-  - {fileID: 11400000, guid: 87d9af0859a1c434fa32ead1970517d4, type: 2}
-  - {fileID: 11400000, guid: f9d7bf5c53692eb499b8d66dadb59b92, type: 2}
-  - {fileID: 11400000, guid: df05e74d61ebc9641ae4de38704becea, type: 2}
   savedStatus:
     d_attackRange: 0
     d_attackArea: 0
@@ -68,3 +60,24 @@ MonoBehaviour:
     selectionCount: 3
     pDmg: 0
     mDmg: 0
+  ability_passives: []
+  ability_actives:
+    array:
+    - Key: 1
+      Value: {fileID: 0}
+    - Key: 2
+      Value: {fileID: 11400000, guid: 87d9af0859a1c434fa32ead1970517d4, type: 2}
+    - Key: 3
+      Value: {fileID: 11400000, guid: df05e74d61ebc9641ae4de38704becea, type: 2}
+    - Key: 4
+      Value: {fileID: 11400000, guid: f9d7bf5c53692eb499b8d66dadb59b92, type: 2}
+  init_actives:
+    array:
+    - Key: 1
+      Value: {fileID: 0}
+    - Key: 2
+      Value: {fileID: 11400000, guid: 87d9af0859a1c434fa32ead1970517d4, type: 2}
+    - Key: 3
+      Value: {fileID: 11400000, guid: df05e74d61ebc9641ae4de38704becea, type: 2}
+    - Key: 4
+      Value: {fileID: 11400000, guid: f9d7bf5c53692eb499b8d66dadb59b92, type: 2}

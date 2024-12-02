@@ -741,6 +741,36 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7665522212054138302, guid: f6a8952bfb0882c4386daa0922f02686,
+        type: 3}
+      propertyPath: draw
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7665522212054138302, guid: f6a8952bfb0882c4386daa0922f02686,
+        type: 3}
+      propertyPath: drawAction.m_Name
+      value: Draw
+      objectReference: {fileID: 0}
+    - target: {fileID: 7665522212054138302, guid: f6a8952bfb0882c4386daa0922f02686,
+        type: 3}
+      propertyPath: utilAction.m_Name
+      value: Util
+      objectReference: {fileID: 0}
+    - target: {fileID: 7665522212054138302, guid: f6a8952bfb0882c4386daa0922f02686,
+        type: 3}
+      propertyPath: scrollAction.m_Name
+      value: Scroll
+      objectReference: {fileID: 0}
+    - target: {fileID: 7665522212054138302, guid: f6a8952bfb0882c4386daa0922f02686,
+        type: 3}
+      propertyPath: interactAction.m_Name
+      value: Interact
+      objectReference: {fileID: 0}
+    - target: {fileID: 7665522212054138302, guid: f6a8952bfb0882c4386daa0922f02686,
+        type: 3}
+      propertyPath: flowControlAction.m_Name
+      value: Flow Control
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
