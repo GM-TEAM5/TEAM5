@@ -5,8 +5,9 @@ using UnityEngine;
 public class PlayerBasicAttack : MonoBehaviour, ITimeScaleable
 {
     [Header("Attack Settings")]
-    [SerializeField] private float attackDelay = 0.2f;
-    [SerializeField] private float damage = 30f;
+    public BasicAttackSO data; 
+
+
     [SerializeField] private float attackRange = 2f;
     [SerializeField] private float comboCooldown = 3f;
     [SerializeField] private float[] comboDelays = new float[] { 0.1f, 0.2f, 0.3f };
@@ -49,6 +50,13 @@ public class PlayerBasicAttack : MonoBehaviour, ITimeScaleable
             slashEffects[i] = slashParent.GetChild(i).gameObject;
             slashEffects[i].SetActive(false);
         }
+    }
+
+    public void Init(BasicAttackSO basicAttackData)
+    {
+        this.data = basicAttackData;
+
+        
     }
 
     public void OnUpdate()

@@ -498,8 +498,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackDelay: 0.2
   damage: 30
-  attackRange: 2
-  comboCooldown: 1
+  attackRange: 3
+  comboCooldown: 3
   comboDelays:
   - 0.1
   - 0.2
@@ -698,7 +698,7 @@ Transform:
   m_GameObject: {fileID: 4479624256799087683}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1467,7 +1467,7 @@ PrefabInstance:
     - target: {fileID: 659031339157106072, guid: 40b8fa5ca06b3db469479bbc1264fee1,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 659031339157106072, guid: 40b8fa5ca06b3db469479bbc1264fee1,
         type: 3}
@@ -1477,22 +1477,22 @@ PrefabInstance:
     - target: {fileID: 659031339157106072, guid: 40b8fa5ca06b3db469479bbc1264fee1,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.5
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 659031339157106072, guid: 40b8fa5ca06b3db469479bbc1264fee1,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.5
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 659031339157106072, guid: 40b8fa5ca06b3db469479bbc1264fee1,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 659031339157106072, guid: 40b8fa5ca06b3db469479bbc1264fee1,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 659031339157106072, guid: 40b8fa5ca06b3db469479bbc1264fee1,
         type: 3}
@@ -1502,7 +1502,7 @@ PrefabInstance:
     - target: {fileID: 659031339157106072, guid: 40b8fa5ca06b3db469479bbc1264fee1,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 659031339157106072, guid: 40b8fa5ca06b3db469479bbc1264fee1,
         type: 3}
@@ -1517,7 +1517,7 @@ PrefabInstance:
     - target: {fileID: 1768877631383285660, guid: 40b8fa5ca06b3db469479bbc1264fee1,
         type: 3}
       propertyPath: m_Name
-      value: Slash3
+      value: Effect3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1561,7 +1561,7 @@ PrefabInstance:
     - target: {fileID: 659031339157106072, guid: 40b8fa5ca06b3db469479bbc1264fee1,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 659031339157106072, guid: 40b8fa5ca06b3db469479bbc1264fee1,
         type: 3}
@@ -1571,22 +1571,22 @@ PrefabInstance:
     - target: {fileID: 659031339157106072, guid: 40b8fa5ca06b3db469479bbc1264fee1,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 659031339157106072, guid: 40b8fa5ca06b3db469479bbc1264fee1,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 659031339157106072, guid: 40b8fa5ca06b3db469479bbc1264fee1,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 659031339157106072, guid: 40b8fa5ca06b3db469479bbc1264fee1,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 659031339157106072, guid: 40b8fa5ca06b3db469479bbc1264fee1,
         type: 3}
@@ -1596,7 +1596,7 @@ PrefabInstance:
     - target: {fileID: 659031339157106072, guid: 40b8fa5ca06b3db469479bbc1264fee1,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 659031339157106072, guid: 40b8fa5ca06b3db469479bbc1264fee1,
         type: 3}
@@ -1611,7 +1611,7 @@ PrefabInstance:
     - target: {fileID: 1768877631383285660, guid: 40b8fa5ca06b3db469479bbc1264fee1,
         type: 3}
       propertyPath: m_Name
-      value: Slash1
+      value: Effect1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1734,7 +1734,7 @@ PrefabInstance:
     - target: {fileID: 659031339157106072, guid: 40b8fa5ca06b3db469479bbc1264fee1,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 659031339157106072, guid: 40b8fa5ca06b3db469479bbc1264fee1,
         type: 3}
@@ -1749,17 +1749,17 @@ PrefabInstance:
     - target: {fileID: 659031339157106072, guid: 40b8fa5ca06b3db469479bbc1264fee1,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.7071068
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 659031339157106072, guid: 40b8fa5ca06b3db469479bbc1264fee1,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 659031339157106072, guid: 40b8fa5ca06b3db469479bbc1264fee1,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 659031339157106072, guid: 40b8fa5ca06b3db469479bbc1264fee1,
         type: 3}
@@ -1769,7 +1769,7 @@ PrefabInstance:
     - target: {fileID: 659031339157106072, guid: 40b8fa5ca06b3db469479bbc1264fee1,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 659031339157106072, guid: 40b8fa5ca06b3db469479bbc1264fee1,
         type: 3}
@@ -1784,7 +1784,7 @@ PrefabInstance:
     - target: {fileID: 1768877631383285660, guid: 40b8fa5ca06b3db469479bbc1264fee1,
         type: 3}
       propertyPath: m_Name
-      value: Slash2
+      value: Effect2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -18,7 +18,7 @@ public class Player : Singleton<Player>, ITimeScaleable     // ui 등에서 플�
 
     //======= ui ========
     public PlayerStateUI stateUI;
-    PlayerDraw playerDraw;
+    public PlayerDraw playerDraw;
     //
     PlayerInputManager playerInput;
     CharacterController controller;

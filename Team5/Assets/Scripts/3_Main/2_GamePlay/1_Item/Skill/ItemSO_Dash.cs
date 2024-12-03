@@ -9,51 +9,35 @@ public class ItemSO_Dash : SkillItemSO
     [Header("Dash Settings")]
     [SerializeField] private float dashMultiplier = 3f;  // 이동 속도 증가 배율
     [SerializeField] private float dashDuration = 0.1f;  // 대시 지속 시간
-    [SerializeField] private float cooldown = 1f;        // 쿨타임
+
 
     public override string id => "2003";
     public override string dataName => "DashSkill";
 
-    private Player player;
-    private float originalMultiplier;
-    private bool canUse = true;
 
     protected override void OnEquip()
     {
-        player = Player.Instance;
-        canUse = true;
         Debug.Log("DashSkill is equipped!");
     }
 
     protected override void OnUnEquip()
     {
-        player = null;
         Debug.Log("DashSkill is unequipped!");
     }
 
     public override void Use()
     {
-        Debug.Log(canUse);
-        if (player == null || !canUse) return;
-        Debug.Log("Dash!");
-
-        // 대시 실행
-        originalMultiplier = player.status.movementSpeedMultiplier;
-        player.status.movementSpeedMultiplier *= dashMultiplier;
-
-        // 쿨타임과 속도 복구 시작
-        canUse = false;
-        player.StartCoroutine(DashRoutine());
+        Player.Instance.StartCoroutine(DashRoutine());
     }
 
     private IEnumerator DashRoutine()
     {
+        // 대시 실행
+        float originalMultiplier = Player.Instance.status.movementSpeedMultiplier;
+        Player.Instance.status.movementSpeedMultiplier *= dashMultiplier;
+
         // 대시 지속
         yield return new WaitForSeconds(dashDuration);
-        player.status.movementSpeedMultiplier = originalMultiplier;
-
-        // 쿨타임
-        yield return new WaitForSeconds(cooldown);
-        canUse = true;
+        Player.Instance.status.movementSpeedMultiplier = originalMultiplier;
     }
 }

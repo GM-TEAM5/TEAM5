@@ -38,8 +38,7 @@ public class PlayerSkills : MonoBehaviour
     public void OnUpdate()
     {
         SetCurrAction();
-
-        currAction?.Use();  //설정된 액션을 실행. 
+        TryUse(); 
     }   
 
 
@@ -69,6 +68,21 @@ public class PlayerSkills : MonoBehaviour
         {
             currAction = null;
         }
+    }
+
+
+    void TryUse()
+    {
+        if (currAction ==null)
+        {
+            return;
+        }
+
+        if (currAction.CanUse())
+        {
+            currAction.Use();
+        }
+
     }
 
     //==============================================================
