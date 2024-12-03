@@ -7,13 +7,12 @@ using UnityEngine.UI;
 public class PlayerStateUI : MonoBehaviour
 {
     [SerializeField] Slider hpBar;
-    [SerializeField] Slider expBar;
-    [SerializeField] Slider inkBar;
-    [SerializeField] Slider topHpBar;
-    [SerializeField] Slider topExpBar;
-    [SerializeField] Slider topInkBar;
+    [SerializeField] Transform inkBarContainer;
+    [SerializeField] Slider inkBarPrefab;
+    [SerializeField] int inkSegments = 5;
 
-    [SerializeField] TextMeshProUGUI levelText;
+    private List<Slider> inkSegmentBars = new List<Slider>();
+    private float segmentValue;
 
 
 
@@ -23,18 +22,20 @@ public class PlayerStateUI : MonoBehaviour
         UpdateMaxHp(player.status.maxHp);
         UpdateCurrHp(player.status.currHp);
 
-        // UpdateMaxExp(player.status.maxExp);
-        // UpdateCurrExp(player.status.currExp);
-        // UpdateLevelText(player.status.level);
+        segmentValue = player.status.maxInk / inkSegments;
+
+        // 세그먼트 슬라이더 생성
+        for (int i = 0; i < inkSegments; i++)
+        {
+            Slider newSegment = Instantiate(inkBarPrefab, inkBarContainer);
+            inkSegmentBars.Add(newSegment);
+        }
 
         UpdateMaxInk(player.status.maxInk);
         UpdateCurrInk(player.status.currInk);
 
-
-        GameEventManager.Instance.onChangePlayerStatus_maxHp.AddListener(()=>UpdateMaxHp(player.status.maxHp));
+        GameEventManager.Instance.onChangePlayerStatus_maxHp.AddListener(() => UpdateMaxHp(player.status.maxHp));
     }
-
-
 
     #region ====== HP =======
 
@@ -44,7 +45,6 @@ public class PlayerStateUI : MonoBehaviour
     public void UpdateMaxHp(float maxHp)
     {
         hpBar.maxValue = maxHp;
-        topHpBar.maxValue = maxHp;
     }
 
     /// <summary>
@@ -53,37 +53,8 @@ public class PlayerStateUI : MonoBehaviour
     public void UpdateCurrHp(float hp)
     {
         hpBar.value = hp;
-        topHpBar.value = hp;
     }
 
-    #endregion
-    #region ====== Level =======
-
-    /// <summary>
-    /// hp bar 의 최댓값을 플레이어 능력치 값에 맞춘다. (주로 체력 증가 이벤트 발생시 호출됨 )
-    /// </summary>
-    public void UpdateMaxExp(float maxExp)
-    {
-        expBar.maxValue = maxExp;
-        topExpBar.maxValue = maxExp;
-    }
-
-    /// <summary>
-    /// hp bar의 현재 값을 플레이어 능력치 값에 맞춘다. (주로 회복, 피해 발생시 호출됨)
-    /// </summary>
-    public void UpdateCurrExp(float currExp)
-    {
-        expBar.value = currExp;
-        topExpBar.value = currExp;
-    }
-
-    /// <summary>
-    ///  레벨 텍스트 업데이트
-    /// </summary>
-    public void UpdateLevelText(int level)
-    {
-        levelText.SetText( level.ToString());
-    }
     #endregion
 
     #region ====== Ink =======
@@ -93,8 +64,7 @@ public class PlayerStateUI : MonoBehaviour
     /// </summary>
     public void UpdateMaxInk(float maxInk)
     {
-        inkBar.maxValue = maxInk;
-        topInkBar.maxValue = maxInk;
+        segmentValue = maxInk / inkSegments;
     }
 
     /// <summary>
@@ -102,8 +72,28 @@ public class PlayerStateUI : MonoBehaviour
     /// </summary>
     public void UpdateCurrInk(float currInk)
     {
-        inkBar.value = currInk;
-        topInkBar.value = currInk;
+        int maxCount = (int)(currInk / segmentValue);
+        int extraInk = (int)(currInk - (maxCount * segmentValue));
+
+        for (int i = 0; i < inkSegments; i++)
+        {
+            if (i < maxCount)
+            {
+                inkSegmentBars[i].value = 1f;
+            }
+            else
+            {
+                if (extraInk > 0)
+                {
+                    inkSegmentBars[i].value = extraInk / (100f / inkSegments);
+                    extraInk = 0;
+                }
+                else
+                {
+                    inkSegmentBars[i].value = 0f;
+                }
+            }
+        }
     }
     #endregion
 }
