@@ -64,7 +64,7 @@ MonoBehaviour:
   ability_actives:
     array:
     - Key: 1
-      Value: {fileID: 0}
+      Value: {fileID: 11400000, guid: 03e0e5aa169111548be97dd798570abf, type: 2}
     - Key: 2
       Value: {fileID: 11400000, guid: 87d9af0859a1c434fa32ead1970517d4, type: 2}
     - Key: 3
@@ -74,7 +74,7 @@ MonoBehaviour:
   init_actives:
     array:
     - Key: 1
-      Value: {fileID: 0}
+      Value: {fileID: 11400000, guid: 03e0e5aa169111548be97dd798570abf, type: 2}
     - Key: 2
       Value: {fileID: 11400000, guid: 87d9af0859a1c434fa32ead1970517d4, type: 2}
     - Key: 3

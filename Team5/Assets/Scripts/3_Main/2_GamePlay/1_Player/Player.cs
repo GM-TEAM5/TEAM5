@@ -51,7 +51,7 @@ public class Player : Singleton<Player>, ITimeScaleable     // ui 등에서 플�
 
     //
     PlayerInteraction playerInteraction;
-    PlayerBasicAttack playerBasicAttack;
+    public PlayerBasicAttack basicAttack;
 
     // 스턴
     public bool isStunned => stunDurationRemain > 0;
@@ -152,7 +152,7 @@ public class Player : Singleton<Player>, ITimeScaleable     // ui 등에서 플�
 
         
         skills.OnUpdate();
-        playerBasicAttack.OnUpdate();
+        // basicAttack.OnUpdate();
 
         Move();
         UpdateSpriteDir();
@@ -215,6 +215,8 @@ public class Player : Singleton<Player>, ITimeScaleable     // ui 등에서 플�
         }
 
         //--------- after init status --------------
+        basicAttack = GetComponentInChildren<PlayerBasicAttack>();
+        
         playerDraw = GetComponentInChildren<PlayerDraw>();
         playerDraw.Init();
 
@@ -225,7 +227,7 @@ public class Player : Singleton<Player>, ITimeScaleable     // ui 등에서 플�
         skills = GetComponent<PlayerSkills>();
         skills.Init();
 
-        playerBasicAttack = GetComponentInChildren<PlayerBasicAttack>();
+        
 
         animator = GetComponentInChildren<PlayerAnimator>();
         //----------- after init finished ---------------------
@@ -476,7 +478,7 @@ public class Player : Singleton<Player>, ITimeScaleable     // ui 등에서 플�
     {
         timeScale = scale;
         // 필요한 경우 자식 컴포넌트들의 timeScale도 설정
-        if (playerBasicAttack != null) playerBasicAttack.SetTimeScale(scale);
+        // if (basicAttack != null) basicAttack.SetTimeScale(scale);
         if (playerDraw != null) playerDraw.SetTimeScale(scale);
         // ... 다른 타임스케일이 필요한 컴포넌트들
     }

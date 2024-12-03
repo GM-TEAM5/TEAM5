@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using System.Reflection;
-using System;
+
 
 public abstract class BasicAttackSO : SkillItemSO
 {
@@ -52,11 +51,12 @@ public abstract class BasicAttackSO : SkillItemSO
     protected override void OnEquip()
     {
         // 플레이어 계층 구조 하위에 지정된 이펙트 생성
+        Player.Instance.basicAttack.Equip(this);
     }
 
     protected override void OnUnEquip()
     {
-        // 플레이어 계층 구조 하위에 생성되었던 이펙트 파괴
+        Player.Instance.basicAttack.UnEquip();
     }
 
 
@@ -64,5 +64,8 @@ public abstract class BasicAttackSO : SkillItemSO
     public override void Use()
     {
         //Player BasicAttack 함수 실행. 
+        Player.Instance.basicAttack.TryAttack();
+
+
     }
 }

@@ -20,7 +20,7 @@ public abstract class SkillItemSO : ItemDataSO
 {
     public SkillType skillType;
     
-    [Min(1)] public float coolTime = 1;
+    [Min(0.1f)] public float coolTime = 1;
 
     
     public SkillItemSO()

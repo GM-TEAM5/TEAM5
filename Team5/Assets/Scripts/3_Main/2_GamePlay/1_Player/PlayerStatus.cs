@@ -88,7 +88,7 @@ public class PlayerStatus
     public float attackRange => d_attackRange * rangeModifier;
     public float attackArea => d_attackArea * rangeModifier;
     public float attackCooltime => d_attackCooltime * cooltimeModifier;
-    public float basicAttackDamage => d_damage + pDmg;
+    // public float basicAttackDamage => d_damage + pDmg;
 
     public float pickUpRange => d_pickupRange * rangeModifier;
 
