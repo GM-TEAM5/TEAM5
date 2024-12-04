@@ -8,10 +8,10 @@ public class PlayerBasicAttack : MonoBehaviour
     public BasicAttackSO data; 
 
 
-    private Vector3 attackDirection;
-    float attackRange = 2f;
+    private Vector3 attackDir;
 
-    float lastAttackTime = -1;
+    float attackAvailableTime = -1;
+    float comboResetTime = -1;
     int currCombo;
 
     
@@ -52,22 +52,20 @@ public class PlayerBasicAttack : MonoBehaviour
     public void TryAttack()
     {
         //
-        if (Time.time >= lastAttackTime )   //0.1, 0.1, 0.2 
+        if (Time.time >= attackAvailableTime )  
         {
             // 콤보 리셋 체크
-            if (Time.time >= lastAttackTime + data.comboResetTime)
+            if (Time.time >= comboResetTime )
             {
                 currCombo = 0;
             }
 
             
-            attackDirection = (PlayerInputManager.Instance.mouseWorldPos - Player.Instance.t.position).normalized;
-            attackDirection.y = 0;    
+            CalAttackDir();
 
             StartCoroutine(Attack());
         }
     }
-
 
 
     IEnumerator Attack()
@@ -76,44 +74,38 @@ public class PlayerBasicAttack : MonoBehaviour
         TestManager.Instance.TestSFX_NormalAttack();
 
         //
-        lastAttackTime = Time.time + data.delays[currCombo];
+        attackAvailableTime = Time.time + data.delays[currCombo];
+        comboResetTime = Time.time + data.comboResetTime;
+        
         
 
         // 현재 이펙트만 활성화
         GameObject currEffect = effects[currCombo];
         currEffect.SetActive(true);
-
-
-        currCombo = (currCombo + 1) % data.comboCount;
-
-
-        // 공격 방향 계산
-        float angle = Mathf.Atan2(attackDirection.x, attackDirection.z) * Mathf.Rad2Deg - 90f;
-        Vector3 spherePosition = (attackDirection * attackRange).WithStandardHeight();  //평타 종류별로 2f 는 달라질 수 잇음. 
-
-        // Slash 부모 오브젝트의 위치와 회전 설정
-        transform.localPosition = spherePosition - (attackDirection * 1.5f);
-        transform.localRotation = Quaternion.Euler(0, angle, 0);
+                
+        // transform.localPosition = spherePosition - (attackDir * 1.5f);      // 이펙트 설정
+        float angle = Mathf.Atan2(attackDir.x, attackDir.z) * Mathf.Rad2Deg - 90f;
+        transform.localRotation = Quaternion.Euler(0, angle, 0);            //이펙트 설정
 
 
         // 데미지 판정 - 
-        Collider[] hits = Physics.OverlapSphere(transform.position + spherePosition, 1f);
-        foreach (var hit in hits)
-        {
-            Enemy enemy = hit.GetComponent<Enemy>();
-            if (enemy != null)
-            {
-                float dmg = data.defaultDamage + data.damageWeight * Player.Instance.status.pDmg;
-                enemy.GetDamaged(dmg );
-            }
-        }
+        data.detections[currCombo].Detect(attackDir,transform.position,data);
+    
 
+        currCombo = (currCombo + 1) % data.comboCount;
 
-        
-
-        yield return new WaitForSeconds(0.5f);      // 이부분은 추후 이펙트 프리팹 스크립트로 빼자. 
+        yield return new WaitForSeconds(1f);      // 이부분은 추후 이펙트 프리팹 스크립트로 빼자. 
         currEffect.SetActive(false);
     }
+
+
+    void CalAttackDir()
+    {
+        attackDir = (PlayerInputManager.Instance.mouseWorldPos - Player.Instance.t.position).normalized;
+        attackDir.y = 0;    
+    }
+
+    //===============================================================================
 
     private void OnDrawGizmos()
     {
@@ -121,7 +113,7 @@ public class PlayerBasicAttack : MonoBehaviour
             effects[currCombo] != null && effects[currCombo].activeSelf)
         {
             Gizmos.color = Color.red;
-            Vector3 spherePos = transform.position + (effects[currCombo].transform.localPosition + (attackDirection * 2f));
+            Vector3 spherePos = transform.position + (effects[currCombo].transform.localPosition + (attackDir * 2f));
             Gizmos.DrawWireSphere(spherePos, 1f);
             Gizmos.DrawLine(transform.position, spherePos);
         }
@@ -131,7 +123,7 @@ public class PlayerBasicAttack : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
+        Gizmos.DrawWireSphere(transform.position, 2f);
     }
 #endif
 }

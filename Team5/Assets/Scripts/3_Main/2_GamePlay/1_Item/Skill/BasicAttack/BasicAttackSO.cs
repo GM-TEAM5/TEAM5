@@ -16,7 +16,7 @@ public abstract class BasicAttackSO : SkillItemSO
     public List<GameObject> effects;        // 각 모션의 이펙트 
     public List<AnimationClip> animations;  // 각 모션의 애니메이션
     public List<float> delays;              // 다음 모션까지의 딜레이
-    // public List<Action> attackEffects;      // 공격 적용 판정 (SO로 뺼거임)
+    public List<AttackDetectionSO> detections;      // 공격 적용 판정 (SO로 뺼거임)
 
 
 
@@ -33,7 +33,7 @@ public abstract class BasicAttackSO : SkillItemSO
         FixListCap(ref effects);
         FixListCap(ref animations);
         FixListCap(ref delays);
-        // FixListCap(ref attackEffects);
+        FixListCap(ref detections);
     }
 
     // 콤보카운트에 맞춰 리스트의 크기를 조절한다.     
