@@ -9,9 +9,9 @@ public class PlayerStateUI : MonoBehaviour
     [SerializeField] Slider hpBar;
     [SerializeField] Transform inkBarContainer;
     [SerializeField] Slider inkBarPrefab;
-    [SerializeField] int inkSegments = 5;
 
     private List<Slider> inkSegmentBars = new List<Slider>();
+    private int inkSegments;
     private float segmentValue;
 
 
@@ -22,6 +22,7 @@ public class PlayerStateUI : MonoBehaviour
         UpdateMaxHp(player.status.maxHp);
         UpdateCurrHp(player.status.currHp);
 
+        inkSegments = player.status.totalInkSegments;
         segmentValue = player.status.maxInk / inkSegments;
 
         // 세그먼트 슬라이더 생성
