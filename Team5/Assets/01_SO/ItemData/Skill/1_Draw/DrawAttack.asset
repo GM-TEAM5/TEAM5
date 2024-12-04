@@ -9,24 +9,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3256d8fc49854e74aab7770c07804264, type: 3}
-  m_Name: SkillItem_2002_E
+  m_Script: {fileID: 11500000, guid: ec8edcf17829d4f41b445d969a608b3c, type: 3}
+  m_Name: DrawAttack
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 2f9022e9a654e5a45873527d8744d409, type: 3}
   type: 2
   tier: 0
   description: 
-  skillType: 4
+  skillType: 2
   coolTime: 1
   _lineColor: {r: 0, g: 0, b: 0, a: 1}
-  _lineWidth: 0.2
+  _lineWidth: 0.3
   _lineMaterial: {fileID: 0}
   _effectRadius: 1
-  _lineDuration: 3
-  slowFieldDuration: 3
-  slowDuration: 10
-  slowAmount: 0.7
-  damage: 30
-  _inkCostPerUnit: 1
-  _minInkRequired: 10
-  maxDrawDuration: 5
+  slashDuration: 0.5
+  defaultDamage: 60
+  damageWeight: 1
+  _inkCostPerUnit: 2
+  _minInkRequired: 15
+  maxDrawDuration: 8

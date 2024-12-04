@@ -5,12 +5,6 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using DG.Tweening;
 
-public enum DrawType
-{
-    GroundPattern,  // E 스킬용 바닥 패턴
-    QuickSlash      // Q 스킬용 빠른 슬래시
-}
-
 public class PlayerDraw : MonoBehaviour, ITimeScaleable
 {
     [Header("Drawing Settings")]
@@ -26,9 +20,8 @@ public class PlayerDraw : MonoBehaviour, ITimeScaleable
     public bool isInDrawMode { get; private set; }
     private PlayerInputManager playerInput;
     private Player player;
-    private DrawType currentDrawType;
     private System.Action<LineRenderer, List<Vector3>> onDrawComplete;
-    private SkillItemSO currentSkill;
+    private DrawAttackSO currentSkill;
     private float timeScale = 1f;
 
     public void Init()
@@ -44,33 +37,24 @@ public class PlayerDraw : MonoBehaviour, ITimeScaleable
         Init();
     }
 
-    public void StartDrawing(DrawType drawType, SkillItemSO skill, System.Action<LineRenderer, List<Vector3>> callback)
+    public void StartDrawing(DrawAttackSO skill, System.Action<LineRenderer, List<Vector3>> callback)
     {
         if (isInDrawMode) return;
 
         currentSkill = skill;
-        currentDrawType = drawType;
         onDrawComplete = callback;
         isInDrawMode = true;
 
-        var drawableSkill = skill as IDrawableSkill;
-        if (drawableSkill != null)
-        {
-            float finalRadius = player.status.drawRange * drawableSkill.effectRadius;
-            drawingArea.SetRadius(finalRadius * 2f);
-        }
+        float finalRadius = player.status.drawRange * skill.effectRadius;
+        drawingArea.SetRadius(finalRadius * 2f);
 
         drawingArea.Activate();
         DirectingManager.Instance.SetVignette(intensity_onDraw, 0.5f);
 
-        if (currentDrawType == DrawType.QuickSlash)
-        {
-            drawingCamera.SetActive(true);
-            Time.timeScale = 0.05f;
-            Player.Instance.SetTimeScale(1f);
-            TestManager.Instance.TestSFX_RyoikiTenkai(true);
-        }
-        
+        drawingCamera.SetActive(true);
+        Time.timeScale = 0.05f;
+        Player.Instance.SetTimeScale(1f);
+        TestManager.Instance.TestSFX_RyoikiTenkai(true);
     }
 
     public void FinishDraw()
@@ -81,17 +65,13 @@ public class PlayerDraw : MonoBehaviour, ITimeScaleable
         }
         DirectingManager.Instance.InitVignette(0.5f);
 
-        if (currentDrawType == DrawType.QuickSlash)
-        {
-            drawingCamera.SetActive(false);
-            Time.timeScale = 1f;
-            Player.Instance.SetTimeScale(1f);
-        }
+        drawingCamera.SetActive(false);
+        Time.timeScale = 1f;
+        Player.Instance.SetTimeScale(1f);
 
         drawingArea.Deactivate();
         isInDrawMode = false;
         onDrawComplete = null;
-        currentDrawType = DrawType.GroundPattern;
         currentSkill = null;
         TestManager.Instance.TestSFX_RyoikiTenkai(false);
     }
@@ -172,8 +152,7 @@ public class PlayerDraw : MonoBehaviour, ITimeScaleable
         float distance = Vector3.Distance(lastPos, mousePos);
         if (distance > minDistance)
         {
-            var drawableSkill = currentSkill as IDrawableSkill;
-            float inkCost = distance * (drawableSkill?.inkCostPerUnit ?? 1f);
+            float inkCost = distance * (currentSkill?.inkCostPerUnit ?? 1f);
 
             if (player.HasEnoughInk(inkCost))
             {
@@ -202,22 +181,20 @@ public class PlayerDraw : MonoBehaviour, ITimeScaleable
         return mousePos;
     }
 
-    private float GetMinInkRequired(SkillItemSO skill)
+    private float GetMinInkRequired(DrawAttackSO skill)
     {
-        var drawableSkill = skill as IDrawableSkill;
-        return drawableSkill?.minInkRequired ?? 10f;
+        return skill?.minInkRequired ?? 10f;
     }
 
     private void SetupLine(LineRenderer line)
     {
-        var drawableSkill = currentSkill as IDrawableSkill;
-        if (drawableSkill != null)
+        if (currentSkill != null)
         {
-            line.material = drawableSkill.lineMaterial != null ?
-                drawableSkill.lineMaterial :
+            line.material = currentSkill.lineMaterial != null ?
+                currentSkill.lineMaterial :
                 new Material(Shader.Find("Sprites/Default"));
-            line.startColor = line.endColor = drawableSkill.lineColor;
-            line.startWidth = line.endWidth = drawableSkill.lineWidth;
+            line.startColor = line.endColor = currentSkill.lineColor;
+            line.startWidth = line.endWidth = currentSkill.lineWidth;
         }
         else
         {
