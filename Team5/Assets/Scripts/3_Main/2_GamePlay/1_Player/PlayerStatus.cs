@@ -42,13 +42,15 @@ public class PlayerStatus
     }
 
     public float Inc_maxHp;
-    [SerializeField] float d_inkChargeRate = 10f;    // 초당 잉크 충전량
-    [SerializeField] float _currInk;                 // 현재 잉크량
-    public float Inc_maxInk;                         // 잉크 최대치 증가량
+    [SerializeField] float d_inkChargeRate = 10f;
+    [SerializeField] int inkSegments = 5;
+    private float _currInk;
+    public float Inc_maxInk;
 
-    public float inkChargeRate => d_inkChargeRate;   // 잉크 충전 속도 프로퍼티
+    public float inkChargeRate => d_inkChargeRate;
+    public int totalInkSegments => inkSegments;
 
-    public float currInk  // 현재 잉크
+    public float currInk
     {
         get => _currInk;
         set
@@ -114,7 +116,7 @@ public class PlayerStatus
 
     public PlayerStatus(PlayerStatus savedStatus)
     {
-        currHp = savedStatus.currHp;     
+        currHp = savedStatus.currHp;
         currInk = savedStatus.currInk;
         rerollCount = savedStatus.rerollCount;
         selectionCount = savedStatus.selectionCount;
