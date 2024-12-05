@@ -73,26 +73,21 @@ public class PlayerStateUI : MonoBehaviour
     /// </summary>
     public void UpdateCurrInk(float currInk)
     {
-        int maxCount = (int)(currInk / segmentValue);
-        int extraInk = (int)(currInk - (maxCount * segmentValue));
+        var (fullSegments, partialSegment) = Player.Instance.status.GetInkSegmentInfo();
 
         for (int i = 0; i < inkSegments; i++)
         {
-            if (i < maxCount)
+            if (i < fullSegments)
             {
                 inkSegmentBars[i].value = 1f;
             }
+            else if (i == fullSegments)
+            {
+                inkSegmentBars[i].value = partialSegment;
+            }
             else
             {
-                if (extraInk > 0)
-                {
-                    inkSegmentBars[i].value = extraInk / (100f / inkSegments);
-                    extraInk = 0;
-                }
-                else
-                {
-                    inkSegmentBars[i].value = 0f;
-                }
+                inkSegmentBars[i].value = 0f;
             }
         }
     }

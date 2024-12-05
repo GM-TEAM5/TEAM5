@@ -190,4 +190,14 @@ public class PlayerStatus
     }
 
     #endregion
+
+    public (int fullSegments, float partialSegment) GetInkSegmentInfo()
+    {
+        float segmentValue = maxInk / totalInkSegments;
+        int maxCount = (int)(currInk / segmentValue);
+        float extraInk = currInk - (maxCount * segmentValue);
+        float partialFill = extraInk > 0 ? extraInk / segmentValue : 0f;
+
+        return (maxCount, partialFill);
+    }
 }
