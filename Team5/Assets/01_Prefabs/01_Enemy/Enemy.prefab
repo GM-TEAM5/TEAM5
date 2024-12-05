@@ -668,6 +668,7 @@ MonoBehaviour:
   stunDurationRemain: 0
   rangeWeight: 1
   lastHitPoint: {x: 0, y: 0, z: 0}
+  canBodyAttack: 0
 --- !u!114 &2342430051140074879
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -757,6 +758,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 196f9386f33700d4d8ae80572bc3296b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilities: []
+  usingAbility:
+    data: {fileID: 0}
+    useCount: 0
+    lastUseTime: 0
   isCasting: 0
 --- !u!1 &6834195862774931770
 GameObject:

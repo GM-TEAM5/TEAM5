@@ -902,6 +902,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e5471ff0f0a1514fa87d3ef66e3df91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefab_skillUI: {fileID: 0}
   skillUIs: []
 --- !u!1 &410087039
 GameObject:
@@ -2266,7 +2267,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 458ba84e0c12d5745b5da08ae2b5941b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInput: {fileID: 0}
   moveAction:
     m_Name: Move
     m_Type: 0
@@ -2285,9 +2285,60 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
-  interactAction: 102
-  isInteractOn: 0
+  drawAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: e345dedb-9922-4218-ae76-34b749c99f16
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  utilAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: ad122734-a7e4-4c45-9db5-c45392faae53
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  scrollAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 5e235ddc-33e6-4ad1-ab59-ad2700b7c5ce
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  interactAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 4f8b7052-a618-40a6-8e03-0658608cbaf7
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  flowControlAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: fc44d5e7-1f90-4474-9e47-65907e4d68df
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  interact: 0
+  flowControl: 0
   isMouseLeftButtonOn: 0
+  basicAttack: 0
+  draw: 0
+  scroll: 0
+  util: 0
+  ability: 0
+  skillKeys: 71000000650000003001000034000000
 --- !u!4 &1235957011
 Transform:
   m_ObjectHideFlags: 0
@@ -3017,8 +3068,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87ad656f400953d43b47a1888d6bdad8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initSkillData:
-  - {fileID: 11400000, guid: ea7204fbdab788c43ad0039ecde11c89, type: 2}
   initProjSprite: {fileID: 21300000, guid: 1396c40b41c55a745a385648ec3e7152, type: 3}
   damageText: {fileID: 6403899980032326514, guid: a537ae7bbd7ea544e892012b3c972e1a,
     type: 3}
@@ -3031,6 +3080,14 @@ MonoBehaviour:
   simpleSFX: {fileID: 0}
   boundImages: []
   InstantDeath: {fileID: 0}
+  fs_clothes: []
+  fs_foot: []
+  fs_grass: []
+  ac_enemyHit: {fileID: 0}
+  sfx_ryoikitenkaiOn: {fileID: 0}
+  sfx_ryoikitenkaiOff: {fileID: 0}
+  testSFXs:
+    array: []
 --- !u!4 &1682831513
 Transform:
   m_ObjectHideFlags: 0

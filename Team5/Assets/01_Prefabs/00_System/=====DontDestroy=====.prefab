@@ -115,7 +115,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87ad656f400953d43b47a1888d6bdad8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initSkillData: []
   initProjSprite: {fileID: 21300000, guid: 1396c40b41c55a745a385648ec3e7152, type: 3}
   damageText: {fileID: 6403899980032326514, guid: a537ae7bbd7ea544e892012b3c972e1a,
     type: 3}
@@ -220,6 +219,9 @@ MonoBehaviour:
   onChangePlayerStatus_pDmg:
     m_PersistentCalls:
       m_Calls: []
+  onChangePlayerStatus_mDmg:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5031679521403383433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -296,7 +298,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 458ba84e0c12d5745b5da08ae2b5941b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInput: {fileID: 0}
   moveAction:
     m_Name: Move
     m_Type: 0
@@ -315,13 +316,59 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
-  interactAction: 102
-  secondaryInteractAction: 114
-  pauseAction: 27
+  drawAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 6b27eafe-9b8d-49e2-8f58-02e2f90eff42
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  utilAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 65461010-97a4-4e19-bee6-0d88e09f8565
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  scrollAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: f7652cd1-c69b-4a8e-8190-a4951ab29f5b
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  interactAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 3d49fca4-a3f5-4f20-9d38-1447cad796a0
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  flowControlAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: a32f3c2a-8297-4c6f-a430-5f12efc68854
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
   interact: 0
-  secondaryInteract: 0
-  pause: 0
+  flowControl: 0
   isMouseLeftButtonOn: 0
+  basicAttack: 0
+  draw: 0
+  scroll: 0
+  util: 0
+  ability: 0
   skillKeys: 31000000320000003300000034000000
 --- !u!114 &8452372033382595405
 MonoBehaviour:

@@ -406,7 +406,7 @@ MonoBehaviour:
     _currHp: 500
     Inc_maxHp: 0
     d_inkChargeRate: 10
-    _currInk: 30.000002
+    inkSegments: 5
     Inc_maxInk: 0
     armor: 0
     evasionRate: 0
@@ -449,12 +449,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hpBar: {fileID: 5775935940384652927}
-  expBar: {fileID: 3725438462143567425}
-  inkBar: {fileID: 4570168845102409480}
-  topHpBar: {fileID: 0}
-  topExpBar: {fileID: 0}
-  topInkBar: {fileID: 0}
-  levelText: {fileID: 679697201767012608}
+  inkBarContainer: {fileID: 0}
+  inkBarPrefab: {fileID: 0}
 --- !u!114 &5738430724439540145
 MonoBehaviour:
   m_ObjectHideFlags: 0
