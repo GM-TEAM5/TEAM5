@@ -75,6 +75,8 @@ public class Player : Singleton<Player>, ITimeScaleable     // ui 등에서 플�
 
     private float timeScale = 1f;
 
+    public PlayerDraw playerDraw { get; private set; }
+
     private void Start()
     {
         // t_camera = Camera.main.transform;
@@ -150,9 +152,7 @@ public class Player : Singleton<Player>, ITimeScaleable     // ui 등에서 플�
             knockbackVelocity = Vector3.Lerp(knockbackVelocity, Vector3.zero, knockbackDamping * Time.unscaledDeltaTime * timeScale);
         }
 
-        
         skills.OnUpdate();
-        // basicAttack.OnUpdate();
 
         Move();
         UpdateSpriteDir();
@@ -216,7 +216,7 @@ public class Player : Singleton<Player>, ITimeScaleable     // ui 등에서 플�
 
         //--------- after init status --------------
         basicAttack = GetComponentInChildren<PlayerBasicAttack>();
-        
+
         playerDraw = GetComponentInChildren<PlayerDraw>();
         playerDraw.Init();
 
@@ -227,7 +227,7 @@ public class Player : Singleton<Player>, ITimeScaleable     // ui 등에서 플�
         skills = GetComponent<PlayerSkills>();
         skills.Init();
 
-        
+
 
         animator = GetComponentInChildren<PlayerAnimator>();
         //----------- after init finished ---------------------
@@ -242,7 +242,7 @@ public class Player : Singleton<Player>, ITimeScaleable     // ui 등에서 플�
 
         playerCanvas.gameObject.SetActive(false);
 
-        
+
 
         //
         GameEventManager.Instance.onInitPlayer.Invoke();    // 플레이어 초기화가 필요한 ui 작업을 하기 위함. 
