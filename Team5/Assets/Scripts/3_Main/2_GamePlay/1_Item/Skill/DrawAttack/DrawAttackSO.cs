@@ -37,16 +37,16 @@ public abstract class DrawAttackSO : SkillItemSO
 
     protected override void OnEquip()
     {
-        Player.Instance.draw.Equip(this);
+        Player.Instance.playerDraw.Equip(this);
     }
 
     protected override void OnUnEquip()
     {
-        Player.Instance.draw.UnEquip();
+        Player.Instance.playerDraw.UnEquip();
     }
 
     public override void Use()
     {
-        Player.Instance.draw.TryDraw();
+        Player.Instance.playerDraw.TryDraw();
     }
 }

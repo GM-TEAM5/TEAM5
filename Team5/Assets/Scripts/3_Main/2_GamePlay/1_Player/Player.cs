@@ -75,7 +75,7 @@ public class Player : Singleton<Player>, ITimeScaleable     // ui 등에서 플�
 
     private float timeScale = 1f;
 
-    public PlayerDraw playerDraw { get; private set; }
+    // public PlayerDraw playerDraw { get; private set; }
 
     private void Start()
     {

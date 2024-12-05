@@ -94,7 +94,7 @@ public class PlayerBasicAttack : MonoBehaviour
 
         currCombo = (currCombo + 1) % data.comboCount;
 
-        yield return new WaitForSeconds(1f);      // 이부분은 추후 이펙트 프리팹 스크립트로 빼자. 
+        yield return new WaitForSeconds(.7f);      // 이부분은 추후 이펙트 프리팹 스크립트로 빼자. 
         currEffect.SetActive(false);
     }
 

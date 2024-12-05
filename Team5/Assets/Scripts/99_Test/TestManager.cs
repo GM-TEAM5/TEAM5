@@ -5,12 +5,12 @@ using UnityEngine;
 public class TestManager :  Singleton<TestManager>
 {
     // public List<PlayerSkillSO> initSkillData;
-    public Sprite initProjSprite;
+    // public Sprite initProjSprite;
 
-    public DamageText damageText;
+    // public DamageText damageText;
 
-    public EnemyDataSO enemyData;
-    public StageDataSO testStageData;
+    // public EnemyDataSO enemyData;
+    // public StageDataSO testStageData;
 
     public AudioClip testEnemyDeathSFX_ghost;
     public AudioClip testEnemyDeathSFX_beast;
@@ -20,7 +20,7 @@ public class TestManager :  Singleton<TestManager>
     public SimpleSFX simpleSFX;
 
 
-    public List<Sprite> boundImages=new();
+    // public List<Sprite> boundImages=new();
 
     public GameObject InstantDeath;
 
@@ -66,10 +66,10 @@ public class TestManager :  Singleton<TestManager>
     {
         Instantiate(simpleSFX).PlaySFX(testNormalAttackSFX);
     }
-    public void TestSFX_EnhancedAttack()
-    {
-        Instantiate(simpleSFX).PlaySFX(testEnhancedAttackSFX);
-    }
+    // public void TestSFX_EnhancedAttack()
+    // {
+    //     Instantiate(simpleSFX).PlaySFX(testEnhancedAttackSFX);
+    // }
 
 
     public AudioClip sfx_ryoikitenkaiOn;

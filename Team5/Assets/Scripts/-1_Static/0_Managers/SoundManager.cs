@@ -7,60 +7,118 @@ using BW.Util;
 using UnityEditor;
 using UnityEngine;
 
-// using Redcode.Pools;
 
-[Serializable]
-internal struct PoolData
+//
+public class SoundManager : Singleton<SoundManager>
 {
-    [SerializeField]
-    private string _name;
-
-    public string Name => _name;
-
-    [SerializeField]
-    private Component _component;
-
-    public Component Component => _component;
-
-    [SerializeField]
-    [Min(0)]
-    private int _count;
-
-    public int Count => _count;
-
-    [SerializeField]
-    private Transform _container;
-
-    public Transform Container => _container;
-
-    [SerializeField]
-    private bool _nonLazy;
-
-    public bool NonLazy => _nonLazy;
-}
-
-/// <summary>
-/// Pool manager. You can set options for it in editor and then use in game. <br/>
-/// It creates specified pools in Awake method, which then you can find with <b>GetPool</b> methods and call its methods.
-/// </summary>
-public class PoolManager : Singleton<PoolManager>
-
-{
-
+    public SoundEventTableSO soundEventTable;
+    //사운드 세팅 
+    SoundSetting soundSetting;
     
-    [SerializeField]
-    private List<PoolData> _pools;
 
-    private readonly List<IPool<Component>> _poolsObjects = new();
+    //==============================================================
 
     private void Start()
     {
-        Init();
+        InitPool();
+        InitSoundSetting();
+    }
+
+    
+    public void InitSoundSetting()
+    {
+        soundSetting = GameManager.Instance.playerData.soundSetting;
+    }
+
+    //==============================================================
+
+
+    public void PlaySFX()
+    {
+
+    }
+
+    public void PlayBGM()
+    {
+        
     }
 
 
 
-    public void Init()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#region pool
+
+    [SerializeField] List<PoolData> _pools;
+
+    readonly List<IPool<Component>> _poolsObjects = new();
+
+
+
+    public void InitPool()
     {
         var namesGroups = _pools.Select(p => p.Name).GroupBy(n => n).Where(g => g.Count() > 1);
 
@@ -164,119 +222,7 @@ public class PoolManager : Singleton<PoolManager>
 
 
 
-    //================================================================================
-    public EnemySpawner GetEnemySpawner(string id, Vector3 initPos)
-    {
-        // aliveEnemiesNum++; 
-        
-        EnemySpawner enemySpawner = GetFromPool<EnemySpawner>(); 
-        enemySpawner.SpawnEnemy( id, initPos, 2f);
-    
-        return enemySpawner;
-    }
+#endregion
 
-
-    public Enemy GetEnemy( string id ,Vector3 initPos)
-    {
-        Enemy enemy = GetFromPool<Enemy>(); 
-        EnemyDataSO enemyData =  ResourceManager.Instance.GetEnemyData(id);
-        enemy.Init( enemyData ,initPos);
-    
-        
-    
-        return enemy;
-    }
-
-    public void TakeEnemy(Enemy e)
-    {
-        // aliveEnemiesNum--;
-
-        TakeToPool<Enemy>(e);
-    }
-
-
-
-    public EnemyProjectile GetEnemyProjectile(EnemyAbilitySO abilityData, Enemy enemy, Vector3 initPos, float lifeTime)
-    {
-        EnemyProjectile enemyProj = GetFromPool<EnemyProjectile>(); 
-        enemyProj.Init(abilityData, enemy, initPos, lifeTime);
-    
-        return enemyProj;
-    }
-
-
-    public DamageText GetDamageText(Vector3 hitPoint, float damage, DamageType type)
-    {
-        DamageText damageText = GetFromPool<DamageText>();
-        damageText.Init(hitPoint, damage, type);
-        return damageText;
-    }
-
-    
-    public DamageText GetText(Vector3 position, string content)
-    {
-        DamageText damageText = GetFromPool<DamageText>();
-        damageText.Init(position, content);
-        return damageText;
-    }
-    
-    
-    
-
-    public DropItem GetExp(float value, Vector3 initPos)
-    {
-        DropItem dropItem = GetFromPool<DropItem>();
-        DropItemDataSO itemData =  ResourceManager.Instance.GetDropItemData("00");
-        dropItem.Init(itemData,value,initPos);
-        return dropItem;
-    }
-
-    public DropItem GetHpUp(float value, Vector3 initPos)
-    {
-        DropItem dropItem = GetFromPool<DropItem>();
-        DropItemDataSO itemData =  ResourceManager.Instance.GetDropItemData("01");
-        dropItem.Init(itemData,value,initPos);
-        return dropItem;
-    }
-
-
-    public DropItem GetMoney(float value, Vector3 initPos)
-    {
-        DropItem dropItem = GetFromPool<DropItem>();
-        DropItemDataSO itemData =  ResourceManager.Instance.GetDropItemData("02");
-        dropItem.Init(itemData,value,initPos);
-        return dropItem;
-    }
-
-    public DropItem GetInk(float value, Vector3 initPos)
-    {
-        DropItem dropItem = GetFromPool<DropItem>();
-        DropItemDataSO itemData =  ResourceManager.Instance.GetDropItemData("03");
-        dropItem.Init(itemData,value,initPos);
-        return dropItem;
-    }
-    
-    public AreaIndicator GetAreaIndicator_Circle(Vector3 initPos,Vector3 targetPos, Vector2 size, float duration)
-    {
-        AreaIndicator areaIndicator = GetFromPool<AreaIndicator>();
-        AreaIndicatorSO data = (AreaIndicatorSO)ResourceManager.Instance.areaIndicatorData.GetData("00");
-        areaIndicator.Init(data,initPos, targetPos, size, duration );
-
-        return areaIndicator;
-    }
-
-    public AreaIndicator GetAreaIndicator_RectDir(Vector3 initPos, Vector3 targetPos, Vector2 size, float duration)
-    {
-        AreaIndicator areaIndicator = GetFromPool<AreaIndicator>();
-        AreaIndicatorSO data = (AreaIndicatorSO)ResourceManager.Instance.areaIndicatorData.GetData("01");
-        areaIndicator.Init(data,initPos, targetPos, size, duration );
-
-        return areaIndicator;
-    }
-
-
-    //=====================================================================
-    
 
 }
-

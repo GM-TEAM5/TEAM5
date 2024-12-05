@@ -9,10 +9,28 @@ using Unity.Collections;
 using UnityEngine.InputSystem;
 
 
+/// <summary>
+/// 사운드 세팅.
+/// </summary>
+[Serializable]
+public class SoundSetting
+{
+    public float bgmSize;
+    public float sfxSize;
+
+    public SoundSetting()
+    {
+        bgmSize = 1;
+        sfxSize = 1;
+    }
+}
+
+
 [CreateAssetMenu(fileName = "PlayerData", menuName = "SO/Player/PlayerData", order = int.MaxValue)]
 public class PlayerDataSO : ScriptableObject
 {
     public InputActionAsset inputActionSO;
+    public SoundSetting soundSetting;
     
     public int traitPoint;
     public int currChapter = 0;

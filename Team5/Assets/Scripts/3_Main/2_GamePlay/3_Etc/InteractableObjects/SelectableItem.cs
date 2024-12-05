@@ -44,7 +44,7 @@ public class SelectableItem : InteractiveObject
     {
         text_select.gameObject.SetActive(isOn);
         
-        GameEventManager.Instance.onCloseTo_selectableItemList.Invoke(isOn);
+        // GameEventManager.Instance.onCloseTo_selectableItemList.Invoke(isOn);
     }
 
     protected override void OnInteract_Custom()

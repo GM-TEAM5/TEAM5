@@ -21,7 +21,7 @@ public class SelectableItemInfoPanel : GamePlayPanel
     protected override void Init()
     {
         GameEventManager.Instance.onUpdate_inspectingObject.AddListener( OnUpdate_inspectingObject );
-        GameEventManager.Instance.onReroll.AddListener(OnReroll);
+        // GameEventManager.Instance.onReroll.AddListener(OnReroll);
         // GameEventManager.Instance.onUpdate_closestSelectableItem.AddListener( UpdateItemInfo );
         
         // btn_select.onClick.AddListener(()=> GamePlayManager.Instance.OnSelect_SelectableItem(currItem) );

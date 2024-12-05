@@ -23,8 +23,8 @@ public class GameEventManager : Singleton<GameEventManager>
 
     public UnityEvent<int> onWaveClear = new();     // int : 클리어한 웨이브 번호 
 
-    public UnityEvent<bool> onCloseTo_selectableItemList = new();   // bool :  enter - true, exit - false
-    public UnityEvent<SelectableItem> onReroll = new();  
+    // public UnityEvent<bool> onCloseTo_selectableItemList = new();   // bool :  enter - true, exit - false
+    // public UnityEvent<SelectableItem> onReroll = new();  
     public UnityEvent onUpgradeReroll = new();   
     public UnityEvent onSelectItem;
  
