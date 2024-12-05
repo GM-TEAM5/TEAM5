@@ -12,7 +12,7 @@ public class PlayerDraw : MonoBehaviour, ITimeScaleable
     [SerializeField] GameObject drawingCamera;
     [SerializeField] float minDistance = 0.1f;
     [SerializeField] float intensity_onDraw = 0.35f;
-    [SerializeField] Transform lineContainer;  // Inspector에서 할당할 빈 GameObject
+    [SerializeField] Transform lineContainer;
 
     private LineRenderer currentLine;
     private List<Vector3> currentPositions = new List<Vector3>();
@@ -20,9 +20,8 @@ public class PlayerDraw : MonoBehaviour, ITimeScaleable
     public bool isInDrawMode { get; private set; }
     private PlayerInputManager playerInput;
     private Player player;
-    private System.Action<LineRenderer, List<Vector3>> onDrawComplete;
-    private DrawAttackSO currentSkill;
     private float timeScale = 1f;
+    private DrawAttackSO currentSkill;
 
     public void Init()
     {
@@ -32,20 +31,34 @@ public class PlayerDraw : MonoBehaviour, ITimeScaleable
         drawingArea.Init();
     }
 
-    void Start()
+    public void Equip(DrawAttackSO skill)
     {
-        Init();
+        currentSkill = skill;
     }
 
-    public void StartDrawing(DrawAttackSO skill, System.Action<LineRenderer, List<Vector3>> callback)
+    public void UnEquip()
     {
-        if (isInDrawMode) return;
+        currentSkill = null;
+    }
 
-        currentSkill = skill;
-        onDrawComplete = callback;
+    public void TryDraw()
+    {
+        if (isInDrawMode)
+        {
+            FinishDraw();
+        }
+        else
+        {
+            StartDrawing();
+        }
+    }
+
+    public void StartDrawing()
+    {
+        if (isInDrawMode || currentSkill == null) return;
+
         isInDrawMode = true;
-
-        float finalRadius = player.status.drawRange * skill.effectRadius;
+        float finalRadius = player.status.drawRange * currentSkill.effectRadius;
         drawingArea.SetRadius(finalRadius * 2f);
 
         drawingArea.Activate();
@@ -71,16 +84,14 @@ public class PlayerDraw : MonoBehaviour, ITimeScaleable
 
         drawingArea.Deactivate();
         isInDrawMode = false;
-        onDrawComplete = null;
-        currentSkill = null;
         TestManager.Instance.TestSFX_RyoikiTenkai(false);
     }
 
     private void EndDrawing()
     {
-        if (currentLine != null && onDrawComplete != null)
+        if (currentLine != null)
         {
-            onDrawComplete.Invoke(currentLine, new List<Vector3>(currentPositions));
+            StartCoroutine(SlashRoutine(currentLine, new List<Vector3>(currentPositions)));
         }
 
         isDrawing = false;
@@ -221,5 +232,55 @@ public class PlayerDraw : MonoBehaviour, ITimeScaleable
 
         float actualRadius = (drawingArea.TargetRadius / 2f) - 0.2f;
         return distanceFromCenter < actualRadius;
+    }
+
+    protected IEnumerator SlashRoutine(LineRenderer line, List<Vector3> positions)
+    {
+        float elapsedTime = 0f;
+        Color startColor = line.startColor;
+        HashSet<Enemy> damagedEnemies = new HashSet<Enemy>();
+
+        Debug.Log("Positions count: " + positions.Count);
+        foreach (var pos in positions)
+        {
+            Debug.Log("Position: " + pos);
+        }
+
+        while (elapsedTime < currentSkill.slashDuration)
+        {
+            elapsedTime += Time.unscaledDeltaTime;
+            float alpha = 1f - (elapsedTime / currentSkill.slashDuration);
+            Color fadeColor = startColor;
+            fadeColor.a = alpha;
+            line.startColor = line.endColor = fadeColor;
+
+            for (int i = 0; i < positions.Count - 1; i++)
+            {
+                RaycastHit[] hits = Physics.BoxCastAll(
+                    positions[i],
+                    Vector3.one * currentSkill.effectRadius,
+                    (positions[i + 1] - positions[i]).normalized,
+                    Quaternion.identity,
+                    Vector3.Distance(positions[i], positions[i + 1]),
+                    LayerMask.GetMask("Enemy")
+                );
+
+                foreach (var hit in hits)
+                {
+                    Enemy enemy = hit.collider.GetComponent<Enemy>();
+                    if (enemy != null && !damagedEnemies.Contains(enemy))
+                    {
+                        float dmg = currentSkill.defaultDamage + Player.Instance.status.mDmg;
+                        Debug.Log($"Damaging enemy: {enemy.name} with {dmg} damage");
+                        enemy.GetDamaged(dmg);
+                        damagedEnemies.Add(enemy);
+                    }
+                }
+            }
+
+            yield return null;
+        }
+
+        Destroy(line.gameObject);
     }
 }
