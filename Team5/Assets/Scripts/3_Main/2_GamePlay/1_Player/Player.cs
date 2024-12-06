@@ -137,9 +137,15 @@ public class Player : Singleton<Player>, ITimeScaleable     // ui 등에서 플�
 
     void Update()
     {
-        if (isAlive == false || GamePlayManager.isGamePlaying == false)
+        if (GamePlayManager.isGamePlaying == false) return;
+
+        // 그리기 모드가 아닐 때만 평타 공격 가능
+        if (!playerDraw.isInDrawMode)
         {
-            return;
+            if (playerInput.isMouseLeftButtonOn)
+            {
+                basicAttack.TryAttack();
+            }
         }
 
         // 스턴 지속시간 감소
