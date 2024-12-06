@@ -43,7 +43,7 @@ public class PlayerStatus
 
     public float Inc_maxHp;
     [SerializeField] float d_inkChargeRate = 10f;
-    [SerializeField] int inkSegments = 5;
+    [SerializeField] int inkSegments = 20;
     private float _currInk;
     public float Inc_maxInk;
 
