@@ -29,7 +29,7 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
     public bool isMouseLeftButtonOn; //마우스를 누르고 있는 중인지.
 
     public bool basicAttack;
-    public bool draw;              
+    public bool draw;
     public bool scroll;
     public bool util;
 
@@ -55,7 +55,7 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
 
     // [SerializeField] LayerMask aimColliderLayerMask = new();
     public List<KeyCode> skillKeys = new() { KeyCode.Q, KeyCode.E, KeyCode.LeftShift, KeyCode.Alpha4 };
-    
+
 
 
     //
@@ -71,7 +71,7 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
         PlayerInput playerInput = GetComponent<PlayerInput>();
         playerInput.actions = GameManager.Instance.playerData.inputActionSO;
 
-        moveAction =  playerInput.actions["Move"];
+        moveAction = playerInput.actions["Move"];
         mouseLeftButtonAction = playerInput.actions["MouseLeftButton"];
         interactAction = playerInput.actions["Interact"];
         drawAction = playerInput.actions["Draw"];
@@ -86,11 +86,11 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
 
     void Update()
     {
-        flowControl =  flowControlAction.triggered;  
-        
-        
-        
-        
+        flowControl = flowControlAction.triggered;
+
+
+
+
         moveVector = moveAction.ReadValue<Vector2>();
 
         mousePosition = Mouse.current.position.ReadValue();
@@ -106,10 +106,10 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
         isMouseLeftButtonOn = mouseLeftButtonAction.ReadValue<float>() > 0;
         interact = interactAction.ReadValue<float>() > 0;
         // secondaryInteract = Input.GetKeyDown(secondaryInteractAction);
-        
+
 
         //
-        basicAttack = mouseLeftButtonAction.ReadValue<float>() > 0;
+        basicAttack = mouseLeftButtonAction.ReadValue<float>() > 0 && !Player.Instance.playerDraw.isInDrawMode;
         draw = drawAction.triggered;
         scroll = scrollAction.triggered;
         util = utilAction.triggered;
