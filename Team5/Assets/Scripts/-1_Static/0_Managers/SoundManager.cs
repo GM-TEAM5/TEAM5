@@ -80,6 +80,29 @@ public class SoundManager : Singleton<SoundManager>
     }
 
     //==============================================================
+        
+    /// <summary>
+    /// 사운드 이벤트 테이블에 맞는 soundSO를 발생시킨다.
+    /// </summary>
+    /// <param name="t"></param>
+    /// <param name="eventType"></param>
+    public void Invoke(Transform t, SoundEventType eventType)
+    {
+        if(soundEventTable.table.TryGetValue(eventType, out var soundSO))
+        {
+            soundSO.Play(t);
+        }
+    }
+
+
+
+    /// <summary>
+    /// soundSO 에서 Play 시키면 호출됨. 
+    /// </summary>
+    /// <param name="audioClip"></param>
+    /// <param name="type"></param>
+    /// <param name="rank"></param>
+    /// <param name="pos"></param>
     public void EnqueueSound(  AudioClip audioClip, SoundType type, int rank, Vector3 pos)
     {
         // 브금인 경우,
@@ -105,18 +128,6 @@ public class SoundManager : Singleton<SoundManager>
     }
 
     //=======================================================================
-    
-    /// <summary>
-    /// 사운드 이벤트 테이블에 맞는 soundSO를 발생시킨다.
-    /// </summary>
-    /// <param name="t"></param>
-    /// <param name="eventType"></param>
-    public void Invoke(Transform t, SoundEventType eventType)
-    {
-        soundEventTable?.table[eventType]?.Play(t);
-    }
-
-
 
     void PlaySFX(SoundData soundData)
     {

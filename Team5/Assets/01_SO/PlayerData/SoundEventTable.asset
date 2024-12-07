@@ -28,4 +28,6 @@ MonoBehaviour:
       Value: {fileID: 11400000, guid: 7f5c319f8b84a7e438ddc80baafedd44, type: 2}
     - Key: 6
       Value: {fileID: 11400000, guid: 31f2514c600832d419242786190de826, type: 2}
+    - Key: 7
+      Value: {fileID: 0}
   maxSFXCount: 5
