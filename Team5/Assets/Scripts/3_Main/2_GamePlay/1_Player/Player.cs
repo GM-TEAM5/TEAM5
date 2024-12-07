@@ -277,10 +277,12 @@ public class Player : Singleton<Player>, ITimeScaleable     // ui 등에서 플�
     /// </summary>
     void Move()
     {
-        // if (canMoveAfterMeleeAttack == false)
-        // {
-        //     return;
-        // }
+        // 그리기 모드일 때는 움직이지 못하도록 함
+        if (playerDraw.isInDrawMode)
+        {
+            return;
+        }
+
         Vector3 moveVector = Vector3.zero;
 
         // 넉백 처리
