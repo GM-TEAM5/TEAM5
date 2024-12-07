@@ -23,7 +23,7 @@ MonoBehaviour:
   _lineMaterial: {fileID: 0}
   _effectRadius: 1
   slashDuration: 0.5
-  defaultDamage: 60
+  defaultDamage: 10
   damageWeight: 1
   _inkCostPerUnit: 2
   _minInkRequired: 15

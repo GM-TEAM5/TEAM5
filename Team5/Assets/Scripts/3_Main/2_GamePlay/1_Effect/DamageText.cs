@@ -19,9 +19,10 @@ public class DamageText : MonoBehaviour, IPoolObject
 {
     TextMeshPro text;
     private static float lastYOffset = 0f;
-    private static float yOffsetIncrement = 1f;
+    private static float yOffsetIncrement = 1.0f;
     private static float resetTime = 0.5f;
     private static float lastTextTime;
+    private static int activeTextCount = 0;
 
     public void OnCreatedInPool()
     {
@@ -30,24 +31,26 @@ public class DamageText : MonoBehaviour, IPoolObject
 
     public void OnGettingFromPool()
     {
-        text.color = Color.white;   // 사라질때 페이드인되기 때문에 다시 색을 바꿔줘야함. 
+        text.color = Color.white;
     }
 
-    public void Init(Vector3 hitPoint, float damage, DamageType type = DamageType.DMG_NORMAL)
+    public void Init(Vector3 hitPoint, string content, DamageType type = DamageType.DMG_NORMAL)
     {
-        // 마지막 텍스트 생성 후 일정 시간이 지났다면 리셋
         if (Time.time - lastTextTime > resetTime)
         {
             lastYOffset = 0f;
+            activeTextCount = 0;
         }
 
-        // Y 증가
         lastYOffset += yOffsetIncrement;
         lastTextTime = Time.time;
+        activeTextCount++;
 
+        // 초기에는 투명하게 시작
+        text.color = new Color(1, 1, 1, 0);
         transform.position = hitPoint + new Vector3(0, lastYOffset, 0);
 
-        text.SetText(damage.ToString("0"));
+        text.SetText(content);
         Color textColor = Color.white;
         switch (type)
         {
@@ -61,36 +64,30 @@ public class DamageText : MonoBehaviour, IPoolObject
                 textColor = new Color(0, 1, 0.5f);
                 break;
         }
-        text.color = textColor;
-        PlayAnim_MoveAndFade();
+
+        float appearDelay = 0.1f * (activeTextCount - 1);
+        float fadeDelay = 1.0f + (0.1f * (activeTextCount - 1));
+        PlayAnim_MoveAndFade(appearDelay, fadeDelay, textColor);
     }
 
-    public void Init(Vector3 hitPoint, string content, DamageType type = DamageType.DMG_NORMAL)
+    public void Init(Vector3 hitPoint, float damage, DamageType type = DamageType.DMG_NORMAL)
     {
-        // 마지막 텍스트 생성 후 일정 시간이 지났다면 리셋
-        if (Time.time - lastTextTime > resetTime)
-        {
-            lastYOffset = 0f;
-        }
-
-        // Y 증가
-        lastYOffset += yOffsetIncrement;
-        lastTextTime = Time.time;
-
-        transform.position = hitPoint + new Vector3(0, lastYOffset, 0);
-
-        text.SetText(content);
-        Color textColor = new Color(1, 0.2f, 0.2f);
-        text.color = textColor;
-        PlayAnim_MoveAndFade();
+        Init(hitPoint, damage.ToString("0"), type);
     }
 
-    void PlayAnim_MoveAndFade()
+    void PlayAnim_MoveAndFade(float appearDelay, float fadeDelay, Color textColor)
     {
         DOTween.Sequence()
-            .OnComplete(() => PoolManager.Instance.TakeToPool<DamageText>(this))
-            .Append(transform.DOLocalMoveY(transform.localPosition.y + 3f, 0.5f))
-            .Join(text.DOFade(0, 0.5f))
+            .OnComplete(() =>
+            {
+                PoolManager.Instance.TakeToPool<DamageText>(this);
+                activeTextCount--;
+            })
+            .AppendInterval(appearDelay * 0.5f)
+            .Append(text.DOColor(textColor, 0.15f))
+            .AppendInterval(fadeDelay * 0.5f)
+            .Append(transform.DOLocalMoveY(transform.localPosition.y + 1f, 0.3f))
+            .Join(text.DOFade(0, 0.3f))
             .Play();
     }
 }
