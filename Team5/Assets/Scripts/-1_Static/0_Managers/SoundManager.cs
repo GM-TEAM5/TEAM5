@@ -4,43 +4,181 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using BW.Util;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Audio;
+
+public class SoundData
+{
+    public AudioClip audioClip; 
+    public SoundType type;
+    public Vector3 pos;
+    public int rank;
+
+    public SoundData( AudioClip audioClip, SoundType type,  int rank = 0 , Vector3 pos = default )
+    {
+        this. audioClip = audioClip;
+        this.type = type;
+        this.rank = rank;
+        this.pos = pos;
+    }
+
+}
 
 
 //
 public class SoundManager : Singleton<SoundManager>
 {
-    public SoundEventTableSO soundEventTable;
-    //사운드 세팅 
-    SoundSetting soundSetting;
+    [SerializeField] SoundEventTableSO soundEventTable;
+
+
+    PriorityQueue< SoundData > waitingQ= new();
     
+
+    AudioSource bgmSource;
+
+    [SerializeField] int playingSFXCount = 0;
 
     //==============================================================
 
-    private void Start()
+    void Update()
     {
+        ClearQueue();
+    }
+
+    public void Init()
+    {
+        bgmSource = GetComponent<AudioSource>();
+        bgmSource.loop = true;
+        bgmSource.dopplerLevel = 0;
+        bgmSource.priority = 0;
+        
+        
         InitPool();
         InitSoundSetting();
     }
 
-    
-    public void InitSoundSetting()
+    //================================================================
+    /// <summary>
+    /// 큐에 등록된 소리들을 재생한다. 동시에 최대 maxSFXCount 개까지 재생.  
+    /// </summary>
+    void ClearQueue()
     {
-        soundSetting = GameManager.Instance.playerData.soundSetting;
+        int cnt = 0;
+        while(waitingQ.IsEmpty()==false)
+        {
+            // 소리재생
+            SoundData soundData = waitingQ.Dequeue();
+            PlaySFX( soundData );
+            //
+            if( ++ cnt >= soundEventTable.maxSFXCount)
+            {
+                waitingQ.Clear();
+            }
+        }
     }
 
     //==============================================================
-
-
-    public void PlaySFX()
+    public void EnqueueSound(  AudioClip audioClip, SoundType type, int rank, Vector3 pos)
     {
-
+        // 브금인 경우,
+        if( type == SoundType.BGM )
+        {
+            PlayBGM(audioClip);
+        }
+        // sfx인 경우, 
+        else 
+        {
+            SoundData soundData =  new SoundData(audioClip, type, rank, pos);
+            if( rank >0)
+            {
+                 // 큐에 등록 
+                waitingQ.Enqueue( soundData , rank);
+            }
+            else
+            {
+                // 바로 재생
+                PlaySFX(soundData );
+            }
+        }
     }
 
-    public void PlayBGM()
+    //=======================================================================
+    
+    /// <summary>
+    /// 사운드 이벤트 테이블에 맞는 soundSO를 발생시킨다.
+    /// </summary>
+    /// <param name="t"></param>
+    /// <param name="eventType"></param>
+    public void Invoke(Transform t, SoundEventType eventType)
     {
+        soundEventTable?.table[eventType]?.Play(t);
+    }
+
+
+
+    void PlaySFX(SoundData soundData)
+    {
+        playingSFXCount++;
         
+        SFX sfx = GetFromPool<SFX>();
+        sfx.Play(soundData);
+    }
+
+    void PlayBGM(AudioClip audioClip)
+    {
+        bgmSource.Stop();
+        bgmSource.clip = audioClip;
+        bgmSource.Play();
+    }
+
+
+    public void DestroySFX(SFX sfx)
+    {
+        TakeToPool<SFX>(sfx);
+        playingSFXCount--;
+    }
+
+
+
+//===============================================
+
+
+    #region 사운드 세팅 
+    AudioMixer mixer;
+
+    [Range(-80,0)] public float master = 0;
+    [Range(-80,0)] public float bgm = 0;
+    [Range(-80,0)] public float sfx = 0;
+
+    //====================================
+    void InitSoundSetting()
+    {
+        // soundSetting = GameManager.Instance.playerData.soundSetting;
+        mixer =  GameManager.Instance.playerData.audioMixer;
+        mixer.GetFloat(nameof(master), out master);
+        mixer.GetFloat(nameof(bgm), out bgm);
+        mixer.GetFloat(nameof(sfx), out sfx);
+    }
+
+
+    public void SetMaster(float value)
+    {
+        master = value;
+        mixer.SetFloat(nameof(master), master);
+    }
+
+    public void SetBGM(float value)
+    {
+        bgm = value;
+        mixer.SetFloat(nameof(bgm), bgm);
+    }
+
+    public void SetSFX(float value)
+    {
+        sfx = value;
+        mixer.SetFloat(nameof(sfx), sfx);
     }
 
 
@@ -52,26 +190,7 @@ public class SoundManager : Singleton<SoundManager>
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    #endregion
 
 
 
@@ -118,7 +237,7 @@ public class SoundManager : Singleton<SoundManager>
 
 
 
-    public void InitPool()
+    void InitPool()
     {
         var namesGroups = _pools.Select(p => p.Name).GroupBy(n => n).Where(g => g.Count() > 1);
 
@@ -153,14 +272,14 @@ public class SoundManager : Singleton<SoundManager>
     /// <typeparam name="T">Pool's objects type.</typeparam>
     /// <param name="index">Pool index.</param>
     /// <returns>Finded pool.</returns>
-    public IPool<T> GetPool<T>(int index) where T : Component => (IPool<T>)_poolsObjects[index];
+    IPool<T> GetPool<T>(int index) where T : Component => (IPool<T>)_poolsObjects[index];
 
     /// <summary>
     /// Find pool by type <typeparamref name="T"/>.
     /// </summary>
     /// <typeparam name="T">Pool's objects type.</typeparam>
     /// <returns>Finded pool.</returns>
-    public IPool<T> GetPool<T>() where T : Component => (IPool<T>)_poolsObjects.Find(p => p.Source is T);
+    IPool<T> GetPool<T>() where T : Component => (IPool<T>)_poolsObjects.Find(p => p.Source is T);
 
     /// <summary>
     /// Find pool by <paramref name="name"/>
@@ -168,7 +287,7 @@ public class SoundManager : Singleton<SoundManager>
     /// <typeparam name="T">Pool's objects type.</typeparam>
     /// <param name="name">Pool name.</param>
     /// <returns>Finded pool.</returns>
-    public IPool<T> GetPool<T>(string name) where T : Component => (IPool<T>)_poolsObjects[_pools.FindIndex(p => p.Name == name)];
+    IPool<T> GetPool<T>(string name) where T : Component => (IPool<T>)_poolsObjects[_pools.FindIndex(p => p.Name == name)];
     #endregion
 
     #region Get from pool
@@ -178,14 +297,14 @@ public class SoundManager : Singleton<SoundManager>
     /// <typeparam name="T"><inheritdoc cref="GetPool{T}"/></typeparam>
     /// <param name="index"><inheritdoc cref="GetPool{T}"/></param>
     /// <returns>Pool's object (or <see langword="null"/> if free object was not finded).</returns>
-    public T GetFromPool<T>(int index) where T : Component => GetPool<T>(index).Get();
+    T GetFromPool<T>(int index) where T : Component => GetPool<T>(index).Get();
 
     /// <summary>
     /// Find pool by type <typeparamref name="T"/> and gets object from it.
     /// </summary>
     /// <typeparam name="T"><inheritdoc cref="GetPool{T}"/></typeparam>
     /// <returns>Pool's object (or <see langword="null"/> if free object was not finded).</returns>
-    public T GetFromPool<T>() where T : Component => GetPool<T>().Get();
+    T GetFromPool<T>() where T : Component => GetPool<T>().Get();
 
     /// <summary>
     /// Find pool by name <paramref name="name"/> and gets object from it.
@@ -193,7 +312,7 @@ public class SoundManager : Singleton<SoundManager>
     /// <typeparam name="T"><inheritdoc cref="GetPool{T}"/></typeparam>
     /// <param name="name"><inheritdoc cref="GetPool{T}(string)"/></param>
     /// <returns>Pool's object (or <see langword="null"/> if free object was not finded).</returns>
-    public T GetFromPool<T>(string name) where T : Component => GetPool<T>(name).Get();
+    T GetFromPool<T>(string name) where T : Component => GetPool<T>(name).Get();
     #endregion
 
     #region Take to pool
@@ -202,14 +321,14 @@ public class SoundManager : Singleton<SoundManager>
     /// </summary>
     /// <param name="index"><inheritdoc cref="GetPool{T}"/></param>
     /// <param name="component">Object (its component) which returns back.</param>
-    public void TakeToPool(int index, Component component) => _poolsObjects[index].Take(component);
+    void TakeToPool(int index, Component component) => _poolsObjects[index].Take(component);
 
     /// <summary>
     /// Returns object back to pool and marks it as free.
     /// </summary>
     /// <typeparam name="T">Pool type.</typeparam>
     /// <param name="component">Object (its component) which returns back.</param>
-    public void TakeToPool<T>(Component component) where T : Component => GetPool<T>().Take(component);
+    void TakeToPool<T>(Component component) where T : Component => GetPool<T>().Take(component);
 
     /// <summary>
     /// Returns object back to pool and marks it as free.
@@ -217,7 +336,7 @@ public class SoundManager : Singleton<SoundManager>
     /// <typeparam name="T">Pool type.</typeparam>
     /// <param name="name"><inheritdoc cref="GetPool{T}(string)"/></param>
     /// <param name="component">Object (its component) which returns back.</param>
-    public void TakeToPool<T>(string name, Component component) where T : Component => GetPool<T>(name).Take(component);
+    void TakeToPool<T>(string name, Component component) where T : Component => GetPool<T>(name).Take(component);
     #endregion
 
 

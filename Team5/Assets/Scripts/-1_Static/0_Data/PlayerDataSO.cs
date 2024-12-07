@@ -7,6 +7,7 @@ using System;
 using UnityEditor.Rendering;
 using Unity.Collections;
 using UnityEngine.InputSystem;
+using UnityEngine.Audio;
 
 
 /// <summary>
@@ -15,13 +16,13 @@ using UnityEngine.InputSystem;
 [Serializable]
 public class SoundSetting
 {
-    public float bgmSize;
-    public float sfxSize;
+    public float bgmVolume;
+    public float sfxVolume;
 
     public SoundSetting()
     {
-        bgmSize = 1;
-        sfxSize = 1;
+        bgmVolume = 1;
+        sfxVolume = 1;
     }
 }
 
@@ -31,6 +32,7 @@ public class PlayerDataSO : ScriptableObject
 {
     public InputActionAsset inputActionSO;
     public SoundSetting soundSetting;
+    public AudioMixer audioMixer;
     
     public int traitPoint;
     public int currChapter = 0;

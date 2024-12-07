@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86487dd4c288af04bb82c346fa82959f, type: 3}
+  m_Name: PlayerFootStep
+  m_EditorClassIdentifier: 
+  type: 0
+  rank: 1
+  combinationCount: 3
+  randomCount: 4
+  rows:
+  - files:
+    - {fileID: 8300000, guid: bd74de800c0a4b647b4de0aee632ba53, type: 3}
+    - {fileID: 8300000, guid: 72997f8bad801bf4a9f184f76fb09c0d, type: 3}
+    - {fileID: 8300000, guid: 9172cbfc537ca2a49a123ae4472b74a9, type: 3}
+    - {fileID: 8300000, guid: 410b2f58e223f9a4783a145813ba4ce0, type: 3}
+  - files:
+    - {fileID: 8300000, guid: 4c28c124093457b4cad9eae36ca6157d, type: 3}
+    - {fileID: 8300000, guid: 3e569d2b546c2c048b8a8b263285e430, type: 3}
+    - {fileID: 8300000, guid: e045642f6e1d49640a1a2540cc8425ff, type: 3}
+    - {fileID: 8300000, guid: ba220b303118f2344b5c1ac78326271f, type: 3}
+  - files:
+    - {fileID: 8300000, guid: c609bed292cdd124e8691fb02573ce62, type: 3}
+    - {fileID: 8300000, guid: 762d4d1e9ceef844f8e888b94d7a7e9f, type: 3}
+    - {fileID: 8300000, guid: 247bfc5352275d54eb4d669d64257a2a, type: 3}
+    - {fileID: 8300000, guid: 1f13fe5afae016a47a4dcbce1a0c9594, type: 3}

@@ -201,7 +201,7 @@ public class Enemy : MonoBehaviour, IPoolObject, ITimeScaleable
 
     public void GetDamaged(float damage, bool isEnhancedAttack = false)
     {
-        TestManager.Instance.TestSFX_enemyHit();
+        SoundManager.Instance.Invoke(t, SoundEventType.EnemyHit);
         lastHitPoint = transform.position;
 
         float nockbackPower = 5;
@@ -286,7 +286,7 @@ public class Enemy : MonoBehaviour, IPoolObject, ITimeScaleable
 
         stateUI.OnDie();
         //
-        TestManager.Instance.TestSFX_enemyDeath(data.type);
+        SoundManager.Instance.Invoke(t, SoundEventType.EnemyDie);
 
         GamePlayManager.Instance.OnEnemyKill(this);
         //

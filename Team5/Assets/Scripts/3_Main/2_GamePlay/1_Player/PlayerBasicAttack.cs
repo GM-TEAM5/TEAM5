@@ -71,7 +71,7 @@ public class PlayerBasicAttack : MonoBehaviour
     IEnumerator Attack()
     {
         Player.Instance.animator.OnBasicAttackStart();      // 이건 이제 애니메이션 클립으로 재생할거임. 
-        TestManager.Instance.TestSFX_NormalAttack();
+        SoundManager.Instance.Invoke(Player.Instance.transform, SoundEventType.PlayerBasicAttack);
 
         //
         attackAvailableTime = Time.time + data.delays[currCombo];

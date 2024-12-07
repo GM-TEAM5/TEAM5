@@ -14,11 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputActionSO: {fileID: -944628639613478452, guid: 0ca1e7f5a8e301b479da84ef68bee2ee,
     type: 3}
+  soundSetting:
+    bgmVolume: 1
+    sfxVolume: 1
+  audioMixer: {fileID: 24100000, guid: 429f604167c8a104097cc54828a6e040, type: 2}
   traitPoint: 123
   currChapter: 0
   currStageNum: 0
   currStagePlayCount: 0
-  deathCount: 15
+  deathCount: 16
   maxCount_equipment: 8
   stages:
   - {fileID: 11400000, guid: 6084220f7ec65f84ba55697acff44cae, type: 2}
@@ -66,7 +70,7 @@ MonoBehaviour:
     - Key: 1
       Value: {fileID: 11400000, guid: 03e0e5aa169111548be97dd798570abf, type: 2}
     - Key: 2
-      Value: {fileID: 11400000, guid: 798b97bc885b6ad4baa0ab33305e75d5, type: 2}
+      Value: {fileID: 0}
     - Key: 3
       Value: {fileID: 11400000, guid: df05e74d61ebc9641ae4de38704becea, type: 2}
     - Key: 4

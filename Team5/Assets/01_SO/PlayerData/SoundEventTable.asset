@@ -14,18 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   table:
     array:
+    - Key: 2
+      Value: {fileID: 11400000, guid: 8c6de06181545bb4e9837dcb41fbceaa, type: 2}
     - Key: 1
-      Value:
-        type: 0
-        file: {fileID: 0}
-        priority: 0
+      Value: {fileID: 11400000, guid: 6a0604af55ae0ed42a4fabfc7deeced0, type: 2}
     - Key: 0
-      Value:
-        type: 0
-        file: {fileID: 0}
-        priority: -12
-    - Key: 0
-      Value:
-        type: 0
-        file: {fileID: 0}
-        priority: -12
+      Value: {fileID: 11400000, guid: 77edf48475d4cd642b184308a94b09ad, type: 2}
+    - Key: 3
+      Value: {fileID: 11400000, guid: 875da863ff6210b458b68b62aab7723f, type: 2}
+    - Key: 4
+      Value: {fileID: 11400000, guid: e9b6cd93456301940933abe87ab1e20d, type: 2}
+    - Key: 5
+      Value: {fileID: 11400000, guid: 7f5c319f8b84a7e438ddc80baafedd44, type: 2}
+    - Key: 6
+      Value: {fileID: 11400000, guid: 31f2514c600832d419242786190de826, type: 2}
+  maxSFXCount: 5

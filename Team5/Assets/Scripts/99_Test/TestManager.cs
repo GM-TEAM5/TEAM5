@@ -4,18 +4,6 @@ using UnityEngine;
 
 public class TestManager :  Singleton<TestManager>
 {
-    // public List<PlayerSkillSO> initSkillData;
-    // public Sprite initProjSprite;
-
-    // public DamageText damageText;
-
-    // public EnemyDataSO enemyData;
-    // public StageDataSO testStageData;
-
-    public AudioClip testEnemyDeathSFX_ghost;
-    public AudioClip testEnemyDeathSFX_beast;
-    public AudioClip testNormalAttackSFX;
-    public AudioClip testEnhancedAttackSFX;
 
     public SimpleSFX simpleSFX;
 
@@ -29,76 +17,14 @@ public class TestManager :  Singleton<TestManager>
     //     SetBoundImage();
     // }
 
-    [Header("Foot Step Sound")]
+    // [Header("Foot Step Sound")]
     
-    public List<AudioClip> fs_clothes= new();
-    public List<AudioClip> fs_foot= new();
-    public List<AudioClip> fs_grass= new();
-
-
-    [Header("EnemyHit")]
-
-    public AudioClip ac_enemyHit;
-
-
-    public void TestSFX_enemyHit()
-    {
-        Instantiate(simpleSFX).PlaySFX(ac_enemyHit);
-    }
+    // public List<AudioClip> fs_clothes= new();
+    // public List<AudioClip> fs_foot= new();
+    // public List<AudioClip> fs_grass= new();
 
 
 
-    //
-    public void TestSFX_enemyDeath(EnemyType enemyType)
-    {
-        if( enemyType == EnemyType.Beast)
-        {
-            Instantiate(simpleSFX).PlaySFX(testEnemyDeathSFX_beast);
-        }
-        else if (enemyType == EnemyType.Ghost)
-        {
-            Instantiate(simpleSFX).PlaySFX(testEnemyDeathSFX_ghost);
-        }
-    }
-
-    //
-    public void TestSFX_NormalAttack()
-    {
-        Instantiate(simpleSFX).PlaySFX(testNormalAttackSFX);
-    }
-    // public void TestSFX_EnhancedAttack()
-    // {
-    //     Instantiate(simpleSFX).PlaySFX(testEnhancedAttackSFX);
-    // }
-
-
-    public AudioClip sfx_ryoikitenkaiOn;
-    public AudioClip sfx_ryoikitenkaiOff;
-    public void TestSFX_RyoikiTenkai(bool isOn)
-    {
-        if (isOn)
-        {
-            Instantiate(simpleSFX).PlaySFX(sfx_ryoikitenkaiOn);
-        }
-        else
-        {
-            Instantiate(simpleSFX).PlaySFX(sfx_ryoikitenkaiOff);
-        }
-        
-        
-    }
-
-
-    
-
-    public void TestSFX_FootStep()
-    {
-        int rand = Random.Range(0,4);
-        // Debug.Log(rand);
-         Instantiate(simpleSFX).PlaySFX(fs_clothes[rand]);
-         Instantiate(simpleSFX).PlaySFX(fs_foot[rand]);
-         Instantiate(simpleSFX).PlaySFX(fs_grass[rand]);
-    }
 
 
     [SerializeField] SerializableDictionary<string, AudioClip> testSFXs=new(); 
@@ -114,7 +40,7 @@ public class TestManager :  Singleton<TestManager>
 
     void TestSFX(string key)
     {
-        Instantiate(simpleSFX).PlaySFX(testSFXs[key]);
+        // Instantiate(simpleSFX).PlaySFX(testSFXs[key]);
     }
 
 

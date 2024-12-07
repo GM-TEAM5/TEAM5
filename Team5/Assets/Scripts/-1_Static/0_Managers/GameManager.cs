@@ -44,6 +44,7 @@ public class GameManager : Singleton<GameManager>
 
         ResourceManager.Instance.Init();
         PlayerInputManager.Instance.Init();
+        SoundManager.Instance.Init();
     }
 
     void onGameOver()

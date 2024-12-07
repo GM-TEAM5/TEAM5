@@ -8,7 +8,7 @@ public class FootStep : MonoBehaviour
     {
         if(Player.Instance.stunned == false)
         {
-            TestManager.Instance.TestSFX_FootStep();
+            SoundManager.Instance.Invoke(Player.Instance.t, SoundEventType.PlayerMove);
         }
         
     }
