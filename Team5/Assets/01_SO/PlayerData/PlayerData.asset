@@ -70,7 +70,7 @@ MonoBehaviour:
     - Key: 1
       Value: {fileID: 11400000, guid: 03e0e5aa169111548be97dd798570abf, type: 2}
     - Key: 2
-      Value: {fileID: 0}
+      Value: {fileID: 11400000, guid: 798b97bc885b6ad4baa0ab33305e75d5, type: 2}
     - Key: 3
       Value: {fileID: 11400000, guid: df05e74d61ebc9641ae4de38704becea, type: 2}
     - Key: 4
@@ -80,7 +80,7 @@ MonoBehaviour:
     - Key: 1
       Value: {fileID: 11400000, guid: 03e0e5aa169111548be97dd798570abf, type: 2}
     - Key: 2
-      Value: {fileID: 0}
+      Value: {fileID: 11400000, guid: 798b97bc885b6ad4baa0ab33305e75d5, type: 2}
     - Key: 3
       Value: {fileID: 11400000, guid: df05e74d61ebc9641ae4de38704becea, type: 2}
     - Key: 4
