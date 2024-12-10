@@ -33,7 +33,7 @@ public class Enemy : MonoBehaviour, IPoolObject, ITimeScaleable
     public float hp // 현재체력
     {
         get => _hp;
-        set { _hp = Math.Clamp(value, 0, data.maxHp); }
+        set { _hp = System.Math.Clamp(value, 0, data.maxHp); }
     }
 
     public bool isAlive => _hp > 0;
@@ -253,7 +253,7 @@ public class Enemy : MonoBehaviour, IPoolObject, ITimeScaleable
     /// <param name="duration"></param>
     void SetStunned(float duration)
     {
-        stunDurationRemain = Math.Max(stunDurationRemain, duration);
+        stunDurationRemain = System.Math.Max(stunDurationRemain, duration);
         ai.OnStunned();
     }
 
