@@ -28,7 +28,7 @@ namespace BW.Util
         // }
     }
 
-    public static class Math
+    public static class BwMath
     {
         public static int GetRandom(int min, int max)
         {

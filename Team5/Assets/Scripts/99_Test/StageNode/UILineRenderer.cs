@@ -1,33 +1,52 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class UILineRenderer : MonoBehaviour
 {
     public GameObject prefab_line;
 
-    public Transform t_lineParent;
+    // public Transform t_lineParent;
 
     public float width = 5;
 
 
-    public void DrawLines(List<RectTransform> points, Color color)
+    public void DrawLines(List<RectTransform> points, Color color, Transform t_lineParent)
     {
         for(int i=0;i<t_lineParent.childCount;i++)
         {
             Destroy(t_lineParent.GetChild(i).gameObject);
         }
-        
-        
+
         for(int i=0;i<points.Count-1;i++)
         {
-            StartCoroutine(DelayedDraw(points[i], points[i+1],color ));
+            StartCoroutine(DelayedDraw(points[i], points[i+1],color , t_lineParent));
         }
     }
 
-    public void DrawLine(RectTransform rt1, RectTransform rt2, Color color)
+    public void DrawLines(RectTransform rt1, RectTransform rt2, Color color, Transform t_lineParent)
+    {
+        for(int i=0;i<t_lineParent.childCount;i++)
+        {
+            Destroy(t_lineParent.GetChild(i).gameObject);
+        }
+        StartCoroutine(DelayedDraw(rt1, rt2,color , t_lineParent));
+
+    }
+
+
+    public IEnumerator DelayedDraw(RectTransform rt1, RectTransform rt2, Color color, Transform t_lineParent)
+    {
+        yield return null;
+        DrawLine(rt1, rt2,color ,t_lineParent);
+
+    }
+
+    public void DrawLine(RectTransform rt1, RectTransform rt2, Color color, Transform t_lineParent)
     {
         Vector3 posA = rt1.anchoredPosition + rt1.parent.GetComponent<RectTransform>().anchoredPosition;
         Vector3 posB = rt2.anchoredPosition + rt2.parent.GetComponent<RectTransform>().anchoredPosition;
@@ -49,14 +68,5 @@ public class UILineRenderer : MonoBehaviour
 
         line.GetComponent<Image>().color= color;
     }
-    
-
-    IEnumerator DelayedDraw(RectTransform rt1, RectTransform rt2, Color color)
-    {
-        yield return null;
-        DrawLine(rt1, rt2,color );
-
-    }
-
 
 }

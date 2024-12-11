@@ -5,13 +5,24 @@ using UnityEngine.UI;
 
 public class StageNodeViewer : MonoBehaviour
 {
-    public GameObject prefab_line;
+    
+    public GameObject prefab_nodeLine;
+    //
+    [Header("Raw")]
+    public Transform t_viewer_raw;
+    public Transform t_lineParent_raw;
+    public List<NodeLineUI> lineUIs_raw;
+
+    //\
+    [Header("Merged")]
+    public Transform t_viewer_merged;
+    public Transform t_lineParent_merged;
+    public List<NodeLineUI> lineUIs_merged;
+    
+    
 
 
-    public Transform t_viewer;
-
-    public List<NodeLineUI> lineUIs;
-
+    
     public UILineRenderer lineRenderer;
 
     public List<Color> colors = new()
@@ -33,23 +44,23 @@ public class StageNodeViewer : MonoBehaviour
     //==================================================================================
 
 
-    public void ShowStageNodes(int w, int h, List<List<int>> nodes)
+    public void ShowRawNodes(int w, int h, List<List<int>> nodes)
     {
         // Destroy
-        for(int i=0;i<t_viewer.childCount;i++)
+        for(int i=0;i<t_viewer_raw.childCount;i++)
         {
-            Destroy(t_viewer.GetChild(i).gameObject);
+            Destroy(t_viewer_raw.GetChild(i).gameObject);
         }
 
         // Generate
-        lineUIs = new();
+        lineUIs_raw = new();
         for(int i=0;i<h;i++)
         {
-            NodeLineUI lineUI = Instantiate(prefab_line,t_viewer).GetComponent<NodeLineUI>();
+            NodeLineUI lineUI = Instantiate(prefab_nodeLine,t_viewer_raw).GetComponent<NodeLineUI>();
             lineUI.Init(w);
             lineUI.transform.SetAsFirstSibling();
 
-            lineUIs.Add(lineUI);
+            lineUIs_raw.Add(lineUI);
         }
 
         // Allocate
@@ -61,15 +72,80 @@ public class StageNodeViewer : MonoBehaviour
             for(int j=0;j<nodes[i].Count;j++)
             {  
                 int nodeIdx = nodes[i][j]; 
-                NodeUI node = lineUIs[j].nodeUIs[nodeIdx];
+                NodeUI node = lineUIs_raw[j].nodeUIs[nodeIdx];
                 node.SetColor(color);
 
                 points.Add( node.GetComponent<RectTransform>());
             }
-            lineRenderer.DrawLines(points,color);
+            lineRenderer.DrawLines(points,color,t_lineParent_raw);
         }
 
 
     }
+
+
     
+    public void ShowMergedNodes(int w, int h, List<List<StageNode>> nodes)
+    {
+        // Destroy
+        for(int i=0;i<t_viewer_merged.childCount;i++)
+        {
+            Destroy(t_viewer_merged.GetChild(i).gameObject);
+        }
+
+        // Generate
+        lineUIs_merged = new();
+        for(int i=0;i<h;i++)
+        {
+            NodeLineUI lineUI = Instantiate(prefab_nodeLine,t_viewer_merged).GetComponent<NodeLineUI>();
+            lineUI.Init(w);
+            lineUI.transform.SetAsFirstSibling();
+
+            lineUIs_merged.Add(lineUI);
+        }
+
+        // Allocate
+        Color color = colors[8];
+        for(int i=0;i<nodes.Count;i++)
+        {
+            for(int j=0;j<nodes[i].Count;j++)
+            {
+                StageNode node = nodes[i][j];
+
+                NodeUI nodeUI = lineUIs_merged[node.level].nodeUIs[node.number];
+                nodeUI.SetColor(color);
+                //
+
+                
+            }
+        }
+
+        // draw line
+        for(int i=0;i<nodes[0].Count;i++)
+        {
+            StageNode startNode = nodes[0][i];
+
+            foreach( StageNode nextNode in startNode.nextNodes )
+            {
+                RecursiveDrawLine( startNode, nextNode,color);
+            }
+        }
+    }
+    
+
+    void RecursiveDrawLine(StageNode currNode, StageNode nextNode,Color color)
+    {
+        // 1. 두 노드를 잇는다. 
+        RectTransform rt1 = lineUIs_merged[currNode.level].nodeUIs[currNode.number].GetComponent<RectTransform>();
+        RectTransform rt2 = lineUIs_merged[nextNode.level].nodeUIs[nextNode.number].GetComponent<RectTransform>();
+
+
+        lineRenderer.DrawLines(rt1,rt2,color,t_lineParent_merged) ;
+
+        // 2.
+        foreach( StageNode nextnextNode in nextNode.nextNodes )
+        {
+            RecursiveDrawLine( nextNode, nextnextNode, color ); 
+        }
+    }
 }
