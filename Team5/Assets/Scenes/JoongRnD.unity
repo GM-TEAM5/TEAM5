@@ -260,14 +260,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e62ec43e1bd87b74c969132766cbb15b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageGenConfig: {fileID: 0}
+  stageGenConfig: {fileID: 11400000, guid: 2ac61f1664a80724fa18c30e91367242, type: 2}
   w: 5
   h: 11
   startNodeCnt: 3
   leftStartOffset: 1
   rightStartOffset: 1
-  repeatCnt: 7
+  repeatCnt: 10
   uniqueNodeIdxs: 04000000090000000a000000
+  allNodes: []
   nodeViewer: {fileID: 204242318}
 --- !u!114 &204242318
 MonoBehaviour:
@@ -686,8 +687,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1140502325}
   - {fileID: 677978249}
+  - {fileID: 1140502325}
   m_Father: {fileID: 739563136}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

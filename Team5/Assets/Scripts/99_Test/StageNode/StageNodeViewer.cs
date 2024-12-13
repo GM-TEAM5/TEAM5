@@ -113,7 +113,7 @@ public class StageNodeViewer : MonoBehaviour
                 StageNode node = nodes[i][j];
 
                 NodeUI nodeUI = lineUIs_merged[node.level].nodeUIs[node.number];
-                nodeUI.SetColor(color);
+                nodeUI.SetColor( colors[(int) node.type]);
                 //
 
                 

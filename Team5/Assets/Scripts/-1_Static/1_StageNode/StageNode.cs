@@ -7,7 +7,7 @@ using UnityEngine;
 
 public enum StageNodeType
 {
-    Unused,             // 사용되지 않음.
+    Unassigned,             // 사용되지 않음.
     NormalBattle,       // 일반 전투
     EliteBattle,        // 정예 전투
     // Event,
@@ -25,8 +25,8 @@ public class StageNode
     public int level;       // 세로번호
     public int number;      // 가로번호
 
-    public List<StageNode> prevNodes;
-    public List<StageNode> nextNodes;
+    [HideInInspector] public List<StageNode> prevNodes;
+    [HideInInspector] public List<StageNode> nextNodes;
 
     public bool unvalid;
 
@@ -74,5 +74,22 @@ public class StageNode
         }
     }
 
+    public void RemoveNextNode(StageNode node)
+    {
+        if (node!=null && nextNodes.Contains(node))
+        {
+            nextNodes.Remove(node);
+        }
+    }
 
+    //======================================
+    public void SetType(StageNodeType type)
+    {
+        this.type = type;
+    }
+
+    public static explicit operator StageNode(UnityEngine.Object v)
+    {
+        throw new NotImplementedException();
+    }
 }

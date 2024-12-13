@@ -7,6 +7,7 @@ using System.Linq;
 using BW.Util;
 using Unity.Collections;
 using Unity.Collections.LowLevel.Unsafe;
+using UnityEngine.Rendering;
 
 
 
@@ -26,7 +27,8 @@ public class StageNodeGenerator : MonoBehaviour
     public List<int> uniqueNodeIdxs = new(){4,9,10};
 
     //
-    public List<List<StageNode>> mergedNodes = new();
+    public List<List<StageNode>> stageNodes = new();
+    // public List<StageNode> allNodes = new();
 
 
     public StageNodeViewer nodeViewer;
@@ -35,29 +37,14 @@ public class StageNodeGenerator : MonoBehaviour
     void Start()
     {
         GenerateStageNodes();
-
-        //
-        // for(int i=0;i<nodes.Count;i++)
-        // {
-        //     List<int> way = nodes[i];
-            
-        //     Debug.Log("==============");
-
-        //     string str = $"way {i} :";
-        //     for(int j=0;j<way.Count;j++)
-        //     {
-        //         str+= $" - {way[j]}";
-
-        //     }
-        //     Debug.Log(str);
-        // }
     }
 
     public void GenerateStageNodes()
     {
-        GenerateRawNodes();
-        MergeRawNodes();
-        SimplifyNodes();
+        GenerateRawNodes(); // 노드 번호들로 경로 생성
+        MergeRawNodes();    // 노드 클래스 생성하여 합치기
+        SimplifyNodes();    // 사용하지 않을 노드 정리
+        AssignNodeTypes();   // 각 노드 설정 지정
     }
 
 
@@ -142,16 +129,16 @@ public class StageNodeGenerator : MonoBehaviour
         }
 
 
-        mergedNodes = new();
+        stageNodes = new();
         for(int y=0;y< mergingNodes.GetLength(0);y++)
         {
-            mergedNodes.Add(new());
+            stageNodes.Add(new());
             for(int x=0;x<mergingNodes.GetLength(1);x++)
             {
                 StageNode node = mergingNodes[y,x];
                 if ( node != null)
                 {
-                    mergedNodes[y].Add(node);
+                    stageNodes[y].Add(node);
                 }
             }
         }
@@ -185,8 +172,8 @@ public class StageNodeGenerator : MonoBehaviour
     void SimplifyNodes()
     {
         // 1.시작 노드 1개만 남기고 제거하고, 그에따라 도달할 수 없는 노드 제거 플래그 켜기
-        int randIdx = BwMath.GetRandom(0, mergedNodes[0].Count );
-        List<StageNode> excludedNodes = mergedNodes[0].Where((val, i) => i != randIdx).ToList();
+        int randIdx = BwMath.GetRandom(0, stageNodes[0].Count );
+        List<StageNode> excludedNodes = stageNodes[0].Where((val, i) => i != randIdx).ToList();
         for(int i=0;i<excludedNodes.Count;i++)
         {
             StageNode excludedNode = excludedNodes[i];
@@ -194,15 +181,29 @@ public class StageNodeGenerator : MonoBehaviour
             RecursiveDisconnectNode(excludedNode);
         }
 
-        // 2. 제거플래그가 켜진 노드들은 리스트에서 제거
-        for(int i=0;i<mergedNodes.Count;i++)
+        // 중간보스 직후 노드도 한개만
+        int targetLevel = uniqueNodeIdxs[0]+1;
+        randIdx = BwMath.GetRandom(0, stageNodes[targetLevel].Count);
+        excludedNodes = stageNodes[targetLevel].Where((val, i) => i != randIdx).ToList();
+        for(int i=0;i<excludedNodes.Count;i++)
         {
-            mergedNodes[i] = mergedNodes[i].Where(x=>x.unvalid == false ).ToList();
+            StageNode excludedNode = excludedNodes[i];
+            foreach( StageNode prevNode in excludedNode.prevNodes)
+            {
+                prevNode.RemoveNextNode(excludedNode);
+            }
+            excludedNode.prevNodes.Clear();
+
+            RecursiveDisconnectNode(excludedNode);
         }
 
 
-        // 보여주기.
-        nodeViewer.ShowMergedNodes(w,h,mergedNodes);
+
+        // 2. 제거플래그가 켜진 노드들은 리스트에서 제거
+        for(int i=0;i<stageNodes.Count;i++)
+        {
+            stageNodes[i] = stageNodes[i].Where(x=>x.unvalid == false ).ToList();
+        }
     } 
 
 
@@ -222,6 +223,23 @@ public class StageNodeGenerator : MonoBehaviour
 
 
     }
+
+    /// <summary>
+    /// 각 노드 타입 지정 - 타입은 config에 따라 지정
+    /// </summary>
+    public void AssignNodeTypes()
+    {
+        stageGenConfig.AssignNodeTypes(stageNodes);
+        // 
+
+        // allNodes = stageNodes.SelectMany(row => row).ToList();  // 이거하면 인스펙터 폭발해서 렉걸림. 
+
+        // 보여주기.
+        nodeViewer.ShowMergedNodes(w,h,stageNodes);
+    } 
+
+
+    //==============================================================================
 
 
 

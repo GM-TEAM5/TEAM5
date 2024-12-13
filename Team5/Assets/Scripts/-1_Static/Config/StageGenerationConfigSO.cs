@@ -1,7 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
+using System.Linq;
+using System.ComponentModel;
 
 
 /// <summary>
@@ -11,6 +11,9 @@ using UnityEngine;
 public class StageGenerationConfigSO : ScriptableObject 
 {
     public List<StageNodeWeight> nodeWeights;
+
+    public SerializableDictionary<int, StageNodeType> fixedNodeType = new();
+
     
     
     //================================================================
@@ -31,12 +34,156 @@ public class StageGenerationConfigSO : ScriptableObject
         for(int i=0;i<nodeWeights.Count-1;i++)
         {
             StageNodeWeight nw = nodeWeights[i];
-            nw.prop = Mathf.Clamp(nw.prop, 0, maxProp);
-            maxProp-= nw.prop;
+            nw.weight = Mathf.Clamp(nw.weight, 0, maxProp);
+            maxProp-= nw.weight;
         }
-        nodeWeights[nodeWeights.Count-1].prop = maxProp;
+        nodeWeights[nodeWeights.Count-1].weight = maxProp;
     }
 
+    //========================================================================
+
+    public StageNodeType GetRandomNodeType()
+    {
+        StageNodeType ret = StageNodeType.NormalBattle;
+        
+
+        int rand = BW.Util.BwMath.GetRandom(0,100);
+        int cumulation = 0;
+        for(int i =0;i<nodeWeights.Count;i++)
+        {
+            StageNodeWeight nw = nodeWeights[i];
+            cumulation += nw.weight;
+
+            if (rand < cumulation)
+            {
+                ret = nw.type;
+                break;
+            }
+        }
+
+        return ret;
+    } 
+
+    public void AssignNodeTypes(List<List<StageNode>> stageNodes)
+    {
+        List<StageNode> allNodes = stageNodes.SelectMany(row => row).ToList();
+        int totalNodeCnt = allNodes.Count;
+        
+        // 일단 특정 레벨의 노드는 타입을 지정함. 
+        foreach(var kv in fixedNodeType)
+        {
+            int level = kv.Key;
+            StageNodeType type = kv.Value;
+
+            List<StageNode> targetNodes = stageNodes[level];
+            for(int i=0;i<targetNodes.Count;i++)
+            {
+                targetNodes[i].SetType(type);
+                totalNodeCnt--;
+            }
+        }
+
+        // 그리고 나머지 노드의 타입은 이제 제약과 가중치에 따라 배치.
+        int totalWeight = nodeWeights.Sum(x=>x.weight);
+        List<StageNodeType> typeList = new();
+
+        foreach(StageNodeWeight nw in nodeWeights)
+        {
+            int cnt = totalNodeCnt * nw.weight / totalWeight;
+            for(int i=0;i<cnt*1.5f;i++) // 1.5는 
+            {
+                typeList.Add(nw.type);
+            }
+        }
+
+        //
+        System.Random random = new();
+        typeList = typeList.OrderBy(x => random.Next()).ToList();   // shuffle
+        Queue<StageNodeType> q = new (typeList);
+        
+        // 
+        List<StageNode> unassginedNodes = allNodes.Where(x=>x.type == StageNodeType.Unassigned ).ToList();
+        foreach(StageNode node in unassginedNodes)
+        {
+            StageNodeType type = q.Dequeue();
+            if (CanAssignType(node, type))
+            {
+                node.SetType(type);
+            }
+            else
+            {
+                q.Enqueue(type);    // 재활용하려고.
+            }
+        }
+
+        // 나머지 처리
+        unassginedNodes = unassginedNodes.Where(x=>x.type == StageNodeType.Unassigned ).ToList();
+        foreach(StageNode node in unassginedNodes)
+        {
+            node.SetType(StageNodeType.NormalBattle);
+        }
+    } 
+
+
+    /// <summary>
+    /// 해당 노드에 해당 타입을 지정할 수 있는지 여부 판단 - 동일 타입의 노드간 거리가 minInterval보다 커야함. -bfs 알고리즘으로 구성.
+    /// </summary>
+    /// <param name="stageNode"></param>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    bool CanAssignType(StageNode stageNode,StageNodeType type)
+    {
+        int minInterval = 0;
+        StageNodeWeight nw =  nodeWeights.Find(x=>x.type==type);
+        if(nw !=null)
+        {
+            minInterval = nw.minInterval;
+        }
+
+        var visited = new HashSet<StageNode>();
+        var queue = new Queue<(StageNode node, int depth)>();
+        
+        queue.Enqueue((stageNode, 0));
+        visited.Add(stageNode);
+
+        while (queue.Count > 0)
+        {
+            var (currNode, depth) = queue.Dequeue();
+
+            // 시작 노드 제외 && 타입이 일치하면 반환
+            if (depth > 0 && currNode.type == type)
+            {
+                return false;
+            }
+
+            // minInterval 범위 내에서만 탐색
+            if (depth < minInterval)
+            {
+                // 다음 노드 탐색
+                foreach (var next in currNode.nextNodes)
+                {
+                    if (!visited.Contains(next))
+                    {
+                        visited.Add(next);
+                        queue.Enqueue((next, depth + 1));
+                    }
+                }
+
+                // 이전 노드 탐색
+                foreach (var prev in currNode.prevNodes)
+                {
+                    if (!visited.Contains(prev))
+                    {
+                        visited.Add(prev);
+                        queue.Enqueue((prev, depth + 1));
+                    }
+                }
+            }
+        }
+
+        // 탐색 종료 후 동일 타입 노드를 못 찾은 경우
+        return true; 
+    }
 
 
 
@@ -49,7 +196,7 @@ public class StageGenerationConfigSO : ScriptableObject
     public class StageNodeWeight
     {
         public StageNodeType type;
-        [Range(0, 100)] public int prop; // 인스펙터 슬라이더로 범위를 제한할 수도 있음
-        public bool continuousGenerationAllowed;
+        [Range(0, 100)] public int weight; // 인스펙터 슬라이더로 범위를 제한할 수도 있음
+        public int minInterval;  // 배치가능한 최소 간격
     }
 }
