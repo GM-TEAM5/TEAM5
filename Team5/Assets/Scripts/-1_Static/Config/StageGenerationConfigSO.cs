@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System.ComponentModel;
+using Unity.VisualScripting;
 
 
 /// <summary>
@@ -64,10 +65,9 @@ public class StageGenerationConfigSO : ScriptableObject
         return ret;
     } 
 
-    public void AssignNodeTypes(List<List<StageNode>> stageNodes)
+    public void AssignNodeTypes(List<StageNode> stageNodes)
     {
-        List<StageNode> allNodes = stageNodes.SelectMany(row => row).ToList();
-        int totalNodeCnt = allNodes.Count;
+        int totalNodeCnt = stageNodes.Count;
         
         // 일단 특정 레벨의 노드는 타입을 지정함. 
         foreach(var kv in fixedNodeType)
@@ -75,7 +75,7 @@ public class StageGenerationConfigSO : ScriptableObject
             int level = kv.Key;
             StageNodeType type = kv.Value;
 
-            List<StageNode> targetNodes = stageNodes[level];
+            List<StageNode> targetNodes = stageNodes.Where(x=>x.level == level).ToList();
             for(int i=0;i<targetNodes.Count;i++)
             {
                 targetNodes[i].SetType(type);
@@ -102,11 +102,11 @@ public class StageGenerationConfigSO : ScriptableObject
         Queue<StageNodeType> q = new (typeList);
         
         // 
-        List<StageNode> unassginedNodes = allNodes.Where(x=>x.type == StageNodeType.Unassigned ).ToList();
+        List<StageNode> unassginedNodes = stageNodes.Where(x=>x.type == StageNodeType.Unassigned ).ToList();
         foreach(StageNode node in unassginedNodes)
         {
             StageNodeType type = q.Dequeue();
-            if (CanAssignType(node, type))
+            if (CanAssignType(stageNodes, node, type))
             {
                 node.SetType(type);
             }
@@ -131,7 +131,7 @@ public class StageGenerationConfigSO : ScriptableObject
     /// <param name="stageNode"></param>
     /// <param name="type"></param>
     /// <returns></returns>
-    bool CanAssignType(StageNode stageNode,StageNodeType type)
+    bool CanAssignType(List<StageNode> stageNodes,StageNode stageNode,StageNodeType type)
     {
         int minInterval = 0;
         StageNodeWeight nw =  nodeWeights.Find(x=>x.type==type);
@@ -140,18 +140,20 @@ public class StageGenerationConfigSO : ScriptableObject
             minInterval = nw.minInterval;
         }
 
-        var visited = new HashSet<StageNode>();
-        var queue = new Queue<(StageNode node, int depth)>();
+        var visited = new HashSet<string>();
+        var queue = new Queue<(string id, int depth)>();
         
-        queue.Enqueue((stageNode, 0));
-        visited.Add(stageNode);
+        queue.Enqueue((stageNode.id, 0));
+        visited.Add(stageNode.id);
 
         while (queue.Count > 0)
         {
-            var (currNode, depth) = queue.Dequeue();
+            var (id, depth) = queue.Dequeue();
+
+            StageNode node = stageNodes.Find(x=>x.id == id);
 
             // 시작 노드 제외 && 타입이 일치하면 반환
-            if (depth > 0 && currNode.type == type)
+            if (depth > 0 && node.type == type)
             {
                 return false;
             }
@@ -160,7 +162,7 @@ public class StageGenerationConfigSO : ScriptableObject
             if (depth < minInterval)
             {
                 // 다음 노드 탐색
-                foreach (var next in currNode.nextNodes)
+                foreach (var next in node.nextNodes)
                 {
                     if (!visited.Contains(next))
                     {
@@ -170,7 +172,7 @@ public class StageGenerationConfigSO : ScriptableObject
                 }
 
                 // 이전 노드 탐색
-                foreach (var prev in currNode.prevNodes)
+                foreach (var prev in node.prevNodes)
                 {
                     if (!visited.Contains(prev))
                     {

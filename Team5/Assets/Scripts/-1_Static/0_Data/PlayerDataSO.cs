@@ -31,7 +31,7 @@ public class SoundSetting
 public class PlayerDataSO : ScriptableObject
 {
     public InputActionAsset inputActionSO;
-    public SoundSetting soundSetting;
+    // public SoundSetting soundSetting;
     public AudioMixer audioMixer;
     
     public int traitPoint;

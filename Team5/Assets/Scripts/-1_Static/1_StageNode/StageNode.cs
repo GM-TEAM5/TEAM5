@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Common;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -21,18 +22,22 @@ public enum StageNodeType
 public class StageNode
 {
     public StageNodeType type;
+    
+    public string id =>$"{chapter}_{level}_{number}";
 
+    public int chapter;
     public int level;       // 세로번호
     public int number;      // 가로번호
 
-    [HideInInspector] public List<StageNode> prevNodes;
-    [HideInInspector] public List<StageNode> nextNodes;
+    public List<string> prevNodes;
+    public List<string> nextNodes;       // 이거 hideInspector 해도 렉걸림. 
 
-    public bool unvalid;
+    [NonSerialized] public bool unvalid;
 
     //==============================
-    public StageNode(int level, int number)
+    public StageNode(int chapter, int level, int number)
     {
+        this.chapter = chapter;
         this.level = level;
         this.number = number;
 
@@ -50,35 +55,34 @@ public class StageNode
     //===================
     public void AddPrevNode(StageNode node)
     {
-        if (node!=null && prevNodes.Contains(node) == false)
+        if (node !=null && prevNodes.Contains(node.id) == false)
         {
-            prevNodes.Add(node);
-
-            node.AddNextNode(this);
+            prevNodes.Add(node.id);
+            node.AddNextNode(this);        
         }
     }
     public void AddNextNode(StageNode node)
     {
-        if (node!=null && nextNodes.Contains(node) == false)
+        if (node != null && nextNodes.Contains(node.id) == false)
         {
-            nextNodes.Add(node);
+            nextNodes.Add(node.id);
         }
     }
 
     //==================
-    public void RemovePrevNode(StageNode node)
+    public void RemovePrevNode(string id)
     {
-        if (node!=null && prevNodes.Contains(node))
+        if (prevNodes.Contains(id))
         {
-            prevNodes.Remove(node);
+            prevNodes.Remove(id);
         }
     }
 
-    public void RemoveNextNode(StageNode node)
+    public void RemoveNextNode(string id)
     {
-        if (node!=null && nextNodes.Contains(node))
+        if (nextNodes.Contains( id))
         {
-            nextNodes.Remove(node);
+            nextNodes.Remove( id );
         }
     }
 
@@ -86,10 +90,5 @@ public class StageNode
     public void SetType(StageNodeType type)
     {
         this.type = type;
-    }
-
-    public static explicit operator StageNode(UnityEngine.Object v)
-    {
-        throw new NotImplementedException();
     }
 }

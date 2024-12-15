@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -85,7 +86,7 @@ public class StageNodeViewer : MonoBehaviour
 
 
     
-    public void ShowMergedNodes(int w, int h, List<List<StageNode>> nodes)
+    public void ShowMergedNodes(int w, int h, List<StageNode> nodes)
     {
         // Destroy
         for(int i=0;i<t_viewer_merged.childCount;i++)
@@ -106,46 +107,38 @@ public class StageNodeViewer : MonoBehaviour
 
         // Allocate
         Color color = colors[8];
-        for(int i=0;i<nodes.Count;i++)
+        foreach(StageNode node in nodes)
         {
-            for(int j=0;j<nodes[i].Count;j++)
-            {
-                StageNode node = nodes[i][j];
-
-                NodeUI nodeUI = lineUIs_merged[node.level].nodeUIs[node.number];
-                nodeUI.SetColor( colors[(int) node.type]);
-                //
-
-                
-            }
+            NodeUI nodeUI = lineUIs_merged[node.level].nodeUIs[node.number];
+            nodeUI.SetColor( colors[(int) node.type]);
         }
 
         // draw line
-        for(int i=0;i<nodes[0].Count;i++)
+        foreach(StageNode startNode in nodes.Where(x=>x.level ==0))
         {
-            StageNode startNode = nodes[0][i];
-
-            foreach( StageNode nextNode in startNode.nextNodes )
+            List<StageNode> nextNodes = nodes.Where(x=> startNode.nextNodes.Contains(x.id)).ToList();
+            foreach(StageNode nextNode in nextNodes)
             {
-                RecursiveDrawLine( startNode, nextNode,color);
+                RecursiveDrawLine(nodes, startNode, nextNode,color);
             }
         }
     }
     
 
-    void RecursiveDrawLine(StageNode currNode, StageNode nextNode,Color color)
+    void RecursiveDrawLine(List<StageNode> nodes, StageNode currNode, StageNode nextNode,Color color)
     {
         // 1. 두 노드를 잇는다. 
         RectTransform rt1 = lineUIs_merged[currNode.level].nodeUIs[currNode.number].GetComponent<RectTransform>();
         RectTransform rt2 = lineUIs_merged[nextNode.level].nodeUIs[nextNode.number].GetComponent<RectTransform>();
 
 
-        lineRenderer.DrawLines(rt1,rt2,color,t_lineParent_merged) ;
+        lineRenderer.DrawLines(rt1,rt2,color,t_lineParent_merged);
 
-        // 2.
-        foreach( StageNode nextnextNode in nextNode.nextNodes )
+        // 2.s
+        List<StageNode> nextnextNodes = nodes.Where( x => nextNode.nextNodes.Contains( x.id ) ).ToList();
+        foreach( StageNode nextnextNode in nextnextNodes)
         {
-            RecursiveDrawLine( nextNode, nextnextNode, color ); 
+            RecursiveDrawLine( nodes, nextNode, nextnextNode, color);
         }
     }
 }

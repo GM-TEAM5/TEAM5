@@ -4,6 +4,8 @@ using UnityEngine;
 using DG.Tweening;
 using TMPro;
 using System.Threading;
+using System.ComponentModel;
+using UnityEngine.Rendering;
 
 /// <summary>
 /// 메인 씬의 게임 플레이 로직 및 ui를 관리
@@ -27,6 +29,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
     // [SerializeField] ReinforcementPanel reinforcementPanel; //레벨업 시 강화 패널
     [SerializeField] PlayerInfoPanel playerInfoPanel; // 플레이어 정보 패널 - esc 눌렀을 때,
     [SerializeField] EquipmentChangePanel equipmentChangePanel; // 장비 교체 패널 - 장비칸 없었을 때 아이템 먹었을 떄, 
+    [SerializeField] GamePlaySettingPanel settingPanel;
 
     //
     // [SerializeField] SelectableItemInfoPanel selectableItemInfoPanel;   // 웨이브 종료시 나타나는 아이템 설명 팝업창
@@ -117,6 +120,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
             }
             else
             {
+                CloseSettingPanel();
                 ClosePlayerInfoPanel();
             }
             
@@ -175,7 +179,19 @@ public class GamePlayManager : Singleton<GamePlayManager>
         }
     }
 
-    //========================================
+    //========================================\
+
+    public void OepnSettingPanel()
+    {
+        settingPanel.Open();
+        // GameManager.Instance.PauseGamePlay(true);   
+    }
+
+    public void CloseSettingPanel()
+    {
+        settingPanel.Close(); 
+    }
+
 
     #region ==== Stage ====
 

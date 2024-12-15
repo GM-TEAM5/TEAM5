@@ -17,10 +17,10 @@ MonoBehaviour:
     weight: 0
     minInterval: 0
   - type: 1
-    weight: 50
+    weight: 35
     minInterval: 0
   - type: 2
-    weight: 20
+    weight: 35
     minInterval: 1
   - type: 3
     weight: 20
