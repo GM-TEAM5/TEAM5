@@ -26,13 +26,11 @@ public class GamePlayManager : Singleton<GamePlayManager>
 
     [Header("UI Panels")]
     [SerializeField] GamePlayStartUI gamePlayStartUI;    // 스테이지 시작시 안내창
-    // [SerializeField] ReinforcementPanel reinforcementPanel; //레벨업 시 강화 패널
     [SerializeField] PlayerInfoPanel playerInfoPanel; // 플레이어 정보 패널 - esc 눌렀을 때,
     [SerializeField] EquipmentChangePanel equipmentChangePanel; // 장비 교체 패널 - 장비칸 없었을 때 아이템 먹었을 떄, 
     [SerializeField] GamePlaySettingPanel settingPanel;
 
     //
-    // [SerializeField] SelectableItemInfoPanel selectableItemInfoPanel;   // 웨이브 종료시 나타나는 아이템 설명 팝업창
     [SerializeField] UpgradePanel upgradePanel;   //게임오버 패널
     [SerializeField] GameOverPanel gameOverPanel;   //게임오버 패널
     [SerializeField] StageClearUI stageClearUI;   //게임오버 패널
@@ -254,7 +252,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
 
     public void OnEnemyKill(Enemy enemy)
     {
-        totalEnemyKillCount++;
+        // totalEnemyKillCount++;
         killCount_currWave ++;
 
         GameEventManager.Instance.onEnemyDie.Invoke(enemy);
