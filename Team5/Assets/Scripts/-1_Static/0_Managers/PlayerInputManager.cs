@@ -109,7 +109,8 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
 
 
         //
-        basicAttack = mouseLeftButtonAction.ReadValue<float>() > 0 && !Player.Instance.playerDraw.isInDrawMode;
+        basicAttack = mouseLeftButtonAction?.ReadValue<float>() > 0 &&
+                     Player.Instance?.playerDraw?.isInDrawMode != true;
         draw = drawAction.triggered;
         scroll = scrollAction.triggered;
         util = utilAction.triggered;
