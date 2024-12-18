@@ -17,17 +17,17 @@ MonoBehaviour:
     weight: 0
     minInterval: 0
   - type: 1
-    weight: 50
+    weight: 45
     minInterval: 0
   - type: 2
-    weight: 50
+    weight: 45
     minInterval: 0
   - type: 3
     weight: 0
     minInterval: 1
   - type: 4
-    weight: 0
-    minInterval: 2
+    weight: 10
+    minInterval: 1
   fixedNodeType:
     array:
     - Key: 0

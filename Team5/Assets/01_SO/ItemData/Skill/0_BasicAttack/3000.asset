@@ -18,7 +18,7 @@ MonoBehaviour:
   description: 
   skillType: 1
   coolTime: 0.1
-  defaultDamage: 300
+  defaultDamage: 30
   damageWeight: 1
   comboCount: 3
   comboResetTime: 2
