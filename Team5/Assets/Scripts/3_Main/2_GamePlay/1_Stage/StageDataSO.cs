@@ -9,7 +9,7 @@ public class StageMissionInfo
 {
     public StageGoalType goalType;
     public float targetTime;
-    public SerializableDictionary<int, List<SpawnInfo>>waveInfos;
+    public SerializableDictionary<int, List<_SpawnInfo>>waveInfos;
 }
 
 

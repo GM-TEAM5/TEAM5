@@ -12,7 +12,7 @@ public class StageWave_Survival : StageWave
     
     public float targetTime;
 
-    public StageWave_Survival(float targetTime , SerializableDictionary<int, List<SpawnInfo>> waveInfos): base(waveInfos)
+    public StageWave_Survival(float targetTime , SerializableDictionary<int, List<_SpawnInfo>> waveInfos): base(waveInfos)
     {
         goalType = StageGoalType.Survival;
         this.targetTime = targetTime;
@@ -47,7 +47,7 @@ public class StageWave_Survival : StageWave
         GameEventManager.Instance.onAlarm.RemoveListener(OnAlarm);
     }
 
-    protected override IEnumerator SpawnRoutine(SpawnInfo spawnInfo)
+    protected override IEnumerator SpawnRoutine(_SpawnInfo spawnInfo)
     {
         // 
         float startTime = spawnInfo.startTime;

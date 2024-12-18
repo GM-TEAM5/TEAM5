@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
+using BW.Util;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -22,7 +23,11 @@ public enum StageNodeType
 public class StageNode
 {
     public StageNodeType type;
-    
+    public bool isBattleStage => type == StageNodeType.NormalBattle || 
+                                type == StageNodeType.EliteBattle ||
+                                type ==  StageNodeType.MiddleBoss ||
+                                type == StageNodeType.ChapterBoss; 
+                                
     public string id =>$"{chapter}_{level}_{number}";
 
     public int chapter;
@@ -31,6 +36,10 @@ public class StageNode
 
     public List<string> prevNodes;
     public List<string> nextNodes;       // 이거 hideInspector 해도 렉걸림. 
+
+    public StageWaveInfo waveInfo;  // 웨이브 정보
+    public StageRewardInfo rewardInfo;  // 클리어시 보상 정보 
+    public StageFormInfo formInfo;  // 형태 정보
 
     [NonSerialized] public bool unvalid;
 
@@ -43,6 +52,9 @@ public class StageNode
 
         prevNodes = new();
         nextNodes = new();
+
+
+        formInfo = new(BwMath.GetRandom(20,35),BwMath.GetRandom(20,35));
     }
 
     // public StageNode(StageNodeType type, int level, int number)
@@ -90,5 +102,60 @@ public class StageNode
     public void SetType(StageNodeType type)
     {
         this.type = type;
+    }
+
+    public void SetWaveInfo(List<WaveDataSO> waves)
+    {
+        waveInfo = new( waves );
+    }
+}
+
+
+
+
+/// <summary>
+/// 스테이지 적 등장 정보.
+/// </summary>
+[Serializable]
+public class StageWaveInfo
+{
+    public List<WaveDataSO> waves = new();
+    public int totalWaveCount => waves.Count;
+
+
+    public StageWaveInfo(List<WaveDataSO> waves)
+    {
+        this.waves = waves;
+    }
+}
+
+
+/// <summary>
+/// 스테이지 적 등장 정보.
+/// </summary>
+[Serializable]
+public class StageRewardInfo
+{
+    public StageRewardInfo()
+    {
+        
+    }
+}
+
+
+
+/// <summary>
+/// 스테이지 형태 정보
+/// </summary>
+[Serializable]
+public class StageFormInfo
+{
+    public float width;
+    public float height; 
+
+    public StageFormInfo(float width, float height)
+    {
+        this.width = width;
+        this.height = height;
     }
 }

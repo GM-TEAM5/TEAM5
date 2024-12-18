@@ -14,7 +14,7 @@ public enum SpawnPositionType
 /// 적 생성정보.
 /// </summary>
 [Serializable]
-public class SpawnInfo
+public class _SpawnInfo
 {
     public float startTime;
     public float endTime;
@@ -25,7 +25,7 @@ public class SpawnInfo
     public int spawnPerCycle;
     public int cycleInterval;   // -1이면 한번 생성하고 끝내기
 
-    public SpawnInfo(float startTime, float endTime, EnemyDataSO enemyData, int cycleInterval, int spawnPerCycle )
+    public _SpawnInfo(float startTime, float endTime, EnemyDataSO enemyData, int cycleInterval, int spawnPerCycle )
     {
         this.startTime = startTime;
         this.endTime = endTime;
@@ -36,7 +36,7 @@ public class SpawnInfo
 
         positionType = SpawnPositionType.RandomArea;
     }
-    public SpawnInfo(float startTime, float endTime, EnemyDataSO enemyData, int cycleInterval, int spawnPerCycle, Vector3 spawnPoint )
+    public _SpawnInfo(float startTime, float endTime, EnemyDataSO enemyData, int cycleInterval, int spawnPerCycle, Vector3 spawnPoint )
         : this ( startTime,endTime,enemyData, cycleInterval,spawnPerCycle )
     {
         this.spawnPoint = spawnPoint;
@@ -60,7 +60,7 @@ public class SpawnInfo
 public abstract class StageWave 
 {
     public StageGoalType goalType;
-    public SerializableDictionary<int, List<SpawnInfo>> waveInfos = new();
+    public SerializableDictionary<int, List<_SpawnInfo>> waveInfos = new();
 
     List<Coroutine> runningSpawnRoutines = new();   // 이거 때문에 에러뜨는거 같은데... 
     public int clearedWaveNum;
@@ -68,7 +68,7 @@ public abstract class StageWave
     public bool allWaveClear => clearedWaveNum >= waveInfos.Count;
 
 
-    public StageWave(SerializableDictionary<int, List<SpawnInfo>> waveInfos)
+    public StageWave(SerializableDictionary<int, List<_SpawnInfo>> waveInfos)
     {
         this.waveInfos = waveInfos;
     }
@@ -116,9 +116,9 @@ public abstract class StageWave
         }
         
         //
-        if (waveInfos.TryGetValue(waveNum, out List<SpawnInfo> waveInfo))
+        if (waveInfos.TryGetValue(waveNum, out List<_SpawnInfo> waveInfo))
         {
-            foreach(SpawnInfo spawnInfo in waveInfo)
+            foreach(_SpawnInfo spawnInfo in waveInfo)
             {
                 
                 Coroutine spawnRoutine =  StageManager.Instance.StartCoroutine( SpawnRoutine( spawnInfo ));
@@ -161,14 +161,14 @@ public abstract class StageWave
     //============================================================================================================
     public abstract bool IsWaveClear();         // 각 모드별로 지정해야함. 
 
-    protected abstract IEnumerator SpawnRoutine(SpawnInfo spawnInfo);
+    protected abstract IEnumerator SpawnRoutine(_SpawnInfo spawnInfo);
 
 
     protected abstract void OnStageClear();
 
     //=============================================================================================================
 
-    protected void SpawnEnemy(SpawnInfo spawnInfo)
+    protected void SpawnEnemy(_SpawnInfo spawnInfo)
     {
         string enemyId = spawnInfo.enemyData.id;
         int spawnPerCycle = spawnInfo.spawnPerCycle;

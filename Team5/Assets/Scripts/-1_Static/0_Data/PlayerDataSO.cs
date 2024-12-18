@@ -34,6 +34,8 @@ public class PlayerDataSO : ScriptableObject
     // public SoundSetting soundSetting;
     public AudioMixer audioMixer;
     
+    public string currstageNodeId;
+    
     public int traitPoint;
     public int currChapter = 0;
     public int currStageNum = 0;

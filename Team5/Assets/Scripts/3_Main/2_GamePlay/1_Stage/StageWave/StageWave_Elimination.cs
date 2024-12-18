@@ -11,7 +11,7 @@ public class StageWave_Elimination : StageWave
 {
     public SerializableDictionary<string, int> currTargets = new();
     
-    public StageWave_Elimination(SerializableDictionary<int, List<SpawnInfo>> waveInfos): base(waveInfos)
+    public StageWave_Elimination(SerializableDictionary<int, List<_SpawnInfo>> waveInfos): base(waveInfos)
     {
         goalType = StageGoalType.Elimination;
         // 1
@@ -47,7 +47,7 @@ public class StageWave_Elimination : StageWave
     /// </summary>
     /// <param name="spawnInfo"></param>
     /// <returns></returns>
-    protected override IEnumerator SpawnRoutine(SpawnInfo spawnInfo)
+    protected override IEnumerator SpawnRoutine(_SpawnInfo spawnInfo)
     {
         //
         RegisterTarget(spawnInfo);      
@@ -64,7 +64,7 @@ public class StageWave_Elimination : StageWave
 
 
 
-    void RegisterTarget(SpawnInfo spawnInfo)
+    void RegisterTarget(_SpawnInfo spawnInfo)
     {
         string enemyId = spawnInfo.enemyData.id;
         

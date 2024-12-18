@@ -64,7 +64,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
 
         
         
-        StageManager.Instance.Init(GameManager.Instance.playerData);     
+        StageManager.Instance.Init();     
         InitStageObjects( StageManager.Instance.currStage);
         
         Player.Instance.InitPlayer(GameManager.Instance.playerData);
@@ -209,7 +209,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
     public void StartStage()
     {
         StageManager.Instance.StartStage();
-        GameEventManager.Instance.onStageStart.Invoke( StageManager.Instance.stageWave );
+        // GameEventManager.Instance.onStageStart.Invoke( StageManager.Instance.stageWave );
     }
 
 

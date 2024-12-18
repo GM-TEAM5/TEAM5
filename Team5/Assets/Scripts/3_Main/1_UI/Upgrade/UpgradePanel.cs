@@ -17,8 +17,9 @@ public class UpgradePanel : GamePlayPanel
     [SerializeField] List<UpgradeSelection> selections;
     //
     [Header("Etc")]
+    [SerializeField] Button btn_select; 
     [SerializeField] Button btn_close; 
-    [SerializeField] TextMeshProUGUI text_rerollCount; 
+    // [SerializeField] TextMeshProUGUI text_rerollCount; 
 
     //====================================================================
     
@@ -116,7 +117,7 @@ public class UpgradePanel : GamePlayPanel
 
     void SetRerollcount()
     {
-        text_rerollCount.SetText($"재입고 가능 횟수 : {Player.Instance.status.rerollCount}" );
+        // text_rerollCount.SetText($"재입고 가능 횟수 : {Player.Instance.status.rerollCount}" );
     }
 
 

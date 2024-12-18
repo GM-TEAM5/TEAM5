@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e57097ab8ddd7bb49bc8e08c13198367, type: 3}
+  m_Name: WaveDic
+  m_EditorClassIdentifier: 
+  list_normal:
+  - {fileID: 11400000, guid: 383d96561d1c50145af5e2b6ad22d617, type: 2}
+  - {fileID: 11400000, guid: ee6da218df8124543bf97a2265576883, type: 2}
+  - {fileID: 11400000, guid: 25ec55ee4da3c1f4b99b572c8dc50fc1, type: 2}
+  - {fileID: 11400000, guid: 66b88ff8d638cb54595a40365846cb82, type: 2}
+  list_middleBoss:
+  - {fileID: 11400000, guid: 23749bca9418f3b40b8f5128d3417cf2, type: 2}
+  list_ChapterBoss:
+  - {fileID: 11400000, guid: da719f6706c4b5f4684f873c5c087d07, type: 2}
+  normalWaves:
+    array:
+    - Key: 0
+      Value:
+      - {fileID: 11400000, guid: 383d96561d1c50145af5e2b6ad22d617, type: 2}
+      - {fileID: 11400000, guid: ee6da218df8124543bf97a2265576883, type: 2}
+      - {fileID: 11400000, guid: 25ec55ee4da3c1f4b99b572c8dc50fc1, type: 2}
+    - Key: 1
+      Value:
+      - {fileID: 11400000, guid: 66b88ff8d638cb54595a40365846cb82, type: 2}
+  middleBossWaves:
+    array:
+    - Key: 1
+      Value:
+      - {fileID: 11400000, guid: 23749bca9418f3b40b8f5128d3417cf2, type: 2}
+  chapterBossWaves:
+    array:
+    - Key: 1
+      Value:
+      - {fileID: 11400000, guid: da719f6706c4b5f4684f873c5c087d07, type: 2}

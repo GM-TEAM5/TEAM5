@@ -14,8 +14,8 @@ public class UpgradeSelection : MonoBehaviour
     [SerializeField] TextMeshProUGUI text_itemTier;
     [SerializeField] TextMeshProUGUI text_itemDesc;
 
-    [SerializeField] Button btn_select;
-    [SerializeField] Button btn_reroll;
+    // [SerializeField] Button btn_select;
+    // [SerializeField] Button btn_reroll;
 
     [SerializeField] GameObject vayle;
 
@@ -25,8 +25,8 @@ public class UpgradeSelection : MonoBehaviour
     //=============================================================
     void Init()
     {
-        btn_select.onClick.AddListener(Select);
-        btn_reroll.onClick.AddListener(Reroll); 
+        // btn_select.onClick.AddListener(Select);
+        // btn_reroll.onClick.AddListener(Reroll); 
 
          _initialized = true;
     }
@@ -49,8 +49,8 @@ public class UpgradeSelection : MonoBehaviour
         text_itemTier.SetText($"{data.tier} 등급");
         text_itemDesc.SetText(data.description);
 
-        btn_select.gameObject.SetActive(true);  
-        btn_reroll.gameObject.SetActive(Player.Instance.status.rerollCount > 0);
+        // btn_select.gameObject.SetActive(true);  
+        // btn_reroll.gameObject.SetActive(Player.Instance.status.rerollCount > 0);
 
         vayle.SetActive(false);
     }
@@ -59,7 +59,7 @@ public class UpgradeSelection : MonoBehaviour
     void Select()
     {
         GamePlayManager.Instance.Select_SelectableItem(data);
-        vayle.SetActive(true);
+        vayle.SetActive(true);  
     }
 
     void Reroll()

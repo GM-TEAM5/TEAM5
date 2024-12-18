@@ -5,49 +5,55 @@ using UnityEngine;
 using System.Linq;
 
 using BW.Util;
-using System.Data.Common;
-using Unity.Collections;
+using Unity.VisualScripting;
 
 
 
 
-public class StageNodeGenerator : MonoBehaviour
+public class StageNodeGenerator
 {
     public StageGenerationConfigSO stageGenConfig;
     
-    public int w = 6;
-    public int h = 12;
+    public int w = 5;
+    public int h = 11;
     public int startNodeCnt = 3;
     public int leftStartOffset = 1;
     public int rightStartOffset = 1;
 
-    public int repeatCnt = 5;
+    public int repeatCnt = 10;
 
     public List<List<int>> nodeNums;
-    public List<int> uniqueNodeIdxs = new(){4,9,10};
 
-    //
-    // public List<List<StageNode>> stageNodes = new();
     public List<StageNode> stageNodes = new();
 
 
-    public StageNodeViewer nodeViewer;
+    // public StageNodeViewer nodeViewer;
     
-
-    void Start()
+    //===================================================================
+    public StageNodeGenerator(StageGenerationConfigSO stageGenConfig)
     {
-        GenerateStageNodes();
+        this.stageGenConfig = stageGenConfig;
     }
 
-    public void GenerateStageNodes()
+
+    // void Start()
+    // {
+    //     GenerateStageNodes();
+    // }
+
+    public TotalNodeData GenerateStageNodes()
     {
-        TestLoadData(); // 로드기능 테스트
+        // TestLoadData(); // 로드기능 테스트
         
         GenerateRawNodes(); // 노드 번호들로 경로 생성
         MergeRawNodes();    // 노드 클래스 생성하여 합치기
         SimplifyNodes();    // 사용하지 않을 노드 정리
         AssignNodeTypes();   // 각 노드 설정 지정
-        SaveTotalNodeData();    // db에 저장.
+        // SaveTotalNodeData();    // db에 저장.
+
+        SetStageWaves();
+
+        return new(stageNodes);
     }
 
 
@@ -83,7 +89,7 @@ public class StageNodeGenerator : MonoBehaviour
                 int nextNode = startNode + BwMath.GetRandom(-1,2);
                 CorrectNextIdx(ref nextNode);
 
-                if ( uniqueNodeIdxs.Contains( j ) )
+                if ( stageGenConfig.soloNodeLevel.Contains( j ) )
                 {
                     nextNode = w/2;
                 }
@@ -95,7 +101,7 @@ public class StageNodeGenerator : MonoBehaviour
         }
 
         // 보여주기.
-        nodeViewer.ShowRawNodes(w,h,nodeNums);
+        // nodeViewer.ShowRawNodes(w,h,nodeNums);
     }
 
     /// <summary>
@@ -154,23 +160,23 @@ public class StageNodeGenerator : MonoBehaviour
         }
 
         // 중간보스 직후 노드도 한개만
-        int targetLevel = uniqueNodeIdxs[0]+1;
-        startNodes = stageNodes.Where(x=>x.level == targetLevel ).ToList();
-        randIdx = BwMath.GetRandom(0, startNodes.Count);
-        excludedNodes = startNodes.Where((val, i) => i != randIdx).ToList();
-        for(int i=0;i<excludedNodes.Count;i++)
-        {
-            StageNode excludedNode = excludedNodes[i];
-            List<StageNode> prevNodes = stageNodes.Where(node => excludedNode.prevNodes.Contains(node.id)).ToList();
-            foreach( StageNode prevNode in prevNodes)
-            {
-                prevNode.RemoveNextNode(excludedNode.id);
-            }
+        // int targetLevel = uniqueNodeIdxs[0]+1;
+        // startNodes = stageNodes.Where(x=>x.level == targetLevel ).ToList();
+        // randIdx = BwMath.GetRandom(0, startNodes.Count);
+        // excludedNodes = startNodes.Where((val, i) => i != randIdx).ToList();
+        // for(int i=0;i<excludedNodes.Count;i++)
+        // {
+        //     StageNode excludedNode = excludedNodes[i];
+        //     List<StageNode> prevNodes = stageNodes.Where(node => excludedNode.prevNodes.Contains(node.id)).ToList();
+        //     foreach( StageNode prevNode in prevNodes)
+        //     {
+        //         prevNode.RemoveNextNode(excludedNode.id);
+        //     }
 
-            excludedNode.prevNodes.Clear();
+        //     excludedNode.prevNodes.Clear();
 
-            RecursiveDisconnectNode(excludedNode);
-        }
+        //     RecursiveDisconnectNode(excludedNode);
+        // }
 
 
 
@@ -196,14 +202,16 @@ public class StageNodeGenerator : MonoBehaviour
     }
 
 
-    public void SaveTotalNodeData()
-    {
-        TotalNodeData.ClearAllNodes();
-        TotalNodeData.AddData( stageNodes );
-        TotalNodeData.SaveTotalNodeData();
-    }
+    // public void SaveTotalNodeData()
+    // {
+    //     TotalNodeData.ClearAllNodes();
+    //     TotalNodeData.AddData( stageNodes );
+    //     TotalNodeData.SaveTotalNodeData();
+    //     Debug.Log("저장됨");
+    // }
 
-    public void TestLoadData()
+
+     void TestLoadData()
     {
         List<StageNode> nodes =  LocalDataHandler.LoadTotalNodeData();
         // string str = "";
@@ -215,14 +223,24 @@ public class StageNodeGenerator : MonoBehaviour
     /// <summary>
     /// 각 노드 타입 지정 - 타입은 config에 따라 지정
     /// </summary>
-    public void AssignNodeTypes()
+    void AssignNodeTypes()
     {
         // 
         stageGenConfig.AssignNodeTypes(stageNodes);
         
         // 보여주기.
-        nodeViewer.ShowMergedNodes(w,h,stageNodes);
+        // nodeViewer.ShowMergedNodes(w,h,stageNodes);
     } 
+
+    void SetStageWaves()
+    {
+        StageWaveGenerator swg = new(ResourceManager.Instance.waveDic);
+
+        foreach(StageNode node in stageNodes)
+        {
+            swg.GenerateStageWave(node);
+        }
+    }
 
 
 

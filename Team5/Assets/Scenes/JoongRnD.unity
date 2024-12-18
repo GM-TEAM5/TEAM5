@@ -223,7 +223,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 204242316}
-  - component: {fileID: 204242317}
   - component: {fileID: 204242318}
   - component: {fileID: 204242319}
   m_Layer: 0
@@ -248,28 +247,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &204242317
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 204242315}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e62ec43e1bd87b74c969132766cbb15b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stageGenConfig: {fileID: 11400000, guid: 2ac61f1664a80724fa18c30e91367242, type: 2}
-  w: 5
-  h: 11
-  startNodeCnt: 3
-  leftStartOffset: 1
-  rightStartOffset: 1
-  repeatCnt: 10
-  uniqueNodeIdxs: 04000000090000000a000000
-  allNodes: []
-  nodeViewer: {fileID: 204242318}
 --- !u!114 &204242318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1531,7 +1508,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 204242317}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: StageNodeGenerator, Assembly-CSharp
         m_MethodName: GenerateStageNodes
         m_Mode: 1

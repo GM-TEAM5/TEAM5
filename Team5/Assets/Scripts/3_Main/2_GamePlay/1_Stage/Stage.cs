@@ -25,25 +25,21 @@ public class Stage : MonoBehaviour
 
 
     //
-
-    public void Init(StageMapInfo mapInfo)
+    public void Init(StageNode nodeData)
     {
         enemySpawnArea = t_enemySpawnAreaParent.GetComponentsInChildren<BoxCollider>();
-        InitByMapInfo(mapInfo);
-        // waveActivationSwitch = GetComponentInChildren<WaveActivationSwitch>();
-        
-        // selectableItemList = GetComponentInChildren<SelectableItemList>();
-        // selectableItemList.Init();
+        InitByMapInfo(nodeData.formInfo);
 
         stagePortal = GetComponentInChildren<StagePortal>();
         stagePortal.Init();
 
     }
 
-    void InitByMapInfo(StageMapInfo mapInfo)
+
+    void InitByMapInfo(StageFormInfo formInfo)
     {
-        float width = mapInfo.width;
-        float height = mapInfo.height;
+        float width = formInfo.width;
+        float height = formInfo.height;
 
         navMeshSurface.size = new Vector3(width, navMeshSurface.size.y, height);
         offset = navMeshSurface.transform.position;

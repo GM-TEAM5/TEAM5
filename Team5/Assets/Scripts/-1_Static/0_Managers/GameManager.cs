@@ -4,7 +4,9 @@ using UnityEngine;
 using DG.Tweening;
 
 public class GameManager : Singleton<GameManager>
-{
+{ 
+    public TotalNodeData totalNodeData;
+    
     public PlayerDataSO playerData;       // 얘는 결국 별도의 로딩이 필요없음.
 
     private List<ITimeScaleable> timeScaleables = new List<ITimeScaleable>();

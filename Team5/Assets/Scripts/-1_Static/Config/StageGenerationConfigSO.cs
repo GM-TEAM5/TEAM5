@@ -15,6 +15,8 @@ public class StageGenerationConfigSO : ScriptableObject
 
     public SerializableDictionary<int, StageNodeType> fixedNodeType = new();
 
+    public List<int> soloNodeLevel = new(){4,5,9,10};
+
     
     
     //================================================================
