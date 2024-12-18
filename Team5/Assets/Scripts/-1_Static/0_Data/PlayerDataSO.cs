@@ -8,6 +8,7 @@ using UnityEditor.Rendering;
 using Unity.Collections;
 using UnityEngine.InputSystem;
 using UnityEngine.Audio;
+using JetBrains.Annotations;
 
 
 /// <summary>
@@ -40,7 +41,7 @@ public class PlayerDataSO : ScriptableObject
     public int currChapter = 0;
     public int currStageNum = 0;
     public int currStagePlayCount;
-    public int deathCount;
+    public int deathCount; 
 
 
     // public bool isNewUser => deathCount==0 && currChapter ==1 && currStageNum ==1;
@@ -49,9 +50,9 @@ public class PlayerDataSO : ScriptableObject
     // [Min(0)] public int maxCount_skill = 4;
 
     //
-    public List<StageDataSO> stages = new();
+    // public List<StageDataSO> stages = new();
 
-    public bool isGameclear => currStageNum >= stages.Count;
+    // public bool isGameclear => currStageNum >= stages.Count;
 
 
 
@@ -171,14 +172,30 @@ public class PlayerDataSO : ScriptableObject
         FixContainerSize();
 
         currStageNum = 0;
+        currstageNodeId ="";
+        currChapter = 1;
 
         savedStatus = new();
     }
 
-    public void OnStageClear(Player player)
+    public void OnStageClear(Player player, string nextStageNodeId)
     {
-        currStageNum++;
+        currstageNodeId = nextStageNodeId;
+        
+        SaveData(player);
+    }
 
+    public void OnChapterClear(Player player, int nextChapter)
+    {
+        currChapter = nextChapter;
+        
+        SaveData(player);
+    }
+
+
+
+    void SaveData(Player player)
+    {
         // 진행중이던 데이터 저장
         equipments = player.equipments.equipments;
 
@@ -201,14 +218,15 @@ public class PlayerDataSO : ScriptableObject
     }
 
 
-    public StageDataSO GetCurrStageInfo()
-    {
-        if (currStageNum < stages.Count)
-        {
-            return stages[currStageNum];
-        }
-        currStageNum = 0;
 
-        return stages[currStageNum];
-    }
+    // public StageDataSO GetCurrStageInfo()
+    // {
+    //     if (currStageNum < stages.Count)
+    //     {
+    //         return stages[currStageNum];
+    //     }
+    //     currStageNum = 0;
+
+    //     return stages[currStageNum];
+    // }
 }

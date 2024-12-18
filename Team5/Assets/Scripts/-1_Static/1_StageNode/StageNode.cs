@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
-using BW.Util;
+using BW;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -54,7 +54,7 @@ public class StageNode
         nextNodes = new();
 
 
-        formInfo = new(BwMath.GetRandom(20,35),BwMath.GetRandom(20,35));
+        formInfo = new(BW.Math.GetRandom(20,35), BW.Math.GetRandom(20,35));
     }
 
     // public StageNode(StageNodeType type, int level, int number)

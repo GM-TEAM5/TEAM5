@@ -4,7 +4,7 @@ using System.Data;
 using UnityEngine;
 using System.Linq;
 
-using BW.Util;
+using BW;
 using Unity.VisualScripting;
 
 
@@ -73,7 +73,7 @@ public class StageNodeGenerator
         }
         for(int i=0;i<repeatCnt - startNodeIdxs.Count;i++)  // 나머지는 랜덤~
         {
-            int idx = BwMath.GetRandom(0, startNodeIdxs.Count);
+            int idx = Math.GetRandom(0, startNodeIdxs.Count);
             int startNode = startNodeIdxs[idx];
             nodeNums.Add( new (){startNode});
         }
@@ -86,7 +86,7 @@ public class StageNodeGenerator
             int startNode = currLine[0];
             for(int j=1;j<h;j++)
             {
-                int nextNode = startNode + BwMath.GetRandom(-1,2);
+                int nextNode = startNode + Math.GetRandom(-1,2);
                 CorrectNextIdx(ref nextNode);
 
                 if ( stageGenConfig.soloNodeLevel.Contains( j ) )
@@ -151,7 +151,7 @@ public class StageNodeGenerator
     {
         // 1.시작 노드 1개만 남기고 제거하고, 그에따라 도달할 수 없는 노드 제거 플래그 켜기
         List<StageNode> startNodes = stageNodes.Where(x=>x.level ==0 ).ToList();
-        int randIdx = BwMath.GetRandom(0, startNodes.Count );
+        int randIdx = Math.GetRandom(0, startNodes.Count );
         List<StageNode> excludedNodes = startNodes.Where((val, i) => i != randIdx).ToList();
         for(int i=0;i<excludedNodes.Count;i++)
         {
@@ -267,11 +267,11 @@ public class StageNodeGenerator
         if( idx<0)
         {
             
-            idx =  BwMath.GetRandom(0,2);
+            idx =  Math.GetRandom(0,2);
         }
         if ( idx>= w)
         {
-            idx =  BwMath.GetRandom(w-2,w);
+            idx =  Math.GetRandom(w-2,w);
         }
     }
 

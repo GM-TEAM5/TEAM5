@@ -17,16 +17,16 @@ MonoBehaviour:
     weight: 0
     minInterval: 0
   - type: 1
-    weight: 35
+    weight: 50
     minInterval: 0
   - type: 2
-    weight: 35
-    minInterval: 1
+    weight: 50
+    minInterval: 0
   - type: 3
-    weight: 20
+    weight: 0
     minInterval: 1
   - type: 4
-    weight: 10
+    weight: 0
     minInterval: 2
   fixedNodeType:
     array:
@@ -42,3 +42,4 @@ MonoBehaviour:
       Value: 4
     - Key: 10
       Value: 6
+  soloNodeLevel: 0400000005000000090000000a000000

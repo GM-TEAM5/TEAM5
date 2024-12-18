@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using BW.Util;
+using BW;
 
 [CreateAssetMenu(fileName = "DefaultBasicAttackDetection", menuName = "SO/AttackDetection/DefaultBasicAttack", order = int.MaxValue)]
 public class AttackDetectionSO_DefaultBasicAttack : AttackDetectionSO

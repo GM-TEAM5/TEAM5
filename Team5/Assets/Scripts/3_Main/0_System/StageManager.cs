@@ -1,6 +1,11 @@
 
 using UnityEngine;
 using System.Linq;
+using System.Collections.Generic;
+using UnityEditor;
+using Unity.VisualScripting;
+using BW;
+using UnityEngine.SocialPlatforms.GameCenter;
 
 
 public class StageManager : Singleton<StageManager>
@@ -38,7 +43,8 @@ public class StageManager : Singleton<StageManager>
         // 노드 생성 임시 - 나중에는 천계에서 노드 생성하고 넘어오자.
         if(GameManager.Instance.totalNodeData == null || GameManager.Instance.totalNodeData.initialized == false)
         {
-            StageNodeGenerator sng = new(ResourceManager.Instance.stageGenConfig);
+            GameManager.Instance.playerData.InitPlayerData();
+            StageNodeGenerator sng = new(GameManager.Instance.stageGenConfig);
             GameManager.Instance.totalNodeData = sng.GenerateStageNodes();
         }
 
@@ -53,7 +59,10 @@ public class StageManager : Singleton<StageManager>
         }
         else
         {
+            Debug.Log(" 새로운 게임이다 ");
             nodeData = totalNodeData.GetFirstNode();
+            GameManager.Instance.playerData.currstageNodeId = nodeData.id;
+
         }
         Debug.Log($"[스테이지] {nodeData.id} 시작");
 
@@ -93,10 +102,10 @@ public class StageManager : Singleton<StageManager>
         }
         else
         {
-            
+            GenerateNextStagePortals();
         }
-    }
 
+    }
 
 
     /// <summary>
@@ -114,7 +123,49 @@ public class StageManager : Singleton<StageManager>
         Debug.Log("스테이지 클리어");
         GameEventManager.Instance.onEnemyDie.RemoveListener( OnEnemyDie );
         GamePlayManager.Instance.OnStageClear();
+
+        if (nodeData.type == StageNodeType.ChapterBoss)
+        {
+            GenerateChapterLastPortal();
+        }
+        else
+        {
+            GenerateNextStagePortals();
+        }
         
+    }
+
+
+    void GenerateChapterLastPortal()
+    {
+        ChapterLastPortal portal = Instantiate(ResourceManager.Instance.prefab_chapterLastPortal).GetComponent<ChapterLastPortal>();
+        Vector3 center = currStage.portalPos;
+
+        portal.transform.position = center;
+        portal.Init( nodeData.chapter + 1 );
+    }
+
+    void GenerateNextStagePortals()
+    {
+        List<string> nextNodeIds = nodeData.nextNodes;
+        
+        int count = nextNodeIds.Count;
+        List<GameObject> objects = new();
+        for(int i=0;i<count;i++)
+        {    
+            GameObject obj = Instantiate(ResourceManager.Instance.prefab_stagePortal);
+            objects.Add( obj );
+
+            StagePortal portal = obj.GetComponent<StagePortal>();
+            string nextNodeId = nextNodeIds[i];
+            portal.Init( nextNodeId );
+        }
+
+
+        //
+        Vector3 center = currStage.portalPos;
+        objects.AlignObjects_X(center);
+        objects = objects.OrderBy(x=>x.transform.position.x).ToList();  // x좌표가 낮은 순으로 정렬
     }
 
 

@@ -21,7 +21,7 @@ public class StageClearUI : MonoBehaviour
         img.color = new Color(1,1,1,0);
         text.color = new Color(1,1,1,0);
         //
-        text.SetText( $"스테이지 {GameManager.Instance.playerData.currStageNum + 1} 클리어");
+        // text.SetText( $"스테이지 {GameManager.Instance.playerData.currStageNum + 1} 클리어");
         //
         var ret = DOTween.Sequence()
         .OnComplete( ()=>{

@@ -5,6 +5,10 @@ using DG.Tweening;
 
 public class GameManager : Singleton<GameManager>
 { 
+    public GameConfig gameConfig;
+    public StageGenerationConfigSO stageGenConfig;
+    
+    
     public TotalNodeData totalNodeData;
     
     public PlayerDataSO playerData;       // 얘는 결국 별도의 로딩이 필요없음.
@@ -54,6 +58,11 @@ public class GameManager : Singleton<GameManager>
         playerData.deathCount++;
     }
 
+
+    public bool IsGameClear()
+    {
+        return playerData.currChapter > gameConfig.maxChapter;
+    }
 
 
     /// <summary>

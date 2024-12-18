@@ -7,7 +7,7 @@ using System;
 
 
 
-namespace BW.Util
+namespace BW
 {
     public static class DataProcessor 
     {
@@ -28,7 +28,7 @@ namespace BW.Util
         // }
     }
 
-    public static class BwMath
+    public static class Math
     {
         public static int GetRandom(int min, int max)
         {

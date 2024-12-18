@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using BW.Util;
+using BW;
 
 [CreateAssetMenu(fileName = "EA_B0002", menuName = "SO/EnemyAbility/B0002")]
 public class EnemyAbility_B0002 : EnemyAbilitySO

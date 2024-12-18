@@ -28,7 +28,7 @@ public class StageWaveGenerator
         
         List<WaveDataSO> waves;
         if (stageNode.type == StageNodeType.NormalBattle 
-        && stageNode.type != StageNodeType.EliteBattle)
+        || stageNode.type == StageNodeType.EliteBattle)
         {
             waves = GetNormalWaves(stageNode);
         } 

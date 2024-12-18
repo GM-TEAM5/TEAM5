@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using System;
 using DG.Tweening;
-using BW.Util;
+using BW;
 
 
 [RequireComponent(typeof(NavMeshAgent),

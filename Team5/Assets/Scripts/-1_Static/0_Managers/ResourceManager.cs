@@ -29,12 +29,13 @@ public class ResourceManager : Singleton<ResourceManager>
 
     #region Stage
     public GameObject prefab_stage;
-    public GameObject prefab_portals;
+    public GameObject prefab_stagePortal;
+    public GameObject prefab_chapterLastPortal;
 
     #endregion 
 
     #region Config
-    public StageGenerationConfigSO stageGenConfig;
+    
 
     public WaveDictionarySO waveDic;
 

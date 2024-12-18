@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
-using BW.Util;
+using BW;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEditor;
@@ -238,7 +238,7 @@ public class SoundManager : Singleton<SoundManager>
 
     float ChangeToMixerValue(float settingValue)
     {
-        settingValue = Math.Clamp(settingValue, minSettingValue, maxSettingValue);
+        settingValue = System.Math.Clamp(settingValue, minSettingValue, maxSettingValue);
 
         float ret = minMixerValue  + diff_mixerValue * settingValue / maxSettingValue;
         return ret;        

@@ -43,7 +43,7 @@ public class WaveDictionarySO : ScriptableObject
         
         //
         List<WaveDataSO> waveList  = dic[value];
-        int randIdx  = BW.Util.BwMath.GetRandom(0, waveList.Count);
+        int randIdx  = BW.Math.GetRandom(0, waveList.Count);
 
         WaveDataSO ret = waveList[randIdx];
 

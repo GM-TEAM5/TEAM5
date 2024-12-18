@@ -11,10 +11,14 @@ public class StagePortal : InteractiveObject
 
     public override bool hasSecondaryInteraction => false;
 
-    public void Init()
-    {
-        gameObject.SetActive(false);
+    public string stageNodeId;
 
+    public void Init(string id)
+    {
+        stageNodeId = id;
+
+        gameObject.SetActive(true);
+        Activate();
     }
 
 
@@ -28,36 +32,21 @@ public class StagePortal : InteractiveObject
         Debug.Log("포탈 진입");
 
         //
-        GoToNextStage();
-
-        
+        GoToNextStage();    
     }
-
-
-
-
 
     public void OnStageClear()
     {
-        gameObject.SetActive(true);
-        Activate();
+
     }
 
     
     void GoToNextStage()
     {
-        GameManager.Instance.playerData.OnStageClear(Player.Instance);  // 데이터 저장.
+        GameManager.Instance.playerData.OnStageClear(Player.Instance, stageNodeId);  // 데이터 저장.
         
-        if (GameManager.Instance.playerData.isGameclear)
-        {
-            GameManager.Instance.playerData.InitPlayerData();   // 데이터 초기화.
-            SceneLoadManager.Instance.Load_Credit();     
-        }
-        else
-        {
-            SceneLoadManager.Instance.Load_MainScene();
-        }
-        
+
+        SceneLoadManager.Instance.Load_MainScene();
     }
 
     protected override void OnSecondaryInteract_Custom()

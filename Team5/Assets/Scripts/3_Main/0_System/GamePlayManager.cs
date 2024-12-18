@@ -40,7 +40,6 @@ public class GamePlayManager : Singleton<GamePlayManager>
     [Header("etc")]
     // [SerializeField] WaveActivationSwitch waveActivationSwitch;
     // [SerializeField] SelectableItemList selectableItemList;
-    [SerializeField] StagePortal stagePortal;
 
     [SerializeField] EnemyHpSlider enemyHpSlider;
 
@@ -56,6 +55,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
     //===================================================================================================================================================
     void Start()
     {           
+        GameManager.Instance.PauseGamePlay(false);
         isGamePlaying = false;
         isStageFinished = false;
         // GameEventManager.Instance.onLevelUp.AddListener(OnLevelUp);
@@ -153,11 +153,6 @@ public class GamePlayManager : Singleton<GamePlayManager>
     /// 이미 초기화는 끝난 상태. 변수 리디렉션만 함. 
     public void InitStageObjects(Stage stage)
     {
-        // selectableItemInfoPanel.ForceInit();
-        
-        // waveActivationSwitch = stage.waveActivationSwitch;
-        // selectableItemList = stage.selectableItemList;
-        stagePortal = stage.stagePortal;
     }
     
     public void SetAlarm(float time)
@@ -247,7 +242,6 @@ public class GamePlayManager : Singleton<GamePlayManager>
 
 
         OpenUpgradePanel();
-        stagePortal.OnStageClear();
     }
 
     public void OnEnemyKill(Enemy enemy)

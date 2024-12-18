@@ -12,7 +12,8 @@ public class Stage : MonoBehaviour
     [SerializeField] Transform t_playerSpawnPoint;
     
     public Vector3 playerInitPos => t_playerSpawnPoint.position;
-    
+    public Vector3 portalPos => t_portalPos.position; 
+    [SerializeField] Transform t_portalPos;
     [SerializeField] Transform t_enemySpawnAreaParent;
     [SerializeField] BoxCollider[] enemySpawnArea;
     [SerializeField] BoxCollider[] boundary;
@@ -29,10 +30,6 @@ public class Stage : MonoBehaviour
     {
         enemySpawnArea = t_enemySpawnAreaParent.GetComponentsInChildren<BoxCollider>();
         InitByMapInfo(nodeData.formInfo);
-
-        stagePortal = GetComponentInChildren<StagePortal>();
-        stagePortal.Init();
-
     }
 
 

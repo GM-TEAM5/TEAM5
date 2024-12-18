@@ -1,5 +1,5 @@
 using System.Collections;
-using BW.Util;
+using BW;
 using UnityEngine;
 
 public class PlayerBasicAttack : MonoBehaviour

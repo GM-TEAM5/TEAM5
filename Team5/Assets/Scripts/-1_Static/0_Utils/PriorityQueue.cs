@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace BW.Util
+namespace BW
 {
 public class PriorityQueue<T>
 {

@@ -50,7 +50,7 @@ public class StageGenerationConfigSO : ScriptableObject
         StageNodeType ret = StageNodeType.NormalBattle;
         
 
-        int rand = BW.Util.BwMath.GetRandom(0,100);
+        int rand = BW.Math.GetRandom(0,100);
         int cumulation = 0;
         for(int i =0;i<nodeWeights.Count;i++)
         {
