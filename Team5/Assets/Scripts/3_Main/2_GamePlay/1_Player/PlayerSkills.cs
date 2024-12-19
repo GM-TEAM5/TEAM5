@@ -22,7 +22,7 @@ public class PlayerSkills : MonoBehaviour
     public void Init()
     {        
         actives = new();
-        foreach(var kv in GameManager.Instance.playerData.ability_actives )
+        foreach(var kv in GameManager.Instance.userData.ability_actives )
         {  
             PlayerSkill playerSkill = new(kv.Value);
             actives[kv.Key] =  playerSkill;

@@ -10,33 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 78ec4a2af2a00fa449813f0756e76b8b, type: 3}
-  m_Name: UserrData
+  m_Name: UserData
   m_EditorClassIdentifier: 
   inputActionSO: {fileID: -944628639613478452, guid: 0ca1e7f5a8e301b479da84ef68bee2ee,
     type: 3}
-  soundSetting:
-    bgmVolume: 1
-    sfxVolume: 1
   audioMixer: {fileID: 24100000, guid: 429f604167c8a104097cc54828a6e040, type: 2}
+  currstageNodeId: 1_0_1
   traitPoint: 123
-  currChapter: 0
+  currChapter: 1
   currStageNum: 0
   currStagePlayCount: 0
-  deathCount: 16
-  maxCount_equipment: 8
-  stages:
-  - {fileID: 11400000, guid: 6084220f7ec65f84ba55697acff44cae, type: 2}
-  - {fileID: 11400000, guid: 4139757f8a71c0e4ebe00df73ef78977, type: 2}
-  - {fileID: 11400000, guid: 7315a0f16d8564f478806ebb5bf0fbf5, type: 2}
-  equipments:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  deathCount: 18
+  equipments: []
   savedStatus:
     d_attackRange: 0
     d_attackArea: 0
@@ -50,7 +35,7 @@ MonoBehaviour:
     _currHp: 500
     Inc_maxHp: 0
     d_inkChargeRate: 10
-    inkSegments: 5
+    inkSegments: 20
     Inc_maxInk: 0
     armor: 0
     evasionRate: 0
@@ -62,8 +47,51 @@ MonoBehaviour:
     luck: 0
     rerollCount: 3
     selectionCount: 3
+    gold: 0
     pDmg: 0
     mDmg: 0
+  savedStatusUpgradProgress:
+    list:
+      array:
+      - Key: movementSpeed
+        Value:
+          level: 0
+          cost: 0
+          valuePerLevel: 0
+          maxLevel: 5
+          fieldName: movementSpeed
+      - Key: mDmg
+        Value:
+          level: 0
+          cost: 0
+          valuePerLevel: 0
+          maxLevel: 5
+          fieldName: mDmg
+      - Key: pDmg
+        Value:
+          level: 0
+          cost: 0
+          valuePerLevel: 0
+          maxLevel: 5
+          fieldName: pDmg
+      - Key: Inc_maxInk
+        Value:
+          level: 0
+          cost: 0
+          valuePerLevel: 0
+          maxLevel: 5
+          fieldName: Inc_maxInk
+      - Key: Inc_maxHp
+        Value:
+          level: 0
+          cost: 0
+          valuePerLevel: 0
+          maxLevel: 5
+          fieldName: Inc_maxHp
+  savedNodeData:
+    initialized: 0
+    dic:
+      array: []
   ability_passives: []
   ability_actives:
     array:

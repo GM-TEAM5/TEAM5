@@ -183,7 +183,7 @@ public class SoundManager : Singleton<SoundManager>
     void InitSoundSetting()
     {
         // soundSetting = GameManager.Instance.playerData.soundSetting;
-        mixer =  GameManager.Instance.playerData.audioMixer;
+        mixer =  GameManager.Instance.userData.audioMixer;
         mixer.GetFloat(nameof(master), out master);
         mixer.GetFloat(nameof(bgm), out bgm);
         mixer.GetFloat(nameof(sfx), out sfx);

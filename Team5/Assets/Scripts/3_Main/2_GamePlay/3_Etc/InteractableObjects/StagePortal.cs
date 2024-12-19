@@ -43,7 +43,7 @@ public class StagePortal : InteractiveObject
     
     void GoToNextStage()
     {
-        GameManager.Instance.playerData.OnStageClear(Player.Instance, stageNodeId);  // 데이터 저장.
+        GameManager.Instance.userData.OnStageClear(Player.Instance, stageNodeId);  // 데이터 저장.
         
 
         SceneLoadManager.Instance.Load_MainScene();

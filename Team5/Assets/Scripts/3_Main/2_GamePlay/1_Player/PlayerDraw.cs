@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using DG.Tweening;
+using BW;
 
 public class PlayerDraw : MonoBehaviour, ITimeScaleable
 {
@@ -293,8 +294,7 @@ public class PlayerDraw : MonoBehaviour, ITimeScaleable
                     Vector3.one * currentSkill.effectRadius,
                     (positions[i + 1] - positions[i]).normalized,
                     Quaternion.identity,
-                    Vector3.Distance(positions[i], positions[i + 1]),
-                    LayerMask.GetMask("Enemy")
+                    Vector3.Distance(positions[i], positions[i + 1]), GameConstants.enemyLayer
                 );
 
                 foreach (var hit in hits)
@@ -303,7 +303,7 @@ public class PlayerDraw : MonoBehaviour, ITimeScaleable
                     if (enemy != null && !damagedEnemies.Contains(enemy))
                     {
                         float dmg = currentSkill.defaultDamage + Player.Instance.status.mDmg;
-                        enemy.GetDamaged(dmg);
+                        enemy.GetDamaged(positions[i], dmg);
                         damagedEnemies.Add(enemy);
                     }
                 }

@@ -46,4 +46,14 @@ public class GameEventManager : Singleton<GameEventManager>
 
     }
 
+    void Awake()
+    {
+
+    }
+
+    void Start()
+    {
+
+    }
+
 }

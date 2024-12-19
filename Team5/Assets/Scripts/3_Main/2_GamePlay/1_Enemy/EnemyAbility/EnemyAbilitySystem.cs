@@ -103,6 +103,11 @@ public class EnemyAbilitySystem : MonoBehaviour
 
     public void Interrupt(Enemy enemy)
     {
+        if(usingAbility == null || usingAbility.data.uninterruptible)
+        {
+            return;
+        }
+        
         if (abilityRoutine != null)
         {
             StopCoroutine( abilityRoutine );

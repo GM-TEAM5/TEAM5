@@ -61,16 +61,32 @@ public class GamePlayManager : Singleton<GamePlayManager>
         // GameEventManager.Instance.onLevelUp.AddListener(OnLevelUp);
 
         // GameEventManager.Instance.onEnemyDie.AddListener((Enemy e)=> CheckWaveClear());
+        //
+        InitUserData();
 
-        
-        
+
         StageManager.Instance.Init();     
         InitStageObjects( StageManager.Instance.currStage);
         
-        Player.Instance.InitPlayer(GameManager.Instance.playerData);
+        Player.Instance.InitPlayer(GameManager.Instance.userData);
         // TestManager.Instance.SetBoundImage();
         
         StartCoroutine( StartGamePlaySequence());
+    }
+
+    void InitUserData()
+    {
+        PlayerDataSO userData = GameManager.Instance.userData; 
+
+        if ( userData.needInitailization )
+        {
+            Debug.Log("유저 데이터를 초기화 해야함.");
+            userData.InitPlayerData();
+        }
+        else
+        {
+            Debug.Log("유저 데이터 초기화 필요 없음. ");
+        }
     }
 
     IEnumerator StartGamePlaySequence()

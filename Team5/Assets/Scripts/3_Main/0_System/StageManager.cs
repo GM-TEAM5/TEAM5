@@ -39,29 +39,21 @@ public class StageManager : Singleton<StageManager>
     /// <param name="playerData"></param> 
     public void Init()
     {
-        //
-        // 노드 생성 임시 - 나중에는 천계에서 노드 생성하고 넘어오자.
-        if(GameManager.Instance.totalNodeData == null || GameManager.Instance.totalNodeData.initialized == false)
-        {
-            GameManager.Instance.playerData.InitPlayerData();
-            StageNodeGenerator sng = new(GameManager.Instance.stageGenConfig);
-            GameManager.Instance.totalNodeData = sng.GenerateStageNodes();
-        }
 
         // 노드 데이터 할당
-        PlayerDataSO userData = GameManager.Instance.playerData;
+        PlayerDataSO userData = GameManager.Instance.userData;
         string nodeId = userData.currstageNodeId;
 
-        TotalNodeData totalNodeData = GameManager.Instance.totalNodeData;
+        // 포탈타고 넘어온 건지 판단. 
+        TotalNodeData totalNodeData = userData.savedNodeData;
         if( totalNodeData.TryGetNodeInfo(nodeId, out this.nodeData) )
         {
             
         }
         else
         {
-            Debug.Log(" 새로운 게임이다 ");
             nodeData = totalNodeData.GetFirstNode();
-            GameManager.Instance.playerData.currstageNodeId = nodeData.id;
+            GameManager.Instance.userData.currstageNodeId = nodeData.id;
 
         }
         Debug.Log($"[스테이지] {nodeData.id} 시작");

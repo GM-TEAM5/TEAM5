@@ -9,9 +9,9 @@ public class GameManager : Singleton<GameManager>
     public StageGenerationConfigSO stageGenConfig;
     
     
-    public TotalNodeData totalNodeData;
+    // public TotalNodeData totalNodeData;
     
-    public PlayerDataSO playerData;       // 얘는 결국 별도의 로딩이 필요없음.
+    public PlayerDataSO userData;       // 얘는 결국 별도의 로딩이 필요없음.
 
     private List<ITimeScaleable> timeScaleables = new List<ITimeScaleable>();
     public static bool isPaused;
@@ -20,6 +20,7 @@ public class GameManager : Singleton<GameManager>
 
     void Awake()
     {
+        Debug.LogWarning("============ 게임 시작 =================");
         DOTween.SetTweensCapacity(1000, 50);  // tweens: 1000, sequences: 50
     }
 
@@ -29,16 +30,19 @@ public class GameManager : Singleton<GameManager>
         InitGame();
     }
 
+    void OnDisable()
+    {
+        userData.SetInitializationWaitingState();
+    }
+
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Keypad9))
         {
-            playerData.InitPlayerData();
+            userData.SetInitializationWaitingState();
             SceneLoadManager.Instance.Load_Lobby();
         }
-
-
     }
 
     //===================================================================================
@@ -53,15 +57,16 @@ public class GameManager : Singleton<GameManager>
         SoundManager.Instance.Init();
     }
 
+
     void onGameOver()
     {
-        playerData.deathCount++;
+        userData.deathCount++;
     }
 
 
     public bool IsGameClear()
     {
-        return playerData.currChapter > gameConfig.maxChapter;
+        return userData.currChapter > gameConfig.maxChapter;
     }
 
 

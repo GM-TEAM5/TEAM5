@@ -69,7 +69,7 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
     public void Init()
     {
         PlayerInput playerInput = GetComponent<PlayerInput>();
-        playerInput.actions = GameManager.Instance.playerData.inputActionSO;
+        playerInput.actions = GameManager.Instance.userData.inputActionSO;
 
         moveAction = playerInput.actions["Move"];
         mouseLeftButtonAction = playerInput.actions["MouseLeftButton"];

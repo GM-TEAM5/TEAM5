@@ -41,12 +41,12 @@ public class ChapterLastPortal :InteractiveObject
     
     void GoToNextChapter()
     {
-        GameManager.Instance.playerData.OnChapterClear(Player.Instance, nextChapterNo);  // 데이터 저장.
+        GameManager.Instance.userData.OnChapterClear(Player.Instance, nextChapterNo);  // 데이터 저장.
         
         if(GameManager.Instance.IsGameClear())
         {
   
-            GameManager.Instance.playerData.InitPlayerData();   // 데이터 초기화.
+            GameManager.Instance.userData.SetInitializationWaitingState();   // 데이터 초기화.
             SceneLoadManager.Instance.Load_Credit();     
         }
         else

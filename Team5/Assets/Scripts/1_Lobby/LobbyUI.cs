@@ -10,7 +10,7 @@ public class LobbyUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Init( GameManager.Instance.playerData );
+        Init( GameManager.Instance.userData );
     }
 
 
