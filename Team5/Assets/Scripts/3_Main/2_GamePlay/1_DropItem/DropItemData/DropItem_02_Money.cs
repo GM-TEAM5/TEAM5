@@ -7,6 +7,6 @@ public class DropItem_02_Money : DropItemDataSO
 {
     public override void PickUp(float value)
     {
-        // Player.Instance.GetHealed(value);
+        Player.Instance.status.GetGold((int)value);
     }
 }

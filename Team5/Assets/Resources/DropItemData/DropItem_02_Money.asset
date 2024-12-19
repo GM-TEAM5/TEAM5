@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 02
   itemName: Money
-  sprite: {fileID: 21300000, guid: ec5247fe9d8e51d4193a5963b5a10ec5, type: 3}
+  sprite: {fileID: 21300000, guid: e9d08dd4de6f2ce4bb48bce28ef1318e, type: 3}

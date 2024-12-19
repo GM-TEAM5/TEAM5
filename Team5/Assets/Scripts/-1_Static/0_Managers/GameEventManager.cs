@@ -36,6 +36,8 @@ public class GameEventManager : Singleton<GameEventManager>
     public UnityEvent onChangePlayerStatus_maxHp = new();
     public UnityEvent onChangePlayerStatus_pDmg = new();
     public UnityEvent onChangePlayerStatus_mDmg = new();
+
+    public UnityEvent<int,int> onChangePlayerGold = new();  // int 1: 변동량 , int 2 : 변동 후 골드량
     #endregion
     
 

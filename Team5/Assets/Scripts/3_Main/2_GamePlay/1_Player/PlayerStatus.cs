@@ -73,6 +73,8 @@ public class PlayerStatus
     public int rerollCount;
     public int selectionCount;
 
+    public int gold;
+
 
     public float pDmg;  // physical dmg;
     public float mDmg;  // magical dmg;
@@ -120,6 +122,8 @@ public class PlayerStatus
         currInk = savedStatus.currInk;
         rerollCount = savedStatus.rerollCount;
         selectionCount = savedStatus.selectionCount;
+
+        gold = savedStatus.gold;
     }
 
 
@@ -200,4 +204,30 @@ public class PlayerStatus
 
         return (maxCount, partialFill);
     }
+
+
+    //=========================================================
+    public bool TryUseGold(int cost)
+    {
+        if ( gold>=cost)
+        {
+            UseGold(cost);
+            return true;
+        }
+        return false; 
+    }
+    
+    public void GetGold(int amount)
+    {
+        gold += amount;
+
+        GameEventManager.Instance.onChangePlayerGold.Invoke(amount, gold);
+    }
+
+    public void UseGold(int amount)
+    {
+        gold -= amount;
+
+        GameEventManager.Instance.onChangePlayerGold.Invoke(-amount, gold);
+    } 
 }

@@ -34,6 +34,8 @@ public class StageNode
     public int level;       // 세로번호
     public int number;      // 가로번호
 
+    public int rank;
+
     public List<string> prevNodes;
     public List<string> nextNodes;       // 이거 hideInspector 해도 렉걸림. 
 
@@ -50,11 +52,14 @@ public class StageNode
         this.level = level;
         this.number = number;
 
+        rank = GetDifficulty(level);
+
         prevNodes = new();
         nextNodes = new();
 
-
-        formInfo = new(BW.Math.GetRandom(20,35), BW.Math.GetRandom(20,35));
+        int minSize = 12 +  3 * rank;
+        int maxSize = 24 +  4 * rank;
+        formInfo = new(BW.Math.GetRandom(minSize,maxSize), BW.Math.GetRandom(minSize,maxSize));
     }
 
     // public StageNode(StageNodeType type, int level, int number)
@@ -62,7 +67,38 @@ public class StageNode
     //     this.type = type;
     //     this.level = level;
     //     this.number = number;
-    // }
+    // }    /// <summary>
+    ///  해당 레벨에 맞는 난이도를 계산한다. 
+    /// </summary>
+    /// <param name="level"></param>
+    /// <returns></returns>
+    int GetDifficulty(int level)
+    {
+        int rank = 0;
+        switch( level)
+        {
+            case 1:
+            case 2:
+                rank = 1;
+                break;
+            case 3:
+            case 4:
+            case 5:
+                rank =2;
+                break;
+            case 6:
+            case 7:
+                rank = 3;
+                break;
+            case 8:
+            case 9:
+            case 10:
+                rank = 4;
+                break;
+        }
+
+        return rank;
+    }
 
     //===================
     public void AddPrevNode(StageNode node)

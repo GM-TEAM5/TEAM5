@@ -310,9 +310,10 @@ public class Enemy : MonoBehaviour, IPoolObject, ITimeScaleable
     {
         // PoolManager.Instance.GetExp( enemyData.exp, transform.position);
 
-        if (UnityEngine.Random.Range(0, 100) < 50)
+        if (UnityEngine.Random.Range(0, 100) < 25)
         {
-            PoolManager.Instance.GetMoney(data.exp, transform.position);
+            int amount = UnityEngine.Random.Range(1,5);
+            PoolManager.Instance.GetMoney(amount, transform.position);
         }
     }
 

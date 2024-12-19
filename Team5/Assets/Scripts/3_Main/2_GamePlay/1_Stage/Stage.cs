@@ -50,6 +50,7 @@ public class Stage : MonoBehaviour
         navMeshSurface.BuildNavMesh();
 
         t_playerSpawnPoint.position = offset; 
+        t_portalPos.position = offset + new Vector3(0,0, height * 0.5f * 0.75f);
 
         DrawBoundary();
         AdjustBoundaryCollider();

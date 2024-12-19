@@ -49,7 +49,7 @@ public class StageWaveGenerator
     List<WaveDataSO> GetNormalWaves(StageNode stageNode)
     {
          // init
-        int rank = GetDifficulty( stageNode.level );
+        int rank = stageNode.level;
         int waveCount = stageNode.type == StageNodeType.NormalBattle?2:3;
          // add
         List<WaveDataSO> waves = new();
@@ -85,36 +85,5 @@ public class StageWaveGenerator
 
 
 
-    /// <summary>
-    ///  해당 레벨에 맞는 난이도를 계산한다. 
-    /// </summary>
-    /// <param name="level"></param>
-    /// <returns></returns>
-    int GetDifficulty(int level)
-    {
-        int rank = 0;
-        switch( level)
-        {
-            case 1:
-            case 2:
-                rank = 1;
-                break;
-            case 3:
-            case 4:
-            case 5:
-                rank =2;
-                break;
-            case 6:
-            case 7:
-                rank = 3;
-                break;
-            case 8:
-            case 9:
-            case 10:
-                rank = 4;
-                break;
-        }
 
-        return rank;
-    }
 }
