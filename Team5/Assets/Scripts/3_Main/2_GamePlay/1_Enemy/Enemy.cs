@@ -190,19 +190,19 @@ public class Enemy : MonoBehaviour, IPoolObject, ITimeScaleable
 
     //===========================================================================================
 
-    // public void GetDamaged(Vector3 hitPoint, float damage, bool isEnhancedAttack = false)
-    // {
-    //     // lastHitPoint = hitPoint == Vector3.zero ? enemyCollider.ClosestPoint(t_target.position) : hitPoint;      // 플레이어와 적 개체의 콜라이더가 겹쳐있는 경우, hitPoint 가 (0,0,0)이 나옴;
-    //     lastHitPoint = hitPoint == Vector3.zero ? transform.position : hitPoint;
-    //     Debug.Log(lastHitPoint);
-    //
-    //     GetDamaged(damage, isEnhancedAttack);
-    // }
+    public void GetDamaged(Vector3 hitPoint, float damage, bool isEnhancedAttack = false)
+    {
+        // lastHitPoint = hitPoint == Vector3.zero ? enemyCollider.ClosestPoint(t_target.position) : hitPoint;      // 플레이어와 적 개체의 콜라이더가 겹쳐있는 경우, hitPoint 가 (0,0,0)이 나옴;
+        lastHitPoint = hitPoint == Vector3.zero ? transform.position : hitPoint;
+        Debug.Log(lastHitPoint);
+    
+        GetDamaged(damage, isEnhancedAttack);
+    }
 
     public void GetDamaged(float damage, bool isEnhancedAttack = false)
     {
         SoundManager.Instance.Invoke(t, SoundEventType.EnemyHit);
-        lastHitPoint = transform.position;
+        // lastHitPoint = transform.position;
 
         float nockbackPower = 5;
         if (isEnhancedAttack)
@@ -265,6 +265,7 @@ public class Enemy : MonoBehaviour, IPoolObject, ITimeScaleable
 
         Vector3 dir = (t.position - hitPoint).WithFloorHeight().normalized;
         rb.velocity = dir * power;
+        Debug.Log($" [knockback] {dir}");
 
         DOTween.Sequence()
             .AppendInterval(0.2f)

@@ -48,12 +48,12 @@ public class GameEventManager : Singleton<GameEventManager>
 
     void Awake()
     {
-        Debug.Log("이벤트 매니저 생성");
+
     }
 
     void Start()
     {
-        Debug.Log($"[] {onChangePlayerGold}");
+
     }
 
 }

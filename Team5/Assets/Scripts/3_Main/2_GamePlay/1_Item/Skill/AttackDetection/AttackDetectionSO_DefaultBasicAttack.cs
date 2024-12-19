@@ -23,7 +23,7 @@ public class AttackDetectionSO_DefaultBasicAttack : AttackDetectionSO
             if (enemy != null)
             {
                 float dmg = data.defaultDamage + data.damageWeight * Player.Instance.status.pDmg;
-                enemy.GetDamaged(dmg );
+                enemy.GetDamaged(Player.Instance.t.position, dmg );
             }
         }
     }

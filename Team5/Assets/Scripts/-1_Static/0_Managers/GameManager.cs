@@ -20,6 +20,7 @@ public class GameManager : Singleton<GameManager>
 
     void Awake()
     {
+        Debug.LogWarning("============ 게임 시작 =================");
         DOTween.SetTweensCapacity(1000, 50);  // tweens: 1000, sequences: 50
     }
 

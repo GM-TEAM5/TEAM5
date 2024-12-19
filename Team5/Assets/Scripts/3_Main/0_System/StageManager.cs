@@ -44,6 +44,7 @@ public class StageManager : Singleton<StageManager>
         PlayerDataSO userData = GameManager.Instance.userData;
         string nodeId = userData.currstageNodeId;
 
+        // 포탈타고 넘어온 건지 판단. 
         TotalNodeData totalNodeData = userData.savedNodeData;
         if( totalNodeData.TryGetNodeInfo(nodeId, out this.nodeData) )
         {
@@ -51,7 +52,6 @@ public class StageManager : Singleton<StageManager>
         }
         else
         {
-            Debug.Log(" 새로운 게임이다 ");
             nodeData = totalNodeData.GetFirstNode();
             GameManager.Instance.userData.currstageNodeId = nodeData.id;
 
