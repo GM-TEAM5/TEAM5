@@ -20,7 +20,7 @@ public class GamePlayStartUI : MonoBehaviour
     {
         gameObject.SetActive(true);
         
-        text_stageNum.SetText( $"스테이지 {GameManager.Instance.playerData.currstageNodeId}");
+        text_stageNum.SetText( $"스테이지 {GameManager.Instance.userData.currstageNodeId}");
 
         img.color = new Color(1,1,1,0);
         text_stageNum.color = new Color(1,1,1,0);

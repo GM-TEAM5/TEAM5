@@ -14,7 +14,7 @@ public class PlayerEquipments : MonoBehaviour
     /// </summary>
     public void InitEquipments()
     {
-        List<EquipmentItemSO> equipmentData = GameManager.Instance.playerData.equipments; 
+        List<EquipmentItemSO> equipmentData = GameManager.Instance.userData.equipments; 
         int len = equipmentData.Count;
 
         equipments = new();

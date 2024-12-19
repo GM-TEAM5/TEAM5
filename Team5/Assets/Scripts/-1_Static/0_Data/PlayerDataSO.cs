@@ -46,22 +46,31 @@ public class PlayerDataSO : ScriptableObject
 
     // public bool isNewUser => deathCount==0 && currChapter ==1 && currStageNum ==1;
 
-    [Min(0)] public int maxCount_equipment = 8;
+    // [Min(0)] public int maxCount_equipment = 999;
     // [Min(0)] public int maxCount_skill = 4;
 
     //
     // public List<StageDataSO> stages = new();
 
     // public bool isGameclear => currStageNum >= stages.Count;
-
-
+    bool isInitializationWatingState { get;set;}
+    public bool needInitailization => isInitializationWatingState ||
+                                         savedStatus ==null || 
+                                        savedStatusUpgradProgress ==null || 
+                                        savedNodeData == null || 
+                                        savedNodeData.initialized == false;
 
     //
     public List<EquipmentItemSO> equipments;
     // public List<SkillItemSO> skills;
 
     // public List<SkillItemSO> initSkills;
+
+    [Header("Saved Data")]
     public PlayerStatus savedStatus;
+    public PlayerStatusUpgradeProgress savedStatusUpgradProgress;
+
+    public TotalNodeData savedNodeData;
 
     [Header("Ability")]
     public List<SkillItemSO> ability_passives = new();
@@ -81,6 +90,11 @@ public class PlayerDataSO : ScriptableObject
 
 
     //==================================================================================
+    public void SetInitializationWaitingState()
+    {
+        isInitializationWatingState = true;
+        Debug.Log("유저 데이터를 초기화 상태로 설정합니다.");
+    }
 
     void OnValidate()
     {
@@ -139,10 +153,10 @@ public class PlayerDataSO : ScriptableObject
     void FixContainerSize()
     {
         // 장비
-        equipments = equipments
-        .Take(maxCount_equipment)
-        .Concat(Enumerable.Repeat((EquipmentItemSO)null, Mathf.Max(0, maxCount_equipment - equipments.Count)))  // 부족한 부분을 0으로 채움
-        .ToList();
+        // equipments = equipments
+        // .Take(maxCount_equipment)
+        // .Concat(Enumerable.Repeat((EquipmentItemSO)null, Mathf.Max(0, maxCount_equipment - equipments.Count)))  // 부족한 부분을 0으로 채움
+        // .ToList();
 
         // 스킬
 
@@ -176,6 +190,13 @@ public class PlayerDataSO : ScriptableObject
         currChapter = 1;
 
         savedStatus = new();
+        savedStatusUpgradProgress = new(savedStatus);
+
+        StageNodeGenerator sng = new(GameManager.Instance.stageGenConfig);
+        savedNodeData = sng.GenerateStageNodes();
+
+        //
+        isInitializationWatingState = false;
     }
 
     public void OnStageClear(Player player, string nextStageNodeId)

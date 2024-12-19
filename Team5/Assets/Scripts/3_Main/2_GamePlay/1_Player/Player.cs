@@ -14,6 +14,7 @@ public class Player : Singleton<Player>, ITimeScaleable     // ui 등에서 플�
     public Transform t;
 
     public PlayerStatus status;     // 플레이어의 능력치 정보 
+    public PlayerStatusUpgradeProgress statusUpgradeProgress;
     SpriteEntity spriteEntity;
 
     //======= ui ========
@@ -211,14 +212,16 @@ public class Player : Singleton<Player>, ITimeScaleable     // ui 등에서 플�
         playerCollider.enabled = true;
 
         // 플레이어 스탯 초기화.
-        if (playerData.savedStatus != null)
+        if (playerData.savedStatus==null)
         {
             status = new(playerData.savedStatus);
+            
         }
         else
         {
-            status = new();
+            status = new(); 
         }
+        statusUpgradeProgress = playerData.savedStatusUpgradProgress;
 
         //--------- after init status --------------
         basicAttack = GetComponentInChildren<PlayerBasicAttack>();
