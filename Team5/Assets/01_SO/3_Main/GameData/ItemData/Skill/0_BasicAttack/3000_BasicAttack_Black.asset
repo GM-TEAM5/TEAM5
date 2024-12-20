@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18edb7226e1d7e449a9c4c586018c5ba, type: 3}
+  m_Name: 3000_BasicAttack_Black
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 21300000, guid: 30c57fb0398c842228f6fe22972a5ecb, type: 3}
+  type: 2
+  tier: 0
+  description: 
+  skillType: 1
+  coolTime: 0.1
+  defaultDamage: 30
+  damageWeight: 1
+  comboCount: 3
+  comboResetTime: 2
+  effects:
+  - {fileID: 2387095163939292311, guid: 2ac8964c949d6fe40b028f6f3f73d724, type: 3}
+  - {fileID: 2990359673316876279, guid: 93b85e55d8e3310469a0de37fcd86246, type: 3}
+  - {fileID: 3712060377368903138, guid: 89fec26ebdbdccf4abcb3a82a323d435, type: 3}
+  animations:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  delays:
+  - 0.3
+  - 0.3
+  - 0.5
+  detections:
+  - {fileID: 11400000, guid: b29e51a01ddaeeb4096bb49ce4fea0fc, type: 2}
+  - {fileID: 11400000, guid: b29e51a01ddaeeb4096bb49ce4fea0fc, type: 2}
+  - {fileID: 11400000, guid: b29e51a01ddaeeb4096bb49ce4fea0fc, type: 2}

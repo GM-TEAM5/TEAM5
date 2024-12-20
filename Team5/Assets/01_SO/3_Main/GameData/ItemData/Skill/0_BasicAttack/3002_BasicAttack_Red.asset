@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 18edb7226e1d7e449a9c4c586018c5ba, type: 3}
-  m_Name: 3000
+  m_Name: 3002_BasicAttack_Red
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 30c57fb0398c842228f6fe22972a5ecb, type: 3}
   type: 2
@@ -23,9 +23,9 @@ MonoBehaviour:
   comboCount: 3
   comboResetTime: 2
   effects:
-  - {fileID: 2387095163939292311, guid: 2ac8964c949d6fe40b028f6f3f73d724, type: 3}
-  - {fileID: 2990359673316876279, guid: 93b85e55d8e3310469a0de37fcd86246, type: 3}
-  - {fileID: 3712060377368903138, guid: 89fec26ebdbdccf4abcb3a82a323d435, type: 3}
+  - {fileID: 2387095163939292311, guid: b308c4979a614404ea06c1ce2e95f07b, type: 3}
+  - {fileID: 2990359673316876279, guid: 338a4f089322ae44397c6866bc0d74d0, type: 3}
+  - {fileID: 3712060377368903138, guid: 03bc523680d5a644ebc0bbb7cdccfcc1, type: 3}
   animations:
   - {fileID: 0}
   - {fileID: 0}

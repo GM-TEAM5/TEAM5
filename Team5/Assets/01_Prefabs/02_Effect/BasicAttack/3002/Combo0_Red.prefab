@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2419340432039244963}
   - component: {fileID: 1625100572204076660}
   m_Layer: 0
-  m_Name: Combo0
+  m_Name: Combo0_Red
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4835,7 +4835,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c3765908ce7b91547a1aa371a7284a93, type: 2}
+  - {fileID: 2100000, guid: 89fa6aa21e7354346a448f1cc93d4343, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

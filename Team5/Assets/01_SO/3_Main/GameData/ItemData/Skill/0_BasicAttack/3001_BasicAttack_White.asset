@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18edb7226e1d7e449a9c4c586018c5ba, type: 3}
+  m_Name: 3001_BasicAttack_White
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 21300000, guid: 30c57fb0398c842228f6fe22972a5ecb, type: 3}
+  type: 2
+  tier: 0
+  description: 
+  skillType: 1
+  coolTime: 0.1
+  defaultDamage: 30
+  damageWeight: 1
+  comboCount: 3
+  comboResetTime: 2
+  effects:
+  - {fileID: 2387095163939292311, guid: 344b3087a994cb14a882cf3d6a8037ac, type: 3}
+  - {fileID: 2990359673316876279, guid: 1f120fa45709f78469b53ab19206c5f1, type: 3}
+  - {fileID: 3712060377368903138, guid: 36e2d6d180af06f448cb86066d708bf8, type: 3}
+  animations:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  delays:
+  - 0.3
+  - 0.3
+  - 0.5
+  detections:
+  - {fileID: 11400000, guid: b29e51a01ddaeeb4096bb49ce4fea0fc, type: 2}
+  - {fileID: 11400000, guid: b29e51a01ddaeeb4096bb49ce4fea0fc, type: 2}
+  - {fileID: 11400000, guid: b29e51a01ddaeeb4096bb49ce4fea0fc, type: 2}
