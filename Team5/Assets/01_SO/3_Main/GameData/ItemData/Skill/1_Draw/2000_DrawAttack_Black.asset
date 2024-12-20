@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec8edcf17829d4f41b445d969a608b3c, type: 3}
-  m_Name: 2000_DrawAttack
+  m_Name: 2000_DrawAttack_Black
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 2f9022e9a654e5a45873527d8744d409, type: 3}
   type: 2
@@ -20,7 +20,7 @@ MonoBehaviour:
   coolTime: 1
   _lineColor: {r: 0, g: 0, b: 0, a: 1}
   _lineWidth: 0.3
-  _lineMaterial: {fileID: 0}
+  _lineMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   _effectRadius: 1
   slashDuration: 0.5
   defaultDamage: 10

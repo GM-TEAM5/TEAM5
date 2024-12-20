@@ -215,7 +215,7 @@ public class Player : Singleton<Player>, ITimeScaleable     // ui 등에서 플�
         // if (playerData.savedStatus==null)
         // {
         //     status = new(playerData.savedStatus);
-            
+
         // }
         // else
         // {
