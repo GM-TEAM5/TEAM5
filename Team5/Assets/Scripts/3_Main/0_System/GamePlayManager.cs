@@ -192,7 +192,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
 
     //========================================
 
-    public void OepnSettingPanel()
+    public void OpenSettingPanel()
     {
         settingPanel.Open();
         // GameManager.Instance.PauseGamePlay(true);   
@@ -259,7 +259,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
         yield return new WaitUntil(() => seq_stageClear.IsActive() == false);
 
 
-        OpenUpgradePanel();
+        // OpenUpgradePanel();
     }
 
     public void OnEnemyKill(Enemy enemy)

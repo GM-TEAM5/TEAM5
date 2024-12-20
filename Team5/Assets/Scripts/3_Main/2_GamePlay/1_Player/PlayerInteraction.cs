@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -77,7 +78,8 @@ public class PlayerInteraction : MonoBehaviour
         //     }
         //     return;
         // }
-        
+        inspectingObjects = inspectingObjects.Where(x=>x!=null).ToList();
+
         InteractiveObject newClosestObject = null;
         float sqrDist_old =  Mathf.Infinity;
 

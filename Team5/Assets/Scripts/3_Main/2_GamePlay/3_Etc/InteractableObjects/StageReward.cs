@@ -18,7 +18,8 @@ public class StageReward : InteractiveObject
 
     protected override void OnInteract_Custom()
     {
-        
+        data.Acquire();
+        Destroy(gameObject);
     }
 
     //========================================================================

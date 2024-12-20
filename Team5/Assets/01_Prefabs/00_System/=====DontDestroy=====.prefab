@@ -826,9 +826,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8661812636530507545, guid: 5d3c679ce69ae274fb620273b43c379d,
         type: 3}
+      propertyPath: stageRewardDic
+      value: 
+      objectReference: {fileID: 11400000, guid: c5f4bd74b6003e543b1a090dbc5a46ce,
+        type: 2}
+    - target: {fileID: 8661812636530507545, guid: 5d3c679ce69ae274fb620273b43c379d,
+        type: 3}
       propertyPath: prefab_stagePortal
       value: 
       objectReference: {fileID: 7883547465034309432, guid: a21b70e97f49fe64eabd4610c1c8069e,
+        type: 3}
+    - target: {fileID: 8661812636530507545, guid: 5d3c679ce69ae274fb620273b43c379d,
+        type: 3}
+      propertyPath: prefab_stageReward
+      value: 
+      objectReference: {fileID: 7536466267095209734, guid: 53364eeac5f091048aabcb8c894cfd61,
         type: 3}
     - target: {fileID: 8661812636530507545, guid: 5d3c679ce69ae274fb620273b43c379d,
         type: 3}

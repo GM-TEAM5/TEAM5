@@ -138,11 +138,62 @@ public class StageNode
     public void SetType(StageNodeType type)
     {
         this.type = type;
+        SetStageReward();   // 타입설정되었으니 보상 설정 ㅋ - 추후 규칙이 생기면 밖으로 빼자.
     }
 
     public void SetWaveInfo(List<WaveDataSO> waves)
     {
         waveInfo = new( waves );
+    }
+
+    public void SetStageReward()
+    {
+        List<StageRewardSO> rewards = new();
+        StageRewardDictionarySO stageRewardDic = ResourceManager.Instance.stageRewardDic;
+        
+        // 일반 전투 : 스탯 보상
+        if(type == StageNodeType.NormalBattle)
+        {
+            if (stageRewardDic.TryGetStatusPointReward(1, out StatusPointRewardSO statusPointReward))
+            {
+                rewards.Add(statusPointReward);
+            }
+        } 
+        // 정예 전투 : 스킬보상
+        else if(type == StageNodeType.EliteBattle)
+        {
+            if( stageRewardDic.TryGetRandomSkillReward(out  SkillRewardSO skillReward))
+            {
+                rewards.Add(skillReward);
+            }
+        }
+        // 중간보스 : 스킬보상 + 스텟2
+        else if(type == StageNodeType.MiddleBoss)
+        {
+            if( stageRewardDic.TryGetRandomSkillReward(out  SkillRewardSO skillReward))
+            {
+                rewards.Add(skillReward);
+            }
+            if (stageRewardDic.TryGetStatusPointReward(2, out StatusPointRewardSO statusPointReward))
+            {
+                rewards.Add(statusPointReward);
+            }
+        }
+        // 챕터보스 : 스킬보상 + 스탯3
+        else if(type == StageNodeType.ChapterBoss)
+        {
+            if( stageRewardDic.TryGetRandomSkillReward(out  SkillRewardSO skillReward))
+            {
+                rewards.Add(skillReward);
+            }
+            if (stageRewardDic.TryGetStatusPointReward(3, out StatusPointRewardSO statusPointReward))
+            {
+                rewards.Add(statusPointReward);
+            }
+        }
+
+
+        rewardInfo = new(rewards);
     }
 }
 
@@ -171,10 +222,12 @@ public class StageWaveInfo
 /// </summary>
 [Serializable]
 public class StageRewardInfo
-{
-    public StageRewardInfo()
+{   
+    public List<StageRewardSO> data;
+    
+    public StageRewardInfo(List<StageRewardSO> rewards)
     {
-        
+        this.data = rewards;
     }
 }
 
