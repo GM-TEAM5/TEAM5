@@ -8,34 +8,33 @@ public class PlayerSkillsUI : MonoBehaviour
     [SerializeField] GameObject prefab_skillUI;
     [SerializeField] List<PlayerSkillUI> skillUIs;
 
-
     void Awake()
     {
-        GameEventManager.Instance.onInitPlayer.AddListener( ( )=>Init(Player.Instance._skills) );
+        GameEventManager.Instance.onInitPlayer.AddListener(() =>
+        {
+            var playerSkills = Player.Instance.skills;
+            if (playerSkills.actives != null)
+            {
+                Init(playerSkills.actives);
+            }
+        });
     }
 
-
-
-    public void Init(SerializableDictionary<KeyCode,PlayerSkill> skills)
+    public void Init(SerializableDictionary<SkillType, PlayerSkill> actives)
     {
         // 미리 만들어져 있던 거 파괴
-        for(int i=0;i<transform.childCount;i++)
+        for (int i = 0; i < transform.childCount; i++)
         {
-            Destroy( transform.GetChild(i).gameObject );
+            Destroy(transform.GetChild(i).gameObject);
         }
 
-        //  
         skillUIs = new();
 
         // 생성 
-        foreach( var kv in skills)
+        foreach (var kv in actives)
         {
-            KeyCode keyCode = kv.Key;
-            PlayerSkill playerSkill = kv.Value;
-
             PlayerSkillUI skillUI = Instantiate(prefab_skillUI, transform).GetComponent<PlayerSkillUI>();
-            skillUI.Init( keyCode, playerSkill );
-
+            skillUI.Init(kv.Key, kv.Value);
             skillUIs.Add(skillUI);
         }
     }
