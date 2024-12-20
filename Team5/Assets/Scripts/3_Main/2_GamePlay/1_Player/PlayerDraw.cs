@@ -303,7 +303,7 @@ public class PlayerDraw : MonoBehaviour, ITimeScaleable
                     if (enemy != null && !damagedEnemies.Contains(enemy))
                     {
                         float dmg = currentSkill.defaultDamage + Player.Instance.status.mDmg;
-                        enemy.GetDamaged(positions[i], dmg);
+                        enemy.GetDamaged( positions[i], dmg );
                         damagedEnemies.Add(enemy);
                     }
                 }

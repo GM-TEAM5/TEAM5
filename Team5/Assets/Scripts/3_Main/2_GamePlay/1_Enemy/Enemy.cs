@@ -188,13 +188,13 @@ public class Enemy : MonoBehaviour, IPoolObject, ITimeScaleable
         spriteEntity.Init(data.sprite, ai.navAgent.radius, ai.navAgent.height);
     }
 
-    //===========================================================================================
+    //====================================================================================== 
 
-    public void GetDamaged(Vector3 hitPoint, float damage, bool isEnhancedAttack = false)
+    public void GetDamaged( Vector3 hitPoint, float damage, bool isEnhancedAttack = false )
     {
         // lastHitPoint = hitPoint == Vector3.zero ? enemyCollider.ClosestPoint(t_target.position) : hitPoint;      // 플레이어와 적 개체의 콜라이더가 겹쳐있는 경우, hitPoint 가 (0,0,0)이 나옴;
-        lastHitPoint = hitPoint == Vector3.zero ? transform.position : hitPoint;
-        Debug.Log(lastHitPoint);
+        lastHitPoint = hitPoint == Vector3.zero ? t.position : hitPoint;
+        // Debug.Log(lastHitPoint);
     
         GetDamaged(damage, isEnhancedAttack);
     }
@@ -265,7 +265,7 @@ public class Enemy : MonoBehaviour, IPoolObject, ITimeScaleable
 
         Vector3 dir = (t.position - hitPoint).WithFloorHeight().normalized;
         rb.velocity = dir * power;
-        Debug.Log($" [knockback] {dir}");
+        // Debug.Log($" [knockback] {dir}");
 
         DOTween.Sequence()
             .AppendInterval(0.2f)

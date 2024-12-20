@@ -32,7 +32,7 @@ public class UnderWorldManager : Singleton<UnderWorldManager>
     {
         isGamePlaying = false;
         UnderWorldPlayer.Instance.InitPlayer();
-        
+        GameManager.Instance.PauseGamePlay(false);
         StartCoroutine(EnterSequence());
     }
 

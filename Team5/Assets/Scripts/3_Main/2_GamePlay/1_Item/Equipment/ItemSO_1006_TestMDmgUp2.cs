@@ -24,6 +24,6 @@ public class ItemSO_1006_TestMDmgUp2 : EquipmentItemSO
 
     protected override void EquipEvent(bool isEquip)
     {
-        GameEventManager.Instance.onChangePlayerStatus_mDmg.Invoke();
+        // GameEventManager.Instance.onChangePlayerStatus_mDmg.Invoke();
     }
 }

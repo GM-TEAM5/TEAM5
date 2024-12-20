@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: B00
   entityName: MiddleBoss
-  sprite: {fileID: 21300000, guid: 6d717193fa626ae4bbe20c8feedbe457, type: 3}
+  sprite: {fileID: 21300000, guid: f96c773014b9e40f5847e5294ff34484, type: 3}
   size: 0
   type: 1
   rank: 0

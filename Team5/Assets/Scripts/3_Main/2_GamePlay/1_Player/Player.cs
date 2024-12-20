@@ -212,16 +212,17 @@ public class Player : Singleton<Player>, ITimeScaleable     // ui 등에서 플�
         playerCollider.enabled = true;
 
         // 플레이어 스탯 초기화.
-        if (playerData.savedStatus==null)
-        {
-            status = new(playerData.savedStatus);
+        // if (playerData.savedStatus==null)
+        // {
+        //     status = new(playerData.savedStatus);
             
-        }
-        else
-        {
-            status = new(); 
-        }
-        statusUpgradeProgress = playerData.savedStatusUpgradProgress;
+        // }
+        // else
+        // {
+        //     status = new(); 
+        // }
+        status = playerData.savedStatus;    // 이렇게 하면 현재 아이템 data 장착시 능력치 +하는 구조를 변경해야함. 
+        statusUpgradeProgress = playerData.savedStatusUpgradeProgress;
 
         //--------- after init status --------------
         basicAttack = GetComponentInChildren<PlayerBasicAttack>();

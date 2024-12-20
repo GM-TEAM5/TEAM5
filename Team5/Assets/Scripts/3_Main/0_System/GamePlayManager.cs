@@ -6,6 +6,7 @@ using TMPro;
 using System.Threading;
 using System.ComponentModel;
 using UnityEngine.Rendering;
+using JetBrains.Annotations;
 
 /// <summary>
 /// 메인 씬의 게임 플레이 로직 및 ui를 관리
@@ -31,6 +32,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
     [SerializeField] GamePlaySettingPanel settingPanel;
 
     //
+    [SerializeField] PlayerStatusUpgradePanel playerStatusUpgradePanel;
     [SerializeField] UpgradePanel upgradePanel;   //게임오버 패널
     [SerializeField] GameOverPanel gameOverPanel;   //게임오버 패널
     [SerializeField] StageClearUI stageClearUI;   //게임오버 패널
@@ -142,10 +144,10 @@ public class GamePlayManager : Singleton<GamePlayManager>
         }
         
 
-        // if( Input.GetKeyDown(KeyCode.Alpha6))
-        // {
-        //     StartStage();
-        // }
+        if( Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            OpenPlayerStatusUpgradePanel();
+        }
         
         
         
@@ -188,7 +190,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
         }
     }
 
-    //========================================\
+    //========================================
 
     public void OepnSettingPanel()
     {
@@ -358,6 +360,20 @@ public class GamePlayManager : Singleton<GamePlayManager>
         GameManager.Instance.PauseGamePlay(false);
     }
 
+    #region Upgrade
+    public void OpenPlayerStatusUpgradePanel()
+    {
+        GameManager.Instance.PauseGamePlay(true);
+        playerStatusUpgradePanel.Open();
+    }
+
+    public void ClosePlayerStatusUpgradePanel()
+    {
+        playerStatusUpgradePanel.Close();
+        GameManager.Instance.PauseGamePlay(false);
+    }
+
+
 
     public void OpenUpgradePanel()
     {
@@ -383,6 +399,8 @@ public class GamePlayManager : Singleton<GamePlayManager>
         playerInfoPanel.Close();
         GameManager.Instance.PauseGamePlay(false);
     }
+
+    #endregion
 
 
     //========================================

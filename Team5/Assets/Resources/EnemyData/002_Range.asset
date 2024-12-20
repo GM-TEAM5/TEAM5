@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 002
   entityName: Range
-  sprite: {fileID: 21300000, guid: a37e5fdd95b2ad54cb3ffd452cb7bf5e, type: 3}
+  sprite: {fileID: 21300000, guid: 25abad5fe695e43849f23d2ebfc37f50, type: 3}
   size: 0
   type: 1
   rank: 0

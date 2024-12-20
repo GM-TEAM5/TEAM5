@@ -21,7 +21,7 @@ public class PlayerInteraction : MonoBehaviour
         // 상호작용 
         if( closestObject !=null && Player.Instance.isStunned == false)
         {
-            if ( PlayerInputManager.Instance.interact)
+            if ( PlayerInputManager.Instance.interact )
             {
                 InteractWith(closestObject);
             }

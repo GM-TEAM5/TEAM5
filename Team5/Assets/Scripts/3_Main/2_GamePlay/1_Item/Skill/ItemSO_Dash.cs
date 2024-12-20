@@ -17,12 +17,12 @@ public class ItemSO_Dash : SkillItemSO
 
     protected override void OnEquip()
     {
-        Debug.Log("DashSkill is equipped!");
+        // Debug.Log("DashSkill is equipped!");
     }
 
     protected override void OnUnEquip()
     {
-        Debug.Log("DashSkill is unequipped!");
+        // Debug.Log("DashSkill is unequipped!");
     }
 
     public override void Use()

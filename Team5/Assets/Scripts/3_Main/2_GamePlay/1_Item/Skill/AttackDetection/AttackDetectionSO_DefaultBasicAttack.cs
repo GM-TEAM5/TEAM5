@@ -22,8 +22,8 @@ public class AttackDetectionSO_DefaultBasicAttack : AttackDetectionSO
             Enemy enemy = hit.GetComponent<Enemy>();
             if (enemy != null)
             {
-                float dmg = data.defaultDamage + data.damageWeight * Player.Instance.status.pDmg;
-                enemy.GetDamaged(Player.Instance.t.position, dmg );
+                float dmg = data.defaultDamage + data.damageWeight * Player.Instance.status.pDmg ;
+                enemy.GetDamaged( hit.ClosestPoint( Player.Instance.t.position ), dmg );
             }
         }
     }

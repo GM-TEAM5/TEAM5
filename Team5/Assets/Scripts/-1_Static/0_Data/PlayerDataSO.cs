@@ -56,7 +56,7 @@ public class PlayerDataSO : ScriptableObject
     bool isInitializationWatingState { get;set;}
     public bool needInitailization => isInitializationWatingState ||
                                          savedStatus ==null || 
-                                        savedStatusUpgradProgress ==null || 
+                                        savedStatusUpgradeProgress ==null || 
                                         savedNodeData == null || 
                                         savedNodeData.initialized == false;
 
@@ -68,7 +68,7 @@ public class PlayerDataSO : ScriptableObject
 
     [Header("Saved Data")]
     public PlayerStatus savedStatus;
-    public PlayerStatusUpgradeProgress savedStatusUpgradProgress;
+    public PlayerStatusUpgradeProgress savedStatusUpgradeProgress;
 
     public TotalNodeData savedNodeData;
 
@@ -190,7 +190,7 @@ public class PlayerDataSO : ScriptableObject
         currChapter = 1;
 
         savedStatus = new();
-        savedStatusUpgradProgress = new(savedStatus);
+        savedStatusUpgradeProgress = new(savedStatus);
 
         StageNodeGenerator sng = new(GameManager.Instance.stageGenConfig);
         savedNodeData = sng.GenerateStageNodes();
@@ -202,7 +202,6 @@ public class PlayerDataSO : ScriptableObject
     public void OnStageClear(Player player, string nextStageNodeId)
     {
         currstageNodeId = nextStageNodeId;
-        
         SaveData(player);
     }
 

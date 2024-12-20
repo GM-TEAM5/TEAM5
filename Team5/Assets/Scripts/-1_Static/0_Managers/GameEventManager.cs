@@ -33,9 +33,11 @@ public class GameEventManager : Singleton<GameEventManager>
 
 
     #region 스탯 변동 
-    public UnityEvent onChangePlayerStatus_maxHp = new();
-    public UnityEvent onChangePlayerStatus_pDmg = new();
-    public UnityEvent onChangePlayerStatus_mDmg = new();
+    // ui 에 반영될 때 호출 필요. 
+    public UnityEvent onChangePlayerStatus_maxHp = new();   // 
+    public UnityEvent onChangePlayerStatus_maxInk = new();  //
+    // public UnityEvent onChangePlayerStatus_pDmg = new();
+    // public UnityEvent onChangePlayerStatus_mDmg = new();
 
     public UnityEvent<int,int> onChangePlayerGold = new();  // int 1: 변동량 , int 2 : 변동 후 골드량
     #endregion

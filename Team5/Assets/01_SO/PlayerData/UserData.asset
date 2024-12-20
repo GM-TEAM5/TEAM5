@@ -15,12 +15,12 @@ MonoBehaviour:
   inputActionSO: {fileID: -944628639613478452, guid: 0ca1e7f5a8e301b479da84ef68bee2ee,
     type: 3}
   audioMixer: {fileID: 24100000, guid: 429f604167c8a104097cc54828a6e040, type: 2}
-  currstageNodeId: 1_0_1
+  currstageNodeId: 1_1_1
   traitPoint: 123
   currChapter: 1
   currStageNum: 0
   currStagePlayCount: 0
-  deathCount: 18
+  deathCount: 20
   equipments: []
   savedStatus:
     d_attackRange: 0
@@ -32,66 +32,575 @@ MonoBehaviour:
     d_damage: 30
     d_attackCooltime: 1
     d_pickupRange: 4
-    _currHp: 500
+    _currHp: 210
     Inc_maxHp: 0
     d_inkChargeRate: 10
     inkSegments: 20
-    Inc_maxInk: 0
+    Inc_maxInk: 2
     armor: 0
     evasionRate: 0
     critRate: 0
     critDamageMultiplier: 1.5
-    movementSpeedMultiplier: 1
+    movementSpeedMultiplier: 1.8000002
     rangeModifier: 1
     cooltimeModifier: 1
     luck: 0
     rerollCount: 3
     selectionCount: 3
-    gold: 0
-    pDmg: 0
+    gold: 4
+    statusUpgradePoint: 14
+    pDmg: 10
     mDmg: 0
-  savedStatusUpgradProgress:
+  savedStatusUpgradeProgress:
     list:
       array:
-      - Key: movementSpeed
-        Value:
-          level: 0
-          cost: 0
-          valuePerLevel: 0
-          maxLevel: 5
-          fieldName: movementSpeed
       - Key: mDmg
         Value:
           level: 0
-          cost: 0
-          valuePerLevel: 0
+          initCost: 1
+          costIncrement: 1
+          valuePerLevel: 5
           maxLevel: 5
           fieldName: mDmg
+          displayedName: "\uB3C4\uB825"
+          effectText: "\uC99D\uAC00"
       - Key: pDmg
         Value:
-          level: 0
-          cost: 0
-          valuePerLevel: 0
+          level: 2
+          initCost: 1
+          costIncrement: 1
+          valuePerLevel: 5
           maxLevel: 5
           fieldName: pDmg
+          displayedName: "\uACF5\uACA9\uB825"
+          effectText: "\uC99D\uAC00"
       - Key: Inc_maxInk
         Value:
-          level: 0
-          cost: 0
-          valuePerLevel: 0
+          level: 2
+          initCost: 1
+          costIncrement: 1
+          valuePerLevel: 1
           maxLevel: 5
           fieldName: Inc_maxInk
+          displayedName: "\uBA39\uBB3C\uB7C9"
+          effectText: "\uC99D\uAC00"
+      - Key: movementSpeedMultiplier
+        Value:
+          level: 4
+          initCost: 1
+          costIncrement: 1
+          valuePerLevel: 0.2
+          maxLevel: 5
+          fieldName: movementSpeedMultiplier
+          displayedName: "\uC774\uB3D9\uC18D\uB3C4"
+          effectText: "\uC99D\uAC00"
       - Key: Inc_maxHp
         Value:
           level: 0
-          cost: 0
-          valuePerLevel: 0
+          initCost: 1
+          costIncrement: 1
+          valuePerLevel: 200
           maxLevel: 5
           fieldName: Inc_maxHp
+          displayedName: "\uC0DD\uBA85\uB825"
+          effectText: "\uC99D\uAC00"
   savedNodeData:
-    initialized: 0
+    initialized: 1
     dic:
-      array: []
+      array:
+      - Key: 1_0_1
+        Value:
+          type: 1
+          chapter: 1
+          level: 0
+          number: 1
+          rank: 0
+          prevNodes: []
+          nextNodes:
+          - 1_1_1
+          - 1_1_0
+          waveInfo:
+            waves:
+            - {fileID: 11400000, guid: 383d96561d1c50145af5e2b6ad22d617, type: 2}
+            - {fileID: 11400000, guid: ee6da218df8124543bf97a2265576883, type: 2}
+          formInfo:
+            width: 20
+            height: 18
+      - Key: 1_8_4
+        Value:
+          type: 2
+          chapter: 1
+          level: 8
+          number: 4
+          rank: 4
+          prevNodes:
+          - 1_7_4
+          - 1_7_3
+          nextNodes:
+          - 1_9_2
+          waveInfo:
+            waves:
+            - {fileID: 11400000, guid: e31e566b0368f5c4488165126e1f54b8, type: 2}
+            - {fileID: 11400000, guid: 2da7126d87aa3594b95ce262a3b8a7b6, type: 2}
+            - {fileID: 11400000, guid: e31e566b0368f5c4488165126e1f54b8, type: 2}
+          formInfo:
+            width: 34
+            height: 28
+      - Key: 1_5_2
+        Value:
+          type: 1
+          chapter: 1
+          level: 5
+          number: 2
+          rank: 2
+          prevNodes:
+          - 1_4_2
+          nextNodes:
+          - 1_6_3
+          - 1_6_2
+          - 1_6_1
+          waveInfo:
+            waves:
+            - {fileID: 11400000, guid: 36e5369e289b36446ae6ff40c97db8c6, type: 2}
+            - {fileID: 11400000, guid: e97c303bdea3239408c34466a532d9d1, type: 2}
+          formInfo:
+            width: 22
+            height: 27
+      - Key: 1_8_0
+        Value:
+          type: 1
+          chapter: 1
+          level: 8
+          number: 0
+          rank: 4
+          prevNodes:
+          - 1_7_0
+          nextNodes:
+          - 1_9_2
+          waveInfo:
+            waves:
+            - {fileID: 11400000, guid: 497d19cb9c214bc41af9ffd068cc5cae, type: 2}
+            - {fileID: 11400000, guid: c30d924e1e7666845a2237bd30450195, type: 2}
+          formInfo:
+            width: 34
+            height: 37
+      - Key: 1_8_1
+        Value:
+          type: 2
+          chapter: 1
+          level: 8
+          number: 1
+          rank: 4
+          prevNodes:
+          - 1_7_2
+          nextNodes:
+          - 1_9_2
+          waveInfo:
+            waves:
+            - {fileID: 11400000, guid: e97c303bdea3239408c34466a532d9d1, type: 2}
+            - {fileID: 11400000, guid: 2da7126d87aa3594b95ce262a3b8a7b6, type: 2}
+            - {fileID: 11400000, guid: 77001d7b11ff8504dbaac4ca4ba528a3, type: 2}
+          formInfo:
+            width: 38
+            height: 28
+      - Key: 1_6_2
+        Value:
+          type: 2
+          chapter: 1
+          level: 6
+          number: 2
+          rank: 3
+          prevNodes:
+          - 1_5_2
+          nextNodes:
+          - 1_7_2
+          waveInfo:
+            waves:
+            - {fileID: 11400000, guid: 497d19cb9c214bc41af9ffd068cc5cae, type: 2}
+            - {fileID: 11400000, guid: 77001d7b11ff8504dbaac4ca4ba528a3, type: 2}
+            - {fileID: 11400000, guid: 2da7126d87aa3594b95ce262a3b8a7b6, type: 2}
+          formInfo:
+            width: 23
+            height: 29
+      - Key: 1_8_2
+        Value:
+          type: 2
+          chapter: 1
+          level: 8
+          number: 2
+          rank: 4
+          prevNodes:
+          - 1_7_2
+          - 1_7_1
+          nextNodes:
+          - 1_9_2
+          waveInfo:
+            waves:
+            - {fileID: 11400000, guid: 497d19cb9c214bc41af9ffd068cc5cae, type: 2}
+            - {fileID: 11400000, guid: 497d19cb9c214bc41af9ffd068cc5cae, type: 2}
+            - {fileID: 11400000, guid: c30d924e1e7666845a2237bd30450195, type: 2}
+          formInfo:
+            width: 28
+            height: 34
+      - Key: 1_6_3
+        Value:
+          type: 2
+          chapter: 1
+          level: 6
+          number: 3
+          rank: 3
+          prevNodes:
+          - 1_5_2
+          nextNodes:
+          - 1_7_4
+          - 1_7_2
+          - 1_7_3
+          waveInfo:
+            waves:
+            - {fileID: 11400000, guid: e31e566b0368f5c4488165126e1f54b8, type: 2}
+            - {fileID: 11400000, guid: c30d924e1e7666845a2237bd30450195, type: 2}
+            - {fileID: 11400000, guid: 77001d7b11ff8504dbaac4ca4ba528a3, type: 2}
+          formInfo:
+            width: 35
+            height: 31
+      - Key: 1_8_3
+        Value:
+          type: 1
+          chapter: 1
+          level: 8
+          number: 3
+          rank: 4
+          prevNodes:
+          - 1_7_4
+          - 1_7_2
+          nextNodes:
+          - 1_9_2
+          waveInfo:
+            waves:
+            - {fileID: 11400000, guid: 36e5369e289b36446ae6ff40c97db8c6, type: 2}
+            - {fileID: 11400000, guid: e97c303bdea3239408c34466a532d9d1, type: 2}
+          formInfo:
+            width: 32
+            height: 35
+      - Key: 1_6_1
+        Value:
+          type: 1
+          chapter: 1
+          level: 6
+          number: 1
+          rank: 3
+          prevNodes:
+          - 1_5_2
+          nextNodes:
+          - 1_7_1
+          - 1_7_0
+          waveInfo:
+            waves:
+            - {fileID: 11400000, guid: 2da7126d87aa3594b95ce262a3b8a7b6, type: 2}
+            - {fileID: 11400000, guid: 77001d7b11ff8504dbaac4ca4ba528a3, type: 2}
+          formInfo:
+            width: 27
+            height: 33
+      - Key: 1_3_2
+        Value:
+          type: 2
+          chapter: 1
+          level: 3
+          number: 2
+          rank: 2
+          prevNodes:
+          - 1_2_2
+          nextNodes:
+          - 1_4_2
+          waveInfo:
+            waves:
+            - {fileID: 11400000, guid: 77001d7b11ff8504dbaac4ca4ba528a3, type: 2}
+            - {fileID: 11400000, guid: 497d19cb9c214bc41af9ffd068cc5cae, type: 2}
+            - {fileID: 11400000, guid: e31e566b0368f5c4488165126e1f54b8, type: 2}
+          formInfo:
+            width: 25
+            height: 19
+      - Key: 1_3_1
+        Value:
+          type: 1
+          chapter: 1
+          level: 3
+          number: 1
+          rank: 2
+          prevNodes:
+          - 1_2_2
+          nextNodes:
+          - 1_4_2
+          waveInfo:
+            waves:
+            - {fileID: 11400000, guid: e97c303bdea3239408c34466a532d9d1, type: 2}
+            - {fileID: 11400000, guid: 36e5369e289b36446ae6ff40c97db8c6, type: 2}
+          formInfo:
+            width: 20
+            height: 20
+      - Key: 1_3_0
+        Value:
+          type: 1
+          chapter: 1
+          level: 3
+          number: 0
+          rank: 2
+          prevNodes:
+          - 1_2_0
+          - 1_2_1
+          nextNodes:
+          - 1_4_2
+          waveInfo:
+            waves:
+            - {fileID: 11400000, guid: c30d924e1e7666845a2237bd30450195, type: 2}
+            - {fileID: 11400000, guid: 36e5369e289b36446ae6ff40c97db8c6, type: 2}
+          formInfo:
+            width: 31
+            height: 27
+      - Key: 1_4_2
+        Value:
+          type: 5
+          chapter: 1
+          level: 4
+          number: 2
+          rank: 2
+          prevNodes:
+          - 1_3_2
+          - 1_3_0
+          - 1_3_1
+          nextNodes:
+          - 1_5_2
+          waveInfo:
+            waves:
+            - {fileID: 11400000, guid: 23749bca9418f3b40b8f5128d3417cf2, type: 2}
+          formInfo:
+            width: 20
+            height: 31
+      - Key: 1_10_2
+        Value:
+          type: 6
+          chapter: 1
+          level: 10
+          number: 2
+          rank: 4
+          prevNodes:
+          - 1_9_2
+          nextNodes: []
+          waveInfo:
+            waves:
+            - {fileID: 11400000, guid: da719f6706c4b5f4684f873c5c087d07, type: 2}
+          formInfo:
+            width: 33
+            height: 38
+      - Key: 1_1_1
+        Value:
+          type: 1
+          chapter: 1
+          level: 1
+          number: 1
+          rank: 1
+          prevNodes:
+          - 1_0_1
+          nextNodes:
+          - 1_2_2
+          - 1_2_0
+          waveInfo:
+            waves:
+            - {fileID: 11400000, guid: e5bb55c84db2f1442a9678d96d8ec5f3, type: 2}
+            - {fileID: 11400000, guid: 3b2f126aaa6f6a64b8bef1184bbfdaa5, type: 2}
+          formInfo:
+            width: 15
+            height: 16
+      - Key: 1_1_0
+        Value:
+          type: 1
+          chapter: 1
+          level: 1
+          number: 0
+          rank: 1
+          prevNodes:
+          - 1_0_1
+          nextNodes:
+          - 1_2_1
+          - 1_2_0
+          waveInfo:
+            waves:
+            - {fileID: 11400000, guid: 57cc78d37736e8c4a861895d8ba994e0, type: 2}
+            - {fileID: 11400000, guid: 1fe9acdba82de4542948e9bd2e7370dc, type: 2}
+          formInfo:
+            width: 26
+            height: 20
+      - Key: 1_2_2
+        Value:
+          type: 1
+          chapter: 1
+          level: 2
+          number: 2
+          rank: 1
+          prevNodes:
+          - 1_1_1
+          nextNodes:
+          - 1_3_2
+          - 1_3_1
+          waveInfo:
+            waves:
+            - {fileID: 11400000, guid: e31e566b0368f5c4488165126e1f54b8, type: 2}
+            - {fileID: 11400000, guid: 2da7126d87aa3594b95ce262a3b8a7b6, type: 2}
+          formInfo:
+            width: 27
+            height: 17
+      - Key: 1_7_3
+        Value:
+          type: 2
+          chapter: 1
+          level: 7
+          number: 3
+          rank: 3
+          prevNodes:
+          - 1_6_3
+          nextNodes:
+          - 1_8_4
+          waveInfo:
+            waves:
+            - {fileID: 11400000, guid: 2da7126d87aa3594b95ce262a3b8a7b6, type: 2}
+            - {fileID: 11400000, guid: c30d924e1e7666845a2237bd30450195, type: 2}
+            - {fileID: 11400000, guid: e31e566b0368f5c4488165126e1f54b8, type: 2}
+          formInfo:
+            width: 30
+            height: 34
+      - Key: 1_2_0
+        Value:
+          type: 1
+          chapter: 1
+          level: 2
+          number: 0
+          rank: 1
+          prevNodes:
+          - 1_1_1
+          - 1_1_0
+          nextNodes:
+          - 1_3_0
+          waveInfo:
+            waves:
+            - {fileID: 11400000, guid: c30d924e1e7666845a2237bd30450195, type: 2}
+            - {fileID: 11400000, guid: 36e5369e289b36446ae6ff40c97db8c6, type: 2}
+          formInfo:
+            width: 23
+            height: 23
+      - Key: 1_7_2
+        Value:
+          type: 2
+          chapter: 1
+          level: 7
+          number: 2
+          rank: 3
+          prevNodes:
+          - 1_6_2
+          - 1_6_3
+          nextNodes:
+          - 1_8_3
+          - 1_8_1
+          - 1_8_2
+          waveInfo:
+            waves:
+            - {fileID: 11400000, guid: 36e5369e289b36446ae6ff40c97db8c6, type: 2}
+            - {fileID: 11400000, guid: 497d19cb9c214bc41af9ffd068cc5cae, type: 2}
+            - {fileID: 11400000, guid: e97c303bdea3239408c34466a532d9d1, type: 2}
+          formInfo:
+            width: 26
+            height: 27
+      - Key: 1_7_1
+        Value:
+          type: 1
+          chapter: 1
+          level: 7
+          number: 1
+          rank: 3
+          prevNodes:
+          - 1_6_1
+          nextNodes:
+          - 1_8_2
+          waveInfo:
+            waves:
+            - {fileID: 11400000, guid: e97c303bdea3239408c34466a532d9d1, type: 2}
+            - {fileID: 11400000, guid: e31e566b0368f5c4488165126e1f54b8, type: 2}
+          formInfo:
+            width: 25
+            height: 33
+      - Key: 1_2_1
+        Value:
+          type: 2
+          chapter: 1
+          level: 2
+          number: 1
+          rank: 1
+          prevNodes:
+          - 1_1_0
+          nextNodes:
+          - 1_3_0
+          waveInfo:
+            waves:
+            - {fileID: 11400000, guid: 36e5369e289b36446ae6ff40c97db8c6, type: 2}
+            - {fileID: 11400000, guid: 77001d7b11ff8504dbaac4ca4ba528a3, type: 2}
+            - {fileID: 11400000, guid: c30d924e1e7666845a2237bd30450195, type: 2}
+          formInfo:
+            width: 26
+            height: 19
+      - Key: 1_9_2
+        Value:
+          type: 4
+          chapter: 1
+          level: 9
+          number: 2
+          rank: 4
+          prevNodes:
+          - 1_8_3
+          - 1_8_4
+          - 1_8_1
+          - 1_8_2
+          - 1_8_0
+          nextNodes:
+          - 1_10_2
+          waveInfo:
+            waves: []
+          formInfo:
+            width: 29
+            height: 39
+      - Key: 1_7_0
+        Value:
+          type: 4
+          chapter: 1
+          level: 7
+          number: 0
+          rank: 3
+          prevNodes:
+          - 1_6_1
+          nextNodes:
+          - 1_8_0
+          waveInfo:
+            waves: []
+          formInfo:
+            width: 33
+            height: 34
+      - Key: 1_7_4
+        Value:
+          type: 1
+          chapter: 1
+          level: 7
+          number: 4
+          rank: 3
+          prevNodes:
+          - 1_6_3
+          nextNodes:
+          - 1_8_3
+          - 1_8_4
+          waveInfo:
+            waves:
+            - {fileID: 11400000, guid: e97c303bdea3239408c34466a532d9d1, type: 2}
+            - {fileID: 11400000, guid: 497d19cb9c214bc41af9ffd068cc5cae, type: 2}
+          formInfo:
+            width: 28
+            height: 28
   ability_passives: []
   ability_actives:
     array:

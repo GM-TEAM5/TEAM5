@@ -74,6 +74,7 @@ public class PlayerStatus
     public int selectionCount;
 
     public int gold;
+    public int statusUpgradePoint;
 
 
     public float pDmg;  // physical dmg;
@@ -114,6 +115,8 @@ public class PlayerStatus
         currInk = GetMaxInk() * 0.3f;
         rerollCount = 3;
         selectionCount = 3;
+
+        statusUpgradePoint = 30;
     }
 
     public PlayerStatus(PlayerStatus savedStatus)
@@ -124,6 +127,7 @@ public class PlayerStatus
         selectionCount = savedStatus.selectionCount;
 
         gold = savedStatus.gold;
+        statusUpgradePoint = savedStatus.statusUpgradePoint;
     }
 
 
@@ -230,4 +234,16 @@ public class PlayerStatus
 
         GameEventManager.Instance.onChangePlayerGold.Invoke(-amount, gold);
     } 
+
+    //=======================================================
+    public void GetStatusUpgradePoint(int amount)
+    {
+        statusUpgradePoint += amount;
+    }
+
+    public void UseStatusUpgradePoint(int amount)
+    {
+        statusUpgradePoint -= amount;
+        // Debug.Log("띵");
+    }
 }

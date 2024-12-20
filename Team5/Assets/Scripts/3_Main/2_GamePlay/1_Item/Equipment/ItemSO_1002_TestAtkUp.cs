@@ -30,7 +30,7 @@ public class ItemSO_1002_TestAtkUp : EquipmentItemSO
 
     protected override void EquipEvent(bool isEquip)
     {
-        GameEventManager.Instance.onChangePlayerStatus_pDmg.Invoke();
+        // GameEventManager.Instance.onChangePlayerStatus_pDmg.Invoke();
     }
 
 

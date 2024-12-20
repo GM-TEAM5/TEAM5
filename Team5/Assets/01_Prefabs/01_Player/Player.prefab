@@ -121,7 +121,7 @@ RectTransform:
   m_Father: {fileID: 5374486069204350444}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.55, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -419,8 +419,13 @@ MonoBehaviour:
     luck: 0
     rerollCount: 10
     selectionCount: 3
+    gold: 0
+    statusUpgradePoint: 2
     pDmg: 0
     mDmg: 0
+  statusUpgradeProgress:
+    list:
+      array: []
   stateUI: {fileID: 0}
   playerDraw: {fileID: 0}
   playerCollider: {fileID: 0}
@@ -449,9 +454,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcf1b4bb8b3ecdc42b130c24e4a2234f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpBar: {fileID: 5775935940384652927}
+  hpBar: {fileID: 0}
   inkBarContainer: {fileID: 0}
-  inkBarPrefab: {fileID: 0}
+  inkBarPrefab: {fileID: 7362117854504770500, guid: 35eb5a505cc7b824ba4e224ea559cdb8,
+    type: 3}
 --- !u!114 &5738430724439540145
 MonoBehaviour:
   m_ObjectHideFlags: 0

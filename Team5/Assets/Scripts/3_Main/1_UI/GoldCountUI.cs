@@ -17,9 +17,7 @@ public class GoldCountUI : MonoBehaviour
 
     void OnDisable()
     {
-        GameEventManager.Instance.onChangePlayerGold.RemoveListener(OnChangePlayerGold);    // 종료되면서, GameEventManager가 먼저 사라질 때, 참조 오류가 발생하는 듯. 다른 이벤트 시스템을 마련하자. 
-
-        
+        // GameEventManager.Instance.onChangePlayerGold.RemoveListener(OnChangePlayerGold);    // 종료되면서, GameEventManager가 먼저 사라질 때, 참조 오류가 발생하는 듯. 다른 이벤트 시스템을 마련하자.  
     }
 
     //================================================================

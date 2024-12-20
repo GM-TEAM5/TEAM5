@@ -20,7 +20,7 @@ public class PlayerInfoPanel : GamePlayPanel
     {
         btn_setting.onClick .AddListener( GamePlayManager.Instance.OepnSettingPanel );
         btn_resume.onClick  .AddListener( GamePlayManager.Instance.ClosePlayerInfoPanel );
-        btn_lobby.onClick   .AddListener( SceneLoadManager.Instance.Load_Lobby);
+        btn_lobby.onClick   .AddListener( ()=>{SceneLoadManager.Instance.Load_Lobby();GameManager.Instance.userData.SetInitializationWaitingState();   });
         btn_exitGame.onClick.AddListener( GameManager.Instance.QuitGame);
 
     }
