@@ -18,16 +18,16 @@ public class PlayerSkills : MonoBehaviour
     public PlayerSkill currAction;  // 현재 실행할 액션
 
 
-   // 데이터 상의 모든 스킬장착
+    // 데이터 상의 모든 스킬장착
     public void Init()
-    {        
+    {
         actives = new();
-        foreach(var kv in GameManager.Instance.userData.ability_actives )
-        {  
+        foreach (var kv in GameManager.Instance.userData.ability_actives)
+        {
             PlayerSkill playerSkill = new(kv.Value);
-            actives[kv.Key] =  playerSkill;
+            actives[kv.Key] = playerSkill;
             kv.Value?.Equip();
-        }  
+        }
     }
 
     //===========================================
@@ -37,9 +37,15 @@ public class PlayerSkills : MonoBehaviour
     /// </summary>
     public void OnUpdate()
     {
+        if (!GamePlayManager.isGamePlaying)
+        {
+            currAction = null;
+            return;
+        }
+
         SetCurrAction();
-        TryUse(); 
-    }   
+        TryUse();
+    }
 
 
     /// <summary>
@@ -47,7 +53,7 @@ public class PlayerSkills : MonoBehaviour
     /// </summary>
     void SetCurrAction()
     {
-        
+
         if (PlayerInputManager.Instance.util)
         {
             currAction = actives[SkillType.Util];
@@ -73,7 +79,7 @@ public class PlayerSkills : MonoBehaviour
 
     void TryUse()
     {
-        if (currAction ==null)
+        if (currAction == null)
         {
             return;
         }
@@ -93,7 +99,7 @@ public class PlayerSkills : MonoBehaviour
         {
             return true;
         }
-        else 
+        else
         {
             return actives[skillType] == null;
         }
@@ -106,10 +112,10 @@ public class PlayerSkills : MonoBehaviour
     public void SwitchSkill(SkillItemSO skillData)
     {
         SkillType skillType = skillData.skillType;
-        
+
         PlayerSkill currSkill = actives[skillType];
         currSkill.skillData?.UnEquip();
-        
+
         actives[skillType].Init(skillData);
         skillData?.Equip();
     }

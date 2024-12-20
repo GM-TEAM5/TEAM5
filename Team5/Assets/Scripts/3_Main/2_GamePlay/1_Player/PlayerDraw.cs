@@ -113,6 +113,15 @@ public class PlayerDraw : MonoBehaviour, ITimeScaleable
     /// </summary>
     public void OnUpdate()
     {
+        if (!GamePlayManager.isGamePlaying)
+        {
+            if (isInDrawMode)
+            {
+                FinishDraw();
+            }
+            return;
+        }
+
         if (!isInDrawMode)
         {
             return;

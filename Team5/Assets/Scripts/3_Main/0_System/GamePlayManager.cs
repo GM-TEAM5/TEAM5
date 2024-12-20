@@ -16,9 +16,9 @@ public class GamePlayManager : Singleton<GamePlayManager>
     public static bool isGamePlaying = false;
     public bool isStageFinished = false;
     public float gameStartTime;    // 해당 스테이지 시작 시간.
-    public float gamePlayTime; 
-    public List<float> alarms=new() ;
-    
+    public float gamePlayTime;
+    public List<float> alarms = new();
+
     //
     [SerializeField] AudioSource bgm;
     // [SerializeField] GameObject panelBackground;
@@ -54,7 +54,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
 
     //===================================================================================================================================================
     void Start()
-    {           
+    {
         GameManager.Instance.PauseGamePlay(false);
         isGamePlaying = false;
         isStageFinished = false;
@@ -65,20 +65,20 @@ public class GamePlayManager : Singleton<GamePlayManager>
         InitUserData();
 
 
-        StageManager.Instance.Init();     
-        InitStageObjects( StageManager.Instance.currStage);
-        
+        StageManager.Instance.Init();
+        InitStageObjects(StageManager.Instance.currStage);
+
         Player.Instance.InitPlayer(GameManager.Instance.userData);
         // TestManager.Instance.SetBoundImage();
-        
-        StartCoroutine( StartGamePlaySequence());
+
+        StartCoroutine(StartGamePlaySequence());
     }
 
     void InitUserData()
     {
-        PlayerDataSO userData = GameManager.Instance.userData; 
+        PlayerDataSO userData = GameManager.Instance.userData;
 
-        if ( userData.needInitailization )
+        if (userData.needInitailization)
         {
             Debug.Log("유저 데이터를 초기화 해야함.");
             userData.InitPlayerData();
@@ -104,11 +104,11 @@ public class GamePlayManager : Singleton<GamePlayManager>
         // yield return new WaitUntil( ()=> playerEnterPortalSeq.IsActive()==false );
 
         startSequence.Play();
-        
-        yield return new WaitUntil( ()=>startSequence.IsActive()==false);
+
+        yield return new WaitUntil(() => startSequence.IsActive() == false);
 
         // entrancePortal.PlaySeq_DestroyPortal(2f);
-        
+
 
         Player.Instance.OnStartGamePlay();
 
@@ -126,9 +126,9 @@ public class GamePlayManager : Singleton<GamePlayManager>
     void Update()
     {
         // esc 누르면 상태창나옴.
-        if(PlayerInputManager.Instance.flowControl)
+        if (PlayerInputManager.Instance.flowControl)
         {
-            if(playerInfoPanel.gameObject.activeSelf == false)
+            if (playerInfoPanel.gameObject.activeSelf == false)
             {
                 OpenPlayerInfoPanel();
             }
@@ -137,19 +137,19 @@ public class GamePlayManager : Singleton<GamePlayManager>
                 CloseSettingPanel();
                 ClosePlayerInfoPanel();
             }
-            
-            
+
+
         }
-        
+
 
         // if( Input.GetKeyDown(KeyCode.Alpha6))
         // {
         //     StartStage();
         // }
-        
-        
-        
-        
+
+
+
+
         if (isGamePlaying == false)
         {
             return;
@@ -170,7 +170,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
     public void InitStageObjects(Stage stage)
     {
     }
-    
+
     public void SetAlarm(float time)
     {
         alarms.Add(time);
@@ -178,12 +178,12 @@ public class GamePlayManager : Singleton<GamePlayManager>
 
     void CheckAlarms()
     {
-        for(int i=alarms.Count-1;i>=0;i--)
+        for (int i = alarms.Count - 1; i >= 0; i--)
         {
-            if( gamePlayTime >= alarms[i])
+            if (gamePlayTime >= alarms[i])
             {
                 GameEventManager.Instance.onAlarm.Invoke(alarms[i]);
-                alarms.RemoveAt(i);       
+                alarms.RemoveAt(i);
             }
         }
     }
@@ -198,7 +198,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
 
     public void CloseSettingPanel()
     {
-        settingPanel.Close(); 
+        settingPanel.Close();
     }
 
 
@@ -230,17 +230,17 @@ public class GamePlayManager : Singleton<GamePlayManager>
         // targetSpawnCount_currWave = 0;
         // spawnCount_currWave = 0;
         // killCount_currWave = 0;
-        
-        
+
+
         // StageManager.Instance.StartWave();
-        
+
         // selectableItemList.Deactivate();
 
         // StartCoroutine( CheckWaveClear() );
     }
 
 
-    
+
     /// <summary>
     /// 
     /// </summary>
@@ -254,7 +254,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
     {
         Sequence seq_stageClear = stageClearUI.GetSeq_StageClear();
         seq_stageClear.Play();
-        yield return new WaitUntil( ()=> seq_stageClear.IsActive()==false );
+        yield return new WaitUntil(() => seq_stageClear.IsActive() == false);
 
 
         OpenUpgradePanel();
@@ -263,7 +263,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
     public void OnEnemyKill(Enemy enemy)
     {
         // totalEnemyKillCount++;
-        killCount_currWave ++;
+        killCount_currWave++;
 
         GameEventManager.Instance.onEnemyDie.Invoke(enemy);
     }
@@ -309,12 +309,12 @@ public class GamePlayManager : Singleton<GamePlayManager>
     //     selectableItemList.Reroll(selectableItem);
     //     Player.Instance.status.ChangeRerollCount(-1);
     //     GameEventManager.Instance.onReroll.Invoke(selectableItem);
-        
+
     // }
 
     public void Reroll(UpgradeSelection selection)
     {
-        if (Player.Instance.status.rerollCount <=0)
+        if (Player.Instance.status.rerollCount <= 0)
         {
             return;
         }
@@ -337,13 +337,13 @@ public class GamePlayManager : Singleton<GamePlayManager>
     //     while( isGamePlaying )
     //     {
     //         bool isAvailable = Player.Instance.reinforcementLevel < Player.Instance.status.level;
-            
+
     //         if (reinforcementPanel.gameObject.activeSelf == false  &&  isAvailable )
     //         {
     //             reinforcementPanel.Open();
     //             GameManager.Instance.PauseGamePlay(true);
     //         } 
-            
+
     //         yield return waitForSeconds;
     //     }
 
@@ -361,25 +361,27 @@ public class GamePlayManager : Singleton<GamePlayManager>
 
     public void OpenUpgradePanel()
     {
-       upgradePanel.Open();
-       GameManager.Instance.PauseGamePlay(true);   
+        upgradePanel.Open();
+        GameManager.Instance.PauseGamePlay(true);
     }
     public void CloseUpgradePanel()
     {
-       upgradePanel.Close();
-       GameManager.Instance.PauseGamePlay(false);   
+        upgradePanel.Close();
+        GameManager.Instance.PauseGamePlay(false);
     }
 
 
 
     public void OpenPlayerInfoPanel()
     {
+        isGamePlaying = false;  // 직접 상태 변경
         playerInfoPanel.Open();
-        GameManager.Instance.PauseGamePlay(true);   
+        GameManager.Instance.PauseGamePlay(true);
     }
 
     public void ClosePlayerInfoPanel()
     {
+        isGamePlaying = true;  // 직접 상태 변경
         playerInfoPanel.Close();
         GameManager.Instance.PauseGamePlay(false);
     }
@@ -393,7 +395,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
         {
             return;
         }
-        
+
         Debug.Log("----게임오버 ------");
         isGamePlaying = false;
         GameEventManager.Instance.onGameOver.Invoke();
@@ -405,15 +407,15 @@ public class GamePlayManager : Singleton<GamePlayManager>
         DirectingManager.Instance.ZoomIn(Player.Instance.t);
         GameManager.Instance.PauseGamePlay(true);
         yield return new WaitForSecondsRealtime(1f);
-        GameManager.Instance.PauseGamePlay(false,2f);
+        GameManager.Instance.PauseGamePlay(false, 2f);
         yield return new WaitForSecondsRealtime(1f);
-        yield return StartCoroutine(DirectingManager.Instance.FadeSequene() );
+        yield return StartCoroutine(DirectingManager.Instance.FadeSequene());
         gameOverPanel.Open();
         DirectingManager.Instance.ZoomOut();
     }
 
 
     //====================================================
-    
+
 
 }
