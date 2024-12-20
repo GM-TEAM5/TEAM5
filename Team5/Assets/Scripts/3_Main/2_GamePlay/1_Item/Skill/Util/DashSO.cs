@@ -1,23 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
+using System.Collections;
 
-[CreateAssetMenu(fileName = "4000", menuName = "SO/SkillItem/4000_Dash", order = int.MaxValue)]
-public class ItemSO_Dash : SkillItemSO
+public abstract class DashSO : SkillItemSO
 {
     [Header("Dash Settings")]
-    [SerializeField] private float dashMultiplier = 3f;
-    [SerializeField] private float dashDuration = 0.2f;
+    [SerializeField] protected float dashMultiplier = 3f;
+    [SerializeField] protected float dashDuration = 0.2f;
 
     [Header("Trail Settings")]
-    [SerializeField] private Color trailStartColor = new Color(0.2f, 0.5f, 1f, 1f);  // 더 진한 파란색, 완전 불투명
-    [SerializeField] private Color trailEndColor = new Color(0.2f, 0.5f, 1f, 0.9f);  // 끝부분도 더 진하고 덜 투명하게
-    [SerializeField] private float trailStartWidth = 1.5f;
-    [SerializeField] private float trailEndWidth = 0.8f;
+    [SerializeField] protected Color trailStartColor = new Color(0.2f, 0.5f, 1f, 1f);
+    [SerializeField] protected Color trailEndColor = new Color(0.2f, 0.5f, 1f, 0.7f);
+    [SerializeField] protected float trailStartWidth = 1.5f;
+    [SerializeField] protected float trailEndWidth = 0.8f;
+    [SerializeField] protected float trailTime = 0.2f;
+    [SerializeField] protected float minVertexDistance = 0.1f;
 
-    public override string id => $"4000_{property}";
-    public override string dataName =>  $"DashSkill_{property}";
+    protected DashSO()
+    {
+        skillType = SkillType.Util;
+    }
 
     protected override void OnEquip()
     {
@@ -34,7 +35,7 @@ public class ItemSO_Dash : SkillItemSO
         Player.Instance.StartCoroutine(DashRoutine());
     }
 
-    private IEnumerator DashRoutine()
+    protected virtual IEnumerator DashRoutine()
     {
         TrailRenderer dashTrail = Player.Instance.GetComponentInChildren<TrailRenderer>(true);
         if (dashTrail != null)
@@ -43,17 +44,21 @@ public class ItemSO_Dash : SkillItemSO
             dashTrail.enabled = true;
             dashTrail.Clear();
 
-            // 트레일 색상 설정
+            // 트레일 색상과 너비 설정
             dashTrail.startColor = trailStartColor;
             dashTrail.endColor = trailEndColor;
-
-            // 트레일 너비 설정
             dashTrail.startWidth = trailStartWidth;
             dashTrail.endWidth = trailEndWidth;
 
-            // 트레일이 더 선명하게 보이도록 시간 설정 조정
-            dashTrail.time = 0.2f;  // 트레일이 사라지는 시간을 좀 더 길게
-            dashTrail.minVertexDistance = 0.1f;  // 더 부드러운 트레일을 위한 설정
+            // 끝부분을 둥글게 만드는 설정
+            dashTrail.numCornerVertices = 8;
+            dashTrail.numCapVertices = 8;
+            dashTrail.minVertexDistance = 0.1f;
+
+            // 트레일이 더 부드럽게 보이도록 설정
+            dashTrail.shadowBias = 0.5f;
+            dashTrail.generateLightingData = true;
+            dashTrail.time = trailTime;
         }
 
         // 대시 실행

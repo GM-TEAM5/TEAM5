@@ -9,16 +9,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d154a07771967429695a6353f0f29a, type: 3}
+  m_Script: {fileID: 11500000, guid: 6ab1f7543fe4aac4c8c4ceda6bba1785, type: 3}
   m_Name: 4000_Dash_Black
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: bbd607e21d6f149a3bd9eda12f4e9b2b, type: 3}
   type: 2
   tier: 0
   description: 
+  property: 0
   skillType: 3
   coolTime: 1
   dashMultiplier: 3
   dashDuration: 0.2
-  trailStartColor: {r: 0.6981132, g: 0.09549664, b: 0.09549664, a: 1}
-  trailEndColor: {r: 0.5660378, g: 0.253649, b: 0.253649, a: 0}
+  trailStartColor: {r: 0.009433985, g: 0.009433985, b: 0.009433985, a: 1}
+  trailEndColor: {r: 0.20754719, g: 0.20754719, b: 0.20754719, a: 0.78431374}
+  trailStartWidth: 1
+  trailEndWidth: 0.5
+  trailTime: 0.2
+  minVertexDistance: 0.1
