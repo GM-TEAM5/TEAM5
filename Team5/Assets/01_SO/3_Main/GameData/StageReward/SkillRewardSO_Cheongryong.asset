@@ -15,4 +15,4 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 2bf6e067bd08d42878d1ffeb90da620b, type: 3}
   description: "\uCCAD\uB8E1"
   rank: 0
-  skillProperty: 2
+  skillProperty: 3
