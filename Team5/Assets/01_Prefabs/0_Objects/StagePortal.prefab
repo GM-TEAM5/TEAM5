@@ -455,4 +455,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   locked: 0
   text: {fileID: 1206962967837040509}
+  sr_reward: {fileID: 7581866909813920571}
   stageNodeId: 

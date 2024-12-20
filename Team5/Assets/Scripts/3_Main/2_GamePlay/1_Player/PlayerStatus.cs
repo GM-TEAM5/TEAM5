@@ -117,7 +117,7 @@ public class PlayerStatus
         rerollCount = 3;
         selectionCount = 3;
 
-        statusUpgradePoint = 30;
+        // statusUpgradePoint = 30;
     }
 
     public PlayerStatus(PlayerStatus savedStatus)

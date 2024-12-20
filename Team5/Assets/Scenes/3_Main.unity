@@ -5605,6 +5605,8 @@ MonoBehaviour:
     nextNodes: []
     waveInfo:
       waves: []
+    rewardInfo:
+      data: []
     formInfo:
       width: 0
       height: 0

@@ -7,9 +7,9 @@ public class StatusPointRewardSO : StageRewardSO
 {
     public int amount;
     
-    public override string id => $"000_{amount}";
+    public override string id => $"001_{amount}";
 
-    public override string dataName => "스탯보상";
+    public override string dataName => $"스탯보상_{amount}";
 
     public override void Acquire()
     {

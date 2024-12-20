@@ -18,7 +18,7 @@ public class PlayerInfoPanel : GamePlayPanel
     
     protected override void Init()
     {
-        btn_setting.onClick .AddListener( GamePlayManager.Instance.OepnSettingPanel );
+        btn_setting.onClick .AddListener( GamePlayManager.Instance.OpenSettingPanel );
         btn_resume.onClick  .AddListener( GamePlayManager.Instance.ClosePlayerInfoPanel );
         btn_lobby.onClick   .AddListener( ()=>{SceneLoadManager.Instance.Load_Lobby();GameManager.Instance.userData.SetInitializationWaitingState();   });
         btn_exitGame.onClick.AddListener( GameManager.Instance.QuitGame);

@@ -17,7 +17,7 @@ public class SkillRewardSO : StageRewardSO
     public int rank;
     public SkillProperty skillProperty;
     
-    public override string id => $"001_{skillProperty}";
+    public override string id => $"002_{skillProperty}";
 
     public override string dataName => $"스킬 보상 - {skillProperty}";
 

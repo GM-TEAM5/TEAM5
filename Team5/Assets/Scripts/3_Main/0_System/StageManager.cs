@@ -116,6 +116,7 @@ public class StageManager : Singleton<StageManager>
         GameEventManager.Instance.onEnemyDie.RemoveListener( OnEnemyDie );
         GamePlayManager.Instance.OnStageClear();
 
+        //
         if (nodeData.type == StageNodeType.ChapterBoss)
         {
             GenerateChapterLastPortal();
@@ -124,7 +125,22 @@ public class StageManager : Singleton<StageManager>
         {
             GenerateNextStagePortals();
         }
-        
+
+        //
+        GenerateStageReward();
+    }
+
+    void GenerateStageReward()
+    {
+        List<GameObject> rewards = new();
+        foreach(var data in nodeData.rewardInfo.data)
+        {
+            StageReward stageReward = Instantiate( ResourceManager.Instance.prefab_stageReward).GetComponent<StageReward>();
+            stageReward.Init(data);
+
+            rewards.Add(stageReward.gameObject);
+        }
+        rewards.AlignObjects_X(currStage.playerInitPos);    // 정렬
     }
 
 

@@ -26,7 +26,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4174217535216127208}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1.04}
+  m_LocalPosition: {x: 0, y: 0, z: -0.92}
   m_LocalScale: {x: 2.5, y: 2.4999998, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -2.33}
+  m_AnchoredPosition: {x: 0, y: -0.84}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &244671459507853101
@@ -99,7 +99,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "F \uC120\uD0DD"
+  m_text: "\uBCF4\uC0C1 \uBC1B\uAE30\nF "
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7d94e17b793ab7b4982d69374f53af3e, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 8ef7a91ad11af964ab7df35c6130e64c, type: 2}
@@ -181,6 +181,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7670647903962133450}
   - component: {fileID: 8910816839498663912}
+  - component: {fileID: 6293263823466620149}
+  - component: {fileID: 8324114671674176472}
   m_Layer: 0
   m_Name: StageReward
   m_TagString: Interactive
@@ -226,6 +228,38 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 4
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6293263823466620149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7536466267095209734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c05b2993ef20d8d4bad97187a43a671a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteShadow: {fileID: 2100000, guid: 27f239c432540ce4386ac924d33c3f9e, type: 2}
+  spriteRenderer: {fileID: 8390897640013597343}
+  t_sprite: {fileID: 0}
+  t_camera: {fileID: 0}
+--- !u!114 &8324114671674176472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7536466267095209734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97c37921bd4fba54591a4b65cbe72cf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  locked: 0
+  sr_reward: {fileID: 8390897640013597343}
+  text: {fileID: 2532113861311612252}
+  data: {fileID: 0}
 --- !u!1 &8584522924071719394
 GameObject:
   m_ObjectHideFlags: 0
@@ -236,7 +270,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8992985335653021281}
   - component: {fileID: 8390897640013597343}
-  - component: {fileID: 1452893061509951202}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Interactive
@@ -253,7 +286,7 @@ Transform:
   m_GameObject: {fileID: 8584522924071719394}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -311,17 +344,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!114 &1452893061509951202
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8584522924071719394}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed14853993394bb4abf8fb17da63bbe5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  t_sprite: {fileID: 0}
-  t_camera: {fileID: 0}

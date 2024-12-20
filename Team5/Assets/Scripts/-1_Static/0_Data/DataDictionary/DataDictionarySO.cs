@@ -15,7 +15,7 @@ public class DataDictionarySO : ScriptableObject
     [ReadOnly] 
     public SerializableDictionary<string,GameData> dic = new(); 
 
-    System.Random random = new System.Random();
+    protected System.Random random = new System.Random();
 
 
     // 유니티 에디터에서 값이 변경될 때마다 호출되는 메서드
