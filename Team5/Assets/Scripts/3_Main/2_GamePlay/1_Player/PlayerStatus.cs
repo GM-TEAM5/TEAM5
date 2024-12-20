@@ -27,6 +27,9 @@ public class PlayerStatus
 
     [SerializeField] float d_pickupRange = 4;      // 아이템 획득 범위
 
+    [SerializeField] public int inkSegments = 1;
+    public int totalInkSegments => inkSegments;  // 소수점 버림
+
     #endregion
     //
     #region 수정값
@@ -43,12 +46,10 @@ public class PlayerStatus
 
     public float Inc_maxHp;
     [SerializeField] float d_inkChargeRate = 10f;
-    [SerializeField] int inkSegments = 20;
+    public float inkChargeRate => d_inkChargeRate;
+
     private float _currInk;
     public float Inc_maxInk;
-
-    public float inkChargeRate => d_inkChargeRate;
-    public int totalInkSegments => inkSegments;
 
     public float currInk
     {
@@ -213,14 +214,14 @@ public class PlayerStatus
     //=========================================================
     public bool TryUseGold(int cost)
     {
-        if ( gold>=cost)
+        if (gold >= cost)
         {
             UseGold(cost);
             return true;
         }
-        return false; 
+        return false;
     }
-    
+
     public void GetGold(int amount)
     {
         gold += amount;
@@ -233,7 +234,7 @@ public class PlayerStatus
         gold -= amount;
 
         GameEventManager.Instance.onChangePlayerGold.Invoke(-amount, gold);
-    } 
+    }
 
     //=======================================================
     public void GetStatusUpgradePoint(int amount)

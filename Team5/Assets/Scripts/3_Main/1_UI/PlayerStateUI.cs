@@ -22,20 +22,38 @@ public class PlayerStateUI : MonoBehaviour
         UpdateMaxHp(player.status.maxHp);
         UpdateCurrHp(player.status.currHp);
 
-        inkSegments = player.status.totalInkSegments;
-        segmentValue = player.status.maxInk / inkSegments;
+        OnInkSegmentsChanged(player);
 
-        // 세그먼트 슬라이더 생성
+        UpdateMaxInk(player.status.maxInk);
+        UpdateCurrInk(player.status.currInk);
+
+        // 이벤트 리스너 추가
+        GameEventManager.Instance.onChangePlayerStatus_maxHp.AddListener(() => UpdateMaxHp(player.status.maxHp));
+        GameEventManager.Instance.onChangePlayerStatus_inkSegments.AddListener(() => OnInkSegmentsChanged(player));
+    }
+
+    private void OnInkSegmentsChanged(Player player)
+    {
+        // 기존 세그먼트 제거
+        foreach (var segment in inkSegmentBars)
+        {
+            if (segment != null)
+                Destroy(segment.gameObject);
+        }
+        inkSegmentBars.Clear();
+
+        // 새로운 세그먼트 생성 및 segments 값 업데이트
+        inkSegments = player.status.totalInkSegments;
+
         for (int i = 0; i < inkSegments; i++)
         {
             Slider newSegment = Instantiate(inkBarPrefab, inkBarContainer);
             inkSegmentBars.Add(newSegment);
         }
 
+        // 값 업데이트
         UpdateMaxInk(player.status.maxInk);
         UpdateCurrInk(player.status.currInk);
-
-        GameEventManager.Instance.onChangePlayerStatus_maxHp.AddListener(() => UpdateMaxHp(player.status.maxHp));
     }
 
     #region ====== HP =======
