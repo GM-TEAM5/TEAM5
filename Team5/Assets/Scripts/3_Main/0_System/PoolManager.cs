@@ -259,7 +259,7 @@ public class PoolManager : Singleton<PoolManager>
     public AreaIndicator GetAreaIndicator_Circle(Vector3 initPos,Vector3 targetPos, Vector2 size, float duration)
     {
         AreaIndicator areaIndicator = GetFromPool<AreaIndicator>();
-        AreaIndicatorSO data = (AreaIndicatorSO)ResourceManager.Instance.areaIndicatorData.GetData("00");
+        AreaIndicatorSO data = (AreaIndicatorSO)ResourceManager.Instance.areaIndicatorDic.GetData("00");
         areaIndicator.Init(data,initPos, targetPos, size, duration );
 
         return areaIndicator;
@@ -268,7 +268,7 @@ public class PoolManager : Singleton<PoolManager>
     public AreaIndicator GetAreaIndicator_RectDir(Vector3 initPos, Vector3 targetPos, Vector2 size, float duration)
     {
         AreaIndicator areaIndicator = GetFromPool<AreaIndicator>();
-        AreaIndicatorSO data = (AreaIndicatorSO)ResourceManager.Instance.areaIndicatorData.GetData("01");
+        AreaIndicatorSO data = (AreaIndicatorSO)ResourceManager.Instance.areaIndicatorDic.GetData("01");
         areaIndicator.Init(data,initPos, targetPos, size, duration );
 
         return areaIndicator;

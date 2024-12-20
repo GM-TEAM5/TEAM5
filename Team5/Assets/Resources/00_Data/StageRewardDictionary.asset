@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46ce5c2ed0e6f2f4ea33d989d1b2c109, type: 3}
+  m_Name: StageRewardDictionary
+  m_EditorClassIdentifier: 
+  list:
+  - {fileID: 11400000, guid: 05a842a88b4fee84a8f97940b3c41b45, type: 2}
+  - {fileID: 11400000, guid: 60ab9659e8cd19745af76c81c965fa2a, type: 2}
+  - {fileID: 11400000, guid: b5cbab3300d676449984fa76fd6add25, type: 2}
+  - {fileID: 11400000, guid: cb437305bc2b6f544afb0fa781766ec4, type: 2}
+  - {fileID: 11400000, guid: eaceb876c49e59744bb31b83fd1bdfb9, type: 2}
+  - {fileID: 11400000, guid: 0f2808aaf69b47b4794269f2831d7236, type: 2}
+  - {fileID: 11400000, guid: bf49fa8a7d572b547950a765eb689660, type: 2}
+  dic:
+    array:
+    - Key: 001_Cheongryong
+      Value: {fileID: 11400000, guid: eaceb876c49e59744bb31b83fd1bdfb9, type: 2}
+    - Key: 001_Jujak
+      Value: {fileID: 11400000, guid: bf49fa8a7d572b547950a765eb689660, type: 2}
+    - Key: 001_Backho
+      Value: {fileID: 11400000, guid: cb437305bc2b6f544afb0fa781766ec4, type: 2}
+    - Key: 001_Hyeonmu
+      Value: {fileID: 11400000, guid: 0f2808aaf69b47b4794269f2831d7236, type: 2}
+    - Key: 000_1
+      Value: {fileID: 11400000, guid: 05a842a88b4fee84a8f97940b3c41b45, type: 2}
+    - Key: 000_3
+      Value: {fileID: 11400000, guid: b5cbab3300d676449984fa76fd6add25, type: 2}
+    - Key: 000_2
+      Value: {fileID: 11400000, guid: 60ab9659e8cd19745af76c81c965fa2a, type: 2}

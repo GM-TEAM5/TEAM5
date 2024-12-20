@@ -28,7 +28,7 @@ public enum CantGetReason
 
 public abstract class ItemDataSO : GameData 
 {
-    public Sprite sprite; 
+    // public Sprite sprite; 
     public ItemType type;
     public ItemTier tier;
 

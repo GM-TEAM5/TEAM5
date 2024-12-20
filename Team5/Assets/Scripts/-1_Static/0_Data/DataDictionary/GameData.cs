@@ -8,6 +8,7 @@ using UnityEngine;
 /// </summary>
 public abstract class GameData : ScriptableObject
 {
+    public Sprite sprite; 
     public abstract string id {get;}
     public abstract string dataName {get;}
 }

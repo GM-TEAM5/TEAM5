@@ -87,7 +87,7 @@ public class UpgradePanel : GamePlayPanel
     {
         int targetSelectionCount  = selections.Count;
         
-        List<GameData> randomItemData = ResourceManager.Instance.itemData.GetRandomData( targetSelectionCount );
+        List<GameData> randomItemData = ResourceManager.Instance.itemDic.GetRandomData( targetSelectionCount );
 
         for(int i=0;i<targetSelectionCount;i++)
         {
@@ -104,7 +104,7 @@ public class UpgradePanel : GamePlayPanel
         int idx = selection.idx;
 
         List<GameData> exception = selections.Select(x=> (GameData)x.data).ToList();
-        List<GameData> randomItemData = ResourceManager.Instance.itemData.GetRandomData(1, exception );
+        List<GameData> randomItemData = ResourceManager.Instance.itemDic.GetRandomData(1, exception );
         if (randomItemData.Count>0)
         {
             selections[idx].UpdateItemInfo(idx,(ItemDataSO)randomItemData[0] );

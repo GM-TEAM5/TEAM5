@@ -57,7 +57,7 @@ public class SelectableItemList : MonoBehaviour
 
     void FillItemData()
     {
-        List<GameData> randomItemData = ResourceManager.Instance.itemData.GetRandomData(4);
+        List<GameData> randomItemData = ResourceManager.Instance.itemDic.GetRandomData(4);
 
         for(int i=0;i<4;i++)
         {
@@ -73,7 +73,7 @@ public class SelectableItemList : MonoBehaviour
         int idx = selectableItem.idx;
 
         List<GameData> exception = items.Select(x=> (GameData)x.data).ToList();
-        List<GameData> randomItemData = ResourceManager.Instance.itemData.GetRandomData(1, exception );
+        List<GameData> randomItemData = ResourceManager.Instance.itemDic.GetRandomData(1, exception );
         if (randomItemData.Count>0)
         {
             items[idx].Init(idx, (ItemDataSO)randomItemData[0] );

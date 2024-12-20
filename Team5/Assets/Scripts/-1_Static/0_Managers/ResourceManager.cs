@@ -21,16 +21,21 @@ public class ResourceManager : Singleton<ResourceManager>
 
     
     public readonly string itemDataPath = "00_Data/itemDictionary";
-    public ItemDictionarySO itemData;
+    public ItemDictionarySO itemDic;
 
 
     public readonly string areaIndicatorDataPath = "00_Data/areaIndicatorDictionary";
-    public AreaIndicatorDictionarySO areaIndicatorData;
+    public AreaIndicatorDictionarySO areaIndicatorDic;
+
+
+    public StageRewardDictionarySO stageRewardDic;
 
     #region Stage
     public GameObject prefab_stage;
     public GameObject prefab_stagePortal;
     public GameObject prefab_chapterLastPortal;
+
+    public GameObject prefab_stageReward;
 
     #endregion 
 
@@ -57,8 +62,8 @@ public class ResourceManager : Singleton<ResourceManager>
             dropItemData[itemData.id] = itemData;
         }
 
-        itemData = Resources.Load<ItemDictionarySO>(itemDataPath);
-        areaIndicatorData  = Resources.Load<AreaIndicatorDictionarySO>(areaIndicatorDataPath);
+        itemDic = Resources.Load<ItemDictionarySO>(itemDataPath);
+        areaIndicatorDic  = Resources.Load<AreaIndicatorDictionarySO>(areaIndicatorDataPath);
     }
 
     //

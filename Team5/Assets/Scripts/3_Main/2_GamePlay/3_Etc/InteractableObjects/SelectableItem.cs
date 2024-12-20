@@ -19,7 +19,7 @@ public class SelectableItem : InteractiveObject
         }
     }
 
-    public override bool hasSecondaryInteraction => true;
+    // public override bool hasSecondaryInteraction => true;
 
     public int idx;
     public ItemDataSO data;
@@ -52,8 +52,8 @@ public class SelectableItem : InteractiveObject
         GamePlayManager.Instance.Select_SelectableItem(data);
     }
 
-    protected override void OnSecondaryInteract_Custom()
-    {
+    // protected override void OnSecondaryInteract_Custom()
+    // {
         // GamePlayManager.Instance.Reroll(this);
-    }
+    // }
 }

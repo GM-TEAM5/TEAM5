@@ -149,9 +149,9 @@ public class PlayerInteraction : MonoBehaviour
         interactiveObject.OnInteract();
     }
 
-    void SecondaryInteractWith(InteractiveObject interactiveObject)
-    {
-        interactiveObject.OnSecondaryInteract();
-    }
+    // void SecondaryInteractWith(InteractiveObject interactiveObject)
+    // {
+    //     interactiveObject.OnSecondaryInteract();
+    // }
 
 }

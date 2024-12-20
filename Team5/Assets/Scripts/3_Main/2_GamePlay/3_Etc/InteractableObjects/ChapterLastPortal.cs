@@ -8,7 +8,7 @@ public class ChapterLastPortal :InteractiveObject
 {
     [SerializeField] TextMeshPro text;
 
-    public override bool hasSecondaryInteraction => false;
+    // public override bool hasSecondaryInteraction => false;
 
     public int nextChapterNo;
 
@@ -55,8 +55,8 @@ public class ChapterLastPortal :InteractiveObject
         }
     }
 
-    protected override void OnSecondaryInteract_Custom()
-    {
+    // protected override void OnSecondaryInteract_Custom()
+    // {
         
-    }
+    // }
 }

@@ -8,20 +8,16 @@ using TMPro;
 public class StagePortal : InteractiveObject
 {
     [SerializeField] TextMeshPro text;
+    [SerializeField] SpriteRenderer sr_reward;
 
-    public override bool hasSecondaryInteraction => false;
+
+    // public override bool hasSecondaryInteraction => false;
 
     public string stageNodeId;
 
-    public void Init(string id)
-    {
-        stageNodeId = id;
-
-        gameObject.SetActive(true);
-        Activate();
-    }
 
 
+    //========================================================================
     protected override void OnInspect_Custom(bool isOn)
     {
         text.gameObject.SetActive(isOn);
@@ -33,6 +29,22 @@ public class StagePortal : InteractiveObject
 
         //
         GoToNextStage();    
+    }
+
+    // protected override void OnSecondaryInteract_Custom()
+    // {
+        
+    // }
+
+    //========================================================================
+
+    public void Init(string id)
+    {
+        stageNodeId = id;
+        // sr_reward
+
+        gameObject.SetActive(true);
+        Activate();
     }
 
     public void OnStageClear()
@@ -48,13 +60,7 @@ public class StagePortal : InteractiveObject
 
         SceneLoadManager.Instance.Load_MainScene();
     }
-
-    protected override void OnSecondaryInteract_Custom()
-    {
-        
-    }
-
-
+    
 
     // public Sequence GetSeq_GeneratePortal(float playTime)
     // {

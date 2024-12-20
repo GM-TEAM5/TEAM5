@@ -12,7 +12,8 @@ public class DataDictionarySO : ScriptableObject
     [SerializeField] protected List<GameData> list = new(); 
     
     
-    [ReadOnly] public SerializableDictionary<string,GameData> dic = new(); 
+    [ReadOnly] 
+    public SerializableDictionary<string,GameData> dic = new(); 
 
     System.Random random = new System.Random();
 
