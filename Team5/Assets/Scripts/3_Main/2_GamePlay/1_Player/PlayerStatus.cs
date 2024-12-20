@@ -27,7 +27,7 @@ public class PlayerStatus
 
     [SerializeField] float d_pickupRange = 4;      // 아이템 획득 범위
 
-    [SerializeField] public int inkSegments = 1;
+    [SerializeField] public int inkSegments = 3;
     public int totalInkSegments => inkSegments;  // 소수점 버림
 
     #endregion

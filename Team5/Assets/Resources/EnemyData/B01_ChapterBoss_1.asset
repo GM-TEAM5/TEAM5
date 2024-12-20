@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d49c272f0bf0e7a4a83c8036c9815d76, type: 3}
   m_Name: B01_ChapterBoss_1
   m_EditorClassIdentifier: 
-  id: B00
-  entityName: MiddleBoss
+  id: B01
+  entityName: ChapterBoss
   sprite: {fileID: 21300000, guid: 6d717193fa626ae4bbe20c8feedbe457, type: 3}
   size: 0
   type: 1

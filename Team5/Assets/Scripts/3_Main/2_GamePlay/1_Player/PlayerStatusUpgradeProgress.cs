@@ -20,13 +20,13 @@ public class PlayerStatusUpgradeProgress
                                             {nameof(playerStatus.movementSpeedMultiplier) ,"이동속도"} };
 
         Dictionary<string, float> fieldValues = new() { {nameof(playerStatus.Inc_maxHp), 200},
-                                                        {nameof(playerStatus.inkSegments), 1},
+                                                        {nameof(playerStatus.inkSegments), 4},
                                                         {nameof(playerStatus.pDmg)          , 5},
                                                         {nameof(playerStatus.mDmg)          , 5},   //
                                                         {nameof(playerStatus.movementSpeedMultiplier) ,0.2f} }; // 20 %p
 
         Dictionary<string, string> effectStrings = new() { {nameof(playerStatus.Inc_maxHp), "증가"},
-                                                            {nameof(playerStatus.inkSegments), "개"},
+                                                            {nameof(playerStatus.inkSegments), "개 증가"},
                                                             {nameof(playerStatus.pDmg)          , "증가"},
                                                             {nameof(playerStatus.mDmg)          , "증가"},   //
                                                             {nameof(playerStatus.movementSpeedMultiplier) ,$"증가"} }; // 20 %p
