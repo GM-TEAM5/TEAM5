@@ -3,7 +3,14 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
-
+public enum SkillProperty
+{
+    Default,
+    Jujak,
+    Hyeonmu,
+    Cheongryong,
+    Backho
+}
 public enum SkillType
 {
     Passive,
@@ -18,6 +25,7 @@ public enum SkillType
 /// </summary>
 public abstract class SkillItemSO : ItemDataSO
 {
+    public SkillProperty property;  // 속성
     public SkillType skillType;
     
     [Min(0.1f)] public float coolTime = 1;

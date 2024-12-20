@@ -16,8 +16,11 @@ public class PlayerSkillUpgradePanel : GamePlayPanel
     [SerializeField] Transform t_selections;
     [SerializeField] List<UpgradeSelection> selections;
     //
-    [Header("Etc")]
+    [Header("Selection")]
+    [SerializeField] ItemDataSO selectedSkill;
     [SerializeField] Button btn_select; 
+
+    [Header("Etc")]
     [SerializeField] Button btn_close; 
     // [SerializeField] TextMeshProUGUI text_rerollCount; 
 

@@ -3,13 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum SkillProperty
-{
-    Jujak,
-    Hyeonmu,
-    Cheongryong,
-    Backho
-}
+
 
 [CreateAssetMenu(fileName = "SkillReward", menuName = "SO/StageReward/Skill")]
 public class SkillRewardSO : StageRewardSO 
