@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18edb7226e1d7e449a9c4c586018c5ba, type: 3}
   m_Name: 3004_BasicAttack_Yellow
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: 30c57fb0398c842228f6fe22972a5ecb, type: 3}
+  sprite: {fileID: 21300000, guid: 29da6c50568494ef884987e1e3e41faf, type: 3}
   type: 2
   tier: 0
   description: 
