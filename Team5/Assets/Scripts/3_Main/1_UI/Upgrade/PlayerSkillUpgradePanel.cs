@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 using System.Linq;
 
-public class UpgradePanel : GamePlayPanel
+public class PlayerSkillUpgradePanel : GamePlayPanel
 {
     
 
@@ -33,7 +33,7 @@ public class UpgradePanel : GamePlayPanel
         }
 
         //
-        btn_close.onClick.AddListener( GamePlayManager.Instance.CloseUpgradePanel );
+        btn_close.onClick.AddListener( GamePlayManager.Instance.CloseSkillUpgradePanel );
     }
 
     protected override void OnOpen()

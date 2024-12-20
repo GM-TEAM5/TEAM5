@@ -33,7 +33,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
 
     //
     [SerializeField] PlayerStatusUpgradePanel playerStatusUpgradePanel;
-    [SerializeField] UpgradePanel upgradePanel;   //게임오버 패널
+    [SerializeField] PlayerSkillUpgradePanel skillUpgradePanel;   //게임오버 패널
     [SerializeField] GameOverPanel gameOverPanel;   //게임오버 패널
     [SerializeField] StageClearUI stageClearUI;   //게임오버 패널
 
@@ -322,7 +322,7 @@ public class GamePlayManager : Singleton<GamePlayManager>
         }
         //
         Player.Instance.status.ChangeRerollCount(-1);
-        upgradePanel.Reroll(selection);
+        skillUpgradePanel.Reroll(selection);
         GameEventManager.Instance.onUpgradeReroll.Invoke();
         //
     }
@@ -375,14 +375,14 @@ public class GamePlayManager : Singleton<GamePlayManager>
 
 
 
-    public void OpenUpgradePanel()
+    public void OpenSkillUpgradePanel()
     {
-        upgradePanel.Open();
+        skillUpgradePanel.Open();
         GameManager.Instance.PauseGamePlay(true);
     }
-    public void CloseUpgradePanel()
+    public void CloseSkillUpgradePanel()
     {
-        upgradePanel.Close();
+        skillUpgradePanel.Close();
         GameManager.Instance.PauseGamePlay(false);
     }
 

@@ -24,7 +24,7 @@ public class SkillRewardSO : StageRewardSO
 
     public override void Acquire()
     {
-        
+        GamePlayManager.Instance.OpenSkillUpgradePanel();
     }
 
 }
