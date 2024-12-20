@@ -85,4 +85,6 @@ public abstract class SkillItemSO : ItemDataSO
     protected abstract void OnUnEquip();
 
     public abstract void Use();
+
+    // public abstract string 
 }

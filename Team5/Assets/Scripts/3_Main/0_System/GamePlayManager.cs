@@ -375,9 +375,9 @@ public class GamePlayManager : Singleton<GamePlayManager>
 
 
 
-    public void OpenSkillUpgradePanel()
+    public void OpenSkillUpgradePanel(SkillProperty property)
     {
-        skillUpgradePanel.Open();
+        skillUpgradePanel.Open(property);
         GameManager.Instance.PauseGamePlay(true);
     }
     public void CloseSkillUpgradePanel()

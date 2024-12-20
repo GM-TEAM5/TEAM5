@@ -57,6 +57,15 @@ public class DataDictionarySO : ScriptableObject
 
     //================================================
 
+    public List<GameData> GetSamePropertySkills(int targetNum, SkillProperty property)
+    {
+        List<GameData> ret = list.Where(x=>((SkillItemSO)x).property == property).ToList();
+        ret = GetRandomUniqueItems(ret, targetNum);
+
+        return ret;
+    }
+
+
     /// <summary>
     /// 중복 없이 dataNum개의 데이터를 list에서 가져온다.
     /// </summary>

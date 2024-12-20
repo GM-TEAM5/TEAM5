@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ab1f7543fe4aac4c8c4ceda6bba1785, type: 3}
   m_Name: 4004_Dash_Yellow
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: bbd607e21d6f149a3bd9eda12f4e9b2b, type: 3}
+  sprite: {fileID: 21300000, guid: 15f31d881245946f89443072ce05bfbb, type: 3}
   type: 2
   tier: 0
   description: 
