@@ -35,12 +35,16 @@ public class StageNode
     public int number;      // 가로번호
 
     public int rank;
+    
+    public Sprite thumbnail;        // 썸네일 (포탈에 보임)
+
 
     public List<string> prevNodes;
     public List<string> nextNodes;       // 이거 hideInspector 해도 렉걸림. 
 
     public StageWaveInfo waveInfo;  // 웨이브 정보
-    public StageRewardInfo rewardInfo;  // 클리어시 보상 정보 
+    public StageRewardInfo rewardInfo;  // 클리어시 보상 정보
+    
     public StageFormInfo formInfo;  // 형태 정보
 
     [NonSerialized] public bool unvalid;
@@ -139,6 +143,7 @@ public class StageNode
     {
         this.type = type;
         SetStageReward();   // 타입설정되었으니 보상 설정 ㅋ - 추후 규칙이 생기면 밖으로 빼자.
+        SetThumbnail();
     }
 
     public void SetWaveInfo(List<WaveDataSO> waves)
@@ -194,7 +199,18 @@ public class StageNode
 
 
         rewardInfo = new(rewards);
+        
     }
+
+    void SetThumbnail()
+    {
+        if (rewardInfo.data.Count>0)
+        {
+            thumbnail = rewardInfo.data[0].sprite;
+        }
+        
+    }
+
 }
 
 

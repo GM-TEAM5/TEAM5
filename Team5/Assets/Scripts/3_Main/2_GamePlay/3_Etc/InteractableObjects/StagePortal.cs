@@ -41,8 +41,12 @@ public class StagePortal : InteractiveObject
     public void Init(string id)
     {
         stageNodeId = id;
-        // sr_reward
+        if(GameManager.Instance.userData.savedNodeData.TryGetNodeInfo(id, out StageNode stageNode) )
+        {
+            sr_reward.sprite = stageNode.thumbnail;
+        }
 
+        
         gameObject.SetActive(true);
         Activate();
     }

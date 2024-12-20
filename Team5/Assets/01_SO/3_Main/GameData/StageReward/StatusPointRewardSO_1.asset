@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12944f1bf936c044eb482738bb122426, type: 3}
   m_Name: StatusPointRewardSO_1
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: 9d140ed1fdf634cb0b42c5b081df4465, type: 3}
+  sprite: {fileID: 21300000, guid: 5b47fca6c971c4e87aaf4635a45e1b52, type: 3}
   description: "\uD3EC\uC778\uD2B8 1"
   amount: 1
