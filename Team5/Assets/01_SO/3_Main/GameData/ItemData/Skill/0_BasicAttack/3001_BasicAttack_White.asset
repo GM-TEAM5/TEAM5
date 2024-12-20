@@ -16,6 +16,7 @@ MonoBehaviour:
   type: 2
   tier: 0
   description: 
+  property: 4
   skillType: 1
   coolTime: 0.1
   defaultDamage: 30

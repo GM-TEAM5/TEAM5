@@ -16,6 +16,7 @@ MonoBehaviour:
   type: 2
   tier: 0
   description: 
+  property: 3
   skillType: 3
   coolTime: 1
   dashMultiplier: 3

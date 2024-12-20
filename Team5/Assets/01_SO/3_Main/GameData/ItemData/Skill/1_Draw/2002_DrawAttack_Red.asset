@@ -16,6 +16,7 @@ MonoBehaviour:
   type: 2
   tier: 0
   description: 
+  property: 1
   skillType: 2
   coolTime: 1
   _lineColor: {r: 0.7830189, g: 0.14404595, b: 0.14404595, a: 1}
