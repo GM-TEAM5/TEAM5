@@ -919,21 +919,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   t_player: {fileID: 0}
   status:
-    level: 1
-    currExp: 0
-    maxExp: 100
-    _hp: 500
-    maxHp: 500
-    ad: 10
-    attackSpeed: 0.3
+    d_attackRange: 0
+    d_attackArea: 0
+    d_drawRange: 10
+    d_movementSpeed: 10
+    d_maxHp: 500
+    d_maxInk: 100
+    d_damage: 30
+    d_attackCooltime: 1
+    d_pickupRange: 4
+    _currHp: 500
+    Inc_maxHp: 0
+    d_inkChargeRate: 10
+    inkSegments: 5
+    Inc_maxInk: 0
     armor: 0
-    movementSpeed: 10
-    range: 4
-    drawRange: 10
-    maxInk: 100
-    _currInk: 30.000002
-    inkUseRate: 20
-    inkChargeRate: 20
+    evasionRate: 0
+    critRate: 0
+    critDamageMultiplier: 1.5
+    movementSpeedMultiplier: 1
+    rangeModifier: 1
+    cooltimeModifier: 1
+    luck: 0
+    rerollCount: 3
+    selectionCount: 3
+    pDmg: 0
+    mDmg: 0
   playerCollider: {fileID: 0}
   lastMoveDir: {x: 0, y: 0, z: 0}
 --- !u!114 &6430434480045123858

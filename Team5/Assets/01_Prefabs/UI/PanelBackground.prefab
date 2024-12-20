@@ -985,8 +985,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerEquipmentsUI: {fileID: 0}
+  toggleGroup: {fileID: 0}
   btn_ok: {fileID: 0}
   btn_cancel: {fileID: 0}
+  selectedEquipment: {fileID: 0}
+  disposalEquipment: {fileID: 0}
 --- !u!1 &7223981531102085287
 GameObject:
   m_ObjectHideFlags: 0

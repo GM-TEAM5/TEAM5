@@ -76,8 +76,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 0}
   t_itemList: {fileID: 1689544470728146663}
-  t_items:
-  - {fileID: 0}
+  items: []
 --- !u!1 &1975533143374928228
 GameObject:
   m_ObjectHideFlags: 0

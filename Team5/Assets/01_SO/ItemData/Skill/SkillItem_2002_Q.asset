@@ -16,11 +16,14 @@ MonoBehaviour:
   type: 2
   tier: 0
   description: 
+  skillType: 2
+  coolTime: 1
   _lineColor: {r: 0, g: 0, b: 0, a: 1}
   _lineWidth: 0.3
   _lineMaterial: {fileID: 0}
   _effectRadius: 1
   slashDuration: 0.5
-  damage: 30
+  damage: 60
   _inkCostPerUnit: 2
   _minInkRequired: 15
+  maxDrawDuration: 8

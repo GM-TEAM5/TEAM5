@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   list:
   - {fileID: 11400000, guid: 75b1a0ebd8a2ad94f9776da3f87956f0, type: 2}
+  - {fileID: 11400000, guid: 810737849cc5ca54cb50df108e9d69b7, type: 2}
   dic:
     array:
     - Key: 00
       Value: {fileID: 11400000, guid: 75b1a0ebd8a2ad94f9776da3f87956f0, type: 2}
+    - Key: 01
+      Value: {fileID: 11400000, guid: 810737849cc5ca54cb50df108e9d69b7, type: 2}

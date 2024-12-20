@@ -1,0 +1,115 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78ec4a2af2a00fa449813f0756e76b8b, type: 3}
+  m_Name: UserData
+  m_EditorClassIdentifier: 
+  inputActionSO: {fileID: -944628639613478452, guid: 0ca1e7f5a8e301b479da84ef68bee2ee,
+    type: 3}
+  audioMixer: {fileID: 24100000, guid: 429f604167c8a104097cc54828a6e040, type: 2}
+  currstageNodeId: 1_0_1
+  traitPoint: 123
+  currChapter: 1
+  currStageNum: 0
+  currStagePlayCount: 0
+  deathCount: 18
+  equipments: []
+  savedStatus:
+    d_attackRange: 0
+    d_attackArea: 0
+    d_drawRange: 10
+    d_movementSpeed: 10
+    d_maxHp: 500
+    d_maxInk: 100
+    d_damage: 30
+    d_attackCooltime: 1
+    d_pickupRange: 4
+    _currHp: 500
+    Inc_maxHp: 0
+    d_inkChargeRate: 10
+    inkSegments: 20
+    Inc_maxInk: 0
+    armor: 0
+    evasionRate: 0
+    critRate: 0
+    critDamageMultiplier: 1.5
+    movementSpeedMultiplier: 1
+    rangeModifier: 1
+    cooltimeModifier: 1
+    luck: 0
+    rerollCount: 3
+    selectionCount: 3
+    gold: 0
+    pDmg: 0
+    mDmg: 0
+  savedStatusUpgradProgress:
+    list:
+      array:
+      - Key: movementSpeed
+        Value:
+          level: 0
+          cost: 0
+          valuePerLevel: 0
+          maxLevel: 5
+          fieldName: movementSpeed
+      - Key: mDmg
+        Value:
+          level: 0
+          cost: 0
+          valuePerLevel: 0
+          maxLevel: 5
+          fieldName: mDmg
+      - Key: pDmg
+        Value:
+          level: 0
+          cost: 0
+          valuePerLevel: 0
+          maxLevel: 5
+          fieldName: pDmg
+      - Key: Inc_maxInk
+        Value:
+          level: 0
+          cost: 0
+          valuePerLevel: 0
+          maxLevel: 5
+          fieldName: Inc_maxInk
+      - Key: Inc_maxHp
+        Value:
+          level: 0
+          cost: 0
+          valuePerLevel: 0
+          maxLevel: 5
+          fieldName: Inc_maxHp
+  savedNodeData:
+    initialized: 0
+    dic:
+      array: []
+  ability_passives: []
+  ability_actives:
+    array:
+    - Key: 1
+      Value: {fileID: 11400000, guid: 03e0e5aa169111548be97dd798570abf, type: 2}
+    - Key: 2
+      Value: {fileID: 11400000, guid: 798b97bc885b6ad4baa0ab33305e75d5, type: 2}
+    - Key: 3
+      Value: {fileID: 11400000, guid: df05e74d61ebc9641ae4de38704becea, type: 2}
+    - Key: 4
+      Value: {fileID: 0}
+  init_actives:
+    array:
+    - Key: 1
+      Value: {fileID: 11400000, guid: 03e0e5aa169111548be97dd798570abf, type: 2}
+    - Key: 2
+      Value: {fileID: 11400000, guid: 798b97bc885b6ad4baa0ab33305e75d5, type: 2}
+    - Key: 3
+      Value: {fileID: 11400000, guid: df05e74d61ebc9641ae4de38704becea, type: 2}
+    - Key: 4
+      Value: {fileID: 0}

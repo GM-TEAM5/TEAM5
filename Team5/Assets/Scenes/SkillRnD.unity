@@ -496,10 +496,20 @@ PrefabInstance:
       propertyPath: m_PreviewTimeScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1928716999169317264, guid: 48064081dfea914428bef7719181a1f5,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3253106814469546558, guid: 48064081dfea914428bef7719181a1f5,
         type: 3}
       propertyPath: m_Name
       value: Arrow
+      objectReference: {fileID: 0}
+    - target: {fileID: 3253106814469546558, guid: 48064081dfea914428bef7719181a1f5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4148493054692225237, guid: 48064081dfea914428bef7719181a1f5,
         type: 3}

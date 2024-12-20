@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e57097ab8ddd7bb49bc8e08c13198367, type: 3}
+  m_Name: WaveDic
+  m_EditorClassIdentifier: 
+  list_normal:
+  - {fileID: 11400000, guid: 25ec55ee4da3c1f4b99b572c8dc50fc1, type: 2}
+  - {fileID: 11400000, guid: 383d96561d1c50145af5e2b6ad22d617, type: 2}
+  - {fileID: 11400000, guid: ee6da218df8124543bf97a2265576883, type: 2}
+  - {fileID: 11400000, guid: c72b847f63f81bb4e8f6b3860ec43f5b, type: 2}
+  - {fileID: 11400000, guid: 0dd4c7a796750d446b511513d55e7bf6, type: 2}
+  - {fileID: 11400000, guid: 1fe9acdba82de4542948e9bd2e7370dc, type: 2}
+  - {fileID: 11400000, guid: e5bb55c84db2f1442a9678d96d8ec5f3, type: 2}
+  - {fileID: 11400000, guid: 66b88ff8d638cb54595a40365846cb82, type: 2}
+  - {fileID: 11400000, guid: 3b2f126aaa6f6a64b8bef1184bbfdaa5, type: 2}
+  - {fileID: 11400000, guid: 57cc78d37736e8c4a861895d8ba994e0, type: 2}
+  - {fileID: 11400000, guid: 36e5369e289b36446ae6ff40c97db8c6, type: 2}
+  - {fileID: 11400000, guid: c30d924e1e7666845a2237bd30450195, type: 2}
+  - {fileID: 11400000, guid: e97c303bdea3239408c34466a532d9d1, type: 2}
+  - {fileID: 11400000, guid: 77001d7b11ff8504dbaac4ca4ba528a3, type: 2}
+  - {fileID: 11400000, guid: e31e566b0368f5c4488165126e1f54b8, type: 2}
+  - {fileID: 11400000, guid: 497d19cb9c214bc41af9ffd068cc5cae, type: 2}
+  - {fileID: 11400000, guid: 2da7126d87aa3594b95ce262a3b8a7b6, type: 2}
+  list_middleBoss:
+  - {fileID: 11400000, guid: 23749bca9418f3b40b8f5128d3417cf2, type: 2}
+  list_ChapterBoss:
+  - {fileID: 11400000, guid: da719f6706c4b5f4684f873c5c087d07, type: 2}
+  normalWaves:
+    array:
+    - Key: 0
+      Value:
+      - {fileID: 11400000, guid: 25ec55ee4da3c1f4b99b572c8dc50fc1, type: 2}
+      - {fileID: 11400000, guid: 383d96561d1c50145af5e2b6ad22d617, type: 2}
+      - {fileID: 11400000, guid: ee6da218df8124543bf97a2265576883, type: 2}
+      - {fileID: 11400000, guid: c72b847f63f81bb4e8f6b3860ec43f5b, type: 2}
+    - Key: 1
+      Value:
+      - {fileID: 11400000, guid: 0dd4c7a796750d446b511513d55e7bf6, type: 2}
+      - {fileID: 11400000, guid: 1fe9acdba82de4542948e9bd2e7370dc, type: 2}
+      - {fileID: 11400000, guid: e5bb55c84db2f1442a9678d96d8ec5f3, type: 2}
+      - {fileID: 11400000, guid: 66b88ff8d638cb54595a40365846cb82, type: 2}
+      - {fileID: 11400000, guid: 3b2f126aaa6f6a64b8bef1184bbfdaa5, type: 2}
+      - {fileID: 11400000, guid: 57cc78d37736e8c4a861895d8ba994e0, type: 2}
+    - Key: 2
+      Value:
+      - {fileID: 11400000, guid: 36e5369e289b36446ae6ff40c97db8c6, type: 2}
+      - {fileID: 11400000, guid: c30d924e1e7666845a2237bd30450195, type: 2}
+      - {fileID: 11400000, guid: e97c303bdea3239408c34466a532d9d1, type: 2}
+      - {fileID: 11400000, guid: 77001d7b11ff8504dbaac4ca4ba528a3, type: 2}
+      - {fileID: 11400000, guid: e31e566b0368f5c4488165126e1f54b8, type: 2}
+      - {fileID: 11400000, guid: 497d19cb9c214bc41af9ffd068cc5cae, type: 2}
+      - {fileID: 11400000, guid: 2da7126d87aa3594b95ce262a3b8a7b6, type: 2}
+  middleBossWaves:
+    array:
+    - Key: 1
+      Value:
+      - {fileID: 11400000, guid: 23749bca9418f3b40b8f5128d3417cf2, type: 2}
+  chapterBossWaves:
+    array:
+    - Key: 1
+      Value:
+      - {fileID: 11400000, guid: da719f6706c4b5f4684f873c5c087d07, type: 2}

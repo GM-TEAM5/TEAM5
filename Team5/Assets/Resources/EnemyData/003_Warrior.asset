@@ -19,15 +19,15 @@ MonoBehaviour:
   type: 1
   rank: 0
   attackType: 0
-  maxHp: 100
+  maxHp: 200
   armor: 0
   range: 1
   retreatRange: 0
   attackSpeed: 0
-  ad: 33
+  ad: 60
   ap: 0
   moveCooltime: 0.2
-  movementSpeed: 5
+  movementSpeed: 8
   exp: 30
   abilities:
   - {fileID: 11400000, guid: 37959666a0d5843448bc845d289483ae, type: 2}

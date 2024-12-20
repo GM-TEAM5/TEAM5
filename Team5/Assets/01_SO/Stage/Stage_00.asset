@@ -25,8 +25,10 @@ MonoBehaviour:
           enemyData: {fileID: 11400000, guid: 62e821ebc49c5a8479cea5daad4e3b52, type: 2}
           positionType: 0
           spawnPoint: {x: 0, y: 0, z: 0}
-          spawnPerCycle: 2
+          spawnPerCycle: 3
           cycleInterval: 0
+      - Key: 1
+        Value:
         - startTime: 0
           endTime: 0
           enemyData: {fileID: 11400000, guid: 0bdb4f12b102e4b41b1d0f3e98b92b9e, type: 2}
@@ -34,12 +36,37 @@ MonoBehaviour:
           spawnPoint: {x: 0, y: 0, z: 0}
           spawnPerCycle: 2
           cycleInterval: 0
+      - Key: 2
+        Value:
         - startTime: 0
           endTime: 0
-          enemyData: {fileID: 11400000, guid: c7c895deb29c7e542825c05d4fe3c616, type: 2}
+          enemyData: {fileID: 11400000, guid: 62e821ebc49c5a8479cea5daad4e3b52, type: 2}
+          positionType: 0
+          spawnPoint: {x: 0, y: 0, z: 0}
+          spawnPerCycle: 3
+          cycleInterval: 0
+        - startTime: 2
+          endTime: 0
+          enemyData: {fileID: 11400000, guid: 0bdb4f12b102e4b41b1d0f3e98b92b9e, type: 2}
           positionType: 0
           spawnPoint: {x: 0, y: 0, z: 0}
           spawnPerCycle: 2
+          cycleInterval: 0
+      - Key: 3
+        Value:
+        - startTime: 0
+          endTime: 0
+          enemyData: {fileID: 11400000, guid: 62e821ebc49c5a8479cea5daad4e3b52, type: 2}
+          positionType: 0
+          spawnPoint: {x: 0, y: 0, z: 0}
+          spawnPerCycle: 5
+          cycleInterval: 0
+        - startTime: 2
+          endTime: 0
+          enemyData: {fileID: 11400000, guid: 0bdb4f12b102e4b41b1d0f3e98b92b9e, type: 2}
+          positionType: 0
+          spawnPoint: {x: 0, y: 0, z: 0}
+          spawnPerCycle: 3
           cycleInterval: 0
   mapInfo:
     width: 30
