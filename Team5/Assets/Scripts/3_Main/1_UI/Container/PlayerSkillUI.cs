@@ -6,40 +6,35 @@ using UnityEngine.UI;
 
 public class PlayerSkillUI : MonoBehaviour
 {
-    KeyCode keyCode;
-    
+    SkillType skillType;
+
     PlayerSkill playerSkill;
-    
+
     [SerializeField] Image img_icon;
     [SerializeField] TextMeshProUGUI text_keyCode;
-    
+
     void Awake()
     {
         GameEventManager.Instance.onChangeSkill.AddListener(OnChangeSkill);
     }
 
 
-    public void Init(KeyCode keyCode, PlayerSkill playerSkill)
-    {        
-        this.keyCode = keyCode;
+    public void Init(SkillType skillType, PlayerSkill playerSkill)
+    {
+        this.skillType = skillType;
         this.playerSkill = playerSkill;
 
+        text_keyCode.SetText(skillType.ToString());
 
-        text_keyCode.SetText(keyCode.ToString());
-        
-
-        // 그리고 쿨타임도 초기화.
-        if(playerSkill.skillData !=null)
+        if (playerSkill?.skillData != null)
         {
-            img_icon.sprite = playerSkill.skillData?.sprite;
+            img_icon.sprite = playerSkill.skillData.sprite;
             Activate();
-            
         }
         else
         {
             Deactivate();
         }
-        
     }
 
 
@@ -49,22 +44,20 @@ public class PlayerSkillUI : MonoBehaviour
     /// <param name="keyCode"></param>
     /// <param name="playerSkill"></param>
     public void OnChangeSkill(KeyCode keyCode, PlayerSkill playerSkill)
-    {        
-        if (this.keyCode != keyCode)
+    {
+        if (this.skillType != playerSkill.skillData.skillType)
         {
             return;
         }
-        
+
         this.playerSkill = playerSkill;
 
-        text_keyCode.SetText(keyCode.ToString());
+        text_keyCode.SetText(skillType.ToString());
 
-        // 그리고 쿨타임도 초기화.
-        if(playerSkill.skillData !=null)
+        if (playerSkill.skillData != null)
         {
-            img_icon.sprite = playerSkill.skillData?.sprite;
+            img_icon.sprite = playerSkill.skillData.sprite;
             Activate();
-            
         }
         else
         {
@@ -76,7 +69,7 @@ public class PlayerSkillUI : MonoBehaviour
 
     public void Activate()
     {
-        img_icon.gameObject.SetActive(true);    
+        img_icon.gameObject.SetActive(true);
     }
 
     public void Deactivate()
