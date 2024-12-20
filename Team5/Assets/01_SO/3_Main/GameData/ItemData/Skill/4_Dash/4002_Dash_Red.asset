@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f3d154a07771967429695a6353f0f29a, type: 3}
-  m_Name: 4000_Dash_Black
+  m_Name: 4002_Dash_Red
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: bbd607e21d6f149a3bd9eda12f4e9b2b, type: 3}
+  sprite: {fileID: 21300000, guid: 60f307dac89bc4ebb8af021393ba7c2e, type: 3}
   type: 2
   tier: 0
   description: 
@@ -22,3 +22,5 @@ MonoBehaviour:
   dashDuration: 0.2
   trailStartColor: {r: 0.6981132, g: 0.09549664, b: 0.09549664, a: 1}
   trailEndColor: {r: 0.5660378, g: 0.253649, b: 0.253649, a: 0}
+  trailStartWidth: 1.5
+  trailEndWidth: 0.8
