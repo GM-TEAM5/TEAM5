@@ -87,7 +87,7 @@ public class PlayerDraw : MonoBehaviour, ITimeScaleable
         if (activate)
         {
             SoundManager.Instance.Invoke(Player.Instance.transform, SoundEventType.PlayerRyoikiTenkaiOn);
-            
+
             float finalRadius = player.status.drawRange * currentSkill.effectRadius;
             drawingArea.SetRadius(finalRadius * 2f);
             drawingArea.Activate();
@@ -98,7 +98,7 @@ public class PlayerDraw : MonoBehaviour, ITimeScaleable
         else
         {
             SoundManager.Instance.Invoke(Player.Instance.transform, SoundEventType.PlayerRyoikiTenkaiOff);
-            
+
             DirectingManager.Instance.InitVignette(0.5f);
             drawingCamera.SetActive(false);
             Time.timeScale = 1f;
@@ -196,6 +196,7 @@ public class PlayerDraw : MonoBehaviour, ITimeScaleable
         if (!player.HasEnoughInk(inkCost))
         {
             EndDrawing();
+            FinishDraw();
             return;
         }
 
