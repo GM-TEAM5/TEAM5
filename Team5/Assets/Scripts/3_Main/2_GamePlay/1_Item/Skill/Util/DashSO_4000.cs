@@ -4,7 +4,7 @@ using UnityEngine;
 public class DashSO_4000 : DashSO
 {
     public override string id => $"4000_{property}";
-    public override string dataName => $"DashSkill_{property}";
+    public override string dataName => $"순보_{property}";
 
     public DashSO_4000()
     {
