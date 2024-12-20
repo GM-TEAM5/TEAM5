@@ -9,6 +9,8 @@ using System.Linq;
 public class PlayerSkillUpgradePanel : GamePlayPanel
 {
     
+    [SerializeField] SkillProperty currProperty;
+
 
     // Selections
     [Header("Selections")]
@@ -16,11 +18,11 @@ public class PlayerSkillUpgradePanel : GamePlayPanel
     [SerializeField] Transform t_selections;
     [SerializeField] List<UpgradeSelection> selections;
     //
-    [Header("Selection")]
+    [Header("Etc")]
     [SerializeField] ItemDataSO selectedSkill;
     [SerializeField] Button btn_select; 
 
-    [Header("Etc")]
+    
     [SerializeField] Button btn_close; 
     // [SerializeField] TextMeshProUGUI text_rerollCount; 
 
@@ -49,6 +51,12 @@ public class PlayerSkillUpgradePanel : GamePlayPanel
     protected override void OnClose()
     {
         
+    }
+
+    public void Open(SkillProperty property)
+    {
+        currProperty = property;
+        Open();
     }
     
     //=====================================================================
@@ -90,7 +98,7 @@ public class PlayerSkillUpgradePanel : GamePlayPanel
     {
         int targetSelectionCount  = selections.Count;
         
-        List<GameData> randomItemData = ResourceManager.Instance.itemDic.GetRandomData( targetSelectionCount );
+        List<GameData> randomItemData = ResourceManager.Instance.itemDic.GetSamePropertySkills( targetSelectionCount, currProperty);
 
         for(int i=0;i<targetSelectionCount;i++)
         {

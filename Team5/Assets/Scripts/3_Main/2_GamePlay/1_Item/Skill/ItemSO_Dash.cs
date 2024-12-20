@@ -17,7 +17,7 @@ public class ItemSO_Dash : SkillItemSO
     [SerializeField] private float trailEndWidth = 0.8f;
 
     public override string id => $"4000_{property}";
-    public override string dataName =>  $"DashSkill_{property}";
+    public override string dataName =>  $"순보_{property}";
 
     protected override void OnEquip()
     {
