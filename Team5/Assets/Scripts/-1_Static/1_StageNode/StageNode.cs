@@ -204,13 +204,25 @@ public class StageNode
 
     void SetThumbnail()
     {
-        if (rewardInfo.data.Count>0)
+        // 정예 전투 
+        if( type == StageNodeType.EliteBattle)
         {
-            thumbnail = rewardInfo.data[0].sprite;
-        }
-        
-    }
+            if (rewardInfo.data.Count>0)
+            {
+                thumbnail = rewardInfo.data[0].sprite;
+            }
+        } 
+        //그외. 
+        else
+        {   
+            StageGenerationConfigSO stageGenConfig = GameManager.Instance.stageGenConfig;
+            if (stageGenConfig.thumbnails.TryGetValue(type, out Sprite thumbnail))
+            {
+                this.thumbnail = thumbnail;
+            }
 
+        }
+    }
 }
 
 

@@ -473,6 +473,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 3942009974030630049}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &77213084 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 89442826083417357, guid: e562e8dd8ae560847a3fa9538f608284,
+    type: 3}
+  m_PrefabInstance: {fileID: 3942009974030630049}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d4bb9ae62712dc488a2d622f8427e2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &109511817
 GameObject:
   m_ObjectHideFlags: 0
@@ -1336,7 +1348,7 @@ MonoBehaviour:
   equipmentChangePanel: {fileID: 4576345636373471498}
   settingPanel: {fileID: 133363777}
   playerStatusUpgradePanel: {fileID: 8177835310401767953}
-  skillUpgradePanel: {fileID: 0}
+  skillUpgradePanel: {fileID: 77213084}
   gameOverPanel: {fileID: 291544998}
   stageClearUI: {fileID: 1182112853}
   enemyHpSlider: {fileID: 7757515635410346610}
