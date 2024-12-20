@@ -31,7 +31,7 @@ MonoBehaviour:
   fixedNodeType:
     array:
     - Key: 0
-      Value: 2
+      Value: 1
     - Key: 1
       Value: 1
     - Key: 4
