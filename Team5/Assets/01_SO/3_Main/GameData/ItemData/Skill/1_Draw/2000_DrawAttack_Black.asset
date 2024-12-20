@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec8edcf17829d4f41b445d969a608b3c, type: 3}
   m_Name: 2000_DrawAttack_Black
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: 2f9022e9a654e5a45873527d8744d409, type: 3}
+  sprite: {fileID: 21300000, guid: 34724794568f94ac28a47a6d2b9fd410, type: 3}
   type: 2
   tier: 0
   description: 
