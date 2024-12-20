@@ -17,6 +17,8 @@ public class StageGenerationConfigSO : ScriptableObject
 
     public List<int> soloNodeLevel = new(){4,5,9,10};
 
+    public SerializableDictionary<StageNodeType, Sprite> thumbnails;
+
     
     
     //================================================================

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d49c272f0bf0e7a4a83c8036c9815d76, type: 3}
-  m_Name: B00_Boss_1
+  m_Name: B01_ChapterBoss_1
   m_EditorClassIdentifier: 
   id: B00
   entityName: MiddleBoss
@@ -19,17 +19,18 @@ MonoBehaviour:
   type: 1
   rank: 0
   attackType: 0
-  maxHp: 700
+  maxHp: 1000
   armor: 0
   range: 1
   retreatRange: 0
   attackSpeed: 0
-  ad: 60
+  ad: 80
   ap: 0
   moveCooltime: 0.2
   movementSpeed: 11
   exp: 30
   abilities:
+  - {fileID: 11400000, guid: d634ae6ffc59eae4eb02fe5c07f3bbbe, type: 2}
   - {fileID: 11400000, guid: 2f005f8b9e28bfe47a06de92173696f2, type: 2}
   - {fileID: 11400000, guid: 3fed02278c81d464b92c0b379f5b54b1, type: 2}
   - {fileID: 11400000, guid: 3fed02278c81d464b92c0b379f5b54b1, type: 2}
